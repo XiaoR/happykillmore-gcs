@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : TurnCoordinatorInstrumentControl.cs                            
-
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : The turn coordinator instrument control                        
-
 ' Creation : 15/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

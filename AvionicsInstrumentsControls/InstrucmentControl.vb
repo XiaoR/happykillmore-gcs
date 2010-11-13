@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : InstrumentControl.cs                                           
-
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : Generic class for the instrument control design                
-
 ' Creation : 15/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

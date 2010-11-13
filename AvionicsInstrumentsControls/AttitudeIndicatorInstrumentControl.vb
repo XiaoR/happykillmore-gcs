@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
-' File     : AttitudeIndicatorInstrumentControl.cs                          
-
+' File     : AttitudeIndicatorInstrumentControl.cs                      
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : The attitude indicator instrument control                      
-
 ' Creation : 22/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

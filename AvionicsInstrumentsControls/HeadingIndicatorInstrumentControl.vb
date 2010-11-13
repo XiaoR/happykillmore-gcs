@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : HeadingIndicatorInstrumentControl.cs                           
-
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : The heading indicator instrument control                       
-
 ' Creation : 25/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

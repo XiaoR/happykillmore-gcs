@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : VerticalSpeedIndicatorInstrumentControl.cs                     
-
-' Version  : 1                                                              
-
+' Version  : 1                                                             
 ' Language : C#                                                             
-
 ' Summary  : The vertical speed indicator instrument control                
-
 ' Creation : 19/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

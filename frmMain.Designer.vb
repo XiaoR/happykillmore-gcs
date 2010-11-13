@@ -151,7 +151,7 @@ Partial Class frmMain
         Me.TabPage6 = New System.Windows.Forms.TabPage
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.lblHomeAltitude = New System.Windows.Forms.Label
+        Me.tbarModelScale = New System.Windows.Forms.TrackBar
         Me.tabInstrumentView.SuspendLayout()
         Me.tabInstruments.SuspendLayout()
         Me.tabSerialData.SuspendLayout()
@@ -168,6 +168,7 @@ Partial Class frmMain
         Me.tabMapView.SuspendLayout()
         Me.Map.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cmdCenterOnPlane
@@ -1428,21 +1429,23 @@ Partial Class frmMain
         Me.DirectShowControl1.Size = New System.Drawing.Size(540, 486)
         Me.DirectShowControl1.TabIndex = 0
         '
-        'lblHomeAltitude
+        'tbarModelScale
         '
-        Me.lblHomeAltitude.AutoSize = True
-        Me.lblHomeAltitude.Location = New System.Drawing.Point(811, 586)
-        Me.lblHomeAltitude.Name = "lblHomeAltitude"
-        Me.lblHomeAltitude.Size = New System.Drawing.Size(76, 13)
-        Me.lblHomeAltitude.TabIndex = 23
-        Me.lblHomeAltitude.Text = "Home Altitude:"
+        Me.tbarModelScale.Location = New System.Drawing.Point(811, 582)
+        Me.tbarModelScale.Maximum = 50
+        Me.tbarModelScale.Minimum = 1
+        Me.tbarModelScale.Name = "tbarModelScale"
+        Me.tbarModelScale.Size = New System.Drawing.Size(104, 45)
+        Me.tbarModelScale.TabIndex = 23
+        Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarModelScale.Value = 10
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1159, 612)
-        Me.Controls.Add(Me.lblHomeAltitude)
+        Me.Controls.Add(Me.tbarModelScale)
         Me.Controls.Add(Me.tabMapView)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.cmdExit)
@@ -1479,6 +1482,7 @@ Partial Class frmMain
         Me.tabMapView.ResumeLayout(False)
         Me.Map.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1608,9 +1612,9 @@ Partial Class frmMain
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents lblBandwidth As System.Windows.Forms.Label
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents lblHomeAltitude As System.Windows.Forms.Label
     Friend WithEvents cboMapUpdateRate As System.Windows.Forms.ComboBox
     Friend WithEvents Label30 As System.Windows.Forms.Label
+    Friend WithEvents tbarModelScale As System.Windows.Forms.TrackBar
     'Friend WithEvents DirectShow1 As HK_GCS.DirectShow
 
 End Class
