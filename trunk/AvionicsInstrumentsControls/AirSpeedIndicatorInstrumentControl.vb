@@ -1,19 +1,12 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : AirSpeedIndicatorInstrumentControl.cs                          
-
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : The air speed indicator instrument control                     
-
 ' Creation : 19/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
 ' History  :                                                                
 
 '***************************************************************************

@@ -292,9 +292,9 @@ Public Class frmMain
             .Items.Add("EasyStar")
             .Items.Add("FunJet")
             '.Items.Add("-mi- Yellow Plane")
-            .Items.Add("Firecracker")
-            .Items.Add("T-Rex 450")
-            .Items.Add("AeroQuad")
+            '.Items.Add("Firecracker")
+            '.Items.Add("T-Rex 450")
+            '.Items.Add("AeroQuad")
             .Text = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "3D Model", "EasyStar")
             s3DModel = .Text
         End With
@@ -324,6 +324,8 @@ Public Class frmMain
             .SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Selection", "0"))
             eMapSelection = .SelectedIndex
         End With
+
+        tbarModelScale.Value = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Model Scale", "10")
 
         chkCommandLineAutoScroll.Checked = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Command Line Auto Scroll", True)
 
@@ -565,10 +567,10 @@ Public Class frmMain
     End Sub
 
     Private Sub GpS_Parser1_AttitudeChange1(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single)
+        WebBrowser1.Invoke(New MyDelegate(AddressOf updateAttitude))
         AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(IIf(bPitchReverse = True, -1, 1) * -pitch, IIf(bRollReverse = True, -1, 1) * roll)
         'TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(-roll, 0, "TURN COORDINATOR", "L", "R")
         _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * pitch, IIf(bRollReverse = True, -1, 1) * roll, yaw)
-        WebBrowser1.Invoke(New MyDelegate(AddressOf updateAttitude))
     End Sub
     Private Sub GPS_Parser1_Waypoints(ByVal waypointNumber As Integer, ByVal distance As Single, ByVal battery As Single, ByVal mode As Integer, ByVal throttle As Single)
         lblWaypoint.Text = "#" & waypointNumber
@@ -705,7 +707,14 @@ Public Class frmMain
     Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters)})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), cbo3DModel.Text})
+            'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
+        Catch e2 As Exception
+        End Try
+    End Sub
+    Public Sub loadModel()
+        Try
+            webDocument.InvokeScript("loadModel", New Object() {cbo3DModel.Text})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -722,25 +731,21 @@ Public Class frmMain
         Catch e2 As Exception
         End Try
     End Sub
-    Public Sub updateAttitude()
-        Dim nNewHeading As Single
+    Public Sub changeModelScale()
         Try
-            nNewHeading = nHeading + 180
-            If nNewHeading > 360 Then
-                nNewHeading = nNewHeading - 360
-            End If
-            webDocument.InvokeScript("updateAttitude", New Object() {nNewHeading, -nPitch, -nRoll})
+            webDocument.InvokeScript("changeModelScale", New Object() {tbarModelScale.Value})
+        Catch e2 As Exception
+        End Try
+    End Sub
+    Public Sub updateAttitude()
+        Try
+            webDocument.InvokeScript("updateAttitude", New Object() {nHeading, nPitch, nRoll})
         Catch e2 As Exception
         End Try
     End Sub
     Public Sub setPlaneLocation()
-        Dim nNewHeading As Single
         Try
-            nNewHeading = nHeading + 180
-            If nNewHeading > 360 Then
-                nNewHeading = nNewHeading - 360
-            End If
-            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eOutputDistance = e_DistanceFormat.e_DistanceFormat_Feet, True, False), nNewHeading, -nPitch, -nRoll})
+            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eOutputDistance = e_DistanceFormat.e_DistanceFormat_Feet, True, False), nHeading, nPitch, nRoll})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
@@ -1527,6 +1532,7 @@ Public Class frmMain
         Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "3D Model", cbo3DModel.Text)
         s3DModel = cbo3DModel.Text
         _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nYaw, True, s3DModel, System.AppDomain.CurrentDomain.BaseDirectory & "3D Models\")
+        WebBrowser1.Invoke(New MyDelegate(AddressOf loadModel))
     End Sub
 
     Private Sub cboGoogleEarthCamera_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboGoogleEarthCamera.SelectedIndexChanged
@@ -1703,5 +1709,10 @@ Public Class frmMain
 
     Private Sub cboMapUpdateRate_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMapUpdateRate.SelectedIndexChanged
         Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Update Hz", cboMapUpdateRate.SelectedIndex + 1)
+    End Sub
+
+    Private Sub tbarModelScale_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarModelScale.Scroll
+        WebBrowser1.Invoke(New MyDelegate(AddressOf changeModelScale))
+        Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Model Scale", tbarModelScale.Value)
     End Sub
 End Class

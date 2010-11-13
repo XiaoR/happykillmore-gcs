@@ -44,6 +44,9 @@
     var planeOrient = null;
     var planeLoc = null;
     var homeSet = false;
+    var planeLink = null;
+    
+    var nScale = 5;
 
     function init() {
       google.earth.createInstance('map3d', initCallback, failureCallback);
@@ -133,8 +136,22 @@
 	    lookAt.setAltitude(lastAlt);  
         ge.getView().setAbstractView(lookAt);
     }
+    
+    function changeModelScale(newScale) {
+        nScale = newScale;
+        planeModel.getScale().setX(nScale);
+        planeModel.getScale().setY(nScale);
+        planeModel.getScale().setZ(nScale);
 
-    function setHomeLatLng(lat,long, altitude) {
+        //planePlacemark.setGeometry(planeModel);
+    }
+    
+    function loadModel(modelName) {
+        planeLink.setHref('http://www.happykillmore.com/Software/HK_GCS/3D Models/' + modelName + '.dae');
+        planeModel.setLink(planeLink);
+    }
+
+    function setHomeLatLng(lat,long, altitude, modelName) {
         if (isLoaded == false){
             return;
         }
@@ -169,11 +186,11 @@
           ge.getFeatures().appendChild(planePlacemark);
           planeLoc = ge.createLocation('');
           planeModel.setLocation(planeLoc);
-          var planeLink = ge.createLink('');
+          planeLink = ge.createLink('');
           planeOrient = ge.createOrientation(''); 
           planeModel.setOrientation(planeOrient); 
 
-          planeLink.setHref('http://www.happykillmore.com/Software/HK_GCS/EasyStar/EasyStar.dae');
+          planeLink.setHref('http://www.happykillmore.com/Software/HK_GCS/3D Models/' + modelName + '.dae');
           planeModel.setLink(planeLink);
           planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
 
@@ -182,14 +199,11 @@
           planeLoc.setLongitude(long);
           planeLoc.setAltitude(altitude);
           
-
-          planeModel.getScale().setX(5);
-          planeModel.getScale().setY(5);
-          planeModel.getScale().setZ(5);
+          planeModel.getScale().setX(nScale);
+          planeModel.getScale().setY(nScale);
+          planeModel.getScale().setZ(nScale);
 
           planePlacemark.setGeometry(planeModel);
-
-
 
 	    // Create the placemark. 
 	    var placemark = ge.createPlacemark(''); 

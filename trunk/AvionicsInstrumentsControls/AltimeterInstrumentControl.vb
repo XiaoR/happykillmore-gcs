@@ -1,20 +1,13 @@
 '***************************************************************************
 
 ' Project  : AvionicsInstrumentControlDemo                                  
-
 ' File     : AltimeterInstrumentControl.cs                                  
-
 ' Version  : 1                                                              
-
 ' Language : C#                                                             
-
 ' Summary  : The altimeter instrument control                     
-
 ' Creation : 16/06/2008                                                     
-
 ' Autor    : Guillaume CHOUTEAU                                             
-
-' History  :                                                                
+' History  :                                        
 
 '***************************************************************************
 
