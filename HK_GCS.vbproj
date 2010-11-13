@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FCD785F-BABD-4C8D-9AA5-A22F11F22D81}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>HK_GCS.My.MyApplication</StartupObject>
+    <RootNamespace>HK_GCS</RootNamespace>
+    <AssemblyName>Ground Control Station</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>8AE3DB1BF4B5889CD3728942249EC4745322AE54</ManifestCertificateThumbprint>
+    <ManifestKeyFile>HK_GCS_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <ApplicationIcon>PLANE.ICO</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <PublishUrl>ftp://ftp.happykillmore.com/wwwroot/Software/HK_GCS/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <InstallUrl>http://www.happykillmore.com/software/hk_gcs/</InstallUrl>
+    <ProductName>Ground Control Station</ProductName>
+    <PublisherName>HappyKillmore</PublisherName>
+    <WebPage>index.htm</WebPage>
+    <ApplicationVersion>1.0.0.6</ApplicationVersion>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Ground Control Station.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Ground Control Station.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\system32\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2911.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AvionicsInstrumentsControls\3DMesh.Designer.vb">
+      <DependentUpon>3DMesh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\3DMesh.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AirSpeedIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AltimeterInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AttitudeIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AvionicsInstrumentsControlsRessources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\HeadingIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\TurnCoordinatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DirectShowControl.designer.vb">
+      <DependentUpon>DirectShowControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DirectShowControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DirectX.vb" />
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\InstrucmentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="modLoadFiles.vb" />
+    <Compile Include="modRegistry.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="cMessage.vb" />
+    <Compile Include="modChecksums.vb" />
+    <Compile Include="modGlobal.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AvionicsInstrumentsControls\3DMesh.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>3DMesh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HK_GCS_TemporaryKey.pfx" />
+    <BaseApplicationManifest Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PLANE.ICO" />
+    <Content Include="Resources\GroundSpeedNeedle.bmp" />
+    <Content Include="Resources\Maps.html" />
+    <Content Include="Resources\AirSpeedIndicator_Background.bmp" />
+    <Content Include="Resources\AirSpeedNeedle.bmp" />
+    <Content Include="Resources\Altimeter_Background.bmp" />
+    <Content Include="Resources\Bandeau_Dérouleur.bmp" />
+    <Content Include="Resources\HeadingIndicator_Aircraft.bmp" />
+    <Content Include="Resources\HeadingIndicator_Background.bmp" />
+    <Content Include="Resources\HeadingWeel.bmp" />
+    <Content Include="Resources\Horizon_Background.bmp" />
+    <Content Include="Resources\Horizon_GroundSky.bmp" />
+    <Content Include="Resources\Indicator_Background.bmp" />
+    <Content Include="Resources\LongNeedleAltimeter.bmp" />
+    <Content Include="Resources\Maquette_Avion.bmp" />
+    <Content Include="Resources\pluginhost.html" />
+    <Content Include="Resources\SmallNeedleAltimeter.bmp" />
+    <Content Include="Resources\TurnCoordinatorAircraft.bmp" />
+    <Content Include="Resources\TurnCoordinatorBall.bmp" />
+    <Content Include="Resources\TurnCoordinatorMarks.bmp" />
+    <Content Include="Resources\TurnCoordinator_Background.bmp" />
+    <Content Include="Resources\VerticalSpeedIndicator_Background.bmp" />
+    <Content Include="Resources\VerticalSpeedNeedle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
