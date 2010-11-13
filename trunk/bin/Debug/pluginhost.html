@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <head>
+    <title>Google Earth Plug-in</title>
+    <!-- NOTE: replace the key below with your own key -->
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"></script>
+    <script type="text/javascript">
+
+    google.load('earth', '1');
+
+    var ge = null;
+    var lineString = null;
+    var lineStringPlacemark = null;
+    var lineStyle = null;
+    var lookAt = null;
+
+    var flightString = null;
+    var flightStringPlacemark = null;
+    var flightStyle = null;
+    
+    var currentRange = 0;
+    var currentAltitude = 0;
+    var currentTilt = 0;
+    var currentHeading = 0;
+
+    var lastChangeTime = 0;
+
+    var planeIcon = null;
+    var planeplacemark = null;
+
+    function init() {
+      google.earth.createInstance('map3d', initCallback, failureCallback);
+    }
+
+    function initCallback(pluginInstance) {
+      ge = pluginInstance;
+      ge.getWindow().setVisibility(true);
+      google.earth.addEventListener(ge.getView(), "viewchange", eventListener);
+      
+      // tell the application the plugin is ready
+      //window.external.JSInitSuccessCallback_(pluginInstance);
+    }
+
+    function failureCallback(error) {
+      //window.external.JSInitErrorCallback_(error);
+    }
+
+    function setHomeLatLng(lat,long, altitude) {
+	ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
+
+	// Create the placemark 
+	lineStringPlacemark = ge.createPlacemark(''); 
+ 
+	// Create the LineString 
+	lineString = ge.createLineString(''); 
+	lineString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	lineStringPlacemark.setGeometry(lineString);  
+
+	lineStringPlacemark.setStyleSelector(ge.createStyle(''));
+	lineStyle = lineStringPlacemark.getStyleSelector().getLineStyle();
+	//lineStyle.setWidth(lineStyle.getWidth() + 2);
+	lineStyle.getColor().set('00ffffff');  // aabbggrr format
+	lineString.setExtrude(true); 
+
+	// Create the placemark 
+	flightStringPlacemark = ge.createPlacemark(''); 
+ 
+	// Create the LineString 
+	flightString = ge.createLineString(''); 
+	flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	flightStringPlacemark.setGeometry(flightString);  
+
+	flightStringPlacemark.setStyleSelector(ge.createStyle(''));
+	flightStyle = flightStringPlacemark.getStyleSelector().getLineStyle();
+	lineStyle.setWidth(3);
+	flightStyle.getColor().set('ff00ffff');  // aabbggrr format
+	//flightString.setExtrude(true); 
+
+	ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+
+	// Create plane icon
+	planeIcon = ge.createIcon(''); 
+	planeplacemark = ge.createPlacemark(''); 
+
+	planeIcon.setHref('http://dem5xqcn61lj8.cloudfront.net/AirportTracker/airplane_sm_blue_360.png'); 
+	var style = ge.createStyle(''); 
+	style.getIconStyle().setIcon(planeIcon); 
+	style.getIconStyle().setScale(1.0); 
+	var newplaneplacemark = ge.createPlacemark(''); 
+	planeplacemark.setStyleSelector(style);  
+
+	// Set the placemark's location.   
+	var point = ge.createPoint(''); 
+	point.setLatitude(lat); 
+	point.setLongitude(long); 
+	point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+	point.setAltitude(altitude); 
+	planeplacemark.setGeometry(point);  
+
+
+	// Create the placemark. 
+	var placemark = ge.createPlacemark(''); 
+	//placemark.setName("Home");  
+
+	// Define a custom icon. 
+	var icon = ge.createIcon(''); 
+	icon.setHref('http://google-maps-icons.googlecode.com/files/blackH.png'); 
+	var style = ge.createStyle(''); 
+	style.getIconStyle().setIcon(icon); 
+	//style.getIconStyle().setScale(0.5); 
+	placemark.setStyleSelector(style);  
+
+	// Set the placemark's location.   
+	var point = ge.createPoint(''); 
+	point.setLatitude(lat); 
+	point.setLongitude(long); 
+	//point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+	//point.setAltitude(altitude); 
+	placemark.setGeometry(point);  
+
+	// Add the placemark to Earth. 
+	ge.getFeatures().appendChild(placemark); 
+
+	lineString.getCoordinates().pushLatLngAlt(lat,long,altitude);
+
+	// Get the current view 
+	lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);  
+
+	// Set new latitude and longitude values 
+	lookAt.setLatitude(lat); 
+	lookAt.setLongitude(long);  
+	lookAt.setRange(1500);  
+
+	lookAt.setTilt(60); 
+
+	// Update the view in Google Earth 
+	ge.getView().setAbstractView(lookAt);
+
+    }   
+
+    
+
+    function addWaypoint(lat, long, altitude, index) {
+	// Create the placemark. 
+	if (index != "-1"){
+		var placemark = ge.createPlacemark(''); 
+		//placemark.setName("WP#" + index);  
+
+		// Define a custom icon. 
+		var icon = ge.createIcon(''); 
+		icon.setHref('http://google-maps-icons.googlecode.com/files/red' + index + '.png'); 
+		var style = ge.createStyle(''); 
+		style.getIconStyle().setIcon(icon); 
+		//style.getIconStyle().setScale(0.5); 
+		placemark.setStyleSelector(style);  
+
+		// Set the placemark's location.   
+		var point = ge.createPoint(''); 
+		point.setLatitude(lat); 
+		point.setLongitude(long); 
+		point.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+		point.setAltitude(altitude); 
+		placemark.setGeometry(point);  
+
+		// Add the placemark to Earth. 
+		ge.getFeatures().appendChild(placemark); 
+	}
+
+	lineString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
+	ge.getFeatures().appendChild(lineStringPlacemark);
+
+    }
+
+    function drawAndCenter(lat, long, altitude, heading, flightExtrude, flightColor, flightWidth,wpExtrude, wpColor, wpWidth) {
+	var nAngle = 0;
+	var nNewHeading = 0;
+	nNewHeading = heading + currentHeading;
+	if (nNewHeading > 360){
+		nNewHeading += 360;
+	}
+					if ((nNewHeading > 348.75) || (nNewHeading <= 11.25))
+						nAngle="360.png";
+					else if ((nNewHeading > 11.25) && (nNewHeading <= 33.75))
+						nAngle="22_5.png";
+					else if ((nNewHeading > 33.75) && (nNewHeading <= 56.25))
+						nAngle="45.png";
+					else if ((nNewHeading > 56.25) && (nNewHeading <= 78.75))
+						nAngle="67_5.png";
+					else if ((nNewHeading > 78.75) && (nNewHeading <= 101.25))
+						nAngle="90.png";
+					else if ((nNewHeading > 101.25) && (nNewHeading <= 123.75))
+						nAngle="112_5.png";
+					else if ((nNewHeading > 123.75) && (nNewHeading <= 146.25))
+						nAngle="135.png";
+					else if ((nNewHeading > 146.25) && (nNewHeading <= 168.75))
+						nAngle="157_5.png";
+					else if ((nNewHeading > 168.75) && (nNewHeading <= 191.25))
+						nAngle="180.png";
+					else if ((nNewHeading > 191.25) && (nNewHeading <= 213.75))
+						nAngle="202_5.png";
+					else if ((nNewHeading > 213.75) && (nNewHeading <= 236.25))
+						nAngle="225.png";
+					else if ((nNewHeading > 236.25) && (nNewHeading <= 258.75))
+						nAngle="247_5.png";
+					else if ((nNewHeading > 258.75) && (nNewHeading <= 281.25))
+						nAngle="270.png";
+					else if ((nNewHeading > 281.25) && (nNewHeading <= 303.75))
+						nAngle="292_5.png";
+					else if ((nNewHeading > 303.75) && (nNewHeading <= 326.25))
+						nAngle="315.png";
+					else 
+						nAngle="337_5.png";
+
+	// Define a custom icon. 
+//	planeIcon.setHref('http://dem5xqcn61lj8.cloudfront.net/AirportTracker/airplane_sm_blue_' + nAngle); 
+//	var style = ge.createStyle(''); 
+//	style.getIconStyle().setIcon(planeIcon); 
+//	style.getIconStyle().setScale(1.0); 
+//	var newplaneplacemark = ge.createPlacemark(''); 
+//	planeplacemark.setStyleSelector(style);  
+
+	// Set the placemark's location.   
+//	var point = ge.createPoint(''); 
+//	point.setLatitude(lat); 
+//	point.setLongitude(long); 
+//	point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+//	point.setAltitude(altitude); 
+//	planeplacemark.setGeometry(point);  
+
+	// Add the placemark to Earth. 
+//	ge.getFeatures().appendChild(planeplacemark); 
+
+	// Change Waypoint line color
+//	lineString.setExtrude(wpExtrude); 
+//	lineStyle.getColor().set(wpColor);
+//	lineStyle.setWidth(wpWidth);
+//	ge.getFeatures().appendChild(lineStringPlacemark);
+
+	flightString.setExtrude(flightExtrude); 
+	flightStyle.getColor().set(flightColor);
+	flightStyle.setWidth(flightWidth);
+	flightString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
+	ge.getFeatures().appendChild(flightStringPlacemark);
+
+		lookAt.setLatitude(lat); 
+		lookAt.setLongitude(long);  
+
+		lookAt.setRange(currentRange);  
+//		lookAt.setAltitude(currentAltitude);  
+
+		lookAt.setTilt(currentTilt);
+		lookAt.setHeading(currentHeading);
+
+		ge.getView().setAbstractView(lookAt);
+	
+        //planeplacemark = newplaneplacemark;
+
+    }
+
+    function eventListener(event) {
+
+  	var lookAtCurrent = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+	currentRange = lookAtCurrent.getRange().toFixed(2);
+//	currentAltitude = lookAtCurrent.getAltitude().toFixed(2);
+	currentTilt = lookAtCurrent.getTilt().toFixed(2);
+	currentHeading = lookAtCurrent.getHeading().toFixed(2);
+    }
+    </script>
+    <style type="text/css">
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body onload="init()">
+    <div id="map3d" style="width: 100%; height: 100%;"></div>
+  </body>
+</html>

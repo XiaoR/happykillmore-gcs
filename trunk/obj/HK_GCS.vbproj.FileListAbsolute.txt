@@ -1,0 +1,26 @@
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.frmMain.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.Resources.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.AvionicsInstrumentsControlsRessources.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.frmMain.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.Resources.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.AvionicsInstrumentsControlsRessources.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Release\Ground Control Station.exe
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Release\Ground Control Station.pdb
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Release\Ground Control Station.xml
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\Ground Control Station.exe
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\Ground Control Station.xml
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\Ground Control Station.pdb
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\Ground Control Station.exe
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\Ground Control Station.pdb
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\Ground Control Station.xml
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\Ground Control Station.exe
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\Ground Control Station.xml
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\Ground Control Station.pdb
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS._3DMesh.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS._3DMesh.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Release\DirectShowLib-2005.dll
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\DirectShowLib-2005.dll

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+GroundControlStation
+</name>
+</assembly>
+<members>
+<member name="F:HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.SetAlimeterParameters(System.Int32,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft altitude in ft
+
+</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Maps">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
+ 
+&lt;head&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="include.css" /&gt;
+&lt;meta http-equiv="content-type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;meta name="author" content="HappyKillmore based on samples from Wolfgang Pichler" /&gt;
+&lt;meta name="URL"  [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.pluginhost">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+  &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+  &lt;head&gt;
+    &lt;title&gt;Google Earth Plug-in&lt;/title&gt;
+    &lt;!-- NOTE: replace the key below with your own key --&gt;
+    &lt;script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript"&gt;
+
+    g [rest of string was truncated]";.
+</summary>
+</member><member name="T:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.SetTurnCoordinatorParameters(System.Single,System.Single,System.String,System.String,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft turn rate in °deg per minutes
+ The aircraft turn quality
+
+</member><member name="F:HK_GCS.DirectShowControl.DirectShowControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
+ Clean up any resources being used.
+ true if managed resources should be disposed; otherwise, false.
+
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.SetAirSpeedIndicatorParameters(System.Single,System.Int32,System.String,System.String,System.Single)">
+ Define the physical value to be displayed on the indicator
+ The aircraft air speed in kts
+
+</member><member name="P:HK_GCS.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:HK_GCS.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.SetAttitudeIndicatorParameters(System.Double,System.Double)">
+ Define the physical value to be displayed on the indicator
+ The aircraft pitch angle in °deg
+ The aircraft roll angle in °deg
+
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.RotateImage(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Double,System.Drawing.Point,System.Drawing.Point,System.Single)">
+ Rotate an image on a point with a specified angle
+ The paint area event where the image will be displayed
+ The image to display
+ The angle of rotation in radian
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ The location of the rotation point in the paint area
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.TranslateImage(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Int32,System.Single,System.Drawing.Point,System.Single)">
+ Translate an image on line with a specified distance and a spcified angle
+ The paint area event where the image will be displayed
+ The image to display
+ The translation distance in pixel
+ The angle of translation direction in radian
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.RotateAndTranslate(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Double,System.Double,System.Drawing.Point,System.Int32,System.Drawing.Point,System.Single)">
+ Rotate an image an apply a translation on the rotated image and the display it
+ The paint area event where the image will be displayed
+ The image to display
+ The angle of rotation in radian
+ The angle of translation direction in radian, expressed in the rotated image coordonate system
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ The location of the rotation point in the paint area
+ The translation distance in pixel
+ The location of the rotation point in the paint area
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.ScrollCounter(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Int32,System.Int32,System.Drawing.Point,System.Single)">
+ Display a Scroll counter image like on gas  pumps 
+ The paint area event where the image will be displayed
+ The band counter image to display with digts : 0|1|2|3|4|5|6|7|8|9|0
+ The number of digits displayed by the counter
+ The value to dispay on the counter
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.InterpolPhyToAngle(System.Single,System.Single,System.Single,System.Single,System.Single)">
+ Convert a physical value in an rad angle used by the rotate function
+ Physical value to interpol/param&gt;
+ Minimum physical value
+ Maximum physical value
+ The angle related to the minumum value, in deg
+ The angle related to the maximum value, in deg
+ The angle in radian witch correspond to the physical value
+
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.SetVerticalSpeedIndicatorParameters(System.Int32,System.String,System.String,System.String,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft vertical speed in ft per minutes
+
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.SetHeadingIndicatorParameters(System.Int32)">
+ Define the physical value to be displayed on the indicator
+ The aircraft heading in °deg
+
+</member>
+</members>
+</doc>
