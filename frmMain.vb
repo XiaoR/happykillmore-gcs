@@ -67,7 +67,8 @@ Public Class frmMain
 
     Dim nLastComPort As Integer
     Dim bFirstPaint As Boolean = False
-    Dim bFirstVideoCapture As Boolean = False
+    Dim bFirstVideoCapture1 As Boolean = False
+    Dim bFirstVideoCapture2 As Boolean = False
 
     Dim nPlayerState As e_PlayerState
 
@@ -220,7 +221,7 @@ Public Class frmMain
         If eMapSelection = e_MapSelection.e_MapSelection_GoogleMaps Then
             WebBrowser1.Navigate(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html")
         Else
-            WebBrowser1.DocumentText = My.Resources.AvionicsInstrumentsControlsRessources.pluginhost.ToString
+            WebBrowser1.DocumentText = My.Resources.GoogleResources.pluginhost.ToString
             'WebBrowser1.Navigate(System.AppDomain.CurrentDomain.BaseDirectory & "pluginhost.html")
         End If
 
@@ -240,7 +241,7 @@ Public Class frmMain
         Dim nCount As Integer
 
         If Dir(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html") = "" Then
-            Dim sFileContents As String = HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Maps.ToString
+            Dim sFileContents As String = HK_GCS.My.Resources.GoogleResources.Maps.ToString
             Dim fs As New FileStream(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html", FileMode.Create, FileAccess.Write)
             Dim sMapsFile As StreamWriter = New StreamWriter(fs)
 
@@ -295,21 +296,26 @@ Public Class frmMain
             '.Items.Add("Firecracker")
             '.Items.Add("T-Rex 450")
             '.Items.Add("AeroQuad")
-            .Text = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "3D Model", "EasyStar")
+            Try
+                .Text = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "3D Model", "EasyStar")
+            Catch
+                .Text = "EasyStar"
+            End Try
+
             s3DModel = .Text
         End With
 
         LoadComboEntries(cboCommandLineCommand)
         LoadMissions()
 
-        With cboGoogleEarthCamera
-            .Items.Add("No Tracking")
-            .Items.Add("Lat and Long")
-            .Items.Add("Lat, Long and Altitude")
-            .Items.Add("Cockpit View")
-            .SelectedIndex = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Camera Tracking", 0)
-            nCameraTracking = .SelectedIndex
-        End With
+        'With cboGoogleEarthCamera
+        '    .Items.Add("No Tracking")
+        '    .Items.Add("Lat and Long")
+        '    .Items.Add("Lat, Long and Altitude")
+        '    .Items.Add("Cockpit View")
+        '    .SelectedIndex = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Camera Tracking", 0)
+        '    nCameraTracking = .SelectedIndex
+        'End With
 
         With cboMaxSpeed
             For i = 40 To 200 Step 40
@@ -567,10 +573,13 @@ Public Class frmMain
     End Sub
 
     Private Sub GpS_Parser1_AttitudeChange1(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single)
-        WebBrowser1.Invoke(New MyDelegate(AddressOf updateAttitude))
-        AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(IIf(bPitchReverse = True, -1, 1) * -pitch, IIf(bRollReverse = True, -1, 1) * roll)
-        'TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(-roll, 0, "TURN COORDINATOR", "L", "R")
-        _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * pitch, IIf(bRollReverse = True, -1, 1) * roll, yaw)
+        Try
+            'WebBrowser1.Invoke(New MyDelegate(AddressOf updateAttitude))
+            AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(IIf(bPitchReverse = True, -1, 1) * -pitch, IIf(bRollReverse = True, -1, 1) * roll)
+            'TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(-roll, 0, "TURN COORDINATOR", "L", "R")
+            _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * pitch, IIf(bRollReverse = True, -1, 1) * roll, yaw)
+        Catch
+        End Try
     End Sub
     Private Sub GPS_Parser1_Waypoints(ByVal waypointNumber As Integer, ByVal distance As Single, ByVal battery As Single, ByVal mode As Integer, ByVal throttle As Single)
         lblWaypoint.Text = "#" & waypointNumber
@@ -601,6 +610,7 @@ Public Class frmMain
             AltimeterInstrumentControl1.SetAlimeterParameters(altitude, cboDistanceUnits.Text)
             HeadingIndicatorInstrumentControl1.SetHeadingIndicatorParameters(heading)
             VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(verticalChange, "vertical speed", "up", "down", "100ft/min")
+            _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nHeading)
 
             Select Case fix
                 Case 0
@@ -615,8 +625,12 @@ Public Class frmMain
             lblSatellites.Text = satellites
             lblHDOP.Text = hdop
 
-            lblLatitude.Text = latitude
-            lblLongitude.Text = longitude
+            If Not latitude Is Nothing Then
+                lblLatitude.Text = Convert.ToDouble(latitude).ToString("0.000000")
+            End If
+            If Not longitude Is Nothing Then
+                lblLongitude.Text = Convert.ToDouble(longitude).ToString("0.000000")
+            End If
 
             lblDataPoints.Text = nDataPoints.ToString("###,##0")
             nDataPoints = nDataPoints + 1
@@ -707,7 +721,7 @@ Public Class frmMain
     Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), cbo3DModel.Text})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), cbo3DModel.Text, tbarModelScale.Value})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -739,13 +753,13 @@ Public Class frmMain
     End Sub
     Public Sub updateAttitude()
         Try
-            webDocument.InvokeScript("updateAttitude", New Object() {nHeading, nPitch, nRoll})
+            webDocument.InvokeScript("updateAttitude", New Object() {nHeading, IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll})
         Catch e2 As Exception
         End Try
     End Sub
     Public Sub setPlaneLocation()
         Try
-            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eOutputDistance = e_DistanceFormat.e_DistanceFormat_Feet, True, False), nHeading, nPitch, nRoll})
+            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eOutputDistance, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eOutputDistance = e_DistanceFormat.e_DistanceFormat_Feet, True, False), nHeading, IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
@@ -944,11 +958,11 @@ Public Class frmMain
                     lblGPSMessage.Text = UCase(sSplit(0))
                     Select Case UCase(sSplit(0))
                         Case "GPRMC"
-                            nLatitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                             If sSplit(4) = "S" Then
                                 nLatitude = nLatitude * -1
                             End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(5)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(5)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                             If sSplit(6) = "W" Then
                                 nLongitude = nLongitude * -1
                             End If
@@ -956,11 +970,11 @@ Public Class frmMain
                             nHeading = Convert.ToSingle(sSplit(8))
                             bNewGPS = True
                         Case "GPGGA"
-                            nLatitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(2)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(2)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                             If sSplit(3) = "S" Then
                                 nLatitude = nLatitude * -1
                             End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(4)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(4)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                             If sSplit(5) = "W" Then
                                 nLongitude = nLongitude * -1
                             End If
@@ -970,11 +984,11 @@ Public Class frmMain
                             nAltitude = ConvertDistance(sSplit(9), e_DistanceFormat.e_DistanceFormat_Meters, eOutputDistance)
                             bNewGPS = True
                         Case "GPGLL"
-                            nLatitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(1)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(1)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                             If sSplit(2) = "S" Then
                                 nLatitude = nLatitude * -1
                             End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToSingle(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                             If sSplit(4) = "W" Then
                                 nLongitude = nLongitude * -1
                             End If
@@ -990,8 +1004,8 @@ Public Class frmMain
 
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
                     sSplit = Split(.Packet, vbTab)
-                    nLatitude = ConvertLatLongFormat((Convert.ToSingle(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                    nLongitude = ConvertLatLongFormat((Convert.ToSingle(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                    nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                    nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                     nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
 
                     WebBrowser1.Invoke(New MyDelegate(AddressOf setHomeLatLng))
@@ -999,8 +1013,8 @@ Public Class frmMain
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
                     sSplit = Split(.Packet, vbTab)
                     nWaypoint = Convert.ToUInt32(Trim(Mid(sSplit(0), 5, 2)))
-                    nLatitude = ConvertLatLongFormat((Convert.ToSingle(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                    nLongitude = ConvertLatLongFormat((Convert.ToSingle(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                    nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                    nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                     nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
                     'nAltitude = Convert.ToSingle(sSplit(3)) / 100
 
@@ -1074,14 +1088,17 @@ Public Class frmMain
                                     bNewAttitude = True
                                 Case "CRS", "COG"
                                     nHeading = Convert.ToSingle(sValues(1))
+                                    If nHeading < 0 Then
+                                        nHeading = nHeading + 360
+                                    End If
                                     nYaw = nHeading
                                     bNewAttitude = True
 
                                 Case "LAT"
-                                    nLatitude = ConvertLatLongFormat(Convert.ToSingle(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                    nLatitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
                                     bNewGPS = True
                                 Case "LON"
-                                    nLongitude = ConvertLatLongFormat(Convert.ToSingle(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                    nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                                     bNewGPS = True
                                 Case "SOG", "SPD"
                                     nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eOutputSpeed)
@@ -1101,6 +1118,9 @@ Public Class frmMain
                                 Case "BTV"
                                     nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
                                     bNewWaypoint = True
+                                Case "HDO"
+                                    nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
+                                    bNewGPS = True
 
                                 Case "TXS", "STT"
                                     nMode = Convert.ToInt32(sValues(1))
@@ -1451,12 +1471,16 @@ Public Class frmMain
 
     Private Sub tabMapView_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabMapView.SelectedIndexChanged
         Select Case tabMapView.SelectedIndex
-            Case 0
             Case 1
-                If bFirstVideoCapture = False Then
+                If bFirstVideoCapture1 = False Then
                     DirectShowControl1.StartCapture()
                 End If
-                bFirstVideoCapture = True
+                bFirstVideoCapture1 = True
+            Case Else
+                If bFirstVideoCapture1 = True Then
+                    DirectShowControl1.ReleaseInterfaces()
+                    bFirstVideoCapture1 = False
+                End If
         End Select
 
     End Sub
@@ -1535,10 +1559,10 @@ Public Class frmMain
         WebBrowser1.Invoke(New MyDelegate(AddressOf loadModel))
     End Sub
 
-    Private Sub cboGoogleEarthCamera_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboGoogleEarthCamera.SelectedIndexChanged
-        Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Camera Tracking", cboGoogleEarthCamera.SelectedIndex)
-        nCameraTracking = cboGoogleEarthCamera.SelectedIndex
-    End Sub
+    'Private Sub cboGoogleEarthCamera_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Camera Tracking", cboGoogleEarthCamera.SelectedIndex)
+    '    nCameraTracking = cboGoogleEarthCamera.SelectedIndex
+    'End Sub
 
     Private Sub cboMission_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMission.SelectedIndexChanged
         ReadMission(cboMission.Text)
@@ -1698,7 +1722,9 @@ Public Class frmMain
         If serialPortIn.IsOpen = True Then
             dStartTime = Now
         Else
-            dStartTime = New Date(Mid(rawData(nDataIndex), 1, InStr(rawData(nDataIndex), ":") - 1))
+            If UBound(rawData) > 0 Then
+                dStartTime = New Date(Mid(rawData(nDataIndex), 1, InStr(rawData(nDataIndex), ":") - 1))
+            End If
         End If
         lblRunTime.Text = ConvertToRunTime(dStartTime, dStartTime)
     End Sub
@@ -1714,5 +1740,54 @@ Public Class frmMain
     Private Sub tbarModelScale_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarModelScale.Scroll
         WebBrowser1.Invoke(New MyDelegate(AddressOf changeModelScale))
         Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Model Scale", tbarModelScale.Value)
+    End Sub
+
+    Private Sub chkViewNoTracking_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkViewNoTracking.CheckedChanged
+        If chkViewNoTracking.Checked = True Then
+            SetViewButtons(0)
+        End If
+    End Sub
+
+    Private Sub chkViewOverhead_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkViewOverhead.CheckedChanged
+        If chkViewOverhead.Checked = True Then
+            SetViewButtons(1)
+        End If
+    End Sub
+
+    Private Sub chkViewChaseCam_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkViewChaseCam.CheckedChanged
+        If chkViewChaseCam.Checked = True Then
+            SetViewButtons(2)
+        End If
+    End Sub
+    Private Sub SetViewButtons(ByVal newValue As Integer)
+        If Not webDocument Is Nothing Then
+            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, nPitch, nRoll})
+        End If
+        nCameraTracking = newValue
+        chkViewNoTracking.Checked = IIf(nCameraTracking = 0, True, False)
+        chkViewOverhead.Checked = IIf(nCameraTracking = 1, True, False)
+        chkViewChaseCam.Checked = IIf(nCameraTracking = 2, True, False)
+        chkViewFirstPerson.Checked = IIf(nCameraTracking = 3, True, False)
+    End Sub
+
+    Private Sub chkViewFirstPerson_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkViewFirstPerson.CheckedChanged
+        If chkViewFirstPerson.Checked = True Then
+            SetViewButtons(3)
+        End If
+    End Sub
+
+    Private Sub tabInstrumentView_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabInstrumentView.SelectedIndexChanged
+        Select Case tabInstrumentView.SelectedIndex
+            Case 4
+                If bFirstVideoCapture2 = False Then
+                    DirectShowControl2.StartCapture()
+                End If
+                bFirstVideoCapture2 = True
+            Case Else
+                If bFirstVideoCapture2 = True Then
+                    DirectShowControl2.ReleaseInterfaces()
+                    bFirstVideoCapture2 = False
+                End If
+        End Select
     End Sub
 End Class
