@@ -16,7 +16,7 @@
     <ManifestKeyFile>HK_GCS_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>false</GenerateManifests>
     <SignManifests>false</SignManifests>
-    <ApplicationIcon>PLANE.ICO</ApplicationIcon>
+    <ApplicationIcon>Resources\PLANE.ICO</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <PublishUrl>ftp://ftp.happykillmore.com/wwwroot/Software/HK_GCS/</PublishUrl>
     <Install>true</Install>
@@ -79,7 +79,6 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AvionicsInstrumentsControls\3DMesh.Designer.vb">
       <DependentUpon>3DMesh.vb</DependentUpon>
     </Compile>
@@ -109,13 +108,13 @@
     <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DirectShowControl.designer.vb">
-      <DependentUpon>DirectShowControl.vb</DependentUpon>
+    <Compile Include="ctlDirectShowControl.designer.vb">
+      <DependentUpon>ctlDirectShowControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="DirectShowControl.vb">
+    <Compile Include="ctlDirectShowControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DirectX.vb" />
+    <Compile Include="modDirectX.vb" />
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +124,11 @@
     </Compile>
     <Compile Include="AvionicsInstrumentsControls\InstrucmentControl.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Javascript\GoogleResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoogleResources.resx</DependentUpon>
     </Compile>
     <Compile Include="modLoadFiles.vb" />
     <Compile Include="modRegistry.vb" />
@@ -162,6 +166,12 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Javascript\GoogleResources.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GoogleResources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -170,7 +180,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="HK_GCS_TemporaryKey.pfx" />
     <BaseApplicationManifest Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -183,9 +192,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PLANE.ICO" />
+    <Content Include="Javascript\Maps.html" />
+    <Content Include="Javascript\pluginhost.html" />
+    <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
-    <Content Include="Resources\Maps.html" />
     <Content Include="Resources\AirSpeedIndicator_Background.bmp" />
     <Content Include="Resources\AirSpeedNeedle.bmp" />
     <Content Include="Resources\Altimeter_Background.bmp" />
@@ -198,7 +208,6 @@
     <Content Include="Resources\Indicator_Background.bmp" />
     <Content Include="Resources\LongNeedleAltimeter.bmp" />
     <Content Include="Resources\Maquette_Avion.bmp" />
-    <Content Include="Resources\pluginhost.html" />
     <Content Include="Resources\SmallNeedleAltimeter.bmp" />
     <Content Include="Resources\TurnCoordinatorAircraft.bmp" />
     <Content Include="Resources\TurnCoordinatorBall.bmp" />

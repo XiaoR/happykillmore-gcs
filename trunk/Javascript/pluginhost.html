@@ -1,0 +1,533 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <head>
+    <title>Google Earth Plug-in</title>
+    <!-- NOTE: replace the key below with your own key -->
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA0Fr-33jU5znk3eeIujbO7BTJMCHS-jujuL6EC_OZAQIbzgaqGxSc7loBqiXeUNQ8d7DjBpAZtmBctg"></script>
+    <!--<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"></script>-->
+    <script type="text/javascript">
+
+    google.load('earth', '1');
+
+    var ge = null;
+    var lineString = null;
+    var lineStringPlacemark = null;
+    var lineStyle = null;
+    var lookAt = null;
+    var camera = null;
+    
+    var modelName = null;
+
+    var flightString = null;
+    var flightStringPlacemark = null;
+    var flightStyle = null;
+    
+    var lastRange = 0;
+    var currentRange = 0;
+    var currentAltitude = 0;
+    var currentTilt = 0;
+    var currentHeading = 0;
+    var cameraRange = 0;
+
+    var lastChangeTime = 0;
+
+    var planeIcon = null;
+    var planeplacemark = null;
+
+    var homeGroundAltitude = 0;
+    var homePoint = null;
+    
+    var isLoaded = false;
+    var lastLat = 0;
+    var lastLong = 0;
+    var lastAlt = 0;
+    
+    var nLocked = 0;
+    
+    var planeModel = null;
+    var planeOrient = null;
+    var planeLoc = null;
+    var homeSet = false;
+    var planeLink = null;
+    
+    var nScale = 5;
+
+    function init() {
+      google.earth.createInstance('map3d', initCallback, failureCallback);
+    }
+
+    function initCallback(pluginInstance) {
+        ge = pluginInstance;
+        ge.getWindow().setVisibility(true);
+        google.earth.addEventListener(ge.getView(), "viewchange", eventListener);
+
+        ge.getOptions().setStatusBarVisibility(true); 
+        ge.getOptions().setScaleLegendVisibility(true); 
+        ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
+        ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+        
+        ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true); 
+        ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, true); 
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, true); 
+        ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true); 
+
+
+	    // Create the placemark 
+	    lineStringPlacemark = ge.createPlacemark(''); 
+     
+	    // Create the LineString 
+	    lineString = ge.createLineString(''); 
+	    lineString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	    lineStringPlacemark.setGeometry(lineString);  
+
+	    lineStringPlacemark.setStyleSelector(ge.createStyle(''));
+	    lineStyle = lineStringPlacemark.getStyleSelector().getLineStyle();
+	    lineStyle.setWidth(2);
+	    lineStyle.getColor().set('7f0000ff');  // aabbggrr format
+	    lineString.setExtrude(true); 
+
+	    // Create the placemark 
+	    flightStringPlacemark = ge.createPlacemark(''); 
+     
+	    // Create the LineString 
+	    flightString = ge.createLineString(''); 
+	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	    flightStringPlacemark.setGeometry(flightString);  
+
+	    flightStringPlacemark.setStyleSelector(ge.createStyle(''));
+	    flightStyle = flightStringPlacemark.getStyleSelector().getLineStyle();
+	    lineStyle.setWidth(3);
+	    flightStyle.getColor().set('ff00ffff');  // aabbggrr format
+	    //flightString.setExtrude(true); 
+
+	    lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_ABSOLUTE);  
+	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
+
+        // tell the application the plugin is ready
+        //window.external.JSInitSuccessCallback_(pluginInstance);
+        isLoaded = true;
+    }
+
+    function failureCallback(error) {
+      //window.external.JSInitErrorCallback_(error);
+    }
+    
+    function clearMap() {
+    	var features = ge.getFeatures(); 
+	    while (features.getFirstChild()) { 
+   		    features.removeChild(features.getFirstChild()); 
+	    } 
+	    //flightString = ge.createLineString(''); 
+	    // Create the placemark 
+	    flightStringPlacemark = ge.createPlacemark(''); 
+     
+	    // Create the LineString 
+	    flightString = ge.createLineString(''); 
+	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	    flightStringPlacemark.setGeometry(flightString);  
+
+	    flightStringPlacemark.setStyleSelector(ge.createStyle(''));
+	    flightStyle = flightStringPlacemark.getStyleSelector().getLineStyle();
+	    lineStyle.setWidth(3);
+    }
+
+    function centerOnPlane() {
+	    // Get the current view 
+	    //lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_ABSOLUTE);  
+	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
+
+	    // Set new latitude and longitude values 
+//	    lookAt.setLatitude(lastLat); 
+//	    lookAt.setLongitude(lastLong);  
+//	    lookAt.setAltitude(lastAlt);  
+//      ge.getView().setAbstractView(lookAt);
+
+	    camera.setLatitude(lastLat); 
+	    camera.setLongitude(lastLong);  
+	    camera.setAltitude(lastAlt);  
+        ge.getView().setAbstractView(camera);
+    }
+    
+    function changeModelScale(newScale) {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+        nScale = newScale;
+        planeModel.getScale().setX(nScale);
+        planeModel.getScale().setY(nScale);
+        planeModel.getScale().setZ(nScale);
+
+        //planePlacemark.setGeometry(planeModel);
+    }
+    
+    function loadModel(newModelName) {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+        modelName = newModelName;
+        planeLink.setHref('http://www.happykillmore.com/Software/HK_GCS/3D Models/' + modelName + '.dae');
+        planeModel.setLink(planeLink);
+    }
+
+    function setHomeLatLng(lat,long, altitude, newModelName, scale) {
+        if (isLoaded == false){
+            return;
+        }
+        
+        nScale = scale;
+	    var features = ge.getFeatures(); 
+	    while (features.getFirstChild()) { 
+   		    features.removeChild(features.getFirstChild()); 
+	    }
+
+        modelName = newModelName;
+        ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
+
+	    // Create plane icon
+        //	planeIcon = ge.createIcon(''); 
+        //	planeplacemark = ge.createPlacemark(''); 
+
+        //	planeIcon.setHref('http://dem5xqcn61lj8.cloudfront.net/AirportTracker/airplane_sm_blue_360.png'); 
+        //	var style = ge.createStyle(''); 
+        //	style.getIconStyle().setIcon(planeIcon); 
+        //	style.getIconStyle().setScale(1.0); 
+        //	var newplaneplacemark = ge.createPlacemark(''); 
+        //	planeplacemark.setStyleSelector(style);  
+
+	        // Set the placemark's location.   
+        //	var point = ge.createPoint(''); 
+        //	point.setLatitude(lat); 
+        //	point.setLongitude(long); 
+        //	point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+        //	point.setAltitude(altitude); 
+        //	planeplacemark.setGeometry(point);  
+
+          var planePlacemark = ge.createPlacemark('');
+          planePlacemark.setName('model');
+          planeModel = ge.createModel('');
+          ge.getFeatures().appendChild(planePlacemark);
+          planeLoc = ge.createLocation('');
+          planeModel.setLocation(planeLoc);
+          planeLink = ge.createLink('');
+          planeOrient = ge.createOrientation(''); 
+          planeModel.setOrientation(planeOrient); 
+
+          planeLink.setHref('http://www.happykillmore.com/Software/HK_GCS/3D Models/' + newModelName + '.dae');
+          planeModel.setLink(planeLink);
+          planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
+
+          //var la = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+          planeLoc.setLatitude(lat);
+          planeLoc.setLongitude(long);
+          planeLoc.setAltitude(altitude);
+          
+          planeModel.getScale().setX(nScale);
+          planeModel.getScale().setY(nScale);
+          planeModel.getScale().setZ(nScale);
+
+          planePlacemark.setGeometry(planeModel);
+
+	    // Create the placemark. 
+	    var placemark = ge.createPlacemark(''); 
+	    //placemark.setName("Home");  
+
+	    // Define a custom icon. 
+	    var icon = ge.createIcon(''); 
+	    icon.setHref('http://google-maps-icons.googlecode.com/files/blackH.png'); 
+	    var style = ge.createStyle(''); 
+	    style.getIconStyle().setIcon(icon); 
+	    //style.getIconStyle().setScale(0.5); 
+	    placemark.setStyleSelector(style);  
+
+	    // Set the placemark's location.   
+	    homePoint = ge.createPoint(''); 
+	    homePoint.setLatitude(lat); 
+	    homePoint.setLongitude(long); 
+	    //point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+	    homePoint.setAltitude(altitude); 
+	    placemark.setGeometry(homePoint);  
+
+	    // Add the placemark to Earth. 
+	    ge.getFeatures().appendChild(placemark); 
+
+	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+	    if (homeGroundAltitude == 0){
+		    homeGroundAltitude = altitude;
+	    }
+		//document.getElementById('homeGroundAltitude') = homeGroundAltitude;
+	    lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
+
+	    // Get the current view 
+	    //lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_ABSOLUTE);  
+	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
+
+	    // Set new latitude and longitude values 
+	    lookAt.setLatitude(lat); 
+	    lookAt.setLongitude(long);  
+	    lookAt.setRange(1500);  
+
+	    lookAt.setTilt(50); 
+
+	    // Update the view in Google Earth 
+	    ge.getView().setAbstractView(lookAt);
+
+//	    camera.setLatitude(lat); 
+//	    camera.setLongitude(long);  
+//	    camera.setRange(1500);  
+
+//	    camera.setTilt(50); 
+
+	    // Update the view in Google Earth 
+//	    ge.getView().setAbstractView(camera);
+
+	    homeSet = true;
+
+    }   
+
+    function drawHomeLine() {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+	    lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude(), homePoint.getLongitude(),homeGroundAltitude); 
+	    ge.getFeatures().appendChild(lineStringPlacemark);
+        }
+    	
+        function addWaypoint(lat, long, altitude, index) {
+	    // Create the placemark. 
+        if (isLoaded == false){
+            return;
+        }
+	    if (index != "-1"){
+		    var placemark = ge.createPlacemark(''); 
+		    //placemark.setName("WP#" + index);  
+
+		    // Define a custom icon. 
+		    var icon = ge.createIcon(''); 
+		    icon.setHref('http://google-maps-icons.googlecode.com/files/red' + index + '.png'); 
+		    var style = ge.createStyle(''); 
+		    style.getIconStyle().setIcon(icon); 
+		    style.getIconStyle().setScale(0.7); 
+		    placemark.setStyleSelector(style);  
+
+		    homeGroundAltitude = ge.getGlobe().getGroundAltitude(homePoint.getLatitude(), homePoint.getLongitude());
+		    //document.getElementById('homeGroundAltitude') = homeGroundAltitude;
+
+    //		if(homeGroundAltitude == 0) {
+    //			homeGroundAltitude = 500;
+    //		}
+
+		    // Set the placemark's location.   
+		    var point = ge.createPoint('');     
+		    point.setLatitude(lat); 
+		    point.setLongitude(long); 
+		    point.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+		    point.setAltitude(altitude + homeGroundAltitude); 
+		    placemark.setGeometry(point);  
+
+		    // Add the placemark to Earth. 
+		    ge.getFeatures().appendChild(placemark); 
+    	}
+
+	    lineString.getCoordinates().pushLatLngAlt(lat,long,altitude + homeGroundAltitude); 
+	    ge.getFeatures().appendChild(lineStringPlacemark);
+
+    }
+    
+    function updateAttitude(heading,pitch,roll) {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+//        planeOrient.setHeading(heading);
+        planeOrient.setTilt(pitch); 
+        planeOrient.setRoll(roll); 
+        
+//        if (cameraTracking == 2) {
+//		    lookAt.setHeading(heading); 
+//		    ge.getView().setAbstractView(lookAt);
+//		}
+    }
+
+    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,pitch,roll) {
+	    var nAngle = 0;
+	    var nNewHeading = 0;
+	    var nRange = 0;
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+
+        nLocked = 1;
+        if (lastRange != 0) {
+            nRange = currentRange - lastRange;
+        }
+        
+	    if (cameraTracking != 3) {
+            ge.getOptions().setFlyToSpeed(1); 
+        } else {
+            ge.getOptions().setFlyToSpeed(4.5); 
+        }
+            
+        
+        //if (isMeters == "True"){
+            ge.getOptions().setUnitsFeetMiles(isMeters);
+        //} else {
+        //    ge.getOptions().setUnitsFeetMiles(true);
+        //}
+        
+        lastLat = lat;
+        lastLong = long;
+        lastAlt = altitude;
+        
+        planeOrient.setHeading(heading);
+        planeOrient.setTilt(pitch); 
+        planeOrient.setRoll(roll); 
+        
+	    flightString.setExtrude(flightExtrude); 
+	    flightStyle.getColor().set(flightColor);
+	    flightStyle.setWidth(flightWidth);
+	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	    flightString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
+
+	    ge.getFeatures().appendChild(flightStringPlacemark);
+	    
+        planeLoc.setLatitude(lat);
+        planeLoc.setLongitude(long);
+        planeLoc.setAltitude(altitude);
+	    
+	    if (cameraTracking == 1) {
+		    camera.setLatitude(lat); 
+		    camera.setLongitude(long);  
+            //lookAt.setRange(ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND).getRange().toFixed(2)); 
+		    //lookAt.setRange(nRange);
+		    camera.setAltitude(currentRange);
+		    ge.getView().setAbstractView(camera);
+		    lastRange = altitude;
+		} else if(cameraTracking == 2) {
+            //lookAt.setRange(currentRange); 
+		    lookAt.setLatitude(lat); 
+		    lookAt.setLongitude(long);  
+		    lookAt.setAltitude(altitude); 
+		    lookAt.setHeading(heading); 
+		    //lookAt.setRange(currentRange-altitude);
+		    //camera.setAltitude(currentRange);
+		    lookAt.setTilt(60);  
+		    ge.getView().setAbstractView(lookAt);
+		} else if(cameraTracking == 3) {
+		    camera.setLatitude(lat); 
+		    camera.setLongitude(long);  
+		    camera.setAltitude(altitude); 
+		    camera.setHeading(heading); 
+		    camera.setRoll(roll); 
+		    camera.setTilt(90 - pitch); 
+		    ge.getView().setAbstractView(camera);
+		}
+		
+		nLocked = 0;
+	    
+
+//	    if (cameraTracking == 1 || cameraTracking == 2){
+//		    lookAt.setLatitude(lat); 
+//		    lookAt.setLongitude(long);  
+
+		    //lookAt.setRange(currentRange);  
+//		    if (cameraTracking == 2){
+//			    lookAt.setAltitude(altitude);  
+			    //lookAt.setRange(altitude-500);  
+//		    } else {
+//			    lookAt.setAltitude(0);  
+//			    lookAt.setRange(currentRange); 
+//		    }
+//	    }
+//	    lookAt.setTilt(currentTilt);
+//	    lookAt.setHeading(currentHeading);
+
+//	    if (cameraTracking == 1 || cameraTracking == 2){		
+//		    ge.getView().setAbstractView(lookAt);
+//	    }
+    	
+            //planeplacemark = newplaneplacemark;
+
+    }
+    
+    function changeView(newView,altitude,pitch,roll) {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+        
+        ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT);
+        if (newView == 0) {
+            loadModel(modelName);
+        } else if (newView == 1) {
+            loadModel(modelName);
+		    lookAt.setTilt(0);  
+		    lookAt.setAltitude(altitude); 
+            lookAt.setRange(30); 
+		    ge.getView().setAbstractView(lookAt);
+		} else if(newView == 2) {
+            loadModel(modelName);
+		    lookAt.setRange(400); 
+		    lookAt.setTilt(60);  
+		    //lookAt.setAltitude(altitude); 
+		    ge.getView().setAbstractView(lookAt);
+		} else if(newView == 3) {
+            planeModel.setLink(null);
+		    //camera.setRange(-5); 
+		    camera.setTilt(90 - pitch);  
+		    camera.setRoll(roll);  
+		    ge.getView().setAbstractView(camera);		    
+        }	
+    }
+    
+    function createCirclePolygon() {
+        function makeCircle(radius, x, y) {
+        var center = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+
+        var ring = ge.createLinearRing('');
+        var steps = 25;
+        var pi2 = Math.PI * 2;
+        for (var i = 0; i < steps; i++) {
+          var lat = center.getLatitude() + x + radius * Math.cos(i / steps * pi2);
+          var lng = center.getLongitude() + y + radius * Math.sin(i / steps * pi2);
+          ring.getCoordinates().pushLatLngAlt(lat, lng, 5000);
+        }
+        return ring;
+    }
+
+    var polygonPlacemark = ge.createPlacemark('');
+    polygonPlacemark.setGeometry(ge.createPolygon(''));
+    polygonPlacemark.getGeometry().setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
+
+    var outer = ge.createLinearRing('');
+    polygonPlacemark.getGeometry().setOuterBoundary(makeCircle(.05, 0, 0));
+    ge.getFeatures().appendChild(polygonPlacemark);
+}
+	
+
+    function eventListener(event) {
+        if (nLocked == 0){
+  	        var lookAtCurrent = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
+//  	        lookAtCurrent.setLatitude(planeLoc.getLatitude());
+//  	        lookAtCurrent.setLongitude(planeLoc.getLongitude());
+//  	        lookAtCurrent.setAltitude(planeLoc.getAltitude());
+//  	    var cameraCurrent = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
+//	        currentRange = lookAtCurrent.getRange();
+	    currentRange = lookAtCurrent.getAltitude();
+	    //currentTilt = cameraCurrent.getTilt().toFixed(2);
+	    //currentHeading = cameraCurrent.getHeading().toFixed(2);
+	    //cameraRange = cameraCurrent.getRange().toFixed(2);
+	    }
+    }
+    </script>
+    <style type="text/css">
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body onload="init()">
+    <div id="map3d" style="width: 100%; height: 100%;"></div>
+  </body>
+</html>

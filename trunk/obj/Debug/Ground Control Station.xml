@@ -28,32 +28,6 @@ GroundControlStation
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
-</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Maps">
-	<summary>
-  Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
- 
-&lt;head&gt;
-&lt;meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /&gt;
-&lt;link rel="stylesheet" type="text/css" href="include.css" /&gt;
-&lt;meta http-equiv="content-type" content="text/html; charset=iso-8859-1" /&gt;
-&lt;meta name="author" content="HappyKillmore based on samples from Wolfgang Pichler" /&gt;
-&lt;meta name="URL"  [rest of string was truncated]";.
-</summary>
-</member><member name="P:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.pluginhost">
-	<summary>
-  Looks up a localized string similar to &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd"&gt;
-&lt;html&gt;
-  &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
-  &lt;head&gt;
-    &lt;title&gt;Google Earth Plug-in&lt;/title&gt;
-    &lt;!-- NOTE: replace the key below with your own key --&gt;
-    &lt;script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript"&gt;
-
-    g [rest of string was truncated]";.
-</summary>
 </member><member name="T:HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
@@ -71,14 +45,6 @@ GroundControlStation
  Define the physical value to be displayed on the indicator
  The aircraft turn rate in °deg per minutes
  The aircraft turn quality
-
-</member><member name="F:HK_GCS.DirectShowControl.DirectShowControl.components">
-	<summary>
- Required designer variable.
- </summary>
-</member><member name="M:HK_GCS.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
- Clean up any resources being used.
- true if managed resources should be disposed; otherwise, false.
 
 </member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.components">
 	<summary>
@@ -120,6 +86,43 @@ GroundControlStation
  The aircraft pitch angle in °deg
  The aircraft roll angle in °deg
 
+</member><member name="P:HK_GCS.My.Resources.GoogleResources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.GoogleResources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.GoogleResources.Maps">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
+ 
+&lt;head&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="include.css" /&gt;
+&lt;meta http-equiv="content-type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;meta name="author" content="HappyKillmore based on samples from Wolfgang Pichler" /&gt;
+&lt;meta name="URL"  [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.GoogleResources.pluginhost">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+  &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+  &lt;head&gt;
+    &lt;title&gt;Google Earth Plug-in&lt;/title&gt;
+    &lt;!-- NOTE: replace the key below with your own key --&gt;
+    &lt;script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA0Fr-33jU5znk3eeIujbO7BTJMCHS-jujuL6EC_OZAQIbzgaqGxSc7loBqiXeUNQ8d7DjBpAZtmBctg"&gt;&lt;/script&gt;
+    &lt;!--&lt;script type="text/javascript" src=" [rest of string was truncated]";.
+</summary>
+</member><member name="T:HK_GCS.My.Resources.GoogleResources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
 </member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.InstrumentControl.RotateImage(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Double,System.Drawing.Point,System.Drawing.Point,System.Single)">
  Rotate an image on a point with a specified angle
  The paint area event where the image will be displayed
@@ -180,6 +183,14 @@ GroundControlStation
 </member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.SetVerticalSpeedIndicatorParameters(System.Int32,System.String,System.String,System.String,System.String)">
  Define the physical value to be displayed on the indicator
  The aircraft vertical speed in ft per minutes
+
+</member><member name="F:HK_GCS.DirectShowControl.DirectShowControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
+ Clean up any resources being used.
+ true if managed resources should be disposed; otherwise, false.
 
 </member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.components">
 	<summary>

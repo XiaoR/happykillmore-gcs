@@ -62,8 +62,6 @@ Partial Class frmMain
         Me.chkPitchReverse = New System.Windows.Forms.CheckBox
         Me.Label25 = New System.Windows.Forms.Label
         Me.Label24 = New System.Windows.Forms.Label
-        Me.cboGoogleEarthCamera = New System.Windows.Forms.ComboBox
-        Me.Label23 = New System.Windows.Forms.Label
         Me.cbo3DModel = New System.Windows.Forms.ComboBox
         Me.Label21 = New System.Windows.Forms.Label
         Me.tbarFlightWidth = New System.Windows.Forms.TrackBar
@@ -77,6 +75,8 @@ Partial Class frmMain
         Me.cboSpeedUnits = New System.Windows.Forms.ComboBox
         Me.Label3 = New System.Windows.Forms.Label
         Me.cboDistanceUnits = New System.Windows.Forms.ComboBox
+        Me.tabInstrumentLiveCamera = New System.Windows.Forms.TabPage
+        Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.tmrPlayback = New System.Windows.Forms.Timer(Me.components)
         Me.tmrSearch = New System.Windows.Forms.Timer(Me.components)
         Me.serialPortIn = New System.IO.Ports.SerialPort(Me.components)
@@ -146,9 +146,13 @@ Partial Class frmMain
         Me.Label10 = New System.Windows.Forms.Label
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.tabMapView = New System.Windows.Forms.TabControl
-        Me.Map = New System.Windows.Forms.TabPage
+        Me.tabViewMapView = New System.Windows.Forms.TabPage
+        Me.chkViewFirstPerson = New System.Windows.Forms.CheckBox
+        Me.chkViewChaseCam = New System.Windows.Forms.CheckBox
+        Me.chkViewOverhead = New System.Windows.Forms.CheckBox
+        Me.chkViewNoTracking = New System.Windows.Forms.CheckBox
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser
-        Me.TabPage6 = New System.Windows.Forms.TabPage
+        Me.tabViewLiveCamera = New System.Windows.Forms.TabPage
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
         Me.tbarModelScale = New System.Windows.Forms.TrackBar
@@ -159,6 +163,7 @@ Partial Class frmMain
         Me.tabCommandLine.SuspendLayout()
         Me.tabSettings.SuspendLayout()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabInstrumentLiveCamera.SuspendLayout()
         Me.tabPortControl.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
@@ -166,8 +171,8 @@ Partial Class frmMain
         Me.TabPage5.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.tabMapView.SuspendLayout()
-        Me.Map.SuspendLayout()
-        Me.TabPage6.SuspendLayout()
+        Me.tabViewMapView.SuspendLayout()
+        Me.tabViewLiveCamera.SuspendLayout()
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -195,6 +200,7 @@ Partial Class frmMain
         Me.tabInstrumentView.Controls.Add(Me.tabSerialData)
         Me.tabInstrumentView.Controls.Add(Me.tabCommandLine)
         Me.tabInstrumentView.Controls.Add(Me.tabSettings)
+        Me.tabInstrumentView.Controls.Add(Me.tabInstrumentLiveCamera)
         Me.tabInstrumentView.Location = New System.Drawing.Point(8, 12)
         Me.tabInstrumentView.Name = "tabInstrumentView"
         Me.tabInstrumentView.SelectedIndex = 0
@@ -460,8 +466,6 @@ Partial Class frmMain
         Me.tabSettings.Controls.Add(Me.chkPitchReverse)
         Me.tabSettings.Controls.Add(Me.Label25)
         Me.tabSettings.Controls.Add(Me.Label24)
-        Me.tabSettings.Controls.Add(Me.cboGoogleEarthCamera)
-        Me.tabSettings.Controls.Add(Me.Label23)
         Me.tabSettings.Controls.Add(Me.cbo3DModel)
         Me.tabSettings.Controls.Add(Me.Label21)
         Me.tabSettings.Controls.Add(Me.tbarFlightWidth)
@@ -559,24 +563,6 @@ Partial Class frmMain
         Me.Label24.Size = New System.Drawing.Size(84, 13)
         Me.Label24.TabIndex = 18
         Me.Label24.Text = "Flight Path Color"
-        '
-        'cboGoogleEarthCamera
-        '
-        Me.cboGoogleEarthCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboGoogleEarthCamera.FormattingEnabled = True
-        Me.cboGoogleEarthCamera.Location = New System.Drawing.Point(116, 318)
-        Me.cboGoogleEarthCamera.Name = "cboGoogleEarthCamera"
-        Me.cboGoogleEarthCamera.Size = New System.Drawing.Size(121, 21)
-        Me.cboGoogleEarthCamera.TabIndex = 17
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(14, 321)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(88, 13)
-        Me.Label23.TabIndex = 16
-        Me.Label23.Text = "Camera Tracking"
         '
         'cbo3DModel
         '
@@ -698,6 +684,23 @@ Partial Class frmMain
         Me.cboDistanceUnits.Name = "cboDistanceUnits"
         Me.cboDistanceUnits.Size = New System.Drawing.Size(121, 21)
         Me.cboDistanceUnits.TabIndex = 0
+        '
+        'tabInstrumentLiveCamera
+        '
+        Me.tabInstrumentLiveCamera.Controls.Add(Me.DirectShowControl2)
+        Me.tabInstrumentLiveCamera.Location = New System.Drawing.Point(4, 22)
+        Me.tabInstrumentLiveCamera.Name = "tabInstrumentLiveCamera"
+        Me.tabInstrumentLiveCamera.Size = New System.Drawing.Size(565, 382)
+        Me.tabInstrumentLiveCamera.TabIndex = 4
+        Me.tabInstrumentLiveCamera.Text = "Live Camera"
+        Me.tabInstrumentLiveCamera.UseVisualStyleBackColor = True
+        '
+        'DirectShowControl2
+        '
+        Me.DirectShowControl2.Location = New System.Drawing.Point(71, 9)
+        Me.DirectShowControl2.Name = "DirectShowControl2"
+        Me.DirectShowControl2.Size = New System.Drawing.Size(400, 360)
+        Me.DirectShowControl2.TabIndex = 1
         '
         'tmrPlayback
         '
@@ -1384,43 +1387,97 @@ Partial Class frmMain
         '
         'tabMapView
         '
-        Me.tabMapView.Controls.Add(Me.Map)
-        Me.tabMapView.Controls.Add(Me.TabPage6)
+        Me.tabMapView.Controls.Add(Me.tabViewMapView)
+        Me.tabMapView.Controls.Add(Me.tabViewLiveCamera)
         Me.tabMapView.Location = New System.Drawing.Point(587, 12)
         Me.tabMapView.Name = "tabMapView"
         Me.tabMapView.SelectedIndex = 0
         Me.tabMapView.Size = New System.Drawing.Size(566, 567)
         Me.tabMapView.TabIndex = 22
         '
-        'Map
+        'tabViewMapView
         '
-        Me.Map.Controls.Add(Me.WebBrowser1)
-        Me.Map.Location = New System.Drawing.Point(4, 22)
-        Me.Map.Name = "Map"
-        Me.Map.Padding = New System.Windows.Forms.Padding(3)
-        Me.Map.Size = New System.Drawing.Size(558, 541)
-        Me.Map.TabIndex = 0
-        Me.Map.Text = "Map View"
-        Me.Map.UseVisualStyleBackColor = True
+        Me.tabViewMapView.Controls.Add(Me.chkViewFirstPerson)
+        Me.tabViewMapView.Controls.Add(Me.chkViewChaseCam)
+        Me.tabViewMapView.Controls.Add(Me.chkViewOverhead)
+        Me.tabViewMapView.Controls.Add(Me.chkViewNoTracking)
+        Me.tabViewMapView.Controls.Add(Me.WebBrowser1)
+        Me.tabViewMapView.Location = New System.Drawing.Point(4, 22)
+        Me.tabViewMapView.Name = "tabViewMapView"
+        Me.tabViewMapView.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabViewMapView.Size = New System.Drawing.Size(558, 541)
+        Me.tabViewMapView.TabIndex = 0
+        Me.tabViewMapView.Text = "Map View"
+        Me.tabViewMapView.UseVisualStyleBackColor = True
+        '
+        'chkViewFirstPerson
+        '
+        Me.chkViewFirstPerson.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkViewFirstPerson.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewFirstPerson.Location = New System.Drawing.Point(261, 511)
+        Me.chkViewFirstPerson.Name = "chkViewFirstPerson"
+        Me.chkViewFirstPerson.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewFirstPerson.TabIndex = 24
+        Me.chkViewFirstPerson.Text = "First Person"
+        Me.chkViewFirstPerson.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewFirstPerson.UseVisualStyleBackColor = True
+        '
+        'chkViewChaseCam
+        '
+        Me.chkViewChaseCam.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkViewChaseCam.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewChaseCam.Location = New System.Drawing.Point(176, 511)
+        Me.chkViewChaseCam.Name = "chkViewChaseCam"
+        Me.chkViewChaseCam.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewChaseCam.TabIndex = 23
+        Me.chkViewChaseCam.Text = "Chase Cam"
+        Me.chkViewChaseCam.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewChaseCam.UseVisualStyleBackColor = True
+        '
+        'chkViewOverhead
+        '
+        Me.chkViewOverhead.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkViewOverhead.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewOverhead.Location = New System.Drawing.Point(91, 512)
+        Me.chkViewOverhead.Name = "chkViewOverhead"
+        Me.chkViewOverhead.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewOverhead.TabIndex = 22
+        Me.chkViewOverhead.Text = "Overhead"
+        Me.chkViewOverhead.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewOverhead.UseVisualStyleBackColor = True
+        '
+        'chkViewNoTracking
+        '
+        Me.chkViewNoTracking.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkViewNoTracking.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewNoTracking.Checked = True
+        Me.chkViewNoTracking.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkViewNoTracking.Location = New System.Drawing.Point(6, 513)
+        Me.chkViewNoTracking.Name = "chkViewNoTracking"
+        Me.chkViewNoTracking.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewNoTracking.TabIndex = 21
+        Me.chkViewNoTracking.Text = "No Tracking"
+        Me.chkViewNoTracking.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.chkViewNoTracking.UseVisualStyleBackColor = True
         '
         'WebBrowser1
         '
         Me.WebBrowser1.Location = New System.Drawing.Point(6, 9)
         Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(546, 517)
+        Me.WebBrowser1.Size = New System.Drawing.Size(546, 499)
         Me.WebBrowser1.TabIndex = 12
         '
-        'TabPage6
+        'tabViewLiveCamera
         '
-        Me.TabPage6.Controls.Add(Me.DirectShowControl1)
-        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(558, 541)
-        Me.TabPage6.TabIndex = 1
-        Me.TabPage6.Text = "Live Camera"
-        Me.TabPage6.UseVisualStyleBackColor = True
+        Me.tabViewLiveCamera.Controls.Add(Me.DirectShowControl1)
+        Me.tabViewLiveCamera.Location = New System.Drawing.Point(4, 22)
+        Me.tabViewLiveCamera.Name = "tabViewLiveCamera"
+        Me.tabViewLiveCamera.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabViewLiveCamera.Size = New System.Drawing.Size(558, 541)
+        Me.tabViewLiveCamera.TabIndex = 1
+        Me.tabViewLiveCamera.Text = "Live Camera"
+        Me.tabViewLiveCamera.UseVisualStyleBackColor = True
         '
         'DirectShowControl1
         '
@@ -1469,6 +1526,7 @@ Partial Class frmMain
         Me.tabSettings.ResumeLayout(False)
         Me.tabSettings.PerformLayout()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabInstrumentLiveCamera.ResumeLayout(False)
         Me.tabPortControl.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
@@ -1480,8 +1538,8 @@ Partial Class frmMain
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.tabMapView.ResumeLayout(False)
-        Me.Map.ResumeLayout(False)
-        Me.TabPage6.ResumeLayout(False)
+        Me.tabViewMapView.ResumeLayout(False)
+        Me.tabViewLiveCamera.ResumeLayout(False)
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1572,8 +1630,8 @@ Partial Class frmMain
     Friend WithEvents cboMapSelection As System.Windows.Forms.ComboBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents tabMapView As System.Windows.Forms.TabControl
-    Friend WithEvents Map As System.Windows.Forms.TabPage
-    Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
+    Friend WithEvents tabViewMapView As System.Windows.Forms.TabPage
+    Friend WithEvents tabViewLiveCamera As System.Windows.Forms.TabPage
     Friend WithEvents DirectShowControl1 As HK_GCS.DirectShowControl.DirectShowControl
     Friend WithEvents chkFlightExtrude As System.Windows.Forms.CheckBox
     Friend WithEvents cmdFlightColor As System.Windows.Forms.Button
@@ -1582,8 +1640,6 @@ Partial Class frmMain
     Friend WithEvents WebBrowser1 As System.Windows.Forms.WebBrowser
     Friend WithEvents cbo3DModel As System.Windows.Forms.ComboBox
     Friend WithEvents Label21 As System.Windows.Forms.Label
-    Friend WithEvents cboGoogleEarthCamera As System.Windows.Forms.ComboBox
-    Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents Label25 As System.Windows.Forms.Label
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
@@ -1615,6 +1671,12 @@ Partial Class frmMain
     Friend WithEvents cboMapUpdateRate As System.Windows.Forms.ComboBox
     Friend WithEvents Label30 As System.Windows.Forms.Label
     Friend WithEvents tbarModelScale As System.Windows.Forms.TrackBar
+    Friend WithEvents chkViewChaseCam As System.Windows.Forms.CheckBox
+    Friend WithEvents chkViewOverhead As System.Windows.Forms.CheckBox
+    Friend WithEvents chkViewNoTracking As System.Windows.Forms.CheckBox
+    Friend WithEvents chkViewFirstPerson As System.Windows.Forms.CheckBox
+    Friend WithEvents tabInstrumentLiveCamera As System.Windows.Forms.TabPage
+    Friend WithEvents DirectShowControl2 As HK_GCS.DirectShowControl.DirectShowControl
     'Friend WithEvents DirectShow1 As HK_GCS.DirectShow
 
 End Class
