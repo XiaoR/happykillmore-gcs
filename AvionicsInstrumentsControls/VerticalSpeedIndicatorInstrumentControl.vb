@@ -86,7 +86,9 @@ Namespace AvionicsInstrumentControlDemo
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
-            Using the_font As New Font("Arial", 12, FontStyle.Bold)
+            Dim fontSize As Single
+            fontSize = Me.Width / 180 * 12
+            Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 Using string_format As New StringFormat()
                     string_format.Alignment = StringAlignment.Center
                     string_format.LineAlignment = StringAlignment.Near
@@ -95,7 +97,8 @@ Namespace AvionicsInstrumentControlDemo
                 End Using
             End Using
 
-            Using the_font As New Font("Small Fonts", 7, FontStyle.Regular)
+            fontSize = Me.Width / 180 * 7
+            Using the_font As New Font("Small Fonts", fontSize, FontStyle.Regular)
                 pe.Graphics.DrawString(sInstrumentLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.62, bmpCadran.Height * scale * 0.44)
                 pe.Graphics.DrawString(sUnitLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.62, bmpCadran.Height * scale * 0.51)
             End Using

@@ -90,7 +90,9 @@ Namespace AvionicsInstrumentControlDemo
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
-            Using the_font As New Font("Arial", 8, FontStyle.Regular)
+            Dim fontSize As Single
+            fontSize = Me.Width / 180 * 8
+            Using the_font As New Font("Arial", fontSize, FontStyle.Regular)
                 pe.Graphics.DrawString(sUnitLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.3 * scale, bmpCadran.Width * 0.57 * scale)
             End Using
 
