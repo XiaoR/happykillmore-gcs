@@ -34,7 +34,7 @@ Namespace DirectShowControl
             'CaptureVideo()
         End Sub
 
-        Public Sub StartCapture()
+        Public Function StartCapture() As Boolean
             Try
                 AddHandler Me.Resize, New System.EventHandler(AddressOf WebCamControl_Resize)
                 CaptureVideo()
@@ -44,10 +44,12 @@ Namespace DirectShowControl
                 Dim resources As New System.Resources.ResourceManager(GetType(DirectShowControl))
 
                 AddHandler Me.Load, New System.EventHandler(AddressOf DirectShowControl_Load)
+                StartCapture = True
             Catch
                 ReleaseInterfaces()
+                StartCapture = False
             End Try
-        End Sub
+        End Function
 
         Private Sub CaptureVideo()
             Dim hr As Integer = 0

@@ -13,47 +13,50 @@ Public Class _3DMesh
         Dim sFilename As String
         Dim sFilePath As String
 
-        Select Case modelName
-            Case "AeroQuad"
-                sFilename = "aeroquad.x"
-                sFilePath = rootPath & "aeroquad"
-                nScaleFactor = 1.5
-                oBackColor = Color.LightGray
+        Try
+            Select Case modelName
+                Case "AeroQuad"
+                    sFilename = "aeroquad.x"
+                    sFilePath = rootPath & "aeroquad"
+                    nScaleFactor = 1.5
+                    oBackColor = Color.LightGray
 
-            Case "FunJet"
-                sFilename = "funjet.x"
-                sFilePath = rootPath & "funjet"
-                nScaleFactor = 11
-                oBackColor = Color.DarkGray
+                Case "FunJet"
+                    sFilename = "funjet.x"
+                    sFilePath = rootPath & "funjet"
+                    nScaleFactor = 11
+                    oBackColor = Color.DarkGray
 
-            Case "T-Rex 450"
-                sFilename = "trex450.x"
-                sFilePath = rootPath & "Trex450"
-                nScaleFactor = 1.2
-                oBackColor = Color.LightGray
+                Case "T-Rex 450"
+                    sFilename = "trex450.x"
+                    sFilePath = rootPath & "Trex450"
+                    nScaleFactor = 1.2
+                    oBackColor = Color.LightGray
 
-            Case "Firecracker"
-                sFilename = "Firecracker.x"
-                sFilePath = rootPath & "Firecracker"
-                nScaleFactor = 1
-                oBackColor = Color.LightGray
+                Case "Firecracker"
+                    sFilename = "Firecracker.x"
+                    sFilePath = rootPath & "Firecracker"
+                    nScaleFactor = 1
+                    oBackColor = Color.LightGray
 
-            Case "-mi- Yellow Plane"
-                sFilename = "Mi Plane.x"
-                sFilePath = rootPath & "Mi Plane"
-                nScaleFactor = 50
-                oBackColor = Color.DarkGray
+                Case "-mi- Yellow Plane"
+                    sFilename = "Mi Plane.x"
+                    sFilePath = rootPath & "Mi Plane"
+                    nScaleFactor = 50
+                    oBackColor = Color.DarkGray
 
-            Case Else
-                sFilename = "easystar.x"
-                sFilePath = rootPath & "easystar"
-                nScaleFactor = 0.9
-                oBackColor = Color.LightGray
-        End Select
+                Case Else
+                    sFilename = "easystar.x"
+                    sFilePath = rootPath & "easystar"
+                    nScaleFactor = 0.9
+                    oBackColor = Color.LightGray
+            End Select
 
-        'create a model
-        model = createMesh(sFilePath & "\" & sFilename, True, True, sFilePath)
+            'create a model
+            model = createMesh(sFilePath & "\" & sFilename, True, True, sFilePath)
 
+        Catch
+        End Try
 
     End Sub
 
@@ -61,79 +64,84 @@ Public Class _3DMesh
         'transformation matrix
         Dim tempMatrix As Matrix
 
-        If bHasRun = False Or forceLoad = True Then
-            'this function create directX for fullscreen of windowed mode
-            'with true you'll use windowed mode
-            createDevice(0, 0, 32, Me.Handle, True)
-            defaultSetting()
-            loadObject(modelName, rootPath)
-            'this instruction avoid artefact
-            Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.Opaque, True)
-            Me.Invalidate() 'invalidate rendering area
-        End If
-        bHasRun = True
-
-        'syncronize rotation angle with timer
-        'angle = Environment.TickCount / 500.0F
-
-        device.Clear(ClearFlags.Target Or ClearFlags.ZBuffer, oBackColor, 1, 0) 'clear the screen
         Try
-            device.BeginScene() 'begin 3D scene
+            If bHasRun = False Or forceLoad = True Then
+                'this function create directX for fullscreen of windowed mode
+                'with true you'll use windowed mode
+                createDevice(0, 0, 32, Me.Handle, True)
+                defaultSetting()
+                loadObject(modelName, rootPath)
+                'this instruction avoid artefact
+                Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.Opaque, True)
+                Me.Invalidate() 'invalidate rendering area
+            End If
+            bHasRun = True
 
-            'set transformation matrix
-            tempMatrix = Matrix.Scaling(nScaleFactor, nScaleFactor, nScaleFactor)
-            tempMatrix.Multiply(Matrix.RotationZ(-roll / 57.2957))
-            tempMatrix.Multiply(Matrix.RotationX(-pitch / 57.2957))
-            tempMatrix.Multiply(Matrix.RotationY((yaw - 180) / 57.2957))
-            tempMatrix.Multiply(Matrix.Translation(0, 0, 1000))
-            device.Transform.World = tempMatrix
+            'syncronize rotation angle with timer
+            'angle = Environment.TickCount / 500.0F
 
-            device.RenderState.Lighting = True
-            device.Lights(0).Enabled = True
+            device.Clear(ClearFlags.Target Or ClearFlags.ZBuffer, oBackColor, 1, 0) 'clear the screen
+            Try
+                device.BeginScene() 'begin 3D scene
 
-            device.Lights(0).Type = LightType.Point
-            device.Lights(0).Diffuse = Color.White
-            device.Lights(0).Direction = New Vector3(-250, -500, 0)
-            device.Lights(0).Position = New Vector3(250, 500, 0)
-            device.Lights(0).Range = 5000
-            device.Lights(0).Attenuation0 = 0.1 / nScaleFactor
-            device.Lights(0).Attenuation1 = device.Lights(0).Attenuation0 / 400
+                'set transformation matrix
+                tempMatrix = Matrix.Scaling(nScaleFactor, nScaleFactor, nScaleFactor)
+                tempMatrix.Multiply(Matrix.RotationZ(-roll / 57.2957))
+                tempMatrix.Multiply(Matrix.RotationX(-pitch / 57.2957))
+                tempMatrix.Multiply(Matrix.RotationY((yaw - 180) / 57.2957))
+                tempMatrix.Multiply(Matrix.Translation(0, 0, 1000))
+                device.Transform.World = tempMatrix
 
-            'device.Lights(0).Direction = New Vector3(-100, -200, -100)
-            'device.Lights(0).Position = New Vector3(100, 200, 100)
-            'device.Lights(0).Range = 50000
-            'device.Lights(0).Attenuation0 = 0.01
+                device.RenderState.Lighting = True
+                device.Lights(0).Enabled = True
 
-            device.Lights(0).Update()
+                device.Lights(0).Type = LightType.Point
+                device.Lights(0).Diffuse = Color.White
+                device.Lights(0).Direction = New Vector3(-250, -500, 0)
+                device.Lights(0).Position = New Vector3(250, 500, 0)
+                device.Lights(0).Range = 5000
+                device.Lights(0).Attenuation0 = 0.1 / nScaleFactor
+                device.Lights(0).Attenuation1 = device.Lights(0).Attenuation0 / 400
 
-            'loop all mesh subset
-            Dim i As Integer
-            For i = 0 To model.numX
-                'set material
-                device.Material = model.mat(i)
-                'set texture
-                device.SetTexture(0, model.tex(i))
-                'draw mesh
-                model.mesh.DrawSubset(i)
-            Next
+                'device.Lights(0).Direction = New Vector3(-100, -200, -100)
+                'device.Lights(0).Position = New Vector3(100, 200, 100)
+                'device.Lights(0).Range = 50000
+                'device.Lights(0).Attenuation0 = 0.01
 
+                device.Lights(0).Update()
 
-            device.EndScene() 'end 3D scene
-            device.Present() 'send graphics to screen
-            Me.Invalidate()
-        Catch e2 As Exception
+                'loop all mesh subset
+                Dim i As Integer
+                For i = 0 To model.numX
+                    'set material
+                    device.Material = model.mat(i)
+                    'set texture
+                    device.SetTexture(0, model.tex(i))
+                    'draw mesh
+                    model.mesh.DrawSubset(i)
+                Next
+
+                device.EndScene() 'end 3D scene
+                device.Present() 'send graphics to screen
+                Me.Invalidate()
+            Catch e2 As Exception
+                device.Clear(ClearFlags.Target Or ClearFlags.ZBuffer, oBackColor, 1, 0)
+            End Try
+        Catch
         End Try
-    End Sub
-
-    Private Sub _3DMesh_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
 
     End Sub
+
     Private Sub _3DMesh_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        If Not (device Is Nothing) Then
-            'device must be reset
-            resetDevice()
-            'all setting must be updated
-            defaultSetting()
-        End If
+        Try
+            If Not (device Is Nothing) Then
+                'device must be reset
+                resetDevice()
+                'all setting must be updated
+                defaultSetting()
+            End If
+        Catch
+        End Try
+
     End Sub
 End Class

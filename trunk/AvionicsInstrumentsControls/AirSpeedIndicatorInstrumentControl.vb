@@ -88,10 +88,12 @@ Namespace AvionicsInstrumentControlDemo
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
+            Dim fontSize As Single
+            fontSize = Me.Width / 180 * 11
             Using string_format As New StringFormat()
                 string_format.Alignment = StringAlignment.Center
                 string_format.LineAlignment = StringAlignment.Near
-                Using the_font As New Font("Arial", 11, FontStyle.Bold)
+                Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                     pe.Graphics.DrawString((nMaxSpeed / 8).ToString("0"), the_font, Brushes.Azure, bmpCadran.Height * 0.34 * scale, bmpCadran.Width * 0.7 * scale, string_format)
                     pe.Graphics.DrawString(((nMaxSpeed / 8) * 2).ToString("0"), the_font, Brushes.Azure, bmpCadran.Height * 0.22 * scale, bmpCadran.Width * 0.56 * scale, string_format)
                     pe.Graphics.DrawString(((nMaxSpeed / 8) * 3).ToString("0"), the_font, Brushes.Azure, bmpCadran.Height * 0.22 * scale, bmpCadran.Width * 0.36 * scale, string_format)
@@ -104,10 +106,12 @@ Namespace AvionicsInstrumentControlDemo
                 End Using
             End Using
 
-            Using the_font As New Font("Arial", 10, FontStyle.Bold)
+            fontSize = Me.Width / 180 * 10
+            Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 pe.Graphics.DrawString(sInstrumentLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.54 * scale, bmpCadran.Width * 0.66 * scale)
             End Using
-            Using the_font As New Font("Arial", 8, FontStyle.Bold)
+            fontSize = Me.Width / 180 * 8
+            Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 pe.Graphics.DrawString(sUnitLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.54 * scale, bmpCadran.Width * 0.75 * scale)
             End Using
 

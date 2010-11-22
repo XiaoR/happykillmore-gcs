@@ -36,15 +36,15 @@ Partial Class frmMain
         Me.AltimeterInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl
         Me.AirSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl
         Me.tabSerialData = New System.Windows.Forms.TabPage
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.grpSerialSettings = New System.Windows.Forms.GroupBox
         Me.cboWaypoint = New System.Windows.Forms.ComboBox
         Me.cboGPS = New System.Windows.Forms.ComboBox
         Me.cboAttitude = New System.Windows.Forms.ComboBox
         Me.Label4 = New System.Windows.Forms.Label
         Me.Label5 = New System.Windows.Forms.Label
         Me.Label6 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.lblTranslatedData = New System.Windows.Forms.Label
+        Me.lblRawData = New System.Windows.Forms.Label
         Me.lstEvents = New System.Windows.Forms.ListBox
         Me.lstInbound = New System.Windows.Forms.ListBox
         Me.tabCommandLine = New System.Windows.Forms.TabPage
@@ -116,7 +116,7 @@ Partial Class frmMain
         Me.Label26 = New System.Windows.Forms.Label
         Me.cboMission = New System.Windows.Forms.ComboBox
         Me.cmdExit = New System.Windows.Forms.Button
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.grpMisc = New System.Windows.Forms.GroupBox
         Me.Button2 = New System.Windows.Forms.Button
         Me.lblRunTime = New System.Windows.Forms.Label
         Me.Label33 = New System.Windows.Forms.Label
@@ -147,6 +147,7 @@ Partial Class frmMain
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.tabMapView = New System.Windows.Forms.TabControl
         Me.tabViewMapView = New System.Windows.Forms.TabPage
+        Me.tbarModelScale = New System.Windows.Forms.TrackBar
         Me.chkViewFirstPerson = New System.Windows.Forms.CheckBox
         Me.chkViewChaseCam = New System.Windows.Forms.CheckBox
         Me.chkViewOverhead = New System.Windows.Forms.CheckBox
@@ -155,11 +156,10 @@ Partial Class frmMain
         Me.tabViewLiveCamera = New System.Windows.Forms.TabPage
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.tbarModelScale = New System.Windows.Forms.TrackBar
         Me.tabInstrumentView.SuspendLayout()
         Me.tabInstruments.SuspendLayout()
         Me.tabSerialData.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.grpSerialSettings.SuspendLayout()
         Me.tabCommandLine.SuspendLayout()
         Me.tabSettings.SuspendLayout()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -169,16 +169,16 @@ Partial Class frmMain
         Me.TabPage4.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.grpMisc.SuspendLayout()
         Me.tabMapView.SuspendLayout()
         Me.tabViewMapView.SuspendLayout()
-        Me.tabViewLiveCamera.SuspendLayout()
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabViewLiveCamera.SuspendLayout()
         Me.SuspendLayout()
         '
         'cmdCenterOnPlane
         '
-        Me.cmdCenterOnPlane.Location = New System.Drawing.Point(588, 581)
+        Me.cmdCenterOnPlane.Location = New System.Drawing.Point(587, 549)
         Me.cmdCenterOnPlane.Name = "cmdCenterOnPlane"
         Me.cmdCenterOnPlane.Size = New System.Drawing.Size(100, 23)
         Me.cmdCenterOnPlane.TabIndex = 14
@@ -187,7 +187,7 @@ Partial Class frmMain
         '
         'cmdClearMap
         '
-        Me.cmdClearMap.Location = New System.Drawing.Point(694, 581)
+        Me.cmdClearMap.Location = New System.Drawing.Point(693, 549)
         Me.cmdClearMap.Name = "cmdClearMap"
         Me.cmdClearMap.Size = New System.Drawing.Size(110, 23)
         Me.cmdClearMap.TabIndex = 15
@@ -273,9 +273,9 @@ Partial Class frmMain
         '
         'tabSerialData
         '
-        Me.tabSerialData.Controls.Add(Me.GroupBox1)
-        Me.tabSerialData.Controls.Add(Me.Label2)
-        Me.tabSerialData.Controls.Add(Me.Label1)
+        Me.tabSerialData.Controls.Add(Me.grpSerialSettings)
+        Me.tabSerialData.Controls.Add(Me.lblTranslatedData)
+        Me.tabSerialData.Controls.Add(Me.lblRawData)
         Me.tabSerialData.Controls.Add(Me.lstEvents)
         Me.tabSerialData.Controls.Add(Me.lstInbound)
         Me.tabSerialData.Location = New System.Drawing.Point(4, 22)
@@ -286,20 +286,20 @@ Partial Class frmMain
         Me.tabSerialData.Text = "Serial Data"
         Me.tabSerialData.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'grpSerialSettings
         '
-        Me.GroupBox1.Controls.Add(Me.cboWaypoint)
-        Me.GroupBox1.Controls.Add(Me.cboGPS)
-        Me.GroupBox1.Controls.Add(Me.cboAttitude)
-        Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Location = New System.Drawing.Point(14, 294)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(533, 67)
-        Me.GroupBox1.TabIndex = 11
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Serial Settings"
+        Me.grpSerialSettings.Controls.Add(Me.cboWaypoint)
+        Me.grpSerialSettings.Controls.Add(Me.cboGPS)
+        Me.grpSerialSettings.Controls.Add(Me.cboAttitude)
+        Me.grpSerialSettings.Controls.Add(Me.Label4)
+        Me.grpSerialSettings.Controls.Add(Me.Label5)
+        Me.grpSerialSettings.Controls.Add(Me.Label6)
+        Me.grpSerialSettings.Location = New System.Drawing.Point(14, 294)
+        Me.grpSerialSettings.Name = "grpSerialSettings"
+        Me.grpSerialSettings.Size = New System.Drawing.Size(538, 67)
+        Me.grpSerialSettings.TabIndex = 11
+        Me.grpSerialSettings.TabStop = False
+        Me.grpSerialSettings.Text = "Serial Settings"
         '
         'cboWaypoint
         '
@@ -355,23 +355,23 @@ Partial Class frmMain
         Me.Label6.TabIndex = 24
         Me.Label6.Text = "Max Attitude"
         '
-        'Label2
+        'lblTranslatedData
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(8, 138)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(83, 13)
-        Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Translated Data"
+        Me.lblTranslatedData.AutoSize = True
+        Me.lblTranslatedData.Location = New System.Drawing.Point(8, 138)
+        Me.lblTranslatedData.Name = "lblTranslatedData"
+        Me.lblTranslatedData.Size = New System.Drawing.Size(83, 13)
+        Me.lblTranslatedData.TabIndex = 10
+        Me.lblTranslatedData.Text = "Translated Data"
         '
-        'Label1
+        'lblRawData
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(11, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 13)
-        Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Raw Data"
+        Me.lblRawData.AutoSize = True
+        Me.lblRawData.Location = New System.Drawing.Point(11, 10)
+        Me.lblRawData.Name = "lblRawData"
+        Me.lblRawData.Size = New System.Drawing.Size(55, 13)
+        Me.lblRawData.TabIndex = 9
+        Me.lblRawData.Text = "Raw Data"
         '
         'lstEvents
         '
@@ -381,7 +381,7 @@ Partial Class frmMain
         Me.lstEvents.ItemHeight = 14
         Me.lstEvents.Location = New System.Drawing.Point(11, 154)
         Me.lstEvents.Name = "lstEvents"
-        Me.lstEvents.Size = New System.Drawing.Size(536, 130)
+        Me.lstEvents.Size = New System.Drawing.Size(542, 130)
         Me.lstEvents.TabIndex = 8
         '
         'lstInbound
@@ -392,7 +392,7 @@ Partial Class frmMain
         Me.lstInbound.ItemHeight = 14
         Me.lstInbound.Location = New System.Drawing.Point(11, 26)
         Me.lstInbound.Name = "lstInbound"
-        Me.lstInbound.Size = New System.Drawing.Size(536, 102)
+        Me.lstInbound.Size = New System.Drawing.Size(542, 102)
         Me.lstInbound.TabIndex = 7
         '
         'tabCommandLine
@@ -421,15 +421,15 @@ Partial Class frmMain
         'cboCommandLineCommand
         '
         Me.cboCommandLineCommand.FormattingEnabled = True
-        Me.cboCommandLineCommand.Location = New System.Drawing.Point(16, 19)
+        Me.cboCommandLineCommand.Location = New System.Drawing.Point(11, 19)
         Me.cboCommandLineCommand.Name = "cboCommandLineCommand"
-        Me.cboCommandLineCommand.Size = New System.Drawing.Size(450, 21)
+        Me.cboCommandLineCommand.Size = New System.Drawing.Size(460, 21)
         Me.cboCommandLineCommand.TabIndex = 17
         '
         'chkCommandLineAutoScroll
         '
         Me.chkCommandLineAutoScroll.AutoSize = True
-        Me.chkCommandLineAutoScroll.Location = New System.Drawing.Point(16, 355)
+        Me.chkCommandLineAutoScroll.Location = New System.Drawing.Point(11, 355)
         Me.chkCommandLineAutoScroll.Name = "chkCommandLineAutoScroll"
         Me.chkCommandLineAutoScroll.Size = New System.Drawing.Size(77, 17)
         Me.chkCommandLineAutoScroll.TabIndex = 16
@@ -451,7 +451,7 @@ Partial Class frmMain
         Me.lstCommandLineOutput.FormattingEnabled = True
         Me.lstCommandLineOutput.HorizontalScrollbar = True
         Me.lstCommandLineOutput.ItemHeight = 14
-        Me.lstCommandLineOutput.Location = New System.Drawing.Point(16, 55)
+        Me.lstCommandLineOutput.Location = New System.Drawing.Point(11, 55)
         Me.lstCommandLineOutput.Name = "lstCommandLineOutput"
         Me.lstCommandLineOutput.Size = New System.Drawing.Size(536, 284)
         Me.lstCommandLineOutput.TabIndex = 11
@@ -553,7 +553,7 @@ Partial Class frmMain
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(56, 13)
         Me.Label25.TabIndex = 19
-        Me.Label25.Text = "Thcikness"
+        Me.Label25.Text = "Thickness"
         '
         'Label24
         '
@@ -584,11 +584,12 @@ Partial Class frmMain
         '
         'tbarFlightWidth
         '
+        Me.tbarFlightWidth.AutoSize = False
         Me.tbarFlightWidth.LargeChange = 1
         Me.tbarFlightWidth.Location = New System.Drawing.Point(116, 267)
         Me.tbarFlightWidth.Minimum = 1
         Me.tbarFlightWidth.Name = "tbarFlightWidth"
-        Me.tbarFlightWidth.Size = New System.Drawing.Size(121, 45)
+        Me.tbarFlightWidth.Size = New System.Drawing.Size(121, 30)
         Me.tbarFlightWidth.TabIndex = 13
         Me.tbarFlightWidth.TickFrequency = 26
         Me.tbarFlightWidth.TickStyle = System.Windows.Forms.TickStyle.None
@@ -1085,48 +1086,48 @@ Partial Class frmMain
         '
         'cmdExit
         '
-        Me.cmdExit.Location = New System.Drawing.Point(1044, 581)
+        Me.cmdExit.Location = New System.Drawing.Point(978, 549)
         Me.cmdExit.Name = "cmdExit"
         Me.cmdExit.Size = New System.Drawing.Size(110, 23)
         Me.cmdExit.TabIndex = 20
         Me.cmdExit.Text = "Exit"
         Me.cmdExit.UseVisualStyleBackColor = True
         '
-        'GroupBox2
+        'grpMisc
         '
-        Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox2.Controls.Add(Me.Button2)
-        Me.GroupBox2.Controls.Add(Me.lblRunTime)
-        Me.GroupBox2.Controls.Add(Me.Label33)
-        Me.GroupBox2.Controls.Add(Me.lblDataPoints)
-        Me.GroupBox2.Controls.Add(Me.Label32)
-        Me.GroupBox2.Controls.Add(Me.lblTargetAlt)
-        Me.GroupBox2.Controls.Add(Me.Label28)
-        Me.GroupBox2.Controls.Add(Me.lblLongitude)
-        Me.GroupBox2.Controls.Add(Me.lblLatitude)
-        Me.GroupBox2.Controls.Add(Me.Label22)
-        Me.GroupBox2.Controls.Add(Me.lblLatitudeLabel)
-        Me.GroupBox2.Controls.Add(Me.lblThrottle)
-        Me.GroupBox2.Controls.Add(Me.lblMode)
-        Me.GroupBox2.Controls.Add(Me.lblDistance)
-        Me.GroupBox2.Controls.Add(Me.lblWaypoint)
-        Me.GroupBox2.Controls.Add(Me.lblHDOP)
-        Me.GroupBox2.Controls.Add(Me.lblBattery)
-        Me.GroupBox2.Controls.Add(Me.lblSatellites)
-        Me.GroupBox2.Controls.Add(Me.lblGPSLock)
-        Me.GroupBox2.Controls.Add(Me.Label19)
-        Me.GroupBox2.Controls.Add(Me.Label18)
-        Me.GroupBox2.Controls.Add(Me.Label17)
-        Me.GroupBox2.Controls.Add(Me.Label16)
-        Me.GroupBox2.Controls.Add(Me.Label15)
-        Me.GroupBox2.Controls.Add(Me.Label14)
-        Me.GroupBox2.Controls.Add(Me.Label13)
-        Me.GroupBox2.Controls.Add(Me.Label10)
-        Me.GroupBox2.Location = New System.Drawing.Point(282, 427)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(299, 177)
-        Me.GroupBox2.TabIndex = 21
-        Me.GroupBox2.TabStop = False
+        Me.grpMisc.BackColor = System.Drawing.Color.Transparent
+        Me.grpMisc.Controls.Add(Me.Button2)
+        Me.grpMisc.Controls.Add(Me.lblRunTime)
+        Me.grpMisc.Controls.Add(Me.Label33)
+        Me.grpMisc.Controls.Add(Me.lblDataPoints)
+        Me.grpMisc.Controls.Add(Me.Label32)
+        Me.grpMisc.Controls.Add(Me.lblTargetAlt)
+        Me.grpMisc.Controls.Add(Me.Label28)
+        Me.grpMisc.Controls.Add(Me.lblLongitude)
+        Me.grpMisc.Controls.Add(Me.lblLatitude)
+        Me.grpMisc.Controls.Add(Me.Label22)
+        Me.grpMisc.Controls.Add(Me.lblLatitudeLabel)
+        Me.grpMisc.Controls.Add(Me.lblThrottle)
+        Me.grpMisc.Controls.Add(Me.lblMode)
+        Me.grpMisc.Controls.Add(Me.lblDistance)
+        Me.grpMisc.Controls.Add(Me.lblWaypoint)
+        Me.grpMisc.Controls.Add(Me.lblHDOP)
+        Me.grpMisc.Controls.Add(Me.lblBattery)
+        Me.grpMisc.Controls.Add(Me.lblSatellites)
+        Me.grpMisc.Controls.Add(Me.lblGPSLock)
+        Me.grpMisc.Controls.Add(Me.Label19)
+        Me.grpMisc.Controls.Add(Me.Label18)
+        Me.grpMisc.Controls.Add(Me.Label17)
+        Me.grpMisc.Controls.Add(Me.Label16)
+        Me.grpMisc.Controls.Add(Me.Label15)
+        Me.grpMisc.Controls.Add(Me.Label14)
+        Me.grpMisc.Controls.Add(Me.Label13)
+        Me.grpMisc.Controls.Add(Me.Label10)
+        Me.grpMisc.Location = New System.Drawing.Point(282, 427)
+        Me.grpMisc.Name = "grpMisc"
+        Me.grpMisc.Size = New System.Drawing.Size(299, 177)
+        Me.grpMisc.TabIndex = 21
+        Me.grpMisc.TabStop = False
         '
         'Button2
         '
@@ -1142,7 +1143,7 @@ Partial Class frmMain
         '
         Me.lblRunTime.AutoSize = True
         Me.lblRunTime.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRunTime.Location = New System.Drawing.Point(202, 133)
+        Me.lblRunTime.Location = New System.Drawing.Point(195, 132)
         Me.lblRunTime.Name = "lblRunTime"
         Me.lblRunTime.Size = New System.Drawing.Size(30, 13)
         Me.lblRunTime.TabIndex = 25
@@ -1150,7 +1151,7 @@ Partial Class frmMain
         '
         'Label33
         '
-        Me.Label33.Location = New System.Drawing.Point(142, 133)
+        Me.Label33.Location = New System.Drawing.Point(135, 132)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(59, 13)
         Me.Label33.TabIndex = 24
@@ -1161,7 +1162,7 @@ Partial Class frmMain
         '
         Me.lblDataPoints.AutoSize = True
         Me.lblDataPoints.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDataPoints.Location = New System.Drawing.Point(202, 155)
+        Me.lblDataPoints.Location = New System.Drawing.Point(195, 154)
         Me.lblDataPoints.Name = "lblDataPoints"
         Me.lblDataPoints.Size = New System.Drawing.Size(30, 13)
         Me.lblDataPoints.TabIndex = 23
@@ -1169,7 +1170,7 @@ Partial Class frmMain
         '
         'Label32
         '
-        Me.Label32.Location = New System.Drawing.Point(134, 155)
+        Me.Label32.Location = New System.Drawing.Point(127, 154)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(67, 13)
         Me.Label32.TabIndex = 22
@@ -1199,7 +1200,7 @@ Partial Class frmMain
         '
         Me.lblLongitude.AutoSize = True
         Me.lblLongitude.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLongitude.Location = New System.Drawing.Point(202, 86)
+        Me.lblLongitude.Location = New System.Drawing.Point(195, 85)
         Me.lblLongitude.Name = "lblLongitude"
         Me.lblLongitude.Size = New System.Drawing.Size(30, 13)
         Me.lblLongitude.TabIndex = 19
@@ -1209,7 +1210,7 @@ Partial Class frmMain
         '
         Me.lblLatitude.AutoSize = True
         Me.lblLatitude.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLatitude.Location = New System.Drawing.Point(202, 66)
+        Me.lblLatitude.Location = New System.Drawing.Point(195, 65)
         Me.lblLatitude.Name = "lblLatitude"
         Me.lblLatitude.Size = New System.Drawing.Size(30, 13)
         Me.lblLatitude.TabIndex = 18
@@ -1217,7 +1218,7 @@ Partial Class frmMain
         '
         'Label22
         '
-        Me.Label22.Location = New System.Drawing.Point(142, 86)
+        Me.Label22.Location = New System.Drawing.Point(135, 85)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(59, 13)
         Me.Label22.TabIndex = 17
@@ -1226,7 +1227,7 @@ Partial Class frmMain
         '
         'lblLatitudeLabel
         '
-        Me.lblLatitudeLabel.Location = New System.Drawing.Point(142, 66)
+        Me.lblLatitudeLabel.Location = New System.Drawing.Point(135, 65)
         Me.lblLatitudeLabel.Name = "lblLatitudeLabel"
         Me.lblLatitudeLabel.Size = New System.Drawing.Size(59, 13)
         Me.lblLatitudeLabel.TabIndex = 16
@@ -1277,7 +1278,7 @@ Partial Class frmMain
         '
         Me.lblHDOP.AutoSize = True
         Me.lblHDOP.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblHDOP.Location = New System.Drawing.Point(202, 43)
+        Me.lblHDOP.Location = New System.Drawing.Point(195, 42)
         Me.lblHDOP.Name = "lblHDOP"
         Me.lblHDOP.Size = New System.Drawing.Size(30, 13)
         Me.lblHDOP.TabIndex = 11
@@ -1287,7 +1288,7 @@ Partial Class frmMain
         '
         Me.lblBattery.AutoSize = True
         Me.lblBattery.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBattery.Location = New System.Drawing.Point(201, 22)
+        Me.lblBattery.Location = New System.Drawing.Point(194, 21)
         Me.lblBattery.Name = "lblBattery"
         Me.lblBattery.Size = New System.Drawing.Size(30, 13)
         Me.lblBattery.TabIndex = 10
@@ -1351,7 +1352,7 @@ Partial Class frmMain
         '
         'Label15
         '
-        Me.Label15.Location = New System.Drawing.Point(142, 44)
+        Me.Label15.Location = New System.Drawing.Point(135, 43)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(59, 13)
         Me.Label15.TabIndex = 3
@@ -1360,7 +1361,7 @@ Partial Class frmMain
         '
         'Label14
         '
-        Me.Label14.Location = New System.Drawing.Point(142, 22)
+        Me.Label14.Location = New System.Drawing.Point(135, 21)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(59, 13)
         Me.Label14.TabIndex = 2
@@ -1392,11 +1393,12 @@ Partial Class frmMain
         Me.tabMapView.Location = New System.Drawing.Point(587, 12)
         Me.tabMapView.Name = "tabMapView"
         Me.tabMapView.SelectedIndex = 0
-        Me.tabMapView.Size = New System.Drawing.Size(566, 567)
+        Me.tabMapView.Size = New System.Drawing.Size(501, 530)
         Me.tabMapView.TabIndex = 22
         '
         'tabViewMapView
         '
+        Me.tabViewMapView.Controls.Add(Me.tbarModelScale)
         Me.tabViewMapView.Controls.Add(Me.chkViewFirstPerson)
         Me.tabViewMapView.Controls.Add(Me.chkViewChaseCam)
         Me.tabViewMapView.Controls.Add(Me.chkViewOverhead)
@@ -1405,18 +1407,31 @@ Partial Class frmMain
         Me.tabViewMapView.Location = New System.Drawing.Point(4, 22)
         Me.tabViewMapView.Name = "tabViewMapView"
         Me.tabViewMapView.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabViewMapView.Size = New System.Drawing.Size(558, 541)
+        Me.tabViewMapView.Size = New System.Drawing.Size(493, 504)
         Me.tabViewMapView.TabIndex = 0
         Me.tabViewMapView.Text = "Map View"
         Me.tabViewMapView.UseVisualStyleBackColor = True
+        '
+        'tbarModelScale
+        '
+        Me.tbarModelScale.AutoSize = False
+        Me.tbarModelScale.BackColor = System.Drawing.SystemColors.Menu
+        Me.tbarModelScale.Location = New System.Drawing.Point(326, 472)
+        Me.tbarModelScale.Maximum = 50
+        Me.tbarModelScale.Minimum = 1
+        Me.tbarModelScale.Name = "tbarModelScale"
+        Me.tbarModelScale.Size = New System.Drawing.Size(104, 26)
+        Me.tbarModelScale.TabIndex = 25
+        Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarModelScale.Value = 10
         '
         'chkViewFirstPerson
         '
         Me.chkViewFirstPerson.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkViewFirstPerson.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkViewFirstPerson.Location = New System.Drawing.Point(261, 511)
+        Me.chkViewFirstPerson.Location = New System.Drawing.Point(246, 471)
         Me.chkViewFirstPerson.Name = "chkViewFirstPerson"
-        Me.chkViewFirstPerson.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewFirstPerson.Size = New System.Drawing.Size(74, 24)
         Me.chkViewFirstPerson.TabIndex = 24
         Me.chkViewFirstPerson.Text = "First Person"
         Me.chkViewFirstPerson.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1426,9 +1441,9 @@ Partial Class frmMain
         '
         Me.chkViewChaseCam.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkViewChaseCam.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkViewChaseCam.Location = New System.Drawing.Point(176, 511)
+        Me.chkViewChaseCam.Location = New System.Drawing.Point(166, 471)
         Me.chkViewChaseCam.Name = "chkViewChaseCam"
-        Me.chkViewChaseCam.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewChaseCam.Size = New System.Drawing.Size(74, 24)
         Me.chkViewChaseCam.TabIndex = 23
         Me.chkViewChaseCam.Text = "Chase Cam"
         Me.chkViewChaseCam.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1438,9 +1453,9 @@ Partial Class frmMain
         '
         Me.chkViewOverhead.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkViewOverhead.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkViewOverhead.Location = New System.Drawing.Point(91, 512)
+        Me.chkViewOverhead.Location = New System.Drawing.Point(86, 471)
         Me.chkViewOverhead.Name = "chkViewOverhead"
-        Me.chkViewOverhead.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewOverhead.Size = New System.Drawing.Size(74, 24)
         Me.chkViewOverhead.TabIndex = 22
         Me.chkViewOverhead.Text = "Overhead"
         Me.chkViewOverhead.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1452,9 +1467,9 @@ Partial Class frmMain
         Me.chkViewNoTracking.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkViewNoTracking.Checked = True
         Me.chkViewNoTracking.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkViewNoTracking.Location = New System.Drawing.Point(6, 513)
+        Me.chkViewNoTracking.Location = New System.Drawing.Point(6, 471)
         Me.chkViewNoTracking.Name = "chkViewNoTracking"
-        Me.chkViewNoTracking.Size = New System.Drawing.Size(79, 24)
+        Me.chkViewNoTracking.Size = New System.Drawing.Size(74, 24)
         Me.chkViewNoTracking.TabIndex = 21
         Me.chkViewNoTracking.Text = "No Tracking"
         Me.chkViewNoTracking.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1465,7 +1480,8 @@ Partial Class frmMain
         Me.WebBrowser1.Location = New System.Drawing.Point(6, 9)
         Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(546, 499)
+        Me.WebBrowser1.ScrollBarsEnabled = False
+        Me.WebBrowser1.Size = New System.Drawing.Size(471, 471)
         Me.WebBrowser1.TabIndex = 12
         '
         'tabViewLiveCamera
@@ -1474,7 +1490,7 @@ Partial Class frmMain
         Me.tabViewLiveCamera.Location = New System.Drawing.Point(4, 22)
         Me.tabViewLiveCamera.Name = "tabViewLiveCamera"
         Me.tabViewLiveCamera.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabViewLiveCamera.Size = New System.Drawing.Size(558, 541)
+        Me.tabViewLiveCamera.Size = New System.Drawing.Size(493, 504)
         Me.tabViewLiveCamera.TabIndex = 1
         Me.tabViewLiveCamera.Text = "Live Camera"
         Me.tabViewLiveCamera.UseVisualStyleBackColor = True
@@ -1486,41 +1502,29 @@ Partial Class frmMain
         Me.DirectShowControl1.Size = New System.Drawing.Size(540, 486)
         Me.DirectShowControl1.TabIndex = 0
         '
-        'tbarModelScale
-        '
-        Me.tbarModelScale.Location = New System.Drawing.Point(811, 582)
-        Me.tbarModelScale.Maximum = 50
-        Me.tbarModelScale.Minimum = 1
-        Me.tbarModelScale.Name = "tbarModelScale"
-        Me.tbarModelScale.Size = New System.Drawing.Size(104, 45)
-        Me.tbarModelScale.TabIndex = 23
-        Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
-        Me.tbarModelScale.Value = 10
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1159, 612)
-        Me.Controls.Add(Me.tbarModelScale)
+        Me.ClientSize = New System.Drawing.Size(1095, 615)
         Me.Controls.Add(Me.tabMapView)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.grpMisc)
         Me.Controls.Add(Me.cmdExit)
         Me.Controls.Add(Me.tabPortControl)
         Me.Controls.Add(Me.tabInstrumentView)
         Me.Controls.Add(Me.cmdClearMap)
         Me.Controls.Add(Me.cmdCenterOnPlane)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(935, 500)
         Me.Name = "frmMain"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "HappyKillmore's Ground Control Station"
         Me.tabInstrumentView.ResumeLayout(False)
         Me.tabInstruments.ResumeLayout(False)
         Me.tabSerialData.ResumeLayout(False)
         Me.tabSerialData.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.grpSerialSettings.ResumeLayout(False)
+        Me.grpSerialSettings.PerformLayout()
         Me.tabCommandLine.ResumeLayout(False)
         Me.tabCommandLine.PerformLayout()
         Me.tabSettings.ResumeLayout(False)
@@ -1535,14 +1539,13 @@ Partial Class frmMain
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.grpMisc.ResumeLayout(False)
+        Me.grpMisc.PerformLayout()
         Me.tabMapView.ResumeLayout(False)
         Me.tabViewMapView.ResumeLayout(False)
-        Me.tabViewLiveCamera.ResumeLayout(False)
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabViewLiveCamera.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
@@ -1557,11 +1560,11 @@ Partial Class frmMain
     Friend WithEvents AirSpeedIndicatorInstrumentControl1 As HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl
     Friend WithEvents tabSerialData As System.Windows.Forms.TabPage
     Friend WithEvents tmrPlayback As System.Windows.Forms.Timer
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblTranslatedData As System.Windows.Forms.Label
+    Friend WithEvents lblRawData As System.Windows.Forms.Label
     Friend WithEvents lstEvents As System.Windows.Forms.ListBox
     Friend WithEvents lstInbound As System.Windows.Forms.ListBox
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents grpSerialSettings As System.Windows.Forms.GroupBox
     Friend WithEvents cboWaypoint As System.Windows.Forms.ComboBox
     Friend WithEvents cboGPS As System.Windows.Forms.ComboBox
     Friend WithEvents cboAttitude As System.Windows.Forms.ComboBox
@@ -1599,7 +1602,7 @@ Partial Class frmMain
     Friend WithEvents cboBaudRate As System.Windows.Forms.ComboBox
     Public WithEvents serialPortIn As System.IO.Ports.SerialPort
     Friend WithEvents chkPlay As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents grpMisc As System.Windows.Forms.GroupBox
     Friend WithEvents chkStepForward As System.Windows.Forms.CheckBox
     Friend WithEvents chkStepBack As System.Windows.Forms.CheckBox
     Friend WithEvents chkFastForward As System.Windows.Forms.CheckBox
@@ -1670,13 +1673,13 @@ Partial Class frmMain
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents cboMapUpdateRate As System.Windows.Forms.ComboBox
     Friend WithEvents Label30 As System.Windows.Forms.Label
-    Friend WithEvents tbarModelScale As System.Windows.Forms.TrackBar
     Friend WithEvents chkViewChaseCam As System.Windows.Forms.CheckBox
     Friend WithEvents chkViewOverhead As System.Windows.Forms.CheckBox
     Friend WithEvents chkViewNoTracking As System.Windows.Forms.CheckBox
     Friend WithEvents chkViewFirstPerson As System.Windows.Forms.CheckBox
     Friend WithEvents tabInstrumentLiveCamera As System.Windows.Forms.TabPage
     Friend WithEvents DirectShowControl2 As HK_GCS.DirectShowControl.DirectShowControl
+    Friend WithEvents tbarModelScale As System.Windows.Forms.TrackBar
     'Friend WithEvents DirectShow1 As HK_GCS.DirectShow
 
 End Class

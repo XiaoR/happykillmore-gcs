@@ -32,8 +32,8 @@ Public Class frmMain
     Dim nHeading As Single
     Dim nSats As Integer
     Dim nBattery As Single
-    Dim nMode As Integer = -1
     Dim sMode As String
+    Dim sModeNumber As String
     Dim nFix As Integer
     Dim nHDOP As Single
     Dim nWaypointIndex As Integer
@@ -45,6 +45,8 @@ Public Class frmMain
     Dim nWaypointAlt As Single
     Dim nThrottle As Single
     Dim nDistance As Single
+
+    Dim bStartup As Boolean = True
 
     Dim bNewGPS As Boolean
     Dim bNewAttitude As Boolean
@@ -239,6 +241,16 @@ Public Class frmMain
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim sColor As String
         Dim nCount As Integer
+        Dim nTop As Long
+        Dim nLeft As Long
+        Dim nWidth As Long
+        Dim nHeight As Long
+
+        bStartup = True
+        nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 1024)
+        nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 600)
+        nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", Screen.PrimaryScreen.WorkingArea.Height / 2 - nHeight / 2)
+        nLeft = GetRegSetting(sRootRegistry & "\Settings", "Form Left", Screen.PrimaryScreen.WorkingArea.Width / 2 - nWidth / 2)
 
         If Dir(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html") = "" Then
             Dim sFileContents As String = HK_GCS.My.Resources.GoogleResources.Maps.ToString
@@ -342,10 +354,10 @@ Public Class frmMain
 
         bFlightExtrude = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Extrude", True)
         chkFlightExtrude.Checked = bFlightExtrude
-        sColor = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Color", "0000FFFF")
+        sColor = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Color", "FFFFFF00")
         'cmdFlightColor.BackColor = GetSystemColor(sColor)
         cmdFlightColor.BackColor = Color.FromArgb((Convert.ToInt32(Mid(sColor, 1, 2), 16)), (Convert.ToInt32(Mid(sColor, 3, 2), 16)), (Convert.ToInt32(Mid(sColor, 5, 2), 16)), (Convert.ToInt32(Mid(sColor, 7, 2), 16)))
-        nFlightWidth = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Width", 1)
+        nFlightWidth = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Width", 2)
         tbarFlightWidth.Value = nFlightWidth
         UpdateLineColor()
 
@@ -402,7 +414,18 @@ Public Class frmMain
         lblDataPoints.Text = ""
         lblRunTime.Text = ""
         nDataPoints = 1
-        nMode = -1
+        sMode = ""
+        sModeNumber = ""
+
+        bStartup = False
+        Me.WindowState = GetRegSetting(sRootRegistry & "\Settings", "Form WindowState", FormWindowState.Normal)
+        If Me.WindowState = FormWindowState.Normal Then
+            Me.Width = nWidth
+            Me.Height = nHeight
+            Me.Left = nLeft
+            Me.Top = nTop
+        End If
+        frmMain_Resize(sender, e)
 
         'If cboComPort.Items.Count > 0 Then
         '    cboComPort.SelectedIndex = 0
@@ -581,14 +604,14 @@ Public Class frmMain
         Catch
         End Try
     End Sub
-    Private Sub GPS_Parser1_Waypoints(ByVal waypointNumber As Integer, ByVal distance As Single, ByVal battery As Single, ByVal mode As Integer, ByVal throttle As Single)
+    Private Sub GPS_Parser1_Waypoints(ByVal waypointNumber As Integer, ByVal distance As Single, ByVal battery As Single, ByVal mode As String, ByVal throttle As Single)
         lblWaypoint.Text = "#" & waypointNumber
         lblDistance.Text = distance.ToString("0.0") & GetShortDistanceUnits()
         lblTargetAlt.Text = nWaypointAlt.ToString("0.0") & GetShortDistanceUnits()
         lblBattery.Text = battery & "v"
         If sMode <> "" Then
-            lblMode.Text = sMode & " (#" & nMode & ")"
-        ElseIf nMode = -1 Then
+            lblMode.Text = sMode
+        ElseIf sModeNumber = "" Then
             lblMode.Text = ""
         Else
             lblMode.Text = mode
@@ -1067,9 +1090,13 @@ Public Class frmMain
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
                     lblGPSType.Text = "ArduPilot ASCII"
                     lblGPSMessage.Text = "Mode Change"
-                    sSplit = Split(.Packet, vbTab)
-                    sMode = sSplit(0)
-                    nMode = Convert.ToInt32(sSplit(1))
+                    If InStr(.Packet, vbTab) <> 0 Then
+                        sSplit = Split(.Packet, vbTab)
+                        sMode = sSplit(0)
+                        sModeNumber = sSplit(1)
+                    Else
+                        sMode = .Packet
+                    End If
                     bNewWaypoint = True
 
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude, cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
@@ -1123,8 +1150,8 @@ Public Class frmMain
                                     bNewGPS = True
 
                                 Case "TXS", "STT"
-                                    nMode = Convert.ToInt32(sValues(1))
-                                    sMode = ""
+                                    sModeNumber = sValues(1)
+                                    'sMode = ""
                                     bNewWaypoint = True
                                 Case "WPN"
                                     nWaypoint = Convert.ToInt32(sValues(1))
@@ -1214,8 +1241,8 @@ Public Class frmMain
             If Now.Ticks - nLastWaypoint > (1000 / (cboWaypoint.SelectedIndex)) * 10000 And cboWaypoint.SelectedIndex <> 0 Then
                 nLastWaypoint = Now.Ticks
                 bNewWaypoint = False
-                GPS_Parser1_Waypoints(nWaypoint, nDistance, nBattery, nMode, nThrottle)
-                lstEvents.Items.Insert(0, "WP#=" & nWaypoint & ",Dist=" & nDistance & ",Battery=" & nBattery & ",Mode=" & nMode & ",Throttle=" & nThrottle)
+                GPS_Parser1_Waypoints(nWaypoint, nDistance, nBattery, sModeNumber, nThrottle)
+                lstEvents.Items.Insert(0, "WP#=" & nWaypoint & ",Dist=" & nDistance & ",Battery=" & nBattery & ",Mode=" & sModeNumber & ",Throttle=" & nThrottle)
             End If
         End If
         Try
@@ -1464,25 +1491,39 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub frmMain_Move(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Move
+        If bStartup = True Then
+            Exit Sub
+        End If
+        If Me.WindowState = FormWindowState.Normal Then
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Top", Me.Top)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Left", Me.Left)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Height", Me.Height)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Width", Me.Width)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form WindowState", Me.WindowState)
+        ElseIf Me.WindowState = FormWindowState.Maximized Then
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form WindowState", Me.WindowState)
+        End If
+    End Sub
+
     Private Sub frmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nHeading, False, s3DModel, System.AppDomain.CurrentDomain.BaseDirectory & "3D Models\")
         'System.Diagnostics.Debug.Print("Paint " & Now)
     End Sub
 
     Private Sub tabMapView_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabMapView.SelectedIndexChanged
+        frmMain_Resize(sender, e)
         Select Case tabMapView.SelectedIndex
             Case 1
                 If bFirstVideoCapture1 = False Then
-                    DirectShowControl1.StartCapture()
+                    bFirstVideoCapture1 = DirectShowControl1.StartCapture()
                 End If
-                bFirstVideoCapture1 = True
             Case Else
                 If bFirstVideoCapture1 = True Then
                     DirectShowControl1.ReleaseInterfaces()
                     bFirstVideoCapture1 = False
                 End If
         End Select
-
     End Sub
 
     'Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -1761,7 +1802,7 @@ Public Class frmMain
     End Sub
     Private Sub SetViewButtons(ByVal newValue As Integer)
         If Not webDocument Is Nothing Then
-            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, nPitch, nRoll})
+            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, nPitch, nRoll, cbo3DModel.Text})
         End If
         nCameraTracking = newValue
         chkViewNoTracking.Checked = IIf(nCameraTracking = 0, True, False)
@@ -1777,17 +1818,129 @@ Public Class frmMain
     End Sub
 
     Private Sub tabInstrumentView_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabInstrumentView.SelectedIndexChanged
+        frmMain_Resize(sender, e)
         Select Case tabInstrumentView.SelectedIndex
             Case 4
                 If bFirstVideoCapture2 = False Then
-                    DirectShowControl2.StartCapture()
+                    bFirstVideoCapture2 = DirectShowControl2.StartCapture()
                 End If
-                bFirstVideoCapture2 = True
             Case Else
                 If bFirstVideoCapture2 = True Then
                     DirectShowControl2.ReleaseInterfaces()
                     bFirstVideoCapture2 = False
                 End If
         End Select
+    End Sub
+    Private Sub MoveControl(ByRef inputObject As Object, ByVal height As Long, ByVal width As Long, ByVal top As Long, ByVal left As Long)
+        With inputObject
+            .height = height
+            .width = width
+            .left = left
+            .top = top
+        End With
+    End Sub
+    Private Sub FitDirectShow(ByRef inputObject As Object, ByVal maxWidth As Long, ByVal maxHeight As Long)
+        With inputObject
+            If maxWidth / maxHeight >= 1.11111 Then
+                .height = maxHeight
+                .width = maxHeight * 1.11111
+                .left = (maxWidth - .width) / 2 + 10
+            Else
+                .width = maxWidth
+                .height = maxWidth / 1.11111
+                .left = 10
+            End If
+        End With
+    End Sub
+    Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+        Dim nInstrumentSize As Integer
+        If bStartup = True Then
+            Exit Sub
+        End If
+
+        'Tops
+        tabPortControl.Top = Me.Height - tabPortControl.Height - 42
+        grpMisc.Top = tabPortControl.Top
+        tabInstrumentView.Height = tabPortControl.Top - tabInstrumentView.Top - 8
+
+        cmdCenterOnPlane.Top = Me.Height - cmdCenterOnPlane.Height - 42
+        cmdClearMap.Top = cmdCenterOnPlane.Top
+        cmdExit.Top = cmdCenterOnPlane.Top
+
+        tabMapView.Height = cmdExit.Top - 18
+
+        Select Case tabInstrumentView.SelectedIndex
+            Case 0
+                If tabInstrumentView.Height > (180 * 3) + 48 Then
+                    nInstrumentSize = 180
+
+                    MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                    MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                    MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
+
+                    MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                    MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                    MoveControl(_3DMesh1, nInstrumentSize * 2 + 6, nInstrumentSize * 2 + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                Else
+                    If tabInstrumentView.Height < (180 * 2) + 48 Then
+                        nInstrumentSize = (tabInstrumentView.Height - 48) / 2
+                    Else
+                        nInstrumentSize = 180
+                    End If
+                    MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                    MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                    MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
+
+                    MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                    MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6)
+                    MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                End If
+            Case 1
+                grpSerialSettings.Top = tabInstrumentView.Height - grpSerialSettings.Height - 35
+                lstEvents.Height = (grpSerialSettings.Top - 60) / 2
+                lstInbound.Height = lstEvents.Height
+
+                lstEvents.Top = grpSerialSettings.Top - lstEvents.Height - 6
+                lblTranslatedData.Top = lstEvents.Top - lblTranslatedData.Height - 6
+
+                lstInbound.Top = lblTranslatedData.Top - lstInbound.Height - 12
+                lblRawData.Top = lstInbound.Top - lblRawData.Height - 6
+
+            Case 2
+                chkCommandLineAutoScroll.Top = tabInstrumentView.Height - chkCommandLineAutoScroll.Height - 35
+                cboCommandLineDelim.Top = chkCommandLineAutoScroll.Top
+
+                lstCommandLineOutput.Height = chkCommandLineAutoScroll.Top - lstCommandLineOutput.Top - 6
+            Case 3
+            Case 4
+                FitDirectShow(DirectShowControl2, tabInstrumentView.Width - 30, tabInstrumentView.Height - 48)
+        End Select
+
+        Select Case tabMapView.SelectedIndex
+            Case 0
+                chkViewNoTracking.Top = tabMapView.Height - chkViewNoTracking.Height - 32
+                chkViewOverhead.Top = chkViewNoTracking.Top
+                chkViewChaseCam.Top = chkViewNoTracking.Top
+                chkViewFirstPerson.Top = chkViewNoTracking.Top
+                tbarModelScale.Top = chkViewNoTracking.Top
+                WebBrowser1.Height = chkViewNoTracking.Top - 15
+            Case 1
+                FitDirectShow(DirectShowControl1, tabMapView.Width - 30, tabMapView.Height - 48)
+        End Select
+
+        'Lefts
+        tabMapView.Width = Me.Width - tabMapView.Left - 18
+        WebBrowser1.Width = tabMapView.Width - 18
+        cmdExit.Left = tabMapView.Left + tabMapView.Width - cmdExit.Width
+
+        If Me.WindowState = FormWindowState.Normal Then
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Top", Me.Top)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Left", Me.Left)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Height", Me.Height)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form Width", Me.Width)
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form WindowState", Me.WindowState)
+        ElseIf Me.WindowState = FormWindowState.Maximized Then
+            Call SaveRegSetting(sRootRegistry & "\Settings", "Form WindowState", Me.WindowState)
+        End If
     End Sub
 End Class
