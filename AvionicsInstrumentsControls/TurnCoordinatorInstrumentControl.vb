@@ -76,6 +76,8 @@ Namespace AvionicsInstrumentControlDemo
             Dim ptImgBall As New Point(136, 216)
             Dim ptMarks As New Point(134, 216)
 
+            Me.BackColor = GetSystemColor("F5F4F1")
+
             bmpCadran.MakeTransparent(Color.Yellow)
             bmpBall.MakeTransparent(Color.Yellow)
             bmpAircraft.MakeTransparent(Color.Yellow)

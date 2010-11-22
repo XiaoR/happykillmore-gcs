@@ -41,6 +41,8 @@ Public Class frmMain
 
     Dim nMaxListboxRecords As Integer = 1000
 
+    Dim eSelectedInstrument As e_SelectedInstrument = e_SelectedInstrument.e_SelectedInstrument_3DMesh
+
     Dim nWaypoint As Integer
     Dim nWaypointAlt As Single
     Dim nThrottle As Single
@@ -91,6 +93,8 @@ Public Class frmMain
 
     Dim bPitchReverse As Boolean
     Dim bRollReverse As Boolean
+
+    Dim bExpandInstruments As Boolean = False
 
     Private Sub SetPlayerState(ByVal newState As e_PlayerState)
         Dim bRecord As Boolean
@@ -252,6 +256,8 @@ Public Class frmMain
         nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", Screen.PrimaryScreen.WorkingArea.Height / 2 - nHeight / 2)
         nLeft = GetRegSetting(sRootRegistry & "\Settings", "Form Left", Screen.PrimaryScreen.WorkingArea.Width / 2 - nWidth / 2)
 
+        eSelectedInstrument = GetRegSetting(sRootRegistry & "\Settings", "Selected Instrument", e_SelectedInstrument.e_SelectedInstrument_3DMesh)
+
         If Dir(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html") = "" Then
             Dim sFileContents As String = HK_GCS.My.Resources.GoogleResources.Maps.ToString
             Dim fs As New FileStream(System.AppDomain.CurrentDomain.BaseDirectory & "Maps.html", FileMode.Create, FileAccess.Write)
@@ -336,12 +342,12 @@ Public Class frmMain
             .SelectedIndex = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Max Speed", "2")
         End With
 
-        With cboMapSelection
-            .Items.Add("Google Earth")
-            .Items.Add("Google Maps")
-            .SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Selection", "0"))
-            eMapSelection = .SelectedIndex
-        End With
+        'With cboMapSelection
+        '    .Items.Add("Google Earth")
+        '    .Items.Add("Google Maps")
+        '    .SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Selection", "0"))
+        '    eMapSelection = .SelectedIndex
+        'End With
 
         tbarModelScale.Value = GetRegSetting(sRootRegistry & "\GPS Parser\Settings", "Model Scale", "10")
 
@@ -1540,6 +1546,11 @@ Public Class frmMain
 
     Private Sub chkFlightExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFlightExtrude.CheckedChanged
         bFlightExtrude = chkFlightExtrude.Checked
+        If chkFlightExtrude.Checked = True Then
+            chkFlightExtrude.Text = "Yes"
+        Else
+            chkFlightExtrude.Text = "No"
+        End If
         Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Flight Extrude", bFlightExtrude)
     End Sub
 
@@ -1555,10 +1566,6 @@ Public Class frmMain
         GetColor = GetColor & Hex(inputColor.R).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.G).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.B).PadLeft(2, "0")
-    End Function
-    Private Function GetSystemColor(ByVal inputString As String) As System.Drawing.Color
-        GetSystemColor = New System.Drawing.Color
-        GetSystemColor.FromArgb((Convert.ToInt32(Mid(inputString, 1, 2), 16)), (Convert.ToInt32(Mid(inputString, 3, 2), 16)), (Convert.ToInt32(Mid(inputString, 5, 2), 16)), (Convert.ToInt32(Mid(inputString, 7, 2), 16)))
     End Function
     Private Sub UpdateLineColor()
         Dim sTemp As String
@@ -1672,13 +1679,13 @@ Public Class frmMain
         cboMission_SelectedIndexChanged(sender, e)
     End Sub
 
-    Private Sub cboMapSelection_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMapSelection.SelectedIndexChanged
-        Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Selection", cboMapSelection.SelectedIndex)
-        nHomeLat = ""
-        nHomeLong = ""
-        eMapSelection = cboMapSelection.SelectedIndex
-        SetupWebBroswer()
-    End Sub
+    'Private Sub cboMapSelection_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    Call SaveRegSetting(sRootRegistry & "\GPS Parser\Settings", "Map Selection", cboMapSelection.SelectedIndex)
+    '    nHomeLat = ""
+    '    nHomeLong = ""
+    '    eMapSelection = cboMapSelection.SelectedIndex
+    '    SetupWebBroswer()
+    'End Sub
 
     Private Sub chkPitchReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPitchReverse.CheckedChanged
         bPitchReverse = chkPitchReverse.Checked
@@ -1837,6 +1844,7 @@ Public Class frmMain
             .width = width
             .left = left
             .top = top
+            .refresh()
         End With
     End Sub
     Private Sub FitDirectShow(ByRef inputObject As Object, ByVal maxWidth As Long, ByVal maxHeight As Long)
@@ -1854,14 +1862,29 @@ Public Class frmMain
     End Sub
     Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
         Dim nInstrumentSize As Integer
+        Dim bUltraSmall As Boolean
+        Dim nInstrumentHeight As Integer
+        Dim nInstrumentWidth As Integer
+        Dim eLayout As e_InstrumentLayout
+
         If bStartup = True Then
             Exit Sub
         End If
 
         'Tops
         tabPortControl.Top = Me.Height - tabPortControl.Height - 42
-        grpMisc.Top = tabPortControl.Top
-        tabInstrumentView.Height = tabPortControl.Top - tabInstrumentView.Top - 8
+        'grpMisc.Top = tabPortControl.Top
+
+        If bExpandInstruments = True Then
+            tabInstrumentView.Height = tabPortControl.Top + tabPortControl.Height - tabInstrumentView.Top - 5
+            grpMisc.Visible = False
+            tabPortControl.Visible = False
+        Else
+            tabInstrumentView.Height = tabPortControl.Top - tabInstrumentView.Top - 8
+            grpMisc.Visible = True
+            tabPortControl.Visible = True
+        End If
+        cmdExpandInstruments.Top = tabInstrumentView.Top + tabInstrumentView.Height - cmdExpandInstruments.Height + 7
 
         cmdCenterOnPlane.Top = Me.Height - cmdCenterOnPlane.Height - 42
         cmdClearMap.Top = cmdCenterOnPlane.Top
@@ -1869,42 +1892,115 @@ Public Class frmMain
 
         tabMapView.Height = cmdExit.Top - 18
 
+        bUltraSmall = False
+        If Me.Width < 1060 Then
+            bUltraSmall = True
+            tabPortControl.Width = grpMisc.Width + 10
+            tabPortControl.Height = grpMisc.Height + 26
+            tabInstrumentView.Width = tabPortControl.Width
+
+            If tabPortControl.TabPages.Count < 4 Then
+                tabPortControl.TabPages.Add("tabPortStatus", "Status")
+                tabPortControl.TabPages(3).BackColor = tabPortControl.TabPages(0).BackColor
+            End If
+            grpMisc.Top = tabPortControl.Top + 22
+            grpMisc.Left = tabPortControl.Left + 5
+            grpMisc.BackColor = GetSystemColor("F5F4F1")
+        Else
+            tabInstrumentView.Width = 580
+            tabPortControl.Width = 272
+            tabPortControl.Height = 180
+            If tabPortControl.TabPages.Count >= 4 Then
+                tabPortControl.TabPages.RemoveAt(3)
+            End If
+            grpMisc.Top = tabPortControl.Top + tabPortControl.Height - grpMisc.Height
+            grpMisc.Left = tabPortControl.Left + tabPortControl.Width + 6
+            grpMisc.BackColor = Color.Transparent
+        End If
+        'cmdExpandInstruments.Left = tabInstrumentView.Width / 2 - cmdExpandInstruments.Width / 2
+
+        lstInbound.Width = tabInstrumentView.Width - lstInbound.Left * 3
+        lstEvents.Width = lstInbound.Width
+        grpSerialSettings.Width = lstInbound.Width
+
+        cmdCommandLineSend.Left = lstInbound.Width - cmdCommandLineSend.Width + 6
+        cboCommandLineCommand.Width = cmdCommandLineSend.Left - cboCommandLineCommand.Left - 6
+        lstCommandLineOutput.Width = lstInbound.Width
+        cboCommandLineDelim.Left = lstInbound.Width - cboCommandLineDelim.Width + 6
+
         Select Case tabInstrumentView.SelectedIndex
             Case 0
-                If tabInstrumentView.Height > (180 * 3) + 48 Then
-                    nInstrumentSize = 180
-
-                    MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
-                    MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
-                    MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
-
-                    MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
-                    MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
-                    MoveControl(_3DMesh1, nInstrumentSize * 2 + 6, nInstrumentSize * 2 + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                If tabInstrumentView.Width / tabInstrumentView.Height > 1.25 Then
+                    eLayout = e_InstrumentLayout.e_InstrumentLayout_Horizontal
+                    nInstrumentHeight = (tabInstrumentView.Height - 48) / 2
+                    nInstrumentWidth = (tabInstrumentView.Width - 32) / 3
+                ElseIf tabInstrumentView.Height / tabInstrumentView.Width > 1.25 Then
+                    eLayout = e_InstrumentLayout.e_InstrumentLayout_Vertical
+                    nInstrumentHeight = (tabInstrumentView.Height - 48) / 3
+                    nInstrumentWidth = (tabInstrumentView.Width - 32) / 2
                 Else
-                    If tabInstrumentView.Height < (180 * 2) + 48 Then
-                        nInstrumentSize = (tabInstrumentView.Height - 48) / 2
-                    Else
-                        nInstrumentSize = 180
-                    End If
-                    MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
-                    MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
-                    MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
-
-                    MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
-                    MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6)
-                    MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                    eLayout = e_InstrumentLayout.e_InstrumentLayout_Square
+                    nInstrumentHeight = (tabInstrumentView.Height - 48) / 3
+                    nInstrumentWidth = (tabInstrumentView.Width - 32) / 3
                 End If
+
+                If nInstrumentWidth < nInstrumentHeight Then
+                    nInstrumentSize = nInstrumentWidth
+                Else
+                    nInstrumentSize = nInstrumentHeight
+                End If
+
+                Select Case eLayout
+                    Case e_InstrumentLayout.e_InstrumentLayout_Horizontal
+                        MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                        MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                        MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
+
+                        MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                        MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6)
+                        MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                    Case e_InstrumentLayout.e_InstrumentLayout_Square
+                        Select Case eSelectedInstrument
+                            Case e_SelectedInstrument.e_SelectedInstrument_3DMesh
+                                MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                                MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                                MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
+
+                                MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                                MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                                MoveControl(_3DMesh1, nInstrumentSize * 2 + 6, nInstrumentSize * 2 + 6, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, HeadingIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                            Case e_SelectedInstrument.e_SelectedInstrument_Attitude
+                                MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                                MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize * 2 + 6, nInstrumentSize * 2 + 6, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+
+                                MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                                MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+
+                                MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                                MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, HeadingIndicatorInstrumentControl1.Top + nInstrumentSize + 6, AltimeterInstrumentControl1.Left + nInstrumentSize + 6)
+                        End Select
+                        frmMain_Paint(Nothing, Nothing)
+                    Case e_InstrumentLayout.e_InstrumentLayout_Vertical
+                        MoveControl(AirSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, 6)
+                        MoveControl(AltimeterInstrumentControl1, nInstrumentSize, nInstrumentSize, 6, AirSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+
+                        MoveControl(AttitudeIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                        MoveControl(HeadingIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AirSpeedIndicatorInstrumentControl1.Top + nInstrumentSize + 6, AttitudeIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+
+                        MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AttitudeIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
+                        MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, AttitudeIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
+                End Select
             Case 1
                 grpSerialSettings.Top = tabInstrumentView.Height - grpSerialSettings.Height - 35
-                lstEvents.Height = (grpSerialSettings.Top - 60) / 2
+                lstEvents.Height = (grpSerialSettings.Top - 46) / 2
                 lstInbound.Height = lstEvents.Height
 
-                lstEvents.Top = grpSerialSettings.Top - lstEvents.Height - 6
-                lblTranslatedData.Top = lstEvents.Top - lblTranslatedData.Height - 6
+                lblRawData.Top = 8
+                lstInbound.Top = lblRawData.Top + lblRawData.Height + 4
 
-                lstInbound.Top = lblTranslatedData.Top - lstInbound.Height - 12
-                lblRawData.Top = lstInbound.Top - lblRawData.Height - 6
+                lblTranslatedData.Top = lstInbound.Top + lstInbound.Height + 4
+                lstEvents.Top = lblTranslatedData.Top + lblTranslatedData.Height + 4
+
 
             Case 2
                 chkCommandLineAutoScroll.Top = tabInstrumentView.Height - chkCommandLineAutoScroll.Height - 35
@@ -1928,9 +2024,25 @@ Public Class frmMain
                 FitDirectShow(DirectShowControl1, tabMapView.Width - 30, tabMapView.Height - 48)
         End Select
 
+        If bUltraSmall = True And bExpandInstruments = False Then
+            Select Case tabPortControl.SelectedIndex
+                Case 3
+                    grpMisc.Visible = True
+                Case Else
+                    grpMisc.Visible = False
+            End Select
+        ElseIf bExpandInstruments = False Then
+            grpMisc.Visible = True
+        Else
+            grpMisc.Visible = False
+        End If
+
         'Lefts
+        tabMapView.Left = tabInstrumentView.Left + tabInstrumentView.Width + 6
         tabMapView.Width = Me.Width - tabMapView.Left - 18
         WebBrowser1.Width = tabMapView.Width - 18
+        cmdCenterOnPlane.Left = tabMapView.Left
+        cmdClearMap.Left = cmdCenterOnPlane.Left + cmdCenterOnPlane.Width + 6
         cmdExit.Left = tabMapView.Left + tabMapView.Width - cmdExit.Width
 
         If Me.WindowState = FormWindowState.Normal Then
@@ -1942,5 +2054,37 @@ Public Class frmMain
         ElseIf Me.WindowState = FormWindowState.Maximized Then
             Call SaveRegSetting(sRootRegistry & "\Settings", "Form WindowState", Me.WindowState)
         End If
+    End Sub
+
+    Private Sub tabPortControl_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabPortControl.SelectedIndexChanged
+        frmMain_Resize(sender, e)
+    End Sub
+
+    Private Sub grpSerialSettings_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles grpSerialSettings.Enter
+
+    End Sub
+
+    Private Sub cmdExpandInstruments_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExpandInstruments.Click
+        bExpandInstruments = Not bexpandinstruments
+        If bExpandInstruments = True Then
+            cmdExpandInstruments.Text = "<<"
+            ToolTip1.SetToolTip(cmdExpandInstruments, "Shrink")
+        Else
+            cmdExpandInstruments.Text = ">>"
+            ToolTip1.SetToolTip(cmdExpandInstruments, "Expand")
+        End If
+        frmMain_Resize(sender, e)
+    End Sub
+
+    Private Sub AttitudeIndicatorInstrumentControl1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AttitudeIndicatorInstrumentControl1.Click
+        eSelectedInstrument = e_SelectedInstrument.e_SelectedInstrument_Attitude
+        SaveRegSetting(sRootRegistry & "\Settings", "Selected Instrument", eSelectedInstrument)
+        frmMain_Resize(sender, e)
+    End Sub
+
+    Private Sub _3DMesh1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles _3DMesh1.Click
+        eSelectedInstrument = e_SelectedInstrument.e_SelectedInstrument_3DMesh
+        SaveRegSetting(sRootRegistry & "\Settings", "Selected Instrument", eSelectedInstrument)
+        frmMain_Resize(sender, e)
     End Sub
 End Class

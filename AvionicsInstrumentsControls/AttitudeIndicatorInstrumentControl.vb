@@ -73,6 +73,8 @@ Namespace AvionicsInstrumentControlDemo
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
 
+            Me.BackColor = GetSystemColor("F5F4F1")
+
             ' Affichages - - - - - - - - - - - - - - - - - - - - - - 
 
             bmpCadran.MakeTransparent(Color.Yellow)

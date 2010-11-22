@@ -69,6 +69,8 @@ Namespace AvionicsInstrumentControlDemo
             Dim ptImgAircraft As New Point(73, 41)
             Dim ptImgHeadingWeel As New Point(13, 13)
 
+            Me.BackColor = GetSystemColor("F5F4F1")
+
             bmpCadran.MakeTransparent(Color.Yellow)
             bmpHedingWeel.MakeTransparent(Color.Yellow)
             bmpAircaft.MakeTransparent(Color.Yellow)

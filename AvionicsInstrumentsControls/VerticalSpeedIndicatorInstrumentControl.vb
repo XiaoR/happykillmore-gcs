@@ -72,6 +72,8 @@ Namespace AvionicsInstrumentControlDemo
             Dim ptRotation As New Point(150, 150)
             Dim ptimgNeedle As New Point(136, 39)
 
+            Me.BackColor = GetSystemColor("F5F4F1")
+
             bmpCadran.MakeTransparent(Color.Yellow)
             bmpNeedle.MakeTransparent(Color.Yellow)
 
