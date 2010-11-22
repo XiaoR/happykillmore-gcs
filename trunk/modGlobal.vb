@@ -31,6 +31,16 @@ Module modGlobal
         e_PlayerState_StepForward
         e_PlayerState_StepBack
     End Enum
+
+    Public Enum e_InstrumentLayout
+        e_InstrumentLayout_Horizontal = 0
+        e_InstrumentLayout_Square
+        e_InstrumentLayout_Vertical
+    End Enum
+    Public Enum e_SelectedInstrument
+        e_SelectedInstrument_Attitude = 0
+        e_SelectedInstrument_3DMesh
+    End Enum
     Public Function ConvertSpeed(ByVal inputValue As VariantType, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
         Dim nTemp As Double
 
@@ -459,6 +469,9 @@ Module modGlobal
             'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
         End If
 
+    End Function
+    Public Function GetSystemColor(ByVal inputString As String) As System.Drawing.Color
+        GetSystemColor = Color.FromArgb(255, (Convert.ToInt32(Mid(inputString, 1, 2), 16)), (Convert.ToInt32(Mid(inputString, 3, 2), 16)), (Convert.ToInt32(Mid(inputString, 5, 2), 16)))
     End Function
 
     Public Function GetFileContents(ByVal FullPath As String, Optional ByRef ErrInfo As String = "") As String

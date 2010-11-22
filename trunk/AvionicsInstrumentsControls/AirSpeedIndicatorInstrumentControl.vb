@@ -77,6 +77,8 @@ Namespace AvionicsInstrumentControlDemo
             bmpGroundNeedle.MakeTransparent(Color.Yellow)
             bmpAirNeedle.MakeTransparent(Color.Yellow)
 
+            Me.BackColor = GetSystemColor("F5F4F1")
+
             Dim alphaNeedle As Double
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
