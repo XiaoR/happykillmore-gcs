@@ -81,6 +81,9 @@ Module modDirectX
             With createMesh
                 'create a mesh
                 Dim materials() As ExtendedMaterial
+                If Dir(fileSrc, FileAttribute.Normal) = "" Then
+                    MsgBox("Unable to load 3D Model - Model File Missing:" & vbCrLf & fileSrc, MsgBoxStyle.OkOnly + MsgBoxStyle.Critical, "Missing File")
+                End If
                 .mesh = Mesh.FromFile(fileSrc, MeshFlags.Managed, device, materials)
                 'memorize material number
                 .numX = UBound(materials)
@@ -94,6 +97,9 @@ Module modDirectX
                         'load texture if presente in file X
                         If materials(i).TextureFilename <> "" Then
                             'System.Diagnostics.Debug.Print(materials(i).TextureFilename)
+                            If Dir(TexPath & "\" & materials(i).TextureFilename, FileAttribute.Normal) = "" Then
+                                MsgBox("Unable to load 3D Model - Texture File Missing:" & vbCrLf & TexPath & "\" & materials(i).TextureFilename, MsgBoxStyle.OkOnly + MsgBoxStyle.Critical, "Missing File")
+                            End If
                             .tex(i) = TextureLoader.FromFile(device, TexPath & "\" & materials(i).TextureFilename)
                         End If
                     End If

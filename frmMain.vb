@@ -423,7 +423,6 @@ Public Class frmMain
         sMode = ""
         sModeNumber = ""
 
-        bStartup = False
         Me.WindowState = GetRegSetting(sRootRegistry & "\Settings", "Form WindowState", FormWindowState.Normal)
         If Me.WindowState = FormWindowState.Normal Then
             Me.Width = nWidth
@@ -431,6 +430,7 @@ Public Class frmMain
             Me.Left = nLeft
             Me.Top = nTop
         End If
+        bStartup = False
         frmMain_Resize(sender, e)
 
         'If cboComPort.Items.Count > 0 Then
@@ -899,6 +899,7 @@ Public Class frmMain
                 nOldTop = lstCommandLineOutput.TopIndex
 
                 Try
+                    lstCommandLineOutput.BeginUpdate()
                     If nCommandLineDelim = 1 Then
                         Do While InStr(sCommandLineBuffer, vbLf) <> 0
                             lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbLf) - 1))
@@ -906,12 +907,12 @@ Public Class frmMain
                         Loop
                     ElseIf nCommandLineDelim = 2 Then
                         Do While InStr(sCommandLineBuffer, vbCr) <> 0
-                            lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCr) - 1))
+                            lstCommandLineOutput.Items.Add(Replace(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCr) - 1), vbLf, ""))
                             sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCr) + 1)
                         Loop
                     ElseIf nCommandLineDelim = 3 Then
                         Do While InStr(sCommandLineBuffer, vbCrLf) <> 0
-                            lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCrLf) - 2))
+                            lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCrLf) - 1))
                             sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCrLf) + 2)
                         Loop
                     Else
@@ -928,8 +929,9 @@ Public Class frmMain
                         sCommandLineBuffer = ""
                     End If
                     For nCount = nMaxListboxRecords To lstCommandLineOutput.Items.Count - 1
-                        lstCommandLineOutput.Items.RemoveAt(nMaxListboxRecords)
+                        lstCommandLineOutput.Items.RemoveAt(0)
                     Next
+                    lstCommandLineOutput.EndUpdate()
                 Catch
                 End Try
 
@@ -1214,6 +1216,32 @@ Public Class frmMain
                                 nFix = Asc(Mid(.Packet, 31))
                             End If
                             bNewGPS = True
+
+                            'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
+                    End Select
+
+                Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                    lblGPSType.Text = "ArduPilot Mega Binary"
+                    Select Case Asc(Mid(.Packet, 2, 1))
+                        Case 2
+                            lblGPSMessage.Text = "Attitude Data"
+                            nRoll = ConvertHexToDec(Mid(.Packet, 3, 2)) / 100
+                            nPitch = ConvertHexToDec(Mid(.Packet, 5, 2)) / 100
+                            nYaw = ConvertHexToDec(Mid(.Packet, 7, 2)) / 100
+                            bNewAttitude = True
+                            'Case 3
+                            '    lblGPSMessage.Text = "GPS Data"
+                            '    nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 3, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                            '    nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 7, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                            '    nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 11, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eOutputDistance)
+                            '    'System.Diagnostics.Debug.Print("Speed=" & ConvertHexToDec(Mid(.Packet, 13, 2)) / 100)
+                            '    nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 13, 2), , False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eOutputSpeed)
+                            '    nHeading = ConvertHexToDec(Mid(.Packet, 15, 2), , False) / 100
+                            '    If .PacketLength >= 31 Then
+                            '        nSats = Asc(Mid(.Packet, 30))
+                            '        nFix = Asc(Mid(.Packet, 31))
+                            '    End If
+                            '    bNewGPS = True
 
                             'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
                     End Select
@@ -1709,8 +1737,12 @@ Public Class frmMain
 
     Private Sub cmdCommandLineSend_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCommandLineSend.Click
         If serialPortIn.IsOpen = True Then
-            serialPortIn.Write(cboCommandLineCommand.Text)
+            serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
+            serialPortIn.Write(cboCommandLineCommand.Text & vbCr)
             SaveComboEntries(cboCommandLineCommand)
+
+            cboCommandLineCommand.Text = ""
+            cboCommandLineCommand.Focus()
         End If
     End Sub
     Private Sub SaveComboEntries(ByVal inputCombo As ComboBox)
@@ -2065,7 +2097,7 @@ Public Class frmMain
     End Sub
 
     Private Sub cmdExpandInstruments_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExpandInstruments.Click
-        bExpandInstruments = Not bexpandinstruments
+        bExpandInstruments = Not bExpandInstruments
         If bExpandInstruments = True Then
             cmdExpandInstruments.Text = "<<"
             ToolTip1.SetToolTip(cmdExpandInstruments, "Shrink")

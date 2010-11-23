@@ -233,6 +233,7 @@ Partial Class frmMain
         '
         'VerticalSpeedIndicatorInstrumentControl1
         '
+        Me.VerticalSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.VerticalSpeedIndicatorInstrumentControl1.Location = New System.Drawing.Point(192, 192)
         Me.VerticalSpeedIndicatorInstrumentControl1.Name = "VerticalSpeedIndicatorInstrumentControl1"
         Me.VerticalSpeedIndicatorInstrumentControl1.Size = New System.Drawing.Size(180, 180)
@@ -241,6 +242,7 @@ Partial Class frmMain
         '
         'HeadingIndicatorInstrumentControl1
         '
+        Me.HeadingIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.HeadingIndicatorInstrumentControl1.Location = New System.Drawing.Point(6, 192)
         Me.HeadingIndicatorInstrumentControl1.Name = "HeadingIndicatorInstrumentControl1"
         Me.HeadingIndicatorInstrumentControl1.Size = New System.Drawing.Size(180, 180)
@@ -249,6 +251,7 @@ Partial Class frmMain
         '
         'AttitudeIndicatorInstrumentControl1
         '
+        Me.AttitudeIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.AttitudeIndicatorInstrumentControl1.Location = New System.Drawing.Point(378, 6)
         Me.AttitudeIndicatorInstrumentControl1.Name = "AttitudeIndicatorInstrumentControl1"
         Me.AttitudeIndicatorInstrumentControl1.Size = New System.Drawing.Size(180, 180)
@@ -257,6 +260,7 @@ Partial Class frmMain
         '
         'AltimeterInstrumentControl1
         '
+        Me.AltimeterInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.AltimeterInstrumentControl1.Location = New System.Drawing.Point(192, 6)
         Me.AltimeterInstrumentControl1.Name = "AltimeterInstrumentControl1"
         Me.AltimeterInstrumentControl1.Size = New System.Drawing.Size(180, 180)
@@ -265,6 +269,7 @@ Partial Class frmMain
         '
         'AirSpeedIndicatorInstrumentControl1
         '
+        Me.AirSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.AirSpeedIndicatorInstrumentControl1.Location = New System.Drawing.Point(6, 6)
         Me.AirSpeedIndicatorInstrumentControl1.Name = "AirSpeedIndicatorInstrumentControl1"
         Me.AirSpeedIndicatorInstrumentControl1.Size = New System.Drawing.Size(180, 180)
@@ -705,6 +710,7 @@ Partial Class frmMain
         '
         'serialPortIn
         '
+        Me.serialPortIn.DtrEnable = True
         '
         'tabPortControl
         '
