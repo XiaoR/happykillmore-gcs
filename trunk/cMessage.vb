@@ -12,6 +12,7 @@ Public Class cMessage
         e_MessageType_ArduPilot_WP
         e_MessageType_ArduPilot_WPCount
         e_MessageType_ArduPilot_ModeChange
+        e_MessageType_ArduPilotMega_Binary
     End Enum
 
     Public ValidMessage As Boolean

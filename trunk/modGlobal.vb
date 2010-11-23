@@ -214,6 +214,12 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
             End If
 
+            sHeaderCharacters = "4D"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+            End If
+
             sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
@@ -442,6 +448,38 @@ Module modGlobal
                                     .PacketLength = Len(.Packet)
                                     .Checksum = Strings.Right(sTemp, 2)
                                     .VisibleSentence = .Header & " - " & sOutput
+                                    If .Checksum = GetuBloxChecksum(.Packet) Then
+                                        .ValidMessage = True
+                                    End If
+                                End With
+                            Else
+                                System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
+                            End If
+                        End With
+                    End If
+
+                Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                    sHeaderCharacters = "4D"
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
+                        With GetNextSentence
+                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                            .Header = "AP Mega"
+                            nSizeOffset = 5
+                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
+                                sOutput = ""
+                                For nCount = 1 To Len(sTemp)
+                                    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
+                                Next
+                                With GetNextSentence
+                                    .RawMessage = sTemp
+                                    .ID = Asc(Mid(sTemp, 4, 1))
+                                    .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
+                                    .PacketLength = Len(.Packet)
+                                    .Checksum = Strings.Right(sTemp, 2)
+                                    .VisibleSentence = .Header & " - " & Trim(sOutput)
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
                                     End If
