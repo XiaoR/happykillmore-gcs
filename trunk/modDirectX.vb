@@ -2,6 +2,7 @@ Imports Microsoft.DirectX
 Imports Microsoft.DirectX.Direct3D
 
 Module modDirectX
+
     Public device As Device
     Dim deviceSetting As New PresentParameters
     Structure oggX
@@ -20,6 +21,7 @@ Module modDirectX
             deviceSetting.EnableAutoDepthStencil = True 'active Z/Stencil buffer 
             deviceSetting.DeviceWindowHandle = fhWnd 'handle del form
             deviceSetting.SwapEffect = SwapEffect.Flip 'rendering type
+
             If windowed Then
                 deviceSetting.Windowed = True 'setting for windowed mode 
             Else

@@ -114,14 +114,31 @@
     <Compile Include="ctlDirectShowControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="modDirectX.vb" />
-    <Compile Include="frmMain.vb">
+    <Compile Include="frmDebug.Designer.vb">
+      <DependentUpon>frmDebug.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDebug.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmAbout.Designer.vb">
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.vb">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modDirectX.vb" />
     <Compile Include="AvionicsInstrumentsControls\InstrucmentControl.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -132,6 +149,7 @@
     </Compile>
     <Compile Include="modLoadFiles.vb" />
     <Compile Include="modRegistry.vb" />
+    <Compile Include="modSettings.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -162,9 +180,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDebug.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDebug.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Javascript\GoogleResources.resx">
       <SubType>Designer</SubType>

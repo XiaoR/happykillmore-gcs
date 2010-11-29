@@ -6,6 +6,7 @@ Public Class _3DMesh
     Dim nScaleFactor As Single
     Dim oBackColor As System.Drawing.Color
     Dim bHasRun As Boolean = False
+    Dim bLocked As Boolean = False
 
     Private Sub _3DMesh_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
     End Sub
@@ -18,14 +19,14 @@ Public Class _3DMesh
                 Case "AeroQuad"
                     sFilename = "aeroquad.x"
                     sFilePath = rootPath & "aeroquad"
-                    nScaleFactor = 1.5
+                    nScaleFactor = 50
                     oBackColor = Color.LightGray
 
                 Case "FunJet"
                     sFilename = "funjet.x"
                     sFilePath = rootPath & "funjet"
                     nScaleFactor = 11
-                    oBackColor = Color.DarkGray
+                    oBackColor = Color.LightGray
 
                 Case "T-Rex 450"
                     sFilename = "trex450.x"
@@ -48,7 +49,7 @@ Public Class _3DMesh
                 Case Else
                     sFilename = "easystar.x"
                     sFilePath = rootPath & "easystar"
-                    nScaleFactor = 0.9
+                    nScaleFactor = 0.8
                     oBackColor = Color.LightGray
             End Select
 
@@ -132,9 +133,17 @@ Public Class _3DMesh
 
     End Sub
 
+    Public Property Locked() As Boolean
+        Get
+            Locked = bLocked
+        End Get
+        Set(ByVal value As Boolean)
+            bLocked = Locked
+        End Set
+    End Property
     Private Sub _3DMesh_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
         Try
-            If Not (device Is Nothing) Then
+            If Not (device Is Nothing) And bLocked = False Then
                 'device must be reset
                 resetDevice()
                 'all setting must be updated
