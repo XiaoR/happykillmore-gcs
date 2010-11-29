@@ -1,24 +1,6 @@
 Imports System.IO
 Module modGlobal
     Public sRootRegistry As String = "SOFTWARE\HK_GCS"
-    Public Enum e_LatLongFormat
-        e_LatLongFormat_DDMM_MMMM = 0
-        e_LatLongFormat_DD_DDDDDD = 1
-    End Enum
-    Public Enum e_SpeedFormat
-        e_SpeedFormat_Knots = 0
-        e_SpeedFormat_KPH
-        e_SpeedFormat_MPH
-        e_SpeedFormat_MPerSec
-    End Enum
-    Public Enum e_DistanceFormat
-        e_DistanceFormat_Feet = 0
-        e_DistanceFormat_Meters
-    End Enum
-    Public Enum e_MapSelection
-        e_MapSelection_GoogleEarth = 0
-        e_MapSelection_GoogleMaps
-    End Enum
     Public Enum e_PlayerState
         e_PlayerState_None = 0
         e_PlayerState_RecordReady
@@ -32,6 +14,11 @@ Module modGlobal
         e_PlayerState_StepBack
     End Enum
 
+    Public Enum e_MissionFileType
+        e_MissionFileType_None = 0
+        e_MissionFileType_GCS
+        e_MissionFileType_UDB
+    End Enum
     Public Enum e_InstrumentLayout
         e_InstrumentLayout_Horizontal = 0
         e_InstrumentLayout_Square
@@ -41,6 +28,27 @@ Module modGlobal
         e_SelectedInstrument_Attitude = 0
         e_SelectedInstrument_3DMesh
     End Enum
+
+    Public nPitch As Single
+    Public nRoll As Single
+    Public nYaw As Single
+
+    Public nLatitude As String
+    Public nLongitude As String
+    Public nAltitude As Single
+    Public nGroundSpeed As Single
+    Public nAirSpeed As Single
+    Public nHeading As Single
+    Public nSats As Integer
+    Public nBattery As Single
+    Public sMode As String
+    Public sModeNumber As String
+    Public nFix As Integer
+    Public nHDOP As Single
+    Public nWaypointIndex As Integer
+    Public nWaypointTotal As Integer
+    Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
+
     Public Function ConvertSpeed(ByVal inputValue As VariantType, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
         Dim nTemp As Double
 
@@ -70,6 +78,16 @@ Module modGlobal
             End Select
         End If
     End Function
+
+    Public Function GetShortDistanceUnits() As String
+        Select Case eDistanceUnits
+            Case e_DistanceFormat.e_DistanceFormat_Feet
+                GetShortDistanceUnits = "ft"
+            Case e_DistanceFormat.e_DistanceFormat_Meters
+                GetShortDistanceUnits = "m"
+        End Select
+    End Function
+
     Public Function ConvertDistance(ByVal inputValue As VariantType, ByVal inputFormat As e_DistanceFormat, ByVal outputFormat As e_DistanceFormat) As Single
         Dim nTemp As Double
 
@@ -166,6 +184,12 @@ Module modGlobal
         GetNextSentence.ValidMessage = False
 
         Try
+            sHeaderCharacters = "F2:"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_UDB
+            End If
+
             sHeaderCharacters = "$GP"
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
@@ -233,6 +257,23 @@ Module modGlobal
             End If
 
             Select Case nMessageType
+                Case cMessage.e_MessageType.e_MessageType_UDB
+                    sHeaderCharacters = "F2:"
+                    sFooterCharacters = vbCrLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_UDB
+                            .ValidMessage = True
+                            .Header = "Serial UDB Extra"
+                            .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = .Header & " - " & Mid(sTemp, 1, Len(sTemp) - 2)
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
                     sHeaderCharacters = "DIYd"
                     If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
@@ -453,7 +494,7 @@ Module modGlobal
                                     End If
                                 End With
                             Else
-                                System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
+                                'System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
                             End If
                         End With
                     End If
@@ -485,7 +526,7 @@ Module modGlobal
                                     End If
                                 End With
                             Else
-                                System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
+                                'System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
                             End If
                         End With
                     End If
@@ -526,5 +567,35 @@ Module modGlobal
             ErrInfo = Ex.Message
         End Try
     End Function
+    Public Function GetRootPath() As String
+        GetRootPath = Mid(Application.ExecutablePath, 1, InStrRev(Application.ExecutablePath, "\"))
+    End Function
+    Public ReadOnly Property Version() As String
+        Get
+            Dim sTemp As String
+            sTemp = Trim(System.Reflection.Assembly.GetExecutingAssembly.FullName.Split(",")(1).Replace("Version=", ""))
+            Return "v" & Mid(sTemp, 1, InStrRev(sTemp, ".") - 1) & " - Build " & Mid(sTemp, InStrRev(sTemp, ".") + 1)
 
+
+            'Return Application.ProductVersion.ToString()
+            'Dim myBuildInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(GetRootPath)
+            'Return myBuildInfo.ProductVersion
+        End Get
+
+    End Property
+    Public Sub LoadComboWithCameras(ByVal inputCombo As ComboBox, Optional ByVal defaultCamera As String = "")
+        Dim ds As DirectShowLib.DsDevice
+        For Each ds In DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)
+            inputCombo.Items.Add(ds.Name)
+            If defaultCamera <> "" Then
+                If defaultCamera = ds.Name.ToString Then
+                    inputCombo.SelectedIndex = inputCombo.Items.Count - 1
+                End If
+            End If
+        Next
+        If inputCombo.SelectedIndex = -1 And inputCombo.Items.Count > 0 Then
+            inputCombo.SelectedIndex = 0
+        End If
+
+    End Sub
 End Module

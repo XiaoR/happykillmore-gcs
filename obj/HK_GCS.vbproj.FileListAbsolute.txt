@@ -26,3 +26,9 @@ C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\H
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\DirectShowLib-2005.dll
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.GoogleResources.resources
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.GoogleResources.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.frmSettings.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.frmSettings.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.frmAbout.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.frmAbout.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.frmDebug.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.frmDebug.resources

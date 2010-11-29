@@ -125,7 +125,6 @@ Namespace AvionicsInstrumentControlDemo
             alphaNeedle = InterpolPhyToAngle(groundSpeed * 100, 0.0, nMaxSpeed * 100, 180, 468)
             ' display small needle
             RotateImage(pe, bmpGroundNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
-            'System.Diagnostics.Debug.Print("ground=" & groundSpeed & ",alpha=" & alphaNeedle)
 
         End Sub
 
