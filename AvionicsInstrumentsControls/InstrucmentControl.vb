@@ -105,33 +105,36 @@ Namespace AvionicsInstrumentControlDemo
 
             ' Rotation
 
-            If ptImg <> ptRot Then
-                ' Internals coeffs
-                If ptRot.X <> 0 Then
-                    beta = Math.Atan(CDbl(ptRot.Y) / CDbl(ptRot.X))
+            Try
+                If ptImg <> ptRot Then
+                    ' Internals coeffs
+                    If ptRot.X <> 0 Then
+                        beta = Math.Atan(CDbl(ptRot.Y) / CDbl(ptRot.X))
+                    End If
+
+                    d = Math.Sqrt((ptRot.X * ptRot.X) + (ptRot.Y * ptRot.Y))
+
+                    ' Computed offset
+                    deltaXRot = CSng(d * (Math.Cos(alphaRot - beta) - Math.Cos(alphaRot) * Math.Cos(alphaRot + beta) - Math.Sin(alphaRot) * Math.Sin(alphaRot + beta)))
+                    deltaYRot = CSng(d * (Math.Sin(beta - alphaRot) + Math.Sin(alphaRot) * Math.Cos(alphaRot + beta) - Math.Cos(alphaRot) * Math.Sin(alphaRot + beta)))
                 End If
 
-                d = Math.Sqrt((ptRot.X * ptRot.X) + (ptRot.Y * ptRot.Y))
+                ' Translation
 
                 ' Computed offset
-                deltaXRot = CSng(d * (Math.Cos(alphaRot - beta) - Math.Cos(alphaRot) * Math.Cos(alphaRot + beta) - Math.Sin(alphaRot) * Math.Sin(alphaRot + beta)))
-                deltaYRot = CSng(d * (Math.Sin(beta - alphaRot) + Math.Sin(alphaRot) * Math.Cos(alphaRot + beta) - Math.Cos(alphaRot) * Math.Sin(alphaRot + beta)))
-            End If
+                deltaXTrs = CSng(deltaPx * (Math.Sin(alphaTrs)))
+                deltaYTrs = CSng(-deltaPx * (-Math.Cos(alphaTrs)))
 
-            ' Translation
+                ' Rotate image support
+                pe.Graphics.RotateTransform(CSng(alphaRot * 180 / Math.PI))
 
-            ' Computed offset
-            deltaXTrs = CSng(deltaPx * (Math.Sin(alphaTrs)))
-            deltaYTrs = CSng(-deltaPx * (-Math.Cos(alphaTrs)))
+                ' Dispay image
+                pe.Graphics.DrawImage(img, (ptImg.X + deltaXRot + deltaXTrs) * scaleFactor, (ptImg.Y + deltaYRot + deltaYTrs) * scaleFactor, img.Width * scaleFactor, img.Height * scaleFactor)
 
-            ' Rotate image support
-            pe.Graphics.RotateTransform(CSng(alphaRot * 180 / Math.PI))
-
-            ' Dispay image
-            pe.Graphics.DrawImage(img, (ptImg.X + deltaXRot + deltaXTrs) * scaleFactor, (ptImg.Y + deltaYRot + deltaYTrs) * scaleFactor, img.Width * scaleFactor, img.Height * scaleFactor)
-
-            ' Put image support as found
-            pe.Graphics.RotateTransform(CSng(-alphaRot * 180 / Math.PI))
+                ' Put image support as found
+                pe.Graphics.RotateTransform(CSng(-alphaRot * 180 / Math.PI))
+            Catch
+            End Try
         End Sub
 
 

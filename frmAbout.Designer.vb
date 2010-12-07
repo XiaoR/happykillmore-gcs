@@ -64,7 +64,7 @@ Partial Class frmAbout
         Me.GroupBox1.Controls.Add(Me.mnuTitle)
         Me.GroupBox1.Location = New System.Drawing.Point(4, 0)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(607, 367)
+        Me.GroupBox1.Size = New System.Drawing.Size(607, 380)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -72,16 +72,16 @@ Partial Class frmAbout
         '
         Me.lblStatus.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblStatus.Location = New System.Drawing.Point(364, 317)
+        Me.lblStatus.Location = New System.Drawing.Point(364, 325)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(232, 22)
+        Me.lblStatus.Size = New System.Drawing.Size(233, 22)
         Me.lblStatus.TabIndex = 46
         Me.lblStatus.Text = "Status"
         Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(364, 342)
+        Me.ProgressBar1.Location = New System.Drawing.Point(365, 355)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(232, 18)
         Me.ProgressBar1.TabIndex = 45
@@ -103,10 +103,10 @@ Partial Class frmAbout
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(29, 323)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(330, 37)
+        Me.Label6.Size = New System.Drawing.Size(330, 53)
         Me.Label6.TabIndex = 43
         Me.Label6.Text = "NMEA, uBlox, EM406 (SiRF), ArduPilot, ArduIMU Binary, MediaTek (Custom Binary), A" & _
-            "rduPilot Mega, UDB Extra"
+            "rduPilot Mega, MatrixPilot, MAVlink"
         '
         'lblInstruments
         '
@@ -121,7 +121,7 @@ Partial Class frmAbout
         '
         'cmdOk
         '
-        Me.cmdOk.Location = New System.Drawing.Point(526, 337)
+        Me.cmdOk.Location = New System.Drawing.Point(526, 350)
         Me.cmdOk.Name = "cmdOk"
         Me.cmdOk.Size = New System.Drawing.Size(75, 23)
         Me.cmdOk.TabIndex = 41
@@ -219,9 +219,9 @@ Partial Class frmAbout
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(364, 24)
+        Me.PictureBox1.Location = New System.Drawing.Point(365, 24)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(232, 263)
+        Me.PictureBox1.Size = New System.Drawing.Size(231, 279)
         Me.PictureBox1.TabIndex = 42
         Me.PictureBox1.TabStop = False
         '
@@ -241,7 +241,7 @@ Partial Class frmAbout
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(616, 372)
+        Me.ClientSize = New System.Drawing.Size(616, 385)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

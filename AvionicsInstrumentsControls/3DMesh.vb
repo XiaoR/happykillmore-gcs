@@ -19,25 +19,25 @@ Public Class _3DMesh
                 Case "AeroQuad"
                     sFilename = "aeroquad.x"
                     sFilePath = rootPath & "aeroquad"
-                    nScaleFactor = 50
+                    nScaleFactor = 65
                     oBackColor = Color.LightGray
 
                 Case "FunJet"
                     sFilename = "funjet.x"
                     sFilePath = rootPath & "funjet"
-                    nScaleFactor = 11
+                    nScaleFactor = 75
                     oBackColor = Color.LightGray
 
                 Case "T-Rex 450"
                     sFilename = "trex450.x"
                     sFilePath = rootPath & "Trex450"
-                    nScaleFactor = 1.2
+                    nScaleFactor = 70
                     oBackColor = Color.LightGray
 
                 Case "Firecracker"
                     sFilename = "Firecracker.x"
                     sFilePath = rootPath & "Firecracker"
-                    nScaleFactor = 1
+                    nScaleFactor = 70
                     oBackColor = Color.LightGray
 
                 Case "-mi- Yellow Plane"
@@ -49,7 +49,7 @@ Public Class _3DMesh
                 Case Else
                     sFilename = "easystar.x"
                     sFilePath = rootPath & "easystar"
-                    nScaleFactor = 0.8
+                    nScaleFactor = 75
                     oBackColor = Color.LightGray
             End Select
 

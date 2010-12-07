@@ -108,17 +108,12 @@
     <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="modcrc16.vb" />
     <Compile Include="ctlDirectShowControl.designer.vb">
       <DependentUpon>ctlDirectShowControl.vb</DependentUpon>
     </Compile>
     <Compile Include="ctlDirectShowControl.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="frmDebug.Designer.vb">
-      <DependentUpon>frmDebug.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmDebug.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
@@ -148,6 +143,7 @@
       <DependentUpon>GoogleResources.resx</DependentUpon>
     </Compile>
     <Compile Include="modLoadFiles.vb" />
+    <Compile Include="modMAVlink.vb" />
     <Compile Include="modRegistry.vb" />
     <Compile Include="modSettings.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -179,10 +175,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmDebug.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmDebug.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <SubType>Designer</SubType>
@@ -224,6 +216,7 @@
   <ItemGroup>
     <Content Include="Javascript\Maps.html" />
     <Content Include="Javascript\pluginhost.html" />
+    <Content Include="Resources\Bitmap1.bmp" />
     <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
     <Content Include="Resources\AirSpeedIndicator_Background.bmp" />
@@ -238,7 +231,9 @@
     <Content Include="Resources\Indicator_Background.bmp" />
     <Content Include="Resources\LongNeedleAltimeter.bmp" />
     <Content Include="Resources\Maquette_Avion.bmp" />
+    <Content Include="Resources\Record.gif" />
     <Content Include="Resources\SmallNeedleAltimeter.bmp" />
+    <Content Include="Resources\StopRed.gif" />
     <Content Include="Resources\TurnCoordinatorAircraft.bmp" />
     <Content Include="Resources\TurnCoordinatorBall.bmp" />
     <Content Include="Resources\TurnCoordinatorMarks.bmp" />

@@ -155,9 +155,23 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property Record() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Record", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property SmallNeedleAltimeter() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("SmallNeedleAltimeter", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property StopRed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("StopRed", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -41,6 +41,9 @@ Partial Class frmMain
         Me.cmdReloadMissionDirectory = New System.Windows.Forms.Button
         Me.cmdReloadMissions = New System.Windows.Forms.Button
         Me.tbarModelScale = New System.Windows.Forms.TrackBar
+        Me.chkReverse = New System.Windows.Forms.CheckBox
+        Me.chkFullDataFile = New System.Windows.Forms.CheckBox
+        Me.cmdReloadOutputFileList = New System.Windows.Forms.Button
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
         Me.mnuFile = New System.Windows.Forms.ToolStripDropDownButton
@@ -92,8 +95,6 @@ Partial Class frmMain
         Me.lblComPort = New System.Windows.Forms.Label
         Me.cboComPort = New System.Windows.Forms.ComboBox
         Me.tabPortDataFile = New System.Windows.Forms.TabPage
-        Me.chkFastForward = New System.Windows.Forms.CheckBox
-        Me.chkReverse = New System.Windows.Forms.CheckBox
         Me.cboOutputFiles = New System.Windows.Forms.ComboBox
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
         Me.cmdViewFile = New System.Windows.Forms.Button
@@ -101,6 +102,31 @@ Partial Class frmMain
         Me.tabPortMissions = New System.Windows.Forms.TabPage
         Me.Label26 = New System.Windows.Forms.Label
         Me.cboMission = New System.Windows.Forms.ComboBox
+        Me.tabPortServos = New System.Windows.Forms.TabPage
+        Me.lblServo8 = New System.Windows.Forms.Label
+        Me.lblServo7 = New System.Windows.Forms.Label
+        Me.lblServo6 = New System.Windows.Forms.Label
+        Me.lblServo5 = New System.Windows.Forms.Label
+        Me.lblServo4 = New System.Windows.Forms.Label
+        Me.lblServo3 = New System.Windows.Forms.Label
+        Me.lblServo2 = New System.Windows.Forms.Label
+        Me.lblServo1 = New System.Windows.Forms.Label
+        Me.Label23 = New System.Windows.Forms.Label
+        Me.Label21 = New System.Windows.Forms.Label
+        Me.Label20 = New System.Windows.Forms.Label
+        Me.Label8 = New System.Windows.Forms.Label
+        Me.Label7 = New System.Windows.Forms.Label
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.tbarServo8 = New System.Windows.Forms.TrackBar
+        Me.tbarServo7 = New System.Windows.Forms.TrackBar
+        Me.tbarServo6 = New System.Windows.Forms.TrackBar
+        Me.tbarServo5 = New System.Windows.Forms.TrackBar
+        Me.tbarServo4 = New System.Windows.Forms.TrackBar
+        Me.tbarServo3 = New System.Windows.Forms.TrackBar
+        Me.tbarServo2 = New System.Windows.Forms.TrackBar
+        Me.tbarServo1 = New System.Windows.Forms.TrackBar
         Me.tabInstrumentView = New System.Windows.Forms.TabControl
         Me.tabInstruments = New System.Windows.Forms.TabPage
         Me._3DMesh1 = New HK_GCS._3DMesh
@@ -155,6 +181,15 @@ Partial Class frmMain
         Me.tabPortDataFile.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPortMissions.SuspendLayout()
+        Me.tabPortServos.SuspendLayout()
+        CType(Me.tbarServo8, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo7, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarServo1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInstrumentView.SuspendLayout()
         Me.tabInstruments.SuspendLayout()
         Me.tabSerialData.SuspendLayout()
@@ -212,7 +247,7 @@ Partial Class frmMain
         Me.chkStepForward.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkStepForward.AutoSize = True
         Me.chkStepForward.Image = CType(resources.GetObject("chkStepForward.Image"), System.Drawing.Image)
-        Me.chkStepForward.Location = New System.Drawing.Point(217, 39)
+        Me.chkStepForward.Location = New System.Drawing.Point(227, 40)
         Me.chkStepForward.Name = "chkStepForward"
         Me.chkStepForward.Size = New System.Drawing.Size(26, 26)
         Me.chkStepForward.TabIndex = 21
@@ -224,7 +259,7 @@ Partial Class frmMain
         Me.chkStepBack.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkStepBack.AutoSize = True
         Me.chkStepBack.Image = CType(resources.GetObject("chkStepBack.Image"), System.Drawing.Image)
-        Me.chkStepBack.Location = New System.Drawing.Point(190, 39)
+        Me.chkStepBack.Location = New System.Drawing.Point(200, 40)
         Me.chkStepBack.Name = "chkStepBack"
         Me.chkStepBack.Size = New System.Drawing.Size(26, 26)
         Me.chkStepBack.TabIndex = 20
@@ -236,7 +271,7 @@ Partial Class frmMain
         Me.chkPause.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkPause.AutoSize = True
         Me.chkPause.Image = CType(resources.GetObject("chkPause.Image"), System.Drawing.Image)
-        Me.chkPause.Location = New System.Drawing.Point(83, 39)
+        Me.chkPause.Location = New System.Drawing.Point(78, 40)
         Me.chkPause.Name = "chkPause"
         Me.chkPause.Size = New System.Drawing.Size(26, 26)
         Me.chkPause.TabIndex = 17
@@ -248,7 +283,7 @@ Partial Class frmMain
         Me.chkPlay.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkPlay.AutoSize = True
         Me.chkPlay.Image = CType(resources.GetObject("chkPlay.Image"), System.Drawing.Image)
-        Me.chkPlay.Location = New System.Drawing.Point(56, 39)
+        Me.chkPlay.Location = New System.Drawing.Point(51, 40)
         Me.chkPlay.Name = "chkPlay"
         Me.chkPlay.Size = New System.Drawing.Size(26, 26)
         Me.chkPlay.TabIndex = 16
@@ -257,7 +292,7 @@ Partial Class frmMain
         '
         'cmdOutputFolder
         '
-        Me.cmdOutputFolder.Location = New System.Drawing.Point(223, 116)
+        Me.cmdOutputFolder.Location = New System.Drawing.Point(230, 119)
         Me.cmdOutputFolder.Name = "cmdOutputFolder"
         Me.cmdOutputFolder.Size = New System.Drawing.Size(23, 23)
         Me.cmdOutputFolder.TabIndex = 9
@@ -270,7 +305,7 @@ Partial Class frmMain
         Me.chkRecord.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkRecord.AutoSize = True
         Me.chkRecord.Image = CType(resources.GetObject("chkRecord.Image"), System.Drawing.Image)
-        Me.chkRecord.Location = New System.Drawing.Point(17, 39)
+        Me.chkRecord.Location = New System.Drawing.Point(12, 40)
         Me.chkRecord.Name = "chkRecord"
         Me.chkRecord.Size = New System.Drawing.Size(26, 26)
         Me.chkRecord.TabIndex = 10
@@ -310,6 +345,42 @@ Partial Class frmMain
         Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
         Me.ToolTip1.SetToolTip(Me.tbarModelScale, "Change Model Scale")
         Me.tbarModelScale.Value = 10
+        '
+        'chkReverse
+        '
+        Me.chkReverse.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkReverse.AutoSize = True
+        Me.chkReverse.Enabled = False
+        Me.chkReverse.Image = CType(resources.GetObject("chkReverse.Image"), System.Drawing.Image)
+        Me.chkReverse.Location = New System.Drawing.Point(170, 40)
+        Me.chkReverse.Name = "chkReverse"
+        Me.chkReverse.Size = New System.Drawing.Size(26, 26)
+        Me.chkReverse.TabIndex = 18
+        Me.ToolTip1.SetToolTip(Me.chkReverse, "Rewind to Beginning")
+        Me.chkReverse.UseVisualStyleBackColor = True
+        '
+        'chkFullDataFile
+        '
+        Me.chkFullDataFile.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkFullDataFile.Location = New System.Drawing.Point(121, 40)
+        Me.chkFullDataFile.Name = "chkFullDataFile"
+        Me.chkFullDataFile.Size = New System.Drawing.Size(43, 26)
+        Me.chkFullDataFile.TabIndex = 22
+        Me.chkFullDataFile.Text = "Full"
+        Me.chkFullDataFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolTip1.SetToolTip(Me.chkFullDataFile, "Draw Full Mission")
+        Me.chkFullDataFile.UseVisualStyleBackColor = True
+        Me.chkFullDataFile.Visible = False
+        '
+        'cmdReloadOutputFileList
+        '
+        Me.cmdReloadOutputFileList.Location = New System.Drawing.Point(170, 12)
+        Me.cmdReloadOutputFileList.Name = "cmdReloadOutputFileList"
+        Me.cmdReloadOutputFileList.Size = New System.Drawing.Size(20, 23)
+        Me.cmdReloadOutputFileList.TabIndex = 23
+        Me.cmdReloadOutputFileList.Text = "R"
+        Me.ToolTip1.SetToolTip(Me.cmdReloadOutputFileList, "Reload Output File List")
+        Me.cmdReloadOutputFileList.UseVisualStyleBackColor = True
         '
         'SplitContainer1
         '
@@ -669,6 +740,7 @@ Partial Class frmMain
         Me.tabPortControl.Controls.Add(Me.tabPortComPort)
         Me.tabPortControl.Controls.Add(Me.tabPortDataFile)
         Me.tabPortControl.Controls.Add(Me.tabPortMissions)
+        Me.tabPortControl.Controls.Add(Me.tabPortServos)
         Me.tabPortControl.Location = New System.Drawing.Point(5, 411)
         Me.tabPortControl.Name = "tabPortControl"
         Me.tabPortControl.SelectedIndex = 0
@@ -828,9 +900,10 @@ Partial Class frmMain
         '
         'tabPortDataFile
         '
+        Me.tabPortDataFile.Controls.Add(Me.cmdReloadOutputFileList)
+        Me.tabPortDataFile.Controls.Add(Me.chkFullDataFile)
         Me.tabPortDataFile.Controls.Add(Me.chkStepForward)
         Me.tabPortDataFile.Controls.Add(Me.chkStepBack)
-        Me.tabPortDataFile.Controls.Add(Me.chkFastForward)
         Me.tabPortDataFile.Controls.Add(Me.chkReverse)
         Me.tabPortDataFile.Controls.Add(Me.chkPause)
         Me.tabPortDataFile.Controls.Add(Me.chkPlay)
@@ -848,63 +921,40 @@ Partial Class frmMain
         Me.tabPortDataFile.Text = "Data File"
         Me.tabPortDataFile.UseVisualStyleBackColor = True
         '
-        'chkFastForward
-        '
-        Me.chkFastForward.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkFastForward.AutoSize = True
-        Me.chkFastForward.Enabled = False
-        Me.chkFastForward.Image = CType(resources.GetObject("chkFastForward.Image"), System.Drawing.Image)
-        Me.chkFastForward.Location = New System.Drawing.Point(158, 39)
-        Me.chkFastForward.Name = "chkFastForward"
-        Me.chkFastForward.Size = New System.Drawing.Size(26, 26)
-        Me.chkFastForward.TabIndex = 19
-        Me.chkFastForward.UseVisualStyleBackColor = True
-        '
-        'chkReverse
-        '
-        Me.chkReverse.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkReverse.AutoSize = True
-        Me.chkReverse.Enabled = False
-        Me.chkReverse.Image = CType(resources.GetObject("chkReverse.Image"), System.Drawing.Image)
-        Me.chkReverse.Location = New System.Drawing.Point(131, 39)
-        Me.chkReverse.Name = "chkReverse"
-        Me.chkReverse.Size = New System.Drawing.Size(26, 26)
-        Me.chkReverse.TabIndex = 18
-        Me.chkReverse.UseVisualStyleBackColor = True
-        '
         'cboOutputFiles
         '
         Me.cboOutputFiles.FormattingEnabled = True
-        Me.cboOutputFiles.Location = New System.Drawing.Point(17, 12)
+        Me.cboOutputFiles.Location = New System.Drawing.Point(12, 13)
         Me.cboOutputFiles.Name = "cboOutputFiles"
-        Me.cboOutputFiles.Size = New System.Drawing.Size(137, 21)
+        Me.cboOutputFiles.Size = New System.Drawing.Size(152, 21)
         Me.cboOutputFiles.TabIndex = 13
         '
         'TrackBar1
         '
         Me.TrackBar1.BackColor = System.Drawing.Color.White
         Me.TrackBar1.Enabled = False
-        Me.TrackBar1.Location = New System.Drawing.Point(12, 68)
+        Me.TrackBar1.Location = New System.Drawing.Point(12, 69)
         Me.TrackBar1.Maximum = 9
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(231, 45)
+        Me.TrackBar1.Size = New System.Drawing.Size(241, 45)
         Me.TrackBar1.TabIndex = 12
         Me.TrackBar1.TickStyle = System.Windows.Forms.TickStyle.Both
         '
         'cmdViewFile
         '
-        Me.cmdViewFile.Location = New System.Drawing.Point(160, 10)
+        Me.cmdViewFile.Location = New System.Drawing.Point(192, 12)
         Me.cmdViewFile.Name = "cmdViewFile"
-        Me.cmdViewFile.Size = New System.Drawing.Size(83, 23)
+        Me.cmdViewFile.Size = New System.Drawing.Size(61, 23)
         Me.cmdViewFile.TabIndex = 11
-        Me.cmdViewFile.Text = "View Data File"
+        Me.cmdViewFile.Text = "View File"
         Me.cmdViewFile.UseVisualStyleBackColor = True
         '
         'txtOutputFolder
         '
-        Me.txtOutputFolder.Location = New System.Drawing.Point(12, 119)
+        Me.txtOutputFolder.Enabled = False
+        Me.txtOutputFolder.Location = New System.Drawing.Point(12, 120)
         Me.txtOutputFolder.Name = "txtOutputFolder"
-        Me.txtOutputFolder.Size = New System.Drawing.Size(205, 20)
+        Me.txtOutputFolder.Size = New System.Drawing.Size(212, 20)
         Me.txtOutputFolder.TabIndex = 8
         '
         'tabPortMissions
@@ -938,6 +988,287 @@ Partial Class frmMain
         Me.cboMission.Size = New System.Drawing.Size(141, 21)
         Me.cboMission.Sorted = True
         Me.cboMission.TabIndex = 16
+        '
+        'tabPortServos
+        '
+        Me.tabPortServos.Controls.Add(Me.lblServo8)
+        Me.tabPortServos.Controls.Add(Me.lblServo7)
+        Me.tabPortServos.Controls.Add(Me.lblServo6)
+        Me.tabPortServos.Controls.Add(Me.lblServo5)
+        Me.tabPortServos.Controls.Add(Me.lblServo4)
+        Me.tabPortServos.Controls.Add(Me.lblServo3)
+        Me.tabPortServos.Controls.Add(Me.lblServo2)
+        Me.tabPortServos.Controls.Add(Me.lblServo1)
+        Me.tabPortServos.Controls.Add(Me.Label23)
+        Me.tabPortServos.Controls.Add(Me.Label21)
+        Me.tabPortServos.Controls.Add(Me.Label20)
+        Me.tabPortServos.Controls.Add(Me.Label8)
+        Me.tabPortServos.Controls.Add(Me.Label7)
+        Me.tabPortServos.Controls.Add(Me.Label3)
+        Me.tabPortServos.Controls.Add(Me.Label2)
+        Me.tabPortServos.Controls.Add(Me.Label1)
+        Me.tabPortServos.Controls.Add(Me.tbarServo8)
+        Me.tabPortServos.Controls.Add(Me.tbarServo7)
+        Me.tabPortServos.Controls.Add(Me.tbarServo6)
+        Me.tabPortServos.Controls.Add(Me.tbarServo5)
+        Me.tabPortServos.Controls.Add(Me.tbarServo4)
+        Me.tabPortServos.Controls.Add(Me.tbarServo3)
+        Me.tabPortServos.Controls.Add(Me.tbarServo2)
+        Me.tabPortServos.Controls.Add(Me.tbarServo1)
+        Me.tabPortServos.Location = New System.Drawing.Point(4, 22)
+        Me.tabPortServos.Name = "tabPortServos"
+        Me.tabPortServos.Size = New System.Drawing.Size(264, 153)
+        Me.tabPortServos.TabIndex = 3
+        Me.tabPortServos.Text = "Servos"
+        Me.tabPortServos.UseVisualStyleBackColor = True
+        '
+        'lblServo8
+        '
+        Me.lblServo8.Location = New System.Drawing.Point(207, 134)
+        Me.lblServo8.Name = "lblServo8"
+        Me.lblServo8.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo8.TabIndex = 23
+        Me.lblServo8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo7
+        '
+        Me.lblServo7.Location = New System.Drawing.Point(207, 116)
+        Me.lblServo7.Name = "lblServo7"
+        Me.lblServo7.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo7.TabIndex = 22
+        Me.lblServo7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo6
+        '
+        Me.lblServo6.Location = New System.Drawing.Point(207, 98)
+        Me.lblServo6.Name = "lblServo6"
+        Me.lblServo6.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo6.TabIndex = 21
+        Me.lblServo6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo5
+        '
+        Me.lblServo5.Location = New System.Drawing.Point(207, 80)
+        Me.lblServo5.Name = "lblServo5"
+        Me.lblServo5.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo5.TabIndex = 20
+        Me.lblServo5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo4
+        '
+        Me.lblServo4.Location = New System.Drawing.Point(207, 62)
+        Me.lblServo4.Name = "lblServo4"
+        Me.lblServo4.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo4.TabIndex = 19
+        Me.lblServo4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo3
+        '
+        Me.lblServo3.Location = New System.Drawing.Point(207, 44)
+        Me.lblServo3.Name = "lblServo3"
+        Me.lblServo3.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo3.TabIndex = 18
+        Me.lblServo3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo2
+        '
+        Me.lblServo2.Location = New System.Drawing.Point(207, 26)
+        Me.lblServo2.Name = "lblServo2"
+        Me.lblServo2.Size = New System.Drawing.Size(41, 12)
+        Me.lblServo2.TabIndex = 17
+        Me.lblServo2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblServo1
+        '
+        Me.lblServo1.Location = New System.Drawing.Point(207, 9)
+        Me.lblServo1.Name = "lblServo1"
+        Me.lblServo1.Size = New System.Drawing.Size(41, 11)
+        Me.lblServo1.TabIndex = 16
+        Me.lblServo1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label23
+        '
+        Me.Label23.Location = New System.Drawing.Point(6, 134)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(24, 13)
+        Me.Label23.TabIndex = 15
+        Me.Label23.Text = "S8:"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label21
+        '
+        Me.Label21.Location = New System.Drawing.Point(6, 116)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(24, 13)
+        Me.Label21.TabIndex = 14
+        Me.Label21.Text = "S7:"
+        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label20
+        '
+        Me.Label20.Location = New System.Drawing.Point(6, 98)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(24, 13)
+        Me.Label20.TabIndex = 13
+        Me.Label20.Text = "S6:"
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label8
+        '
+        Me.Label8.Location = New System.Drawing.Point(6, 80)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(24, 13)
+        Me.Label8.TabIndex = 12
+        Me.Label8.Text = "S5:"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label7
+        '
+        Me.Label7.Location = New System.Drawing.Point(6, 62)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(24, 13)
+        Me.Label7.TabIndex = 11
+        Me.Label7.Text = "S4:"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label3
+        '
+        Me.Label3.Location = New System.Drawing.Point(6, 44)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(24, 13)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "S3:"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label2
+        '
+        Me.Label2.Location = New System.Drawing.Point(6, 26)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(24, 13)
+        Me.Label2.TabIndex = 9
+        Me.Label2.Text = "S2:"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(6, 7)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(24, 14)
+        Me.Label1.TabIndex = 8
+        Me.Label1.Text = "S1:"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'tbarServo8
+        '
+        Me.tbarServo8.AutoSize = False
+        Me.tbarServo8.BackColor = System.Drawing.Color.White
+        Me.tbarServo8.LargeChange = 1
+        Me.tbarServo8.Location = New System.Drawing.Point(29, 131)
+        Me.tbarServo8.Maximum = 2000
+        Me.tbarServo8.Minimum = 1000
+        Me.tbarServo8.Name = "tbarServo8"
+        Me.tbarServo8.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo8.TabIndex = 7
+        Me.tbarServo8.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo8.Value = 1000
+        '
+        'tbarServo7
+        '
+        Me.tbarServo7.AutoSize = False
+        Me.tbarServo7.BackColor = System.Drawing.Color.White
+        Me.tbarServo7.LargeChange = 1
+        Me.tbarServo7.Location = New System.Drawing.Point(29, 113)
+        Me.tbarServo7.Maximum = 2000
+        Me.tbarServo7.Minimum = 1000
+        Me.tbarServo7.Name = "tbarServo7"
+        Me.tbarServo7.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo7.TabIndex = 6
+        Me.tbarServo7.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo7.Value = 1000
+        '
+        'tbarServo6
+        '
+        Me.tbarServo6.AutoSize = False
+        Me.tbarServo6.BackColor = System.Drawing.Color.White
+        Me.tbarServo6.LargeChange = 1
+        Me.tbarServo6.Location = New System.Drawing.Point(29, 95)
+        Me.tbarServo6.Maximum = 2000
+        Me.tbarServo6.Minimum = 1000
+        Me.tbarServo6.Name = "tbarServo6"
+        Me.tbarServo6.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo6.TabIndex = 5
+        Me.tbarServo6.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo6.Value = 1000
+        '
+        'tbarServo5
+        '
+        Me.tbarServo5.AutoSize = False
+        Me.tbarServo5.BackColor = System.Drawing.Color.White
+        Me.tbarServo5.LargeChange = 1
+        Me.tbarServo5.Location = New System.Drawing.Point(29, 77)
+        Me.tbarServo5.Maximum = 2000
+        Me.tbarServo5.Minimum = 1000
+        Me.tbarServo5.Name = "tbarServo5"
+        Me.tbarServo5.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo5.TabIndex = 4
+        Me.tbarServo5.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo5.Value = 1000
+        '
+        'tbarServo4
+        '
+        Me.tbarServo4.AutoSize = False
+        Me.tbarServo4.BackColor = System.Drawing.Color.White
+        Me.tbarServo4.LargeChange = 1
+        Me.tbarServo4.Location = New System.Drawing.Point(29, 59)
+        Me.tbarServo4.Maximum = 2000
+        Me.tbarServo4.Minimum = 1000
+        Me.tbarServo4.Name = "tbarServo4"
+        Me.tbarServo4.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo4.TabIndex = 3
+        Me.tbarServo4.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo4.Value = 1000
+        '
+        'tbarServo3
+        '
+        Me.tbarServo3.AutoSize = False
+        Me.tbarServo3.BackColor = System.Drawing.Color.White
+        Me.tbarServo3.LargeChange = 1
+        Me.tbarServo3.Location = New System.Drawing.Point(29, 41)
+        Me.tbarServo3.Maximum = 2000
+        Me.tbarServo3.Minimum = 1000
+        Me.tbarServo3.Name = "tbarServo3"
+        Me.tbarServo3.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo3.TabIndex = 2
+        Me.tbarServo3.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo3.Value = 1000
+        '
+        'tbarServo2
+        '
+        Me.tbarServo2.AutoSize = False
+        Me.tbarServo2.BackColor = System.Drawing.Color.White
+        Me.tbarServo2.LargeChange = 1
+        Me.tbarServo2.Location = New System.Drawing.Point(29, 23)
+        Me.tbarServo2.Maximum = 2000
+        Me.tbarServo2.Minimum = 1000
+        Me.tbarServo2.Name = "tbarServo2"
+        Me.tbarServo2.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo2.TabIndex = 1
+        Me.tbarServo2.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo2.Value = 1000
+        '
+        'tbarServo1
+        '
+        Me.tbarServo1.AutoSize = False
+        Me.tbarServo1.BackColor = System.Drawing.Color.White
+        Me.tbarServo1.LargeChange = 1
+        Me.tbarServo1.Location = New System.Drawing.Point(29, 5)
+        Me.tbarServo1.Maximum = 2000
+        Me.tbarServo1.Minimum = 1000
+        Me.tbarServo1.Name = "tbarServo1"
+        Me.tbarServo1.Size = New System.Drawing.Size(160, 18)
+        Me.tbarServo1.TabIndex = 0
+        Me.tbarServo1.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.tbarServo1.Value = 1000
         '
         'tabInstrumentView
         '
@@ -1408,6 +1739,15 @@ Partial Class frmMain
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPortMissions.ResumeLayout(False)
         Me.tabPortMissions.PerformLayout()
+        Me.tabPortServos.ResumeLayout(False)
+        CType(Me.tbarServo8, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo7, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarServo1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabInstrumentView.ResumeLayout(False)
         Me.tabInstruments.ResumeLayout(False)
         Me.tabSerialData.ResumeLayout(False)
@@ -1501,7 +1841,6 @@ Partial Class frmMain
     Friend WithEvents tabPortDataFile As System.Windows.Forms.TabPage
     Friend WithEvents chkStepForward As System.Windows.Forms.CheckBox
     Friend WithEvents chkStepBack As System.Windows.Forms.CheckBox
-    Friend WithEvents chkFastForward As System.Windows.Forms.CheckBox
     Friend WithEvents chkReverse As System.Windows.Forms.CheckBox
     Friend WithEvents chkPause As System.Windows.Forms.CheckBox
     Friend WithEvents chkPlay As System.Windows.Forms.CheckBox
@@ -1543,4 +1882,31 @@ Partial Class frmMain
     Friend WithEvents mnuAbout As System.Windows.Forms.ToolStripLabel
     Friend WithEvents cmdLiveCameraProperties2 As System.Windows.Forms.Button
     Friend WithEvents cboLiveCameraSelect2 As System.Windows.Forms.ComboBox
+    Friend WithEvents chkFullDataFile As System.Windows.Forms.CheckBox
+    Friend WithEvents cmdReloadOutputFileList As System.Windows.Forms.Button
+    Friend WithEvents tabPortServos As System.Windows.Forms.TabPage
+    Friend WithEvents tbarServo8 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo7 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo6 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo5 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo4 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo3 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo2 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarServo1 As System.Windows.Forms.TrackBar
+    Friend WithEvents Label23 As System.Windows.Forms.Label
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblServo8 As System.Windows.Forms.Label
+    Friend WithEvents lblServo7 As System.Windows.Forms.Label
+    Friend WithEvents lblServo6 As System.Windows.Forms.Label
+    Friend WithEvents lblServo5 As System.Windows.Forms.Label
+    Friend WithEvents lblServo4 As System.Windows.Forms.Label
+    Friend WithEvents lblServo3 As System.Windows.Forms.Label
+    Friend WithEvents lblServo2 As System.Windows.Forms.Label
+    Friend WithEvents lblServo1 As System.Windows.Forms.Label
 End Class
