@@ -14,8 +14,8 @@ Public Class frmSettings
             .Items.Add("EasyStar")
             .Items.Add("FunJet")
             '.Items.Add("-mi- Yellow Plane")
-            '.Items.Add("Firecracker")
-            '.Items.Add("T-Rex 450")
+            .Items.Add("Firecracker")
+            .Items.Add("T-Rex 450")
             .Items.Add("AeroQuad")
             Try
                 .Text = sModelName
@@ -25,7 +25,7 @@ Public Class frmSettings
         End With
 
         With cboMaxSpeed
-            For nCount = 40 To 200 Step 40
+            For nCount = 40 To 280 Step 40
                 .Items.Add(nCount)
             Next
             .Text = nMaxSpeed
@@ -33,10 +33,18 @@ Public Class frmSettings
 
         chkPitchReverse.Checked = bPitchReverse
         chkRollReverse.Checked = bRollReverse
-        chkFlightExtrude.Checked = bFlightExtrude
+        chkYawReverse.Checked = bYawReverse
+        chkHeadingReverse.Checked = bHeadingReverse
 
+        chkFlightExtrude.Checked = bFlightExtrude
         cmdFlightColor.BackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sFlightColor, 7, 2), 16), Convert.ToInt32(Mid(sFlightColor, 5, 2), 16), Convert.ToInt32(Mid(sFlightColor, 3, 2), 16))
         tbarFlightWidth.Value = nFlightWidth
+        tbarFlightOpacity.Value = Convert.ToInt32(Mid(sFlightColor, 1, 2), 16)
+
+        chkMissionExtrude.Checked = bMissionExtrude
+        cmdMissionColor.BackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sMissionColor, 7, 2), 16), Convert.ToInt32(Mid(sMissionColor, 5, 2), 16), Convert.ToInt32(Mid(sMissionColor, 3, 2), 16))
+        tbarMissionWidth.Value = nMissionWidth
+        tbarMissionOpacity.Value = Convert.ToInt32(Mid(sMissionColor, 1, 2), 16)
 
         With cboDistanceUnits
             .Items.Add("Feet")
@@ -62,15 +70,22 @@ Public Class frmSettings
         nMaxSpeed = Convert.ToInt32(cboMaxSpeed.Text)
         bPitchReverse = chkPitchReverse.Checked
         bRollReverse = chkRollReverse.Checked
+        bYawReverse = chkYawReverse.Checked
+        bHeadingReverse = chkHeadingReverse.Checked
 
         nMapUpdateRate = cboMapUpdateRate.SelectedIndex + 1
-        sFlightColor = GetColor(cmdFlightColor.BackColor)
+
+        sFlightColor = GetColor(cmdFlightColor.BackColor, tbarFlightOpacity.Value)
         nFlightWidth = tbarFlightWidth.Value
         bFlightExtrude = chkFlightExtrude.Checked
 
+        sMissionColor = GetColor(cmdMissionColor.BackColor, tbarMissionOpacity.Value)
+        nMissionWidth = tbarMissionWidth.Value
+        bMissionExtrude = chkMissionExtrude.Checked
+
         If cbo3DModel.Text <> sModelName Then
             sModelName = cbo3DModel.Text
-            frmMain._3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nYaw, True, sModelName, GetRootPath() & "3D Models\")
+            frmMain._3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), True, sModelName, GetRootPath() & "3D Models\")
             frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.loadModel))
         End If
 
@@ -107,4 +122,33 @@ Public Class frmSettings
         End If
     End Sub
 
+    Private Sub chkYawReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkYawReverse.CheckedChanged
+        If chkYawReverse.Checked = True Then
+            chkYawReverse.Text = "Reversed"
+        Else
+            chkYawReverse.Text = "Normal"
+        End If
+    End Sub
+
+    Private Sub chkHeadingReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHeadingReverse.CheckedChanged
+        If chkHeadingReverse.Checked = True Then
+            chkHeadingReverse.Text = "Reversed"
+        Else
+            chkHeadingReverse.Text = "Normal"
+        End If
+    End Sub
+
+    Private Sub chkMissionExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkMissionExtrude.CheckedChanged
+        If chkMissionExtrude.Checked = True Then
+            chkMissionExtrude.Text = "Yes"
+        Else
+            chkMissionExtrude.Text = "No"
+        End If
+    End Sub
+
+    Private Sub cmdMissionColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdMissionColor.Click
+        If Me.ColorDialog1.ShowDialog = DialogResult.OK Then
+            cmdMissionColor.BackColor = ColorDialog1.Color
+        End If
+    End Sub
 End Class

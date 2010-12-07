@@ -63,38 +63,40 @@ Namespace AvionicsInstrumentControlDemo
 #Region "Paint"
 
         Protected Overrides Sub OnPaint(ByVal pe As PaintEventArgs)
-            ' Calling the base class OnPaint
-            MyBase.OnPaint(pe)
+            Try
+                ' Calling the base class OnPaint
+                MyBase.OnPaint(pe)
 
-            ' Pre Display computings
+                ' Pre Display computings
 
-            Dim ptBoule As New Point(25, -210)
-            Dim ptRotation As New Point(150, 150)
+                Dim ptBoule As New Point(25, -210)
+                Dim ptRotation As New Point(150, 150)
 
-            Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
+                Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
 
-            Me.BackColor = GetSystemColor("F5F4F1")
+                Me.BackColor = GetSystemColor("F5F4F1")
 
-            ' Affichages - - - - - - - - - - - - - - - - - - - - - - 
+                ' Affichages - - - - - - - - - - - - - - - - - - - - - - 
 
-            bmpCadran.MakeTransparent(Color.Yellow)
-            bmpAvion.MakeTransparent(Color.Yellow)
+                bmpCadran.MakeTransparent(Color.Yellow)
+                bmpAvion.MakeTransparent(Color.Yellow)
 
-            ' display Horizon
-            RotateAndTranslate(pe, bmpBoule, RollAngle, 0, ptBoule, CInt(Math.Truncate(4 * PitchAngle)), _
-             ptRotation, scale)
+                ' display Horizon
+                RotateAndTranslate(pe, bmpBoule, RollAngle, 0, ptBoule, CInt(Math.Truncate(4 * PitchAngle)), _
+                 ptRotation, scale)
 
-            ' diplay mask
-            Dim maskPen As New Pen(Me.BackColor, 30 * scale)
-            pe.Graphics.DrawRectangle(maskPen, 0, 0, bmpCadran.Width * scale, bmpCadran.Height * scale)
+                ' diplay mask
+                Dim maskPen As New Pen(Me.BackColor, 30 * scale)
+                pe.Graphics.DrawRectangle(maskPen, 0, 0, bmpCadran.Width * scale, bmpCadran.Height * scale)
 
-            ' display cadran
-            pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
+                ' display cadran
+                pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
-            ' display aircraft symbol
-            pe.Graphics.DrawImage(bmpAvion, CSng((0.5 * bmpCadran.Width - 0.5 * bmpAvion.Width) * scale), CSng((0.5 * bmpCadran.Height - 0.5 * bmpAvion.Height) * scale), CSng(bmpAvion.Width * scale), CSng(bmpAvion.Height * scale))
+                ' display aircraft symbol
+                pe.Graphics.DrawImage(bmpAvion, CSng((0.5 * bmpCadran.Width - 0.5 * bmpAvion.Width) * scale), CSng((0.5 * bmpCadran.Height - 0.5 * bmpAvion.Height) * scale), CSng(bmpAvion.Width * scale), CSng(bmpAvion.Height * scale))
 
-
+            Catch
+            End Try
         End Sub
 
 #End Region

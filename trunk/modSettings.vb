@@ -4,9 +4,17 @@ Module modSettings
     Public nMaxSpeed As Integer = 120
     Public bPitchReverse As Boolean = False
     Public bRollReverse As Boolean = False
+    Public bYawReverse As Boolean = False
+    Public bHeadingReverse As Boolean = False
+
     Public bFlightExtrude As Boolean = True
     Public sFlightColor As String = "ff00ffff"
     Public nFlightWidth As Integer = 2
+
+    Public bMissionExtrude As Boolean = True
+    Public sMissionColor As String = "ff0000ff"
+    Public nMissionWidth As Integer = 1
+
     Public eDistanceUnits As e_DistanceFormat = e_DistanceFormat.e_DistanceFormat_Feet
     Public eSpeedUnits As e_SpeedFormat = e_SpeedFormat.e_SpeedFormat_MPH
     Public sSpeedUnits As String
@@ -36,11 +44,18 @@ Module modSettings
         nMaxSpeed = GetRegSetting(sRootRegistry & "\Settings", "Max Speed", "120")
         bPitchReverse = GetRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", False)
         bRollReverse = GetRegSetting(sRootRegistry & "\Settings", "Roll Reverse", False)
+        bYawReverse = GetRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", False)
+        bHeadingReverse = GetRegSetting(sRootRegistry & "\Settings", "Heading Reverse", False)
+
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
         bFlightExtrude = GetRegSetting(sRootRegistry & "\Settings", "Flight Extrude", True)
         sFlightColor = GetRegSetting(sRootRegistry & "\Settings", "Flight Color", "FF00FFFF")
         nFlightWidth = GetRegSetting(sRootRegistry & "\Settings", "Flight Width", 2)
+
+        bMissionExtrude = GetRegSetting(sRootRegistry & "\Settings", "Mission Extrude", True)
+        sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "FF0000FF")
+        nMissionWidth = GetRegSetting(sRootRegistry & "\Settings", "Mission Width", 1)
 
         eDistanceUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Distance Units", "0"))
         Select Case eDistanceUnits
@@ -71,9 +86,17 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Max Speed", nMaxSpeed)
         SaveRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", bPitchReverse)
         SaveRegSetting(sRootRegistry & "\Settings", "Roll Reverse", bRollReverse)
+        SaveRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", bYawReverse)
+        SaveRegSetting(sRootRegistry & "\Settings", "Heading Reverse", bHeadingReverse)
+
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Extrude", bFlightExtrude)
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Color", sFlightColor)
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Width", nFlightWidth)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Mission Extrude", bMissionExtrude)
+        SaveRegSetting(sRootRegistry & "\Settings", "Mission Color", sMissionColor)
+        SaveRegSetting(sRootRegistry & "\Settings", "Mission Width", nMissionWidth)
+
         SaveRegSetting(sRootRegistry & "\Settings", "Distance Units", eDistanceUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Speed Units", eSpeedUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Map Update Hz", nMapUpdateRate)
@@ -81,8 +104,8 @@ Module modSettings
         LoadSettings()
     End Sub
 
-    Public Function GetColor(ByVal inputColor As System.Drawing.Color) As String
-        GetColor = Hex(inputColor.A).PadLeft(2, "0")
+    Public Function GetColor(ByVal inputColor As System.Drawing.Color, ByVal opacity As Integer) As String
+        GetColor = Hex(opacity).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.B).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.G).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.R).PadLeft(2, "0")

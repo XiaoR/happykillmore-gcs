@@ -1,9 +1,5 @@
 Public Class frmAbout
     Public bIsSplash As Boolean = False
-    Dim nPitch As Integer = 15
-    Dim nRoll As Integer = 15
-    Dim nHeading As Integer = 70
-    Dim sModelName As String = "EasyStar"
 
     Private Sub lblGoogleCode_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblGoogleCode.Click
         System.Diagnostics.Process.Start(lblGoogleCode.Text)

@@ -10,6 +10,7 @@ Public Class frmMain
     Private theDevice As IBaseFilter = Nothing
     Private theCompressor As IBaseFilter = Nothing
 
+    Dim bShutdown As Boolean = False
 
     Dim nHomeLat As String = ""
     Dim nHomeLong As String
@@ -41,10 +42,12 @@ Public Class frmMain
     Dim nDistance As Single
 
     Dim bStartup As Boolean = True
+    Dim bButtonStateLocked As Boolean = False
 
     Dim bNewGPS As Boolean
     Dim bNewAttitude As Boolean
     Dim bNewWaypoint As Boolean
+    Dim bNewServo As Boolean
     Dim dStartTime As Date
 
     Dim nAttitudeInterval As Integer
@@ -55,6 +58,7 @@ Public Class frmMain
     'Dim nLastGPS As Long
     Dim nLastAlt As Single
     Dim nDataPoints As Long
+    Dim bIsRecording As Boolean = False
 
     Dim sSelectedCamera As String
 
@@ -82,7 +86,7 @@ Public Class frmMain
 
     Dim bExpandInstruments As Boolean = False
 
-    Private Sub SetPlayerState(ByVal newState As e_PlayerState)
+    Private Sub SetPlayerState(ByVal newState As e_PlayerState, Optional ByVal fileExists As Boolean = False, Optional ByVal fullPlay As Boolean = False)
         Dim bRecord As Boolean
         Dim bPlay As Boolean
         Dim bPause As Boolean
@@ -92,8 +96,10 @@ Public Class frmMain
         Dim bStepForward As Boolean
         Dim bLoaded As Boolean
         Dim bRecordReady As Boolean
+        Dim bFullPlay As Boolean
 
         nPlayerState = newState
+        bFullPlay = fullPlay
         Select Case nPlayerState
             Case e_PlayerState.e_PlayerState_None
                 bRecord = False
@@ -105,6 +111,7 @@ Public Class frmMain
                 bStepForward = False
                 bLoaded = False
                 bRecordReady = False
+                bFullPlay = False
             Case e_PlayerState.e_PlayerState_Loaded
                 bRecord = False
                 bPlay = False
@@ -115,6 +122,7 @@ Public Class frmMain
                 bStepForward = False
                 bLoaded = True
                 bRecordReady = True
+                bFullPlay = False
             Case e_PlayerState.e_PlayerState_RecordReady
                 bRecord = False
                 bPlay = False
@@ -125,6 +133,7 @@ Public Class frmMain
                 bStepForward = False
                 bLoaded = False
                 bRecordReady = True
+                bFullPlay = False
             Case e_PlayerState.e_PlayerState_Play
                 bRecord = False
                 bPlay = True
@@ -134,7 +143,7 @@ Public Class frmMain
                 bStepReverse = False
                 bStepForward = False
                 bLoaded = True
-                bRecordReady = True
+                bRecordReady = False
             Case e_PlayerState.e_PlayerState_Record
                 bRecord = True
                 bPlay = False
@@ -143,8 +152,9 @@ Public Class frmMain
                 bFastForward = False
                 bStepReverse = False
                 bStepForward = False
-                bLoaded = True
+                bLoaded = fileExists
                 bRecordReady = True
+                bFullPlay = False
             Case e_PlayerState.e_PlayerState_Pause, e_PlayerState.e_PlayerState_StepBack, e_PlayerState.e_PlayerState_StepForward
                 bRecord = False
                 bPlay = False
@@ -155,21 +165,27 @@ Public Class frmMain
                 bStepForward = False
                 bLoaded = True
                 bRecordReady = True
+                bFullPlay = False
         End Select
 
+        If bRecord = True Then
+            nDataIndex = 0
+            TrackBar1.Value = 0
+        End If
+
+        bButtonStateLocked = True
         chkRecord.Checked = bRecord
         chkPlay.Checked = bPlay
         chkPause.Checked = bPause
         chkReverse.Checked = bReverse
-        chkFastForward.Checked = bFastForward
         chkStepBack.Checked = False
         chkStepForward.Checked = False
+        chkFullDataFile.Checked = bFullPlay
 
         chkRecord.Enabled = bRecordReady
         chkPlay.Enabled = bLoaded
         chkPause.Enabled = bLoaded
-        chkReverse.Enabled = False
-        chkFastForward.Enabled = False
+        chkReverse.Enabled = bLoaded
         If bLoaded = True And nDataIndex > 1 Then
             chkStepBack.Enabled = bLoaded
         Else
@@ -180,8 +196,18 @@ Public Class frmMain
         Else
             chkStepForward.Enabled = False
         End If
+        chkFullDataFile.Enabled = bLoaded
+        If bRecord = True Then
+            chkRecord.Image = My.Resources.AvionicsInstrumentsControlsRessources.StopRed
+            ToolTip1.SetToolTip(chkRecord, "Stop Recording")
+        Else
+            chkRecord.Image = My.Resources.AvionicsInstrumentsControlsRessources.Record
+            ToolTip1.SetToolTip(chkRecord, "Record")
+        End If
         cmdViewFile.Enabled = bLoaded
         TrackBar1.Enabled = bLoaded
+
+        bButtonStateLocked = False
     End Sub
     Private Sub FormClosing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
         Me.Dispose()
@@ -189,6 +215,12 @@ Public Class frmMain
 
     Private Sub frmMain_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Disposed
         Try
+            bShutdown = True
+            If Not sOutputFile Is Nothing Then
+                sOutputFile.Close()
+                sOutputFile = Nothing
+            End If
+
             tmrSearch.Enabled = False
             If serialPortIn.IsOpen = True Then
                 serialPortIn.Close()
@@ -320,6 +352,10 @@ Public Class frmMain
 
         eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth
 
+        frmAbout.UpdateStatus("Loading COM Ports", 50)
+
+        LoadComPorts()
+        SetPlayerState(e_PlayerState.e_PlayerState_None)
 
         With cboBaudRate
             For nCount = LBound(baudRates) To UBound(baudRates)
@@ -327,11 +363,6 @@ Public Class frmMain
             Next
             .Text = GetRegSetting(sRootRegistry & "\Settings", "Baud Rate", "38400")
         End With
-
-        frmAbout.UpdateStatus("Loading COM Ports", 50)
-
-        LoadComPorts()
-        SetPlayerState(e_PlayerState.e_PlayerState_None)
 
         lblGPSLock.Text = ""
         lblSatellites.Text = ""
@@ -377,6 +408,7 @@ Public Class frmMain
     End Sub
     Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "")
         Dim i As Integer
+        Dim sSavedComPort As String
 
         cboComPort.Items.Clear()
         Try
@@ -385,14 +417,17 @@ Public Class frmMain
                     cboComPort.Items.Add(My.Computer.Ports.SerialPortNames(i))
                 End If
             Next
+            sSavedComPort = GetRegSetting(sRootRegistry & "\Settings", "COM Port", "")
             For i = 0 To cboComPort.Items.Count - 1
                 If defaultComPort = "" Then
-                    If My.Computer.Ports.SerialPortNames(i) = GetRegSetting(sRootRegistry & "\Settings", "COM Port", "") Then
-                        cboComPort.Text = GetRegSetting(sRootRegistry & "\Settings", "COM Port", "")
+                    If cboComPort.Items(i) = sSavedComPort Then
+                        cboComPort.Text = sSavedComPort
+                        Exit For
                     End If
                 Else
                     If My.Computer.Ports.SerialPortNames(i) = defaultComPort Then
                         cboComPort.Text = defaultComPort
+                        Exit For
                     End If
                 End If
             Next
@@ -415,10 +450,16 @@ Public Class frmMain
                 .Items.Add(sMission)
                 sMission = Dir()
             Loop
+            sMission = Dir(GetRootPath() & "Missions\*.h", FileAttribute.Normal)
+            Do While sMission <> ""
+                .Items.Add(sMission)
+                sMission = Dir()
+            Loop
         End With
     End Sub
 
-    Private Sub LoadOutputFiles()
+    Private Sub LoadOutputFiles(Optional ByVal selectedFile As String = "")
+        Dim nCount As Int16
         Dim sFilename As String
         With cboOutputFiles
             sFilename = Dir(txtOutputFolder.Text & "*.hko", FileAttribute.Normal)
@@ -432,6 +473,13 @@ Public Class frmMain
                 .Items.Add(sFilename)
                 sFilename = Dir()
             Loop
+
+            For nCount = 0 To .Items.Count - 1
+                If selectedFile = .Items(nCount).ToString Then
+                    .SelectedIndex = nCount
+                    Exit For
+                End If
+            Next
         End With
     End Sub
     Private Sub cmdOutputFolder_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOutputFolder.Click
@@ -440,7 +488,7 @@ Public Class frmMain
             .ShowNewFolderButton = True
             .ShowDialog()
             If .SelectedPath <> "" Then
-                txtOutputFolder.Text = .SelectedPath
+                txtOutputFolder.Text = .SelectedPath & "\"
                 Call SaveRegSetting(sRootRegistry & "\Settings", "OutputFolder", txtOutputFolder.Text)
             End If
         End With
@@ -507,24 +555,27 @@ Public Class frmMain
                     For nCount = 0 To UBound(rawData)
                         If Microsoft.VisualBasic.Left(rawData(nCount), 3) = "F2:" Then
                             If Microsoft.VisualBasic.Left(rawData(nCount), 6) <> "F2:T0:" Then
-                                sTemp = Mid(rawData(nCount), 5)
-                                sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
-                                dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(Now.ToString("MM/dd/yyyy") & " 12:00:00AM"))
-                                dStartTime = DateAdd(DateInterval.Second, Convert.ToInt32(sTemp / 1000), dWeekStart)
-                                Exit For
+                                Try
+                                    sTemp = Mid(rawData(nCount), 5)
+                                    sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
+                                    dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(FormatDateTime(Now, DateFormat.ShortDate) & " 12:00:00AM"))
+                                    dStartTime = DateAdd(DateInterval.Second, Convert.ToInt32(sTemp / 1000), dWeekStart)
+                                    Exit For
+                                Catch
+                                End Try
                             End If
                         End If
                     Next nCount
                 End If
 
-                nDataIndex = 1
+                nDataIndex = 0
 
                 TrackBar1.Maximum = UBound(rawData)
                 If nDataIndex <= UBound(rawData) Then
                     TrackBar1.Value = nDataIndex
                 End If
 
-                TrackBar1.TickFrequency = UBound(rawData) / 10
+                TrackBar1.TickFrequency = (UBound(rawData) - 1) / 10
 
                 TrackBar1.Enabled = True
                 chkPlay.Enabled = True
@@ -540,17 +591,61 @@ Public Class frmMain
             End If
         End If
     End Function
+
+    Private Sub cboOutputFiles_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboOutputFiles.LostFocus
+        Dim sTemp As String
+
+        sTemp = Trim(cboOutputFiles.Text)
+        If sTemp <> "" Then
+            sTemp = Replace(sTemp, "\", "")
+            sTemp = Replace(sTemp, "/", "")
+            If InStr(sTemp, ".") = 0 Then
+                sTemp = sTemp & ".hko"
+            End If
+        End If
+        cboOutputFiles.Text = sTemp
+    End Sub
     Private Sub cboOutputFiles_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboOutputFiles.SelectedIndexChanged
-        LoadDataFile(txtOutputFolder.Text & cboOutputFiles.Text)
-        SetPlayerState(e_PlayerState.e_PlayerState_Loaded)
+        'tmrPlayback.Enabled = False
+        'SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        'LoadDataFile(txtOutputFolder.Text & cboOutputFiles.Text)
+        'SetPlayerState(e_PlayerState.e_PlayerState_Loaded)
+    End Sub
+    Private Sub SetServoSlider(ByVal inputControl As TrackBar, ByVal inputLabel As Label, ByVal value As Integer)
+        With inputControl
+            If value < .Minimum Then
+                .Value = .Minimum
+                inputLabel.ForeColor = Color.Red
+            ElseIf value > .Maximum Then
+                .Value = .Maximum
+                inputLabel.ForeColor = Color.Red
+            Else
+                inputLabel.ForeColor = Color.Black
+                .Value = value
+            End If
+        End With
+        If value = 0 Then
+            inputLabel.Text = ""
+        Else
+            inputLabel.Text = value
+        End If
     End Sub
 
     Private Sub GpS_Parser1_AttitudeChange1(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single)
         Try
             'WebBrowser1.Invoke(New MyDelegate(AddressOf updateAttitude))
-            AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(IIf(bPitchReverse = True, -1, 1) * -pitch, IIf(bRollReverse = True, -1, 1) * roll)
+            AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(GetPitch(-pitch), GetRoll(roll))
             'TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(-roll, 0, "TURN COORDINATOR", "L", "R")
-            _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * pitch, IIf(bRollReverse = True, -1, 1) * roll, yaw)
+            _3DMesh1.DrawMesh(GetPitch(pitch), GetRoll(roll), GetYaw(yaw))
+
+            SetServoSlider(tbarServo1, lblServo1, nServo1)
+            SetServoSlider(tbarServo2, lblServo2, nServo2)
+            SetServoSlider(tbarServo3, lblServo3, nServo3)
+            SetServoSlider(tbarServo4, lblServo4, nServo4)
+            SetServoSlider(tbarServo5, lblServo5, nServo5)
+            SetServoSlider(tbarServo6, lblServo6, nServo6)
+            SetServoSlider(tbarServo7, lblServo7, nServo7)
+            SetServoSlider(tbarServo8, lblServo8, nServo8)
         Catch
         End Try
     End Sub
@@ -581,7 +676,7 @@ Public Class frmMain
                     If Microsoft.VisualBasic.Left(rawData(nCount), 6) <> "F2:T0:" Then
                         sTemp = Mid(rawData(nCount), 5)
                         sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
-                        dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(Now.ToString("MM/dd/yyyy") & " 12:00:00AM"))
+                        dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(FormatDateTime(Now, DateFormat.ShortDate) & " 12:00:00AM"))
                         GetNextFileTime = DateAdd(DateInterval.Second, Convert.ToInt32(sTemp / 1000), dWeekStart)
                         'Debug.Print("Next File Time = " & GetNextFileTime & ",Added = " & Convert.ToInt32(sTemp / 1000))
                         Exit For
@@ -595,30 +690,32 @@ Public Class frmMain
         Dim dNextTime As Date
         Try
 
-            AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(groundSpeed, nMaxSpeed, "Speed", sSpeedUnits, airSpeed)
-            AltimeterInstrumentControl1.SetAlimeterParameters(altitude, sDistanceUnits)
-            HeadingIndicatorInstrumentControl1.SetHeadingIndicatorParameters(heading)
-            VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(verticalChange, "vertical speed", "up", "down", "100ft/min")
-            _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nHeading)
+            If chkFullDataFile.Checked = False Then
+                AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(groundSpeed, nMaxSpeed, "Speed", sSpeedUnits, airSpeed)
+                AltimeterInstrumentControl1.SetAlimeterParameters(altitude, sDistanceUnits)
+                HeadingIndicatorInstrumentControl1.SetHeadingIndicatorParameters(GetHeading(heading))
+                VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(verticalChange, "vertical speed", "up", "down", "100ft/min")
+                _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw))
 
-            Select Case fix
-                Case 0
-                    lblGPSLock.Text = "Not Locked"
-                Case 1
-                    lblGPSLock.Text = "Locked"
-                Case 2
-                    lblGPSLock.Text = "2D Lock"
-                Case Else
-                    lblGPSLock.Text = "3D Lock"
-            End Select
-            lblSatellites.Text = satellites
-            lblHDOP.Text = hdop
+                Select Case fix
+                    Case 0
+                        lblGPSLock.Text = "Not Locked"
+                    Case 1
+                        lblGPSLock.Text = "Locked"
+                    Case 2
+                        lblGPSLock.Text = "2D Lock"
+                    Case Else
+                        lblGPSLock.Text = "3D Lock"
+                End Select
+                lblSatellites.Text = satellites
+                lblHDOP.Text = hdop
 
-            If Not latitude Is Nothing Then
-                lblLatitude.Text = Convert.ToDouble(latitude).ToString("0.000000")
-            End If
-            If Not longitude Is Nothing Then
-                lblLongitude.Text = Convert.ToDouble(longitude).ToString("0.000000")
+                If Not latitude Is Nothing Then
+                    lblLatitude.Text = Convert.ToDouble(latitude).ToString("0.000000")
+                End If
+                If Not longitude Is Nothing Then
+                    lblLongitude.Text = Convert.ToDouble(longitude).ToString("0.000000")
+                End If
             End If
 
             lblDataPoints.Text = nDataPoints.ToString("###,##0")
@@ -711,7 +808,7 @@ Public Class frmMain
     Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelName, tbarModelScale.Value, nPitch, nRoll, nCameraTracking})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -725,7 +822,7 @@ Public Class frmMain
     End Sub
     Public Sub addWaypoint()
         Try
-            webDocument.InvokeScript("addWaypoint", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), nWaypoint.ToString.PadLeft(2, "0")})
+            webDocument.InvokeScript("addWaypoint", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), nWaypoint.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
         Catch e2 As Exception
         End Try
     End Sub
@@ -743,20 +840,20 @@ Public Class frmMain
     End Sub
     Public Sub updateAttitude()
         Try
-            webDocument.InvokeScript("updateAttitude", New Object() {nHeading, IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll})
+            webDocument.InvokeScript("updateAttitude", New Object() {GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
         Catch e2 As Exception
         End Try
     End Sub
     Public Sub setPlaneLocation()
         Try
-            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), nHeading, IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll})
+            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
     End Sub
 
     Private Sub GpS_Parser1_RawPacket(ByVal messageString As String)
-        If chkRecord.Checked = True Then
+        If bIsRecording = True Then
             If Not sOutputFile Is Nothing Then
                 sOutputFile.WriteLine(Now.Ticks & ":" & messageString & Chr(255))
             End If
@@ -795,16 +892,20 @@ Public Class frmMain
         nDataPoints = nDataIndex
 
         'System.Diagnostics.Debug.Print(GetMessageTime(nDataIndex + 1) - GetMessageTime(nDataIndex))
-        If GetMessageTime(nDataIndex + 1) > 0 And tmrPlayback.Enabled = True Then
-            nLastTime = GetMessageTime(nDataIndex)
-            nThisTime = GetMessageTime(nDataIndex + 1)
-            If nLastTime = 0 Then
-                nLastTime = nThisTime
-            End If
-            tmrPlayback.Interval = ((nThisTime - nLastTime) / 10000) + 1
-            'Debug.Print("Interval=" & tmrPlayback.Interval)
+        If chkFullDataFile.Checked = True Then
+            tmrPlayback.Interval = 75
         Else
-            tmrPlayback.Interval = 5
+            If GetMessageTime(nDataIndex + 1) > 0 And tmrPlayback.Enabled = True Then
+                nLastTime = GetMessageTime(nDataIndex)
+                nThisTime = GetMessageTime(nDataIndex + 1)
+                If nLastTime = 0 Or nThisTime < nLastTime Then
+                    nLastTime = nThisTime
+                End If
+                tmrPlayback.Interval = ((nThisTime - nLastTime) / 10000) + 1
+                'Debug.Print("Interval=" & tmrPlayback.Interval)
+            Else
+                tmrPlayback.Interval = 5
+            End If
         End If
         'If tmrPlayback.Interval = 0 Or tmrPlayback.Interval > 5000 Then
         '    Debug.Print("Error Interval=" & tmrPlayback.Interval)
@@ -822,6 +923,7 @@ Public Class frmMain
     Private Function GetMessageTime(ByVal index As Long) As Long
 
         Dim sTemp As String
+        Dim nSeconds As Int32
         Dim dWeekStart As Date
 
         If eMissionFileType = e_MissionFileType.e_MissionFileType_GCS Then
@@ -831,14 +933,20 @@ Public Class frmMain
                 GetMessageTime = Mid(rawData(index), 1, InStr(rawData(index), ":") - 1)
             End If
         ElseIf eMissionFileType = e_MissionFileType.e_MissionFileType_UDB Then
-            If Microsoft.VisualBasic.Left(rawData(index), 3) = "F2:" Then
-                If Microsoft.VisualBasic.Left(rawData(index), 6) = "F2:T0:" Then
-                    GetMessageTime = 0
+            If index < UBound(rawData) Then
+                If Microsoft.VisualBasic.Left(rawData(index), 3) = "F2:" Then
+                    If Microsoft.VisualBasic.Left(rawData(index), 6) = "F2:T0:" Then
+                        GetMessageTime = 0
+                    Else
+                        sTemp = Mid(rawData(index), 5)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
+                        dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(FormatDateTime(Now, DateFormat.ShortDate) & " 12:00:00AM"))
+                        nSeconds = Convert.ToInt32(Mid(Convert.ToDouble(sTemp / 1000).ToString, 1, Len(sTemp) - 3))
+                        GetMessageTime = DateAdd(DateInterval.Second, nSeconds, dWeekStart).Ticks
+                        GetMessageTime = GetMessageTime + (Convert.ToInt32(Microsoft.VisualBasic.Right(sTemp, 3)) * 10000)
+                    End If
                 Else
-                    sTemp = Mid(rawData(index), 5)
-                    sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
-                    dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(Now.ToString("MM/dd/yyyy") & " 12:00:00AM"))
-                    GetMessageTime = DateAdd(DateInterval.Second, Convert.ToInt32(sTemp / 1000), dWeekStart).Ticks
+                    GetMessageTime = 0
                 End If
             Else
                 GetMessageTime = 0
@@ -855,6 +963,10 @@ Public Class frmMain
         Dim nExistingLen As Integer
         Dim nOldTop As Long
         Dim nBandwith As Single
+
+        If bShutdown = True Then
+            Exit Sub
+        End If
 
         bWasSearching = tmrSearch.Enabled
         If bWasSearching Then
@@ -973,6 +1085,23 @@ Public Class frmMain
         Dim nCount As Integer
         Dim nAltChange As Single
         Dim sTemp As String
+        Dim nYawComponent1 As Single
+
+        Dim bFireAttitude As Boolean = False
+        Dim bFireGPS As Boolean = False
+        Dim bFireWaypoint As Boolean = False
+
+        If Now.Ticks - nLastAttitude > (1000 / (cboAttitude.SelectedIndex)) * 10000 And cboAttitude.SelectedIndex <> 0 Then
+            bFireAttitude = True
+        End If
+
+        If Now.Ticks - nLastGPS > (1000 / (cboGPS.SelectedIndex)) * 10000 And cboGPS.SelectedIndex <> 0 Then
+            bFireGPS = True
+        End If
+
+        If Now.Ticks - nLastWaypoint > (1000 / (cboWaypoint.SelectedIndex)) * 10000 And cboWaypoint.SelectedIndex <> 0 Then
+            bFireWaypoint = True
+        End If
 
         GpS_Parser1_RawPacket(oMessage.RawMessage)
         If serialPortIn.IsOpen = False Then
@@ -987,383 +1116,509 @@ Public Class frmMain
         Catch
         End Try
 
-
         With oMessage
-            Select Case .MessageType
-                Case cMessage.e_MessageType.e_MessageType_NMEA
-                    lblGPSType.Text = "NMEA"
-                    sSplit = Split(.Packet, ",")
-                    lblGPSMessage.Text = UCase(sSplit(0))
-                    Select Case UCase(sSplit(0))
-                        Case "GPRMC"
-                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
-                            If sSplit(4) = "S" Then
-                                nLatitude = nLatitude * -1
-                            End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(5)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
-                            If sSplit(6) = "W" Then
-                                nLongitude = nLongitude * -1
-                            End If
-                            nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_Knots, eSpeedUnits)
-                            nHeading = Convert.ToSingle(sSplit(8))
-                            bNewGPS = True
-                        Case "GPGGA"
-                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(2)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
-                            If sSplit(3) = "S" Then
-                                nLatitude = nLatitude * -1
-                            End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(4)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
-                            If sSplit(5) = "W" Then
-                                nLongitude = nLongitude * -1
-                            End If
-                            nFix = Convert.ToInt32(sSplit(6))
-                            nSats = Convert.ToSingle(sSplit(7))
-                            nHDOP = Convert.ToSingle(sSplit(8))
-                            nAltitude = ConvertDistance(sSplit(9), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                            bNewGPS = True
-                        Case "GPGLL"
-                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(1)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
-                            If sSplit(2) = "S" Then
-                                nLatitude = nLatitude * -1
-                            End If
-                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
-                            If sSplit(4) = "W" Then
-                                nLongitude = nLongitude * -1
-                            End If
-                            bNewGPS = True
-                        Case "GPVTG"
-                            nHeading = Convert.ToSingle(sSplit(1))
-                            nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
-                            bNewGPS = True
-                    End Select
+            If .ValidMessage = True Then
+                Select Case .MessageType
+                    Case cMessage.e_MessageType.e_MessageType_NMEA
+                        lblGPSType.Text = "NMEA"
+                        sSplit = Split(.Packet, ",")
+                        lblGPSMessage.Text = UCase(sSplit(0))
+                        Select Case UCase(sSplit(0))
+                            Case "GPRMC"
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                If sSplit(4) = "S" Then
+                                    nLatitude = nLatitude * -1
+                                End If
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(5)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                If sSplit(6) = "W" Then
+                                    nLongitude = nLongitude * -1
+                                End If
+                                nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_Knots, eSpeedUnits)
+                                nHeading = Convert.ToSingle(sSplit(8))
+                                nYaw = nHeading
+                                bNewGPS = True
+                            Case "GPGGA"
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(2)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                If sSplit(3) = "S" Then
+                                    nLatitude = nLatitude * -1
+                                End If
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(4)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                If sSplit(5) = "W" Then
+                                    nLongitude = nLongitude * -1
+                                End If
+                                nFix = Convert.ToInt32(sSplit(6))
+                                nSats = Convert.ToSingle(sSplit(7))
+                                nHDOP = Convert.ToSingle(sSplit(8))
+                                nAltitude = ConvertDistance(sSplit(9), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                bNewGPS = True
+                            Case "GPGLL"
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(1)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                If sSplit(2) = "S" Then
+                                    nLatitude = nLatitude * -1
+                                End If
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                If sSplit(4) = "W" Then
+                                    nLongitude = nLongitude * -1
+                                End If
+                                bNewGPS = True
+                            Case "GPVTG"
+                                nHeading = Convert.ToSingle(sSplit(1))
+                                nYaw = nHeading
+                                nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                                bNewGPS = True
+                        End Select
 
-                Case cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
-                    nWaypointTotal = Convert.ToInt32(Trim(Mid(.Packet, 10)))
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
+                        nWaypointTotal = Convert.ToInt32(Trim(Mid(.Packet, 10)))
 
-                Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
-                    sSplit = Split(.Packet, vbTab)
-                    nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                    nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                    nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
-
-                    WebBrowser1.Invoke(New MyDelegate(AddressOf setHomeLatLng))
-
-                Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
-                    sSplit = Split(.Packet, vbTab)
-                    nWaypoint = Convert.ToUInt32(Trim(Mid(sSplit(0), 5, 2)))
-                    nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                    nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                    nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
-                    'nAltitude = Convert.ToSingle(sSplit(3)) / 100
-
-                    WebBrowser1.Invoke(New MyDelegate(AddressOf addWaypoint))
-
-                    If nWaypoint = nWaypointTotal Then
-                        WebBrowser1.Invoke(New MyDelegate(AddressOf drawHomeLine))
-                    End If
-
-                Case cMessage.e_MessageType.e_MessageType_MediaTek
-                    lblGPSType.Text = "MediaTek/MTK"
-                    lblGPSMessage.Text = "Custom Binary"
-                    nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 3, 4), False) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                    nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 7, 4), False) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                    nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 11, 4), False) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                    nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 15, 4), False) / 27.7777778, e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
-                    nHeading = ConvertHexToDec(Mid(.Packet, 19, 4), False) / 1000000
-                    nSats = ConvertHexToDec(Mid(.Packet, 23, 1), False)
-                    nFix = ConvertHexToDec(Mid(.Packet, 24, 1), False) - 1
-                    bNewGPS = True
-
-                Case cMessage.e_MessageType.e_MessageType_uBlox
-                    lblGPSType.Text = "uBlox Binary"
-                    Select Case Asc(Mid(.Packet, 2, 1))
-                        Case 2 'NAV_POSLLH
-                            lblGPSMessage.Text = "NAV_POSLLH"
-                            nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 9, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                            nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 13, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                            nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 17, 4)) / 1000, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                            bNewGPS = True
-                        Case 18 'NAV_VELNED
-                            lblGPSMessage.Text = "NAV_VELNED"
-                            nGroundSpeed = (ConvertSpeed(ConvertHexToDec(Mid(.Packet, 25, 4)) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)).ToString("#.0")
-                            nHeading = (ConvertHexToDec(Mid(.Packet, 29, 4)) / 100000).ToString("#.0")
-                            bNewGPS = True
-                        Case 3 'NAV_STATUS
-                            lblGPSMessage.Text = "NAV_STATUS"
-                            nFix = ConvertHexToDec(Mid(.Packet, 9, 1))
-                            bNewGPS = True
-                        Case 6 'NAV_SOL
-                            lblGPSMessage.Text = "NAV_SOL"
-                            nSats = ConvertHexToDec(Mid(.Packet, 52, 1))
-                            bNewGPS = True
-                        Case 4 'NAV_DOP
-                            lblGPSMessage.Text = "NAV_DOP"
-                            nHDOP = ConvertHexToDec(Mid(.Packet, 17, 2)) / 100
-                            bNewGPS = True
-                    End Select
-
-                Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
-                    lblGPSType.Text = "ArduPilot ASCII"
-                    lblGPSMessage.Text = "Mode Change"
-                    If InStr(.Packet, vbTab) <> 0 Then
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
                         sSplit = Split(.Packet, vbTab)
-                        sMode = sSplit(0)
-                        sModeNumber = sSplit(1)
-                    Else
-                        sMode = .Packet
-                    End If
-                    bNewWaypoint = True
+                        nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                        nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                        nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
 
-                Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude, cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
-                    lblGPSType.Text = "ArduPilot ASCII"
-                    lblGPSMessage.Text = "ArduPilot Message"
-                    sSplit = Split(.Packet, ",")
-                    Try
-                        For nCount = 0 To UBound(sSplit)
-                            sValues = Split(sSplit(nCount), ":")
-                            Select Case UCase(sValues(0))
-                                Case "RLL"
-                                    nRoll = -Convert.ToSingle(sValues(1))
-                                    bNewAttitude = True
-                                Case "PCH"
-                                    nPitch = -Convert.ToSingle(sValues(1))
-                                    bNewAttitude = True
-                                Case "CRS", "COG"
-                                    nHeading = Convert.ToSingle(sValues(1))
-                                    If nHeading < 0 Then
-                                        nHeading = nHeading + 360
-                                    End If
-                                    nYaw = nHeading
-                                    bNewAttitude = True
+                        WebBrowser1.Invoke(New MyDelegate(AddressOf setHomeLatLng))
 
-                                Case "LAT"
-                                    nLatitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                                    bNewGPS = True
-                                Case "LON"
-                                    nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                                    bNewGPS = True
-                                Case "SOG", "SPD"
-                                    nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                    bNewGPS = True
-                                Case "ASP"
-                                    nAirSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                    bNewGPS = True
-                                Case "FIX", "LOC"
-                                    nFix = System.Math.Abs(Convert.ToInt32(sValues(1)) - 1)
-                                    bNewGPS = True
-                                Case "ALT"
-                                    nAltitude = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                    bNewGPS = True
-                                Case "SAT"
-                                    nSats = Convert.ToInt32(sValues(1))
-                                    bNewGPS = True
-                                Case "BTV"
-                                    nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
-                                    bNewWaypoint = True
-                                Case "HDO"
-                                    nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
-                                    bNewGPS = True
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
+                        sSplit = Split(.Packet, vbTab)
+                        nWaypoint = Convert.ToUInt32(Trim(Mid(sSplit(0), 5, 2)))
+                        nLatitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(1)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                        nLongitude = ConvertLatLongFormat((Convert.ToDouble(sSplit(2)) / 10000000), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                        nAltitude = ConvertDistance(Convert.ToSingle(sSplit(3)) / 100, e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet)
+                        'nAltitude = Convert.ToSingle(sSplit(3)) / 100
 
-                                Case "TXS", "STT"
-                                    sModeNumber = sValues(1)
-                                    'sMode = ""
-                                    bNewWaypoint = True
-                                Case "WPN"
-                                    nWaypoint = Convert.ToInt32(sValues(1))
-                                    bNewWaypoint = True
-                                Case "THH"
-                                    nThrottle = Convert.ToString(sValues(1))
-                                    bNewWaypoint = True
-                                Case "DST"
-                                    nDistance = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                    bNewWaypoint = True
-                                Case "ALH"
-                                    nWaypointAlt = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                    bNewWaypoint = True
-                            End Select
-                        Next
-                    Catch
-                    End Try
+                        WebBrowser1.Invoke(New MyDelegate(AddressOf addWaypoint))
 
-                Case cMessage.e_MessageType.e_MessageType_UDB
-                    lblGPSType.Text = "Type F2"
-                    sSplit = Split(.Packet, ":")
-                    Try
-                        'Debug.Print("Time = " & sSplit(0))
-                        For nCount = 1 To UBound(sSplit) - 1
-                            Select Case nCount
-                                Case 1
-                                    nFix = Convert.ToInt32(Mid(sSplit(nCount), 3, 1) = "1")
-                                    If Mid(sSplit(nCount), 4, 1) = "1" Then
-                                        sMode = "Autonomous"
-                                    Else
-                                        sMode = "Manual"
-                                    End If
-                                Case 2
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nLatitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                                Case 3
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nLongitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                                Case 4
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nAltitude = ConvertDistance(Convert.ToDouble(sTemp) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                Case 5
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nWaypoint = Convert.ToInt32(sTemp)
-                                Case 15
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nHeading = Convert.ToSingle(sTemp) / 100
-                                    'Debug.Print("Heading = " & nHeading)
-                                    If nHeading < 0 Then
-                                        nHeading = nHeading + 360
-                                    End If
-                                    nYaw = nHeading
-                                Case 16
-                                    sTemp = Mid(sSplit(nCount), 2)
-                                    nGroundSpeed = ConvertSpeed(Convert.ToSingle(sTemp) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                Case 18
-                                    sTemp = Mid(sSplit(nCount), 4)
-                                    If sTemp <> "" And sTemp <> "0" Then
-                                        nBattery = (Convert.ToSingle(sTemp) / 1000).ToString("#.00")
-                                    Else
-                                        nBattery = 0
-                                    End If
-                                Case 19
-                                    sTemp = Mid(sSplit(nCount), 3)
-                                    If sTemp <> "" And sTemp <> "0" Then
-                                        nAirSpeed = ConvertSpeed(Convert.ToSingle(sTemp) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                    Else
-                                        nAirSpeed = 0
-                                    End If
-                                Case 26
-                                    sTemp = Mid(sSplit(nCount), 4)
-                                    If sTemp <> "" Then
-                                        nSats = Convert.ToInt32(sTemp)
-                                    Else
-                                        nSats = 0
-                                    End If
-                                Case 27
-                                    sTemp = Mid(sSplit(nCount), 3)
-                                    If sTemp <> "" And sTemp <> "0" Then
-                                        nHDOP = (Convert.ToSingle(sTemp) / 5).ToString("#.00")
-                                    Else
-                                        nHDOP = 0
-                                    End If
-                                Case 39
-                                    sTemp = Mid(sSplit(nCount), 4)
-                                    nPitch = -Convert.ToSingle(sTemp) / 10
-                                Case 40
-                                    sTemp = Mid(sSplit(nCount), 4)
-                                    nRoll = -Convert.ToSingle(sTemp) / 10
-                                Case 41
-                                    sTemp = Mid(sSplit(nCount), 4)
-                                    'nYaw = Convert.ToSingle(sTemp)
-                                    'If nYaw < 0 Then
-                                    '    nYaw = nYaw + 360
-                                    'End If
-                            End Select
-                        Next nCount
+                        If nWaypoint = nWaypointTotal Then
+                            WebBrowser1.Invoke(New MyDelegate(AddressOf drawHomeLine))
+                        End If
+
+                    Case cMessage.e_MessageType.e_MessageType_MediaTek
+                        lblGPSType.Text = "MediaTek/MTK"
+                        lblGPSMessage.Text = "Custom Binary"
+                        nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 3, 4), False) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                        nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 7, 4), False) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                        nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 11, 4), False) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                        nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 15, 4), False) / 27.7777778, e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                        nHeading = ConvertHexToDec(Mid(.Packet, 19, 4), False) / 1000000
+                        nYaw = nHeading
+                        nSats = ConvertHexToDec(Mid(.Packet, 23, 1), False)
+                        nFix = ConvertHexToDec(Mid(.Packet, 24, 1), False) - 1
                         bNewGPS = True
-                        bNewAttitude = True
-                        bNewWaypoint = True
-                    Catch e2 As Exception
-                        Debug.Print(e2.Message)
-                    End Try
 
+                    Case cMessage.e_MessageType.e_MessageType_uBlox
+                        lblGPSType.Text = "uBlox Binary"
+                        Select Case Asc(Mid(.Packet, 2, 1))
+                            Case 2 'NAV_POSLLH
+                                lblGPSMessage.Text = "NAV_POSLLH"
+                                nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 9, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 13, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 17, 4)) / 1000, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                bNewGPS = True
+                            Case 18 'NAV_VELNED
+                                lblGPSMessage.Text = "NAV_VELNED"
+                                nGroundSpeed = (ConvertSpeed(ConvertHexToDec(Mid(.Packet, 25, 4)) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)).ToString("#.0")
+                                nHeading = (ConvertHexToDec(Mid(.Packet, 29, 4)) / 100000).ToString("#.0")
+                                nYaw = nHeading
+                                bNewGPS = True
+                            Case 3 'NAV_STATUS
+                                lblGPSMessage.Text = "NAV_STATUS"
+                                nFix = ConvertHexToDec(Mid(.Packet, 9, 1))
+                                bNewGPS = True
+                            Case 6 'NAV_SOL
+                                lblGPSMessage.Text = "NAV_SOL"
+                                nSats = ConvertHexToDec(Mid(.Packet, 52, 1))
+                                bNewGPS = True
+                            Case 4 'NAV_DOP
+                                lblGPSMessage.Text = "NAV_DOP"
+                                nHDOP = ConvertHexToDec(Mid(.Packet, 17, 2)) / 100
+                                bNewGPS = True
+                        End Select
 
-                Case cMessage.e_MessageType.e_MessageType_SiRF
-                    lblGPSType.Text = "SiRF"
-                    Select Case .ID
-                        Case 91
-                            lblGPSMessage.Text = "Geonavigation Data"
-                            nFix = ConvertHexToDec(Mid(.Packet, 4, 1)) And 3
-                            nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 24, 4), False) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                            nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 28, 4), False) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                            nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 36, 4), False) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                            nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 41, 2), False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                            nHeading = ConvertHexToDec(Mid(.Packet, 43, 2), False, False) / 100
-                            nSats = ConvertHexToDec(Mid(.Packet, 89, 1))
-                            nHDOP = ConvertHexToDec(Mid(.Packet, 90, 1)) / 5
-                            bNewGPS = True
-                    End Select
-
-                Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
-                    lblGPSType.Text = "ArduIMU Binary"
-                    Select Case Asc(Mid(.Packet, 2, 1))
-                        Case 2
-                            lblGPSMessage.Text = "Attitude Data"
-                            nRoll = ConvertHexToDec(Mid(.Packet, 3, 2)) / 100
-                            nPitch = ConvertHexToDec(Mid(.Packet, 5, 2)) / 100
-                            nYaw = ConvertHexToDec(Mid(.Packet, 7, 2)) / 100
-                            bNewAttitude = True
-                        Case 3
-                            lblGPSMessage.Text = "GPS Data"
-                            nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 3, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                            nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 7, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                            nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 11, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                            'System.Diagnostics.Debug.Print("Speed=" & ConvertHexToDec(Mid(.Packet, 13, 2)) / 100)
-                            nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 13, 2), , False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                            nHeading = ConvertHexToDec(Mid(.Packet, 15, 2), , False) / 100
-                            If .PacketLength >= 31 Then
-                                nSats = Asc(Mid(.Packet, 30))
-                                nFix = Asc(Mid(.Packet, 31))
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
+                        lblGPSType.Text = "ArduPilot ASCII"
+                        lblGPSMessage.Text = "Mode Change"
+                        If bFireWaypoint = True Then
+                            If InStr(.Packet, vbTab) <> 0 Then
+                                sSplit = Split(.Packet, vbTab)
+                                sMode = sSplit(0)
+                                sModeNumber = sSplit(1)
+                            Else
+                                sMode = .Packet
                             End If
-                            bNewGPS = True
-
-                            'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
-                    End Select
-
-                Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
-                    lblGPSType.Text = "AP Mega Binary"
-                    Select Case Asc(Mid(.Packet, 2, 1))
-                        Case 1
-                            System.Diagnostics.Debug.Print(oMessage.VisibleSentence)
-                            lblGPSMessage.Text = "Heatbeat Data"
-                            sModeNumber = Asc(Mid(.Packet, 3, 1))
-                            nBattery = Convert.ToSingle(Asc(Mid(.Packet, 6, 2)) / 100).ToString("#.00")
                             bNewWaypoint = True
-                        Case 2
-                            lblGPSMessage.Text = "Attitude Data"
-                            nRoll = ConvertHexToDec(Mid(.Packet, 4, 2)) / 100
-                            nPitch = ConvertHexToDec(Mid(.Packet, 6, 2)) / 100
-                            nYaw = ConvertHexToDec(Mid(.Packet, 8, 2)) / 100
-                            bNewAttitude = True
+                        End If
 
-                        Case 3
-                            lblGPSMessage.Text = "Location Data"
-                            nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 4, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                            nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 8, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                            nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 12, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                            'System.Diagnostics.Debug.Print("Speed=" & ConvertHexToDec(Mid(.Packet, 13, 2)) / 100)
-                            nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 14, 2), , False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                            nHeading = ConvertHexToDec(Mid(.Packet, 16, 2), , False) / 100
-                            'If .PacketLength >= 31 Then
-                            '    nSats = Asc(Mid(.Packet, 30))
-                            '    nFix = Asc(Mid(.Packet, 31))
-                            'End If
-                            bNewGPS = True
-                        Case 6
-                            nSats = ConvertHexToDec(Mid(.Packet, 13, 1))
-                            bNewGPS = True
-                        Case Else
-                            System.Diagnostics.Debug.Print("ID=" & Asc(Mid(.Packet, 2, 1)) & ",Packet=" & .Packet & ",Message=" & .VisibleSentence & vbCrLf)
-                            'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
-                    End Select
-            End Select
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude, cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
+                        lblGPSType.Text = "ArduPilot ASCII"
+                        lblGPSMessage.Text = "ArduPilot Message"
+                        If bFireAttitude Or bFireGPS Or bFireWaypoint Then
+                            sSplit = Split(.Packet, ",")
+                            Try
+                                For nCount = 0 To UBound(sSplit)
+                                    sValues = Split(sSplit(nCount), ":")
+                                    Select Case UCase(sValues(0))
+                                        Case "RLL"
+                                            nRoll = -Convert.ToSingle(sValues(1))
+                                            bNewAttitude = True
+                                        Case "PCH"
+                                            nPitch = -Convert.ToSingle(sValues(1))
+                                            bNewAttitude = True
+                                        Case "CRS", "COG"
+                                            nHeading = Convert.ToSingle(sValues(1))
+                                            If nHeading < 0 Then
+                                                nHeading = nHeading + 360
+                                            End If
+                                            nYaw = nHeading
+                                            bNewAttitude = True
+
+                                        Case "LAT"
+                                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                            bNewGPS = True
+                                        Case "LON"
+                                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                            bNewGPS = True
+                                        Case "SOG", "SPD"
+                                            nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                            bNewGPS = True
+                                        Case "ASP"
+                                            nAirSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                            bNewGPS = True
+                                        Case "FIX", "LOC"
+                                            nFix = System.Math.Abs(Convert.ToInt32(sValues(1)) - 1)
+                                            bNewGPS = True
+                                        Case "ALT"
+                                            nAltitude = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                            bNewGPS = True
+                                        Case "SAT"
+                                            nSats = Convert.ToInt32(sValues(1))
+                                            bNewGPS = True
+                                        Case "BTV"
+                                            nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
+                                            bNewWaypoint = True
+                                        Case "HDO"
+                                            nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
+                                            bNewGPS = True
+
+                                        Case "TXS", "STT"
+                                            sModeNumber = sValues(1)
+                                            'sMode = ""
+                                            bNewWaypoint = True
+                                        Case "WPN"
+                                            nWaypoint = Convert.ToInt32(sValues(1))
+                                            bNewWaypoint = True
+                                        Case "THH"
+                                            nThrottle = Convert.ToString(sValues(1))
+                                            bNewWaypoint = True
+                                        Case "DST"
+                                            nDistance = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                            bNewWaypoint = True
+                                        Case "ALH"
+                                            nWaypointAlt = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                            bNewWaypoint = True
+                                    End Select
+                                Next
+                            Catch
+                            End Try
+                        End If
+
+                    Case cMessage.e_MessageType.e_MessageType_UDB_SetHome
+                        lblGPSType.Text = "Type F13"
+                        sSplit = Split(.Packet, ":")
+                        Try
+                            'Debug.Print("Time = " & sSplit(0))
+                            For nCount = 1 To UBound(sSplit)
+                                Select Case nCount
+                                    Case 1
+                                        sTemp = Mid(sSplit(nCount), 6)
+                                        nLatitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                    Case 2
+                                        sTemp = Mid(sSplit(nCount), 6)
+                                        nLongitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                    Case 3
+                                        sTemp = Mid(sSplit(nCount), 2)
+                                        nAltitude = ConvertDistance(Convert.ToDouble(sTemp) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        WebBrowser1.Invoke(New MyDelegate(AddressOf setHomeLatLng))
+                                End Select
+                            Next nCount
+                        Catch
+                        End Try
+
+
+                    Case cMessage.e_MessageType.e_MessageType_UDB
+                        lblGPSType.Text = "Type F2"
+                        If bFireAttitude Or bFireGPS Or bFireWaypoint Then
+                            sSplit = Split(.Packet, ":")
+                            Try
+                                'Debug.Print("Time = " & sSplit(0))
+                                For nCount = 1 To UBound(sSplit) - 1
+                                    Select Case nCount
+                                        Case 1
+                                            nFix = Convert.ToInt32(Mid(sSplit(nCount), 3, 1) = "1")
+                                            If Mid(sSplit(nCount), 4, 1) = "1" Then
+                                                sMode = "Autonomous"
+                                            Else
+                                                sMode = "Manual"
+                                            End If
+                                        Case 2
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                        Case 3
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                        Case 4
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nAltitude = ConvertDistance(Convert.ToDouble(sTemp) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        Case 5
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nWaypoint = Convert.ToInt32(sTemp)
+                                        Case 7
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nYawComponent1 = Convert.ToSingle(sTemp)
+                                        Case 10
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nYaw = (System.Math.Atan2(-nYawComponent1, Convert.ToSingle(sTemp)) / (2 * pi)) * 360
+                                        Case 12
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nRoll = (System.Math.Asin(sTemp / 16384.0) / (2 * pi)) * 360
+                                        Case 13
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nPitch = (System.Math.Asin(sTemp / 16384.0) / (2 * pi)) * 360
+                                        Case 14
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            If Convert.ToSingle(sTemp) < 0 Then
+                                                nRoll = 180 - nRoll
+                                            End If
+                                        Case 15
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nHeading = Convert.ToSingle(sTemp) / 100
+                                            'Debug.Print("Heading = " & nHeading)
+                                            If nHeading < 0 Then
+                                                nHeading = nHeading + 360
+                                            End If
+                                        Case 16
+                                            sTemp = Mid(sSplit(nCount), 2)
+                                            nGroundSpeed = ConvertSpeed(Convert.ToSingle(sTemp) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                        Case 18
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            If sTemp <> "" And sTemp <> "0" Then
+                                                nBattery = (Convert.ToSingle(sTemp) / 1000).ToString("#.00")
+                                            Else
+                                                nBattery = 0
+                                            End If
+                                        Case 19
+                                            sTemp = Mid(sSplit(nCount), 3)
+                                            If sTemp <> "" And sTemp <> "0" Then
+                                                nAirSpeed = ConvertSpeed(Convert.ToSingle(sTemp) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                            Else
+                                                nAirSpeed = 0
+                                            End If
+                                        Case 26
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            If sTemp <> "" Then
+                                                nSats = Convert.ToInt32(sTemp)
+                                            Else
+                                                nSats = 0
+                                            End If
+                                        Case 27
+                                            sTemp = Mid(sSplit(nCount), 3)
+                                            If sTemp <> "" And sTemp <> "0" Then
+                                                nHDOP = (Convert.ToSingle(sTemp) / 5).ToString("#.00")
+                                            Else
+                                                nHDOP = 0
+                                            End If
+                                        Case 28
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo1 = Convert.ToInt16(sTemp) / 2
+                                        Case 29
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo2 = Convert.ToInt16(sTemp) / 2
+                                        Case 30
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo3 = Convert.ToInt16(sTemp) / 2
+                                        Case 31
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo4 = Convert.ToInt16(sTemp) / 2
+                                        Case 32
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo5 = Convert.ToInt16(sTemp) / 2
+                                        Case 33
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo6 = Convert.ToInt16(sTemp) / 2
+                                        Case 34
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo7 = Convert.ToInt16(sTemp) / 2
+                                        Case 35
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo8 = Convert.ToInt16(sTemp) / 2
+                                    End Select
+                                Next nCount
+                                bNewGPS = True
+                                bNewAttitude = True
+                                bNewWaypoint = True
+                            Catch e2 As Exception
+                                Debug.Print(e2.Message)
+                            End Try
+                        End If
+
+                    Case cMessage.e_MessageType.e_MessageType_SiRF
+                        lblGPSType.Text = "SiRF"
+                        Select Case .ID
+                            Case 91
+                                lblGPSMessage.Text = "Geonavigation Data"
+                                nFix = ConvertHexToDec(Mid(.Packet, 4, 1)) And 3
+                                nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 24, 4), False) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 28, 4), False) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 36, 4), False) / 100, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 41, 2), False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                nHeading = ConvertHexToDec(Mid(.Packet, 43, 2), False, False) / 100
+                                nYaw = nHeading
+                                nSats = ConvertHexToDec(Mid(.Packet, 89, 1))
+                                nHDOP = ConvertHexToDec(Mid(.Packet, 90, 1)) / 5
+                                bNewGPS = True
+                        End Select
+
+                    Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
+                        lblGPSType.Text = "ArduIMU Binary"
+                        If bFireAttitude Or bFireGPS Then
+                            Select Case Asc(Mid(.Packet, 2, 1))
+                                Case 2
+                                    lblGPSMessage.Text = "Attitude Data"
+                                    nRoll = ConvertHexToDec(Mid(.Packet, 3, 2)) / 100
+                                    nPitch = ConvertHexToDec(Mid(.Packet, 5, 2)) / 100
+                                    nYaw = ConvertHexToDec(Mid(.Packet, 7, 2)) / 100
+                                    bNewAttitude = True
+                                Case 3
+                                    lblGPSMessage.Text = "GPS Data"
+                                    nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 3, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                    nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 7, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                    nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 11, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    'System.Diagnostics.Debug.Print("Speed=" & ConvertHexToDec(Mid(.Packet, 13, 2)) / 100)
+                                    nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 13, 2), , False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    nHeading = ConvertHexToDec(Mid(.Packet, 15, 2), , False) / 100
+                                    If .PacketLength >= 31 Then
+                                        nSats = Asc(Mid(.Packet, 30))
+                                        nFix = Asc(Mid(.Packet, 31))
+                                    End If
+                                    bNewGPS = True
+
+                                    'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
+                            End Select
+                        End If
+
+                    Case cMessage.e_MessageType.e_MessageType_MAV
+                        lblGPSType.Text = "MAVlink"
+                        If bFireAttitude Or bFireGPS Or bFireWaypoint Then
+                            'Debug.Print("Message ID=" & Asc(Mid(.Packet, 6, 1)) & ",Length=" & Asc(Mid(.Packet, 2, 1))) '& ",Packet=" & .VisibleSentence)
+                            Select Case Asc(Mid(.Packet, 6, 1))
+                                Case 27
+                                    lblGPSMessage.Text = "GPS Status"
+                                    nSats = Asc(Mid(.Packet, 7, 1))
+                                    bNewGPS = True
+                                Case 30
+                                    lblGPSMessage.Text = "Attitude"
+                                    nRoll = ConvertMavlinkToSingle(Mid(.Packet, 15, 4)) * 180 / Math.PI
+                                    nPitch = ConvertMavlinkToSingle(Mid(.Packet, 19, 4)) * 180 / Math.PI
+                                    nYaw = ConvertMavlinkToSingle(Mid(.Packet, 23, 4)) * 180 / Math.PI
+                                    bNewAttitude = True
+                                Case 32
+                                    lblGPSMessage.Text = "GPS Raw"
+                                    nFix = Asc(Mid(.Packet, 15, 1)) - 1
+                                    nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 16, 4))
+                                    nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 20, 4))
+                                    nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 24, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    nHDOP = ConvertMavlinkToSingle(Mid(.Packet, 32, 4))
+                                    nGroundSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 36, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    nHeading = ConvertMavlinkToSingle(Mid(.Packet, 40, 4))
+                                    bNewGPS = True
+                                Case 34
+                                    lblGPSMessage.Text = "System Status"
+                                    'sModeNumber = Mid(.Packet, 7, 2)
+                                    sMode = GetMavMode(Asc(Mid(.Packet, 7, 2)))
+                                    nBattery = CInt("&h" & Hex(Asc(Mid(.Packet, 12, 1))) & Hex(Asc(Mid(.Packet, 13, 1)))) / 1000
+                                    bNewWaypoint = True
+                                Case 35
+                                    lblGPSMessage.Text = "Channel Raw"
+                                    nServo1 = CInt("&h" & Hex(Asc(Mid(.Packet, 7, 1))) & Hex(Asc(Mid(.Packet, 8, 1))))
+                                    nServo2 = CInt("&h" & Hex(Asc(Mid(.Packet, 9, 1))) & Hex(Asc(Mid(.Packet, 10, 1))))
+                                    nServo3 = CInt("&h" & Hex(Asc(Mid(.Packet, 11, 1))) & Hex(Asc(Mid(.Packet, 12, 1))))
+                                    nServo4 = CInt("&h" & Hex(Asc(Mid(.Packet, 13, 1))) & Hex(Asc(Mid(.Packet, 14, 1))))
+                                    nServo5 = CInt("&h" & Hex(Asc(Mid(.Packet, 15, 1))) & Hex(Asc(Mid(.Packet, 16, 1))))
+                                    nServo6 = CInt("&h" & Hex(Asc(Mid(.Packet, 17, 1))) & Hex(Asc(Mid(.Packet, 18, 1))))
+                                    nServo7 = CInt("&h" & Hex(Asc(Mid(.Packet, 19, 1))) & Hex(Asc(Mid(.Packet, 20, 1))))
+                                    nServo8 = CInt("&h" & Hex(Asc(Mid(.Packet, 21, 1))) & Hex(Asc(Mid(.Packet, 22, 1))))
+                                    bFireAttitude = True
+                                Case 39
+                                    lblGPSMessage.Text = "Waypoint"
+                                    nWaypoint = CInt("&h" & Hex(Asc(Mid(.Packet, 9, 1))) & Hex(Asc(Mid(.Packet, 10, 1))))
+                                    'nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 21, 4))
+                                    'nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 25, 4))
+                                    nWaypointAlt = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 29, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    bNewWaypoint = True
+                                Case 42, 46
+                                    lblGPSMessage.Text = "Current Waypoint"
+                                    nWaypoint = CInt("&h" & Hex(Asc(Mid(.Packet, 7, 1))) & Hex(Asc(Mid(.Packet, 8, 1))))
+                                    bNewWaypoint = True
+                            End Select
+                        End If
+
+                    Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                        lblGPSType.Text = "AP Mega Binary"
+                        If bFireAttitude Or bFireGPS Or bFireWaypoint Then
+                            Select Case Asc(Mid(.Packet, 2, 1))
+                                Case 1
+                                    System.Diagnostics.Debug.Print(oMessage.VisibleSentence)
+                                    lblGPSMessage.Text = "Heatbeat Data"
+                                    sModeNumber = Asc(Mid(.Packet, 3, 1))
+                                    nBattery = Convert.ToSingle(Asc(Mid(.Packet, 6, 2)) / 100).ToString("#.00")
+                                    bNewWaypoint = True
+                                Case 2
+                                    lblGPSMessage.Text = "Attitude Data"
+                                    nRoll = ConvertHexToDec(Mid(.Packet, 4, 2)) / 100
+                                    nPitch = ConvertHexToDec(Mid(.Packet, 6, 2)) / 100
+                                    nYaw = ConvertHexToDec(Mid(.Packet, 8, 2)) / 100
+                                    bNewAttitude = True
+
+                                Case 3
+                                    lblGPSMessage.Text = "Location Data"
+                                    nLatitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 4, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                    nLongitude = ConvertLatLongFormat(ConvertHexToDec(Mid(.Packet, 8, 4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                    nAltitude = ConvertDistance(ConvertHexToDec(Mid(.Packet, 12, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    'System.Diagnostics.Debug.Print("Speed=" & ConvertHexToDec(Mid(.Packet, 13, 2)) / 100)
+                                    nGroundSpeed = ConvertSpeed(ConvertHexToDec(Mid(.Packet, 14, 2), , False) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    nHeading = ConvertHexToDec(Mid(.Packet, 16, 2), , False) / 100
+                                    'If .PacketLength >= 31 Then
+                                    '    nSats = Asc(Mid(.Packet, 30))
+                                    '    nFix = Asc(Mid(.Packet, 31))
+                                    'End If
+                                    bNewGPS = True
+                                Case 6
+                                    nSats = ConvertHexToDec(Mid(.Packet, 13, 1))
+                                    bNewGPS = True
+                                Case Else
+                                    System.Diagnostics.Debug.Print("ID=" & Asc(Mid(.Packet, 2, 1)) & ",Packet=" & .Packet & ",Message=" & .VisibleSentence & vbCrLf)
+                                    'System.Diagnostics.Debug.Print("Lat=" & sLatitude & ",Long=" & sLongitude)
+                            End Select
+                        End If
+                End Select
+            End If
         End With
 
-        If bNewAttitude = True Then
-            If Now.Ticks - nLastAttitude > (1000 / (cboAttitude.SelectedIndex)) * 10000 And cboAttitude.SelectedIndex <> 0 Then
+        If bNewAttitude = True And chkFullDataFile.Checked = False Then
+            If bFireAttitude = True Then
                 nLastAttitude = Now.Ticks
                 bNewAttitude = False
-                GpS_Parser1_AttitudeChange1(nPitch, nRoll, nHeading)
-                lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw)
+                GpS_Parser1_AttitudeChange1(nPitch, nRoll, nYaw)
+                If nServo1 <> 0 Then
+                    lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw & ",Servo1=" & nServo1 & ",Servo2=" & nServo2 & ",Servo3=" & nServo3 & ",Servo4=" & nServo4 & ",Servo5=" & nServo5 & ",Servo6=" & nServo6 & ",Servo7=" & nServo7 & ",Servo8=" & nServo8)
+                Else
+                    lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw)
+                End If
             End If
         End If
 
         If bNewGPS = True Then
-            If Now.Ticks - nLastGPS > (1000 / (cboGPS.SelectedIndex)) * 10000 And cboGPS.SelectedIndex <> 0 Then
+            If bFireGPS = True Then
                 'System.Diagnostics.Debug.Print("Diff=" & Now.Ticks - nLastGPS)
                 If nAltitude <> 0 And nLastAlt <> 0 Then
                     nAltChange = -(nLastAlt - nAltitude) / ((Now.Ticks - nLastGPS) / 600000000)
@@ -1376,8 +1631,8 @@ Public Class frmMain
             End If
         End If
 
-        If bNewWaypoint = True Then
-            If Now.Ticks - nLastWaypoint > (1000 / (cboWaypoint.SelectedIndex)) * 10000 And cboWaypoint.SelectedIndex <> 0 Then
+        If bNewWaypoint = True And chkFullDataFile.Checked = False Then
+            If bFireWaypoint = True Then
                 nLastWaypoint = Now.Ticks
                 bNewWaypoint = False
                 GPS_Parser1_Waypoints(nWaypoint, nDistance, nBattery, sModeNumber, nThrottle)
@@ -1392,13 +1647,19 @@ Public Class frmMain
         End Try
         'System.Windows.Forms.Application.DoEvents()
     End Sub
-
     Private Sub serialPortIn_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles serialPortIn.Disposed
+        If bShutdown = True Then
+            Exit Sub
+        End If
+
         System.Diagnostics.Debug.Print("Serial Port Disposed")
         EnableComButtons(True)
     End Sub
 
     Private Sub serialPortIn_ErrorReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialErrorReceivedEventArgs) Handles serialPortIn.ErrorReceived
+        If bShutdown = True Then
+            Exit Sub
+        End If
         'System.Diagnostics.Debug.Assert(False)
         System.Diagnostics.Debug.Print("serialPortIn_ErrorReceived - " & e.ToString)
     End Sub
@@ -1536,6 +1797,10 @@ Public Class frmMain
 
     Private Sub cmdExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExit.Click
         Try
+            bShutdown = True
+            If serialPortIn.IsOpen = True Then
+                serialPortIn.Close()
+            End If
             Me.Dispose()
         Catch
         End Try
@@ -1546,7 +1811,10 @@ Public Class frmMain
         serialPortIn.BaudRate = cboBaudRate.Text
     End Sub
 
-    Private Sub chkPlay_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPlay.Click
+    Private Sub chkPlay_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPlay.CheckedChanged
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
         If chkPlay.Checked = True Then
             If serialPortIn.IsOpen = True Then
                 cmdConnect_Click(sender, e)
@@ -1579,12 +1847,21 @@ Public Class frmMain
     End Sub
 
     Private Sub chkPause_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPause.CheckedChanged
-        tmrPlayback.Enabled = False
-        SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
+        If chkPause.Checked = True Then
+            tmrPlayback.Enabled = False
+            SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        End If
     End Sub
 
     Private Sub chkStepForward_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkStepForward.CheckedChanged
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
         If chkStepForward.Checked = True Then
+            'nDataIndex = nDataIndex + 1
             tmrPlayback.Enabled = False
 
             tmrPlayback_Tick(sender, e)
@@ -1593,18 +1870,23 @@ Public Class frmMain
     End Sub
 
     Private Sub chkStepBack_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkStepBack.CheckedChanged
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
         If chkStepBack.Checked = True Then
-            SetPlayerState(e_PlayerState.e_PlayerState_Pause)
             tmrPlayback.Enabled = False
 
             nDataIndex = nDataIndex - 2
             tmrPlayback_Tick(sender, e)
+            SetPlayerState(e_PlayerState.e_PlayerState_Pause)
         End If
     End Sub
 
     Private Sub cboOutputFiles_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboOutputFiles.TextChanged
+        tmrPlayback.Enabled = False
+        SetPlayerState(e_PlayerState.e_PlayerState_Pause)
         If Trim(cboOutputFiles.Text) <> "" Then
-            If Dir(txtOutputFolder.Text & cboOutputFiles.Text) <> "" Then
+            If Dir(txtOutputFolder.Text & cboOutputFiles.Text, FileAttribute.Normal) <> "" Then
                 LoadDataFile(txtOutputFolder.Text & cboOutputFiles.Text)
                 SetPlayerState(e_PlayerState.e_PlayerState_Loaded)
             Else
@@ -1629,7 +1911,7 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
-        _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nHeading, False, sModelName, GetRootPath() & "3D Models\")
+        _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), False, sModelName, GetRootPath() & "3D Models\")
         'System.Diagnostics.Debug.Print("Paint " & Now)
     End Sub
 
@@ -1663,41 +1945,75 @@ Public Class frmMain
         Dim sSplit2() As String
         Dim nCount As Integer
         Dim nWPNumber As Integer
+        Dim bFirstWaypoint As Boolean = False
         sMission = GetFileContents(GetRootPath() & "Missions\" & inputMission)
 
         sSplit = Split(sMission, vbCrLf)
-        If Mid(sSplit(0), 1, 5) <> "OPTIO" And Mid(sSplit(0), 1, 5) <> "HOME:" Then
-            Call MsgBox("Invalid Mission File Format", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Invalid File")
-            Exit Sub
-        End If
-
-        nWPNumber = 0
-        For nCount = 0 To UBound(sSplit)
-            If Trim(sSplit(nCount)) <> "" Then
-                If Mid(sSplit(nCount), 1, 5) = "HOME:" Then
-                    sSplit2 = Split(sSplit(nCount), ",")
-                    Try
-                        webDocument.InvokeScript("clearMap", New Object() {})
-                        If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                            webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nPitch, nRoll, nCameraTracking})
-                        End If
-                    Catch e2 As Exception
-                    End Try
-                    nHomeLat = Mid(sSplit2(0), 6)
-                    nHomeLong = sSplit2(1)
-                ElseIf Mid(sSplit(nCount), 1, 5) = "OPTIO" Then
-                Else
-                    nWPNumber = nWPNumber + 1
-                    sSplit2 = Split(sSplit(nCount), ",")
-                    Try
-                        If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                            webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(0), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0")})
-                        End If
-                    Catch e2 As Exception
-                    End Try
-                End If
+        If Mid(inputMission, InStr(inputMission, ".") + 1) = "txt" Then
+            If Mid(sSplit(0), 1, 5) <> "OPTIO" And Mid(sSplit(0), 1, 5) <> "HOME:" Then
+                Call MsgBox("Invalid Mission File Format", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Invalid File")
+                Exit Sub
             End If
-        Next
+
+            nWPNumber = 0
+            For nCount = 0 To UBound(sSplit)
+                If Trim(sSplit(nCount)) <> "" Then
+                    If Mid(sSplit(nCount), 1, 5) = "HOME:" Then
+                        sSplit2 = Split(sSplit(nCount), ",")
+                        Try
+                            webDocument.InvokeScript("clearMap", New Object() {})
+                            If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
+                                webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+                            End If
+                        Catch e2 As Exception
+                        End Try
+                        nHomeLat = Mid(sSplit2(0), 6)
+                        nHomeLong = sSplit2(1)
+                    ElseIf Mid(sSplit(nCount), 1, 5) = "OPTIO" Then
+                    Else
+                        nWPNumber = nWPNumber + 1
+                        sSplit2 = Split(sSplit(nCount), ",")
+                        Try
+                            If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
+                                webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(0), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
+                            End If
+                        Catch e2 As Exception
+                        End Try
+                    End If
+                End If
+            Next
+        ElseIf Mid(inputMission, InStr(inputMission, ".") + 1) = "h" Then
+            If Mid(sSplit(0), 1, 7) <> "#define" Then
+                Call MsgBox("Invalid Mission File Format", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Invalid File")
+                Exit Sub
+            End If
+
+            webDocument.InvokeScript("clearMap", New Object() {})
+            nWPNumber = 0
+            For nCount = 0 To UBound(sSplit)
+                If Trim(sSplit(nCount)) <> "" Then
+                    If Trim(Mid(sSplit(nCount), 1, 14)) = "{CMD_WAYPOINT," Then
+                        sSplit2 = Split(sSplit(nCount), ",")
+                        sSplit2(4) = Replace(sSplit2(4), "}", "")
+                        Try
+                            If nWPNumber = 0 Then
+                                If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
+                                    webDocument.InvokeScript("setHomeLatLng", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+                                    nHomeLat = sSplit2(3)
+                                    nHomeLong = sSplit2(4)
+                                End If
+                            Else
+                                If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
+                                    webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
+                                End If
+                            End If
+                        Catch e2 As Exception
+                        End Try
+                        nWPNumber = nWPNumber + 1
+                    End If
+                End If
+            Next
+        End If
 
         If nWPNumber > 0 Then
             Try
@@ -1831,7 +2147,7 @@ Public Class frmMain
     End Sub
     Private Sub SetViewButtons(ByVal newValue As Integer)
         If Not webDocument Is Nothing Then
-            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, nPitch, nRoll, sModelName})
+            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, GetPitch(nPitch), GetRoll(nRoll), sModelName})
         End If
         nCameraTracking = newValue
         chkViewNoTracking.Checked = IIf(nCameraTracking = 0, True, False)
@@ -1935,7 +2251,7 @@ Public Class frmMain
             tabInstrumentView.Width = tabPortControl.Width
             grpMisc.Width = tabInstrumentView.Width - 12
 
-            If tabPortControl.TabPages.Count < 4 Then
+            If tabPortControl.TabPages.Count < 5 Then
                 tabPortControl.TabPages.Add("tabPortStatus", "Status")
                 oTab = tabPortControl.TabPages(tabPortControl.TabPages.Count - 1)
                 oTab.BackColor = Color.FromName("Control")
@@ -1947,14 +2263,32 @@ Public Class frmMain
             tabInstrumentView.Width = SplitContainer1.Panel1.Width - 8
             grpMisc.Width = 300
             tabPortControl.Width = SplitContainer1.Panel1.Width - grpMisc.Width - 18
-            If tabPortControl.TabPages.Count >= 4 Then
-                tabPortControl.TabPages.RemoveAt(3)
+            If tabPortControl.TabPages.Count >= 5 Then
+                tabPortControl.TabPages.RemoveAt(4)
             End If
             grpMisc.Top = tabPortControl.Top + tabPortControl.Height - grpMisc.Height
             grpMisc.Left = tabPortControl.Left + tabPortControl.Width + 6
             grpMisc.BackColor = Color.Transparent
         End If
         'cmdExpandInstruments.Left = tabInstrumentView.Width / 2 - cmdExpandInstruments.Width / 2
+
+        lblServo1.Left = tabPortControl.Width - lblServo1.Width - 6
+        lblServo2.Left = lblServo1.Left
+        lblServo3.Left = lblServo1.Left
+        lblServo4.Left = lblServo1.Left
+        lblServo5.Left = lblServo1.Left
+        lblServo6.Left = lblServo1.Left
+        lblServo7.Left = lblServo1.Left
+        lblServo8.Left = lblServo1.Left
+
+        tbarServo1.Width = lblServo1.Left - tbarServo1.Left
+        tbarServo2.Width = tbarServo1.Width
+        tbarServo3.Width = tbarServo1.Width
+        tbarServo4.Width = tbarServo1.Width
+        tbarServo5.Width = tbarServo1.Width
+        tbarServo6.Width = tbarServo1.Width
+        tbarServo7.Width = tbarServo1.Width
+        tbarServo8.Width = tbarServo1.Width
 
         lstInbound.Width = tabInstrumentView.Width - lstInbound.Left * 3
         lstEvents.Width = lstInbound.Width
@@ -2065,7 +2399,7 @@ Public Class frmMain
 
         If bUltraSmall = True And bExpandInstruments = False Then
             Select Case tabPortControl.SelectedIndex
-                Case 3
+                Case 4
                     grpMisc.Visible = True
                 Case Else
                     grpMisc.Visible = False
@@ -2138,7 +2472,7 @@ Public Class frmMain
 
     Private Sub cmdSetHome_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetHome.Click
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelName, tbarModelScale.Value, nPitch, nRoll, nCameraTracking})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
             nDataPoints = 1
         Catch
         End Try
@@ -2204,5 +2538,78 @@ Public Class frmMain
 
     Private Sub cmdLiveCameraProperties2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdLiveCameraProperties2.Click
         DisplayPropertyPage(theDevice)
+    End Sub
+
+    Private Sub chkRecord_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRecord.CheckedChanged
+        Dim ret As Long
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
+        If chkRecord.Checked = True Then
+            If Dir(txtOutputFolder.Text & cboOutputFiles.Text, FileAttribute.Normal) <> "" Then
+                ret = MsgBox(cboOutputFiles.Text & " already exists." & vbCrLf & "Overwrite output file?", MsgBoxStyle.YesNo + MsgBoxStyle.Question, "Overwrite File")
+                If ret = MsgBoxResult.No Then
+                    chkRecord.Checked = False
+                    bIsRecording = False
+                    SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+                Else
+                    bIsRecording = True
+                    If Not sOutputFile Is Nothing Then
+                        sOutputFile.Close()
+                        sOutputFile = Nothing
+                    End If
+                    sOutputFile = New StreamWriter(txtOutputFolder.Text & cboOutputFiles.Text)
+                    SetPlayerState(e_PlayerState.e_PlayerState_Record)
+                End If
+            Else
+                sOutputFile = New StreamWriter(txtOutputFolder.Text & cboOutputFiles.Text)
+                bIsRecording = True
+                SetPlayerState(e_PlayerState.e_PlayerState_Record)
+            End If
+        Else
+            If Not sOutputFile Is Nothing Then
+                sOutputFile.Close()
+                sOutputFile = Nothing
+            End If
+            LoadOutputFiles(cboOutputFiles.Text)
+            'cboOutputFiles_SelectedIndexChanged(sender, e)
+            'SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        End If
+    End Sub
+
+    Private Sub chkReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkReverse.CheckedChanged
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
+        tmrPlayback.Enabled = False
+        nDataIndex = 0
+        TrackBar1.Value = 0
+        SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+    End Sub
+
+    Private Sub txtOutputFolder_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtOutputFolder.TextChanged
+        If Microsoft.VisualBasic.Right(txtOutputFolder.Text, 1) <> "\" Then
+            txtOutputFolder.Text = txtOutputFolder.Text & "\"
+        End If
+    End Sub
+
+    Private Sub cmdReloadOutputFileList_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadOutputFileList.Click
+        LoadOutputFiles(cboOutputFiles.Text)
+    End Sub
+
+    Private Sub chkFullDataFile_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFullDataFile.CheckedChanged
+        If bButtonStateLocked = True Then
+            Exit Sub
+        End If
+        If chkFullDataFile.Checked = True Then
+            cmdClearMap_Click(sender, e)
+            nDataIndex = 0
+            TrackBar1.Value = 0
+            SetPlayerState(e_PlayerState.e_PlayerState_Play, , True)
+            tmrPlayback.Enabled = True
+        Else
+            tmrPlayback.Enabled = False
+            SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        End If
     End Sub
 End Class

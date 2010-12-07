@@ -14,6 +14,8 @@ Public Class cMessage
         e_MessageType_ArduPilot_ModeChange
         e_MessageType_ArduPilotMega_Binary
         e_MessageType_UDB
+        e_MessageType_UDB_SetHome
+        e_MessageType_MAV
     End Enum
 
     Public ValidMessage As Boolean
