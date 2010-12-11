@@ -20,6 +20,6 @@ Module modcrc16
         Next
 
         crc_calculate = Hex(crcTmp).PadLeft(4, "0")
-        crc_calculate = Chr("&h" & Mid(crc_calculate, 3, 2)) & Chr("&h" & Mid(crc_calculate, 1, 2))
+        crc_calculate = AddCharacter("&h" & Mid(crc_calculate, 3, 2)) & AddCharacter("&h" & Mid(crc_calculate, 1, 2))
     End Function
 End Module

@@ -1,5 +1,9 @@
 Imports System.IO
+Imports DirectShowLib
+
 Module modGlobal
+    Public theDevice1 As IBaseFilter
+    Public theDevice2 As IBaseFilter
     Public Const pi As Double = 3.14159265
     Public sRootRegistry As String = "SOFTWARE\HK_GCS"
     Public Enum e_PlayerState
@@ -34,6 +38,8 @@ Module modGlobal
     Public nRoll As Single
     Public nYaw As Single
 
+    Public nYawOffset As Single
+
     Public bShowBinary As Boolean = True
     Public nLatitude As String
     Public nLongitude As String
@@ -49,31 +55,24 @@ Module modGlobal
     Public nHDOP As Single
     Public nWaypointIndex As Integer
     Public nWaypointTotal As Integer
-    Public nServo1 As Integer
-    Public nServo2 As Integer
-    Public nServo3 As Integer
-    Public nServo4 As Integer
-    Public nServo5 As Integer
-    Public nServo6 As Integer
-    Public nServo7 As Integer
-    Public nServo8 As Integer
+    Public nServo(0 To 7) As Integer
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
 
-    Public Function ConvertSpeed(ByVal inputValue As VariantType, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
+    Public Function ConvertSpeed(ByVal inputValue As String, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
         Dim nTemp As Double
 
         If inputFormat = outputFormat Then
-            ConvertSpeed = inputValue
+            ConvertSpeed = ConvertPeriodToLocal(inputValue)
         Else
             Select Case inputFormat
                 Case e_SpeedFormat.e_SpeedFormat_Knots
-                    nTemp = inputValue * 1.852
+                    nTemp = ConvertPeriodToLocal(inputValue) * 1.852
                 Case e_SpeedFormat.e_SpeedFormat_KPH
-                    nTemp = inputValue
+                    nTemp = ConvertPeriodToLocal(inputValue)
                 Case e_SpeedFormat.e_SpeedFormat_MPerSec
-                    nTemp = inputValue * 3.6
+                    nTemp = ConvertPeriodToLocal(inputValue) * 3.6
                 Case e_SpeedFormat.e_SpeedFormat_MPH
-                    nTemp = inputValue * 1.609344
+                    nTemp = ConvertPeriodToLocal(inputValue) * 1.609344
             End Select
 
             Select Case outputFormat
@@ -98,17 +97,17 @@ Module modGlobal
         End Select
     End Function
 
-    Public Function ConvertDistance(ByVal inputValue As VariantType, ByVal inputFormat As e_DistanceFormat, ByVal outputFormat As e_DistanceFormat) As Single
+    Public Function ConvertDistance(ByVal inputValue As String, ByVal inputFormat As e_DistanceFormat, ByVal outputFormat As e_DistanceFormat) As Single
         Dim nTemp As Double
 
         If inputFormat = outputFormat Then
-            ConvertDistance = inputValue
+            ConvertDistance = ConvertPeriodToLocal(inputValue)
         Else
             Select Case inputFormat
                 Case e_DistanceFormat.e_DistanceFormat_Feet
-                    nTemp = inputValue / 3.2808399
+                    nTemp = ConvertPeriodToLocal(inputValue) / 3.2808399
                 Case e_DistanceFormat.e_DistanceFormat_Meters
-                    nTemp = inputValue
+                    nTemp = ConvertPeriodToLocal(inputValue)
             End Select
 
             Select Case outputFormat
@@ -118,6 +117,13 @@ Module modGlobal
                     ConvertDistance = (nTemp).ToString("#.00")
             End Select
         End If
+    End Function
+    Public Function ConvertPeriodToLocal(ByVal inputString As String) As Double
+        Try
+            ConvertPeriodToLocal = Convert.ToDouble(Replace(inputString, ".", System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator))
+        Catch
+            ConvertPeriodToLocal = 0
+        End Try
     End Function
     Public Function ConvertLatLongFormat(ByVal inputValue As String, ByVal inputFormat As e_LatLongFormat, ByVal outputFormat As e_LatLongFormat, ByVal isLat As Boolean) As String
         Dim sFormat As String
@@ -144,7 +150,7 @@ Module modGlobal
                     ConvertLatLongFormat = (Mid(inputValue, 1, InStr(inputValue, ".") - 1) & Convert.ToDouble(Mid(inputValue, InStr(inputValue, "."))) * 60)
                 Case e_LatLongFormat.e_LatLongFormat_DDMM_MMMM
                     If InStr(inputValue, ".") <> 0 Then
-                        ConvertLatLongFormat = Mid(inputValue, 1, InStr(inputValue, ".") - 3) & (Convert.ToDouble(Mid(inputValue, InStr(inputValue, ".") - 2)) / 60).ToString(".000000")
+                        ConvertLatLongFormat = Mid(inputValue, 1, InStr(inputValue, ".") - 3) & (Convert.ToDouble(ConvertPeriodToLocal(Mid(inputValue, InStr(inputValue, ".") - 2))) / 60).ToString(".000000")
                     Else
                         ConvertLatLongFormat = 0
                     End If
@@ -194,91 +200,123 @@ Module modGlobal
         GetNextSentence.ValidMessage = False
 
         Try
-            sHeaderCharacters = Chr(85)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            sHeaderCharacters = "TEST:"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_Test
+            End If
+
+            sHeaderCharacters = AddCharacter(85)
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_MAV
             End If
 
             sHeaderCharacters = "F2:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_UDB
             End If
 
             sHeaderCharacters = "F13:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_UDB_SetHome
             End If
 
             sHeaderCharacters = "$GP"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_NMEA
             End If
 
             sHeaderCharacters = "home:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
             End If
 
             sHeaderCharacters = "wp #"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
             End If
 
             sHeaderCharacters = "WP Total:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
             End If
 
             sHeaderCharacters = "+++"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
             End If
 
             sHeaderCharacters = "###"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
             End If
 
             sHeaderCharacters = "!!!"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
             End If
 
-            sHeaderCharacters = Chr(&HB5) & Chr(&H62)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            sHeaderCharacters = AddCharacter(&HB5) & AddCharacter(&H62)
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
             End If
 
             sHeaderCharacters = "4D"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
             End If
 
-            sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            sHeaderCharacters = AddCharacter(&HA0) & AddCharacter(&HA2)
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_SiRF
             End If
 
             sHeaderCharacters = "DIYd"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And nLastStart > 0 Then
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
             End If
 
             Select Case nMessageType
+                Case cMessage.e_MessageType.e_MessageType_Test
+                    sHeaderCharacters = "TEST:"
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 6 Then
+                        nPacketSize = 255
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 5 Then
+                            nLastStart = InStr(sBuffer, sHeaderCharacters)
+                            sTemp = Mid(sBuffer, nLastStart, nPacketSize + 5)
+                            If bShowBinary = True Then
+                                For nCount = 1 To Len(sTemp)
+                                    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
+                                Next
+                            Else
+                                sOutput = "{Binary Message}"
+                            End If
+                            With GetNextSentence
+                                .RawMessage = sTemp
+                                .MessageType = cMessage.e_MessageType.e_MessageType_Test
+                                .Header = "Test Msg"
+                                .Packet = Mid(sTemp, 6, Len(sTemp) - 5)
+                                .PacketLength = Len(.Packet) - 2
+                                .VisibleSentence = .Header & " - " & sOutput
+                                .ValidMessage = True
+                            End With
+                        End If
+                    End If
+
                 Case cMessage.e_MessageType.e_MessageType_UDB
                     sHeaderCharacters = "F2:"
                     sFooterCharacters = vbCrLf
@@ -338,153 +376,158 @@ Module modGlobal
                                 .VisibleSentence = .Header & " - " & sOutput
                                 If .Checksum = GetuBloxChecksum(.Packet) Then
                                     .ValidMessage = True
+                                Else
+                                    .ValidMessage = False
                                 End If
                             End With
                         End If
                     End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
-                        sHeaderCharacters = "+++"
-                        sFooterCharacters = "***"
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
-                                .ValidMessage = True
-                                .Header = "AP Attitude"
-                                .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = .Header & " - " & sTemp
-                            End With
-                        End If
+                    sHeaderCharacters = "+++"
+                    sFooterCharacters = "***"
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
+                            .ValidMessage = True
+                            .Header = "AP Attitude"
+                            .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = .Header & " - " & sTemp
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
-                        sHeaderCharacters = "###"
-                        sFooterCharacters = "***"
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
-                                .ValidMessage = True
-                                .Header = "AP Mode Change"
-                                .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = .Header & " - " & sTemp
-                            End With
-                        End If
+                    sHeaderCharacters = "###"
+                    sFooterCharacters = "***"
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
+                            .ValidMessage = True
+                            .Header = "AP Mode Change"
+                            .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = .Header & " - " & sTemp
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
-                        sHeaderCharacters = "!!!"
-                        sFooterCharacters = "***"
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
-                                .ValidMessage = True
-                                .Header = "AP GPS"
-                                .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = .Header & " - " & sTemp
-                            End With
-                        End If
+                    sHeaderCharacters = "!!!"
+                    sFooterCharacters = "***"
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
+                            .ValidMessage = True
+                            .Header = "AP GPS"
+                            .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = .Header & " - " & sTemp
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_NMEA
-                        sHeaderCharacters = "$GP"
-                        sFooterCharacters = vbLf
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
-                            If Strings.Right(sTemp, 1) = vbCr Then
-                                sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
-                            End If
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_NMEA
-                                .Header = Mid(sTemp, 1, 6)
-                                .Packet = Mid(sTemp, 2, Len(Mid(sTemp, 1, InStr(sTemp, "*") - 2)))
-                                .PacketLength = Len(.Packet)
-                                .Checksum = Mid(sTemp, InStr(sTemp, "*") + 1)
-                                .VisibleSentence = "NMEA - " & sTemp
-                                If .Checksum = GetChecksum(.Packet) Then
-                                    .ValidMessage = True
-                                End If
-                            End With
+                    sHeaderCharacters = "$GP"
+                    sFooterCharacters = vbLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                         End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_NMEA
+                            .Header = Mid(sTemp, 1, 6)
+                            .Packet = Mid(sTemp, 2, Len(Mid(sTemp, 1, InStr(sTemp, "*") - 2)))
+                            .PacketLength = Len(.Packet)
+                            .Checksum = Mid(sTemp, InStr(sTemp, "*") + 1)
+                            .VisibleSentence = "NMEA - " & sTemp
+                            If .Checksum = GetChecksum(.Packet) Then
+                                .ValidMessage = True
+                            Else
+                                .ValidMessage = False
+                            End If
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
-                        sHeaderCharacters = "home:"
-                        sFooterCharacters = vbLf
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
-                            If Strings.Right(sTemp, 1) = vbCr Then
-                                sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
-                            End If
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
-                                .Header = Mid(sTemp, 1, 5)
-                                .Packet = sTemp
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = "AP Home - " & sTemp
-                                .ValidMessage = True
-                            End With
+                    sHeaderCharacters = "home:"
+                    sFooterCharacters = vbLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                         End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
+                            .Header = Mid(sTemp, 1, 5)
+                            .Packet = sTemp
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = "AP Home - " & sTemp
+                            .ValidMessage = True
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
-                        sHeaderCharacters = "wp #"
-                        sFooterCharacters = vbLf
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
-                            If Strings.Right(sTemp, 1) = vbCr Then
-                                sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
-                            End If
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
-                                .Header = Trim(Mid(sTemp, 1, 7))
-                                .Packet = sTemp
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = "AP Waypoint - " & sTemp
-                                .ValidMessage = True
-                            End With
+                    sHeaderCharacters = "wp #"
+                    sFooterCharacters = vbLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                         End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
+                            .Header = Trim(Mid(sTemp, 1, 7))
+                            .Packet = sTemp
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = "AP Waypoint - " & sTemp
+                            .ValidMessage = True
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
-                        sHeaderCharacters = "WP Total:"
-                        sFooterCharacters = vbLf
-                        If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
-                            nLastStart = InStr(sBuffer, sHeaderCharacters)
-                            sTemp = Mid(sBuffer, nLastStart)
-                            sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
-                            If Strings.Right(sTemp, 1) = vbCr Then
-                                sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
-                            End If
-                            With GetNextSentence
-                                .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
-                                .Header = ""
-                                .Packet = sTemp
-                                .PacketLength = Len(.Packet)
-                                .VisibleSentence = "AP Waypoint Count - " & sTemp
-                                .ValidMessage = True
-                            End With
+                    sHeaderCharacters = "WP Total:"
+                    sFooterCharacters = vbLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                         End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
+                            .Header = ""
+                            .Packet = sTemp
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = "AP Waypoint Count - " & sTemp
+                            .ValidMessage = True
+                        End With
+                    End If
 
                 Case cMessage.e_MessageType.e_MessageType_SiRF
-                        sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
-                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 3, 1))
-                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 6 Then
-                                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                                sTemp = Mid(sBuffer, nLastStart, nPacketSize + 6)
-                                sOutput = ""
+                    sHeaderCharacters = AddCharacter(&HA0) & AddCharacter(&HA2)
+                    sFooterCharacters = AddCharacter(&HB0) & AddCharacter(&HB3)
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
+                        nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 3, 1))
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
+                            nLastStart = InStr(sBuffer, sHeaderCharacters)
+                            sTemp = Mid(sBuffer, nLastStart, nPacketSize + 8)
+                            sOutput = ""
                             If bShowBinary = True Then
                                 For nCount = 1 To Len(sTemp)
                                     sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
@@ -492,40 +535,43 @@ Module modGlobal
                             Else
                                 sOutput = "{Binary Message}"
                             End If
+                            'Debug.Print(sOutput)
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = cMessage.e_MessageType.e_MessageType_SiRF
                                 .Header = "SiRF"
                                 .ID = Asc(Mid(sTemp, 4, 1))
-                                .Packet = Mid(sTemp, 5, Len(sTemp) - 6)
-                                .PacketLength = Len(.Packet) - 2
-                                .Checksum = Strings.Right(sTemp, 2)
+                                .Packet = Mid(sTemp, 5, nPacketSize)
+                                .PacketLength = nPacketSize
+                                .Checksum = Mid(sTemp, Len(sHeaderCharacters) + 3 + nPacketSize, 2)
                                 .VisibleSentence = .Header & " - " & sOutput
                                 If .Checksum = GetSiRFChecksum(.Packet) Then
                                     .ValidMessage = True
+                                Else
+                                    .ValidMessage = False
                                 End If
                             End With
                         End If
                     End If
                 Case cMessage.e_MessageType.e_MessageType_uBlox
-                        sHeaderCharacters = Chr(&HB5) & Chr(&H62)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
-                            With GetNextSentence
-                                If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 2) <> Chr("&H1") & Chr("&H5") Then
-                                    nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 4, 1))
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_uBlox
-                                    .Header = "uBlox"
-                                    nSizeOffset = 8
-                                Else
-                                    nPacketSize = 28
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_MediaTek
-                                    .Header = "MTK"
-                                    nSizeOffset = 4
-                                End If
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
-                                    sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
-                                    sOutput = ""
+                    sHeaderCharacters = AddCharacter(&HB5) & AddCharacter(&H62)
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
+                        With GetNextSentence
+                            If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 2) <> Chr("&H1") & Chr("&H5") Then
+                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 4, 1))
+                                .MessageType = cMessage.e_MessageType.e_MessageType_uBlox
+                                .Header = "uBlox"
+                                nSizeOffset = 8
+                            Else
+                                nPacketSize = 28
+                                .MessageType = cMessage.e_MessageType.e_MessageType_MediaTek
+                                .Header = "MTK"
+                                nSizeOffset = 4
+                            End If
+                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
+                                sOutput = ""
                                 If bShowBinary = True Then
                                     For nCount = 1 To Len(sTemp)
                                         sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
@@ -542,27 +588,30 @@ Module modGlobal
                                     .VisibleSentence = .Header & " - " & sOutput
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
+                                    Else
+                                        Debug.Print(sOutput)
+                                        .ValidMessage = False
                                     End If
                                 End With
                             Else
                                 .ValidMessage = False
                                 'System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
                             End If
-                            End With
-                        End If
+                        End With
+                    End If
 
                 Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
-                        sHeaderCharacters = "4D"
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
-                            With GetNextSentence
-                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
-                                .Header = "AP Mega"
-                                nSizeOffset = 5
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
-                                    sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
-                                    sOutput = ""
+                    sHeaderCharacters = "4D"
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
+                        With GetNextSentence
+                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
+                            .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                            .Header = "AP Mega"
+                            nSizeOffset = 5
+                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
+                                sOutput = ""
                                 If bShowBinary = True Then
                                     For nCount = 1 To Len(sTemp)
                                         sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
@@ -579,26 +628,28 @@ Module modGlobal
                                     .VisibleSentence = .Header & " - " & Trim(sOutput)
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
+                                    Else
+                                        .ValidMessage = False
                                     End If
                                 End With
                             Else
                                 .ValidMessage = False
                                 'System.Diagnostics.Debug.Print("Len=" & Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) & ",PacketSize=" & nPacketSize)
                             End If
-                            End With
-                        End If
+                        End With
+                    End If
                 Case cMessage.e_MessageType.e_MessageType_MAV
-                        sHeaderCharacters = Chr(85)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 1 Then
-                            With GetNextSentence
-                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
-                                .MessageType = cMessage.e_MessageType.e_MessageType_MAV
-                                .Header = "MAVlink"
-                                nSizeOffset = 6
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
-                                    sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
-                                    sOutput = ""
+                    sHeaderCharacters = AddCharacter(85)
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 1 Then
+                        With GetNextSentence
+                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
+                            .MessageType = cMessage.e_MessageType.e_MessageType_MAV
+                            .Header = "MAVlink"
+                            nSizeOffset = 6
+                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
+                                sOutput = ""
                                 If bShowBinary = True Then
                                     For nCount = 1 To Len(sTemp)
                                         sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
@@ -617,6 +668,8 @@ Module modGlobal
                                     'Debug.Print(".checksum=" & Hex(Asc(Mid(.Checksum, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(.Checksum, 2, 1))).PadLeft(2, "0"))
                                     If .Checksum = crc_calculate(.Packet) Then
                                         .ValidMessage = True
+                                    Else
+                                        .ValidMessage = False
                                     End If
                                 End With
                             Else
@@ -639,12 +692,22 @@ Module modGlobal
             Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
                 sBuffer = Mid(sBuffer, 2)
             Loop
-        ElseIf Len(sBuffer) > 300 Then
-            sBuffer = Mid(sBuffer, Len(sBuffer) - 300)
+        End If
+        If Len(sBuffer) > 500 Then
+            sBuffer = Mid(sBuffer, Len(sBuffer) - 500)
             'System.Diagnostics.Debug.Assert(False)
             'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
         End If
 
+    End Function
+    Public Function AddCharacter(ByVal inputIndex As Int32) As String
+        'If inputIndex = 156 Then
+        '    AddCharacter = System.Convert.ToChar(347)
+        If inputIndex >= 128 And inputIndex <= 159 Then     '&H80<=indata<=&H9F
+            AddCharacter = Chr(inputIndex)
+        Else
+            AddCharacter = ChrW(inputIndex)
+        End If
     End Function
     '    unsigned short crc16(data_p, length)
     'char *data_p;
@@ -695,7 +758,7 @@ Module modGlobal
             Next J
         Next I
         sTemp = Hex(CRC And &HFFFF).PadLeft(4, "0")
-        CRC16A = Chr("&h" & Mid(sTemp, 1, 2)) & Chr("&h" & Mid(sTemp, 3, 2))
+        CRC16A = AddCharacter("&h" & Mid(sTemp, 1, 2)) & AddCharacter("&h" & Mid(sTemp, 3, 2))
     End Function
     Public Function GetSystemColor(ByVal inputString As String) As System.Drawing.Color
         GetSystemColor = Color.FromArgb(255, (Convert.ToInt32(Mid(inputString, 1, 2), 16)), (Convert.ToInt32(Mid(inputString, 3, 2), 16)), (Convert.ToInt32(Mid(inputString, 5, 2), 16)))
@@ -722,7 +785,7 @@ Module modGlobal
         Get
             Dim sTemp As String
             sTemp = Trim(System.Reflection.Assembly.GetExecutingAssembly.FullName.Split(",")(1).Replace("Version=", ""))
-            Return "v" & Mid(sTemp, 1, InStrRev(sTemp, ".") - 1) & " - Build " & Mid(sTemp, InStrRev(sTemp, ".") + 1)
+            Return "v" & Mid(sTemp, 1, InStrRev(sTemp, ".") - 1) '& " - Build " & Mid(sTemp, InStrRev(sTemp, ".") + 1)
 
 
             'Return Application.ProductVersion.ToString()
@@ -731,21 +794,7 @@ Module modGlobal
         End Get
 
     End Property
-    Public Sub LoadComboWithCameras(ByVal inputCombo As ComboBox, Optional ByVal defaultCamera As String = "")
-        Dim ds As DirectShowLib.DsDevice
-        For Each ds In DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)
-            inputCombo.Items.Add(ds.Name)
-            If defaultCamera <> "" Then
-                If defaultCamera = ds.Name.ToString Then
-                    inputCombo.SelectedIndex = inputCombo.Items.Count - 1
-                End If
-            End If
-        Next
-        If inputCombo.SelectedIndex = -1 And inputCombo.Items.Count > 0 Then
-            inputCombo.SelectedIndex = 0
-        End If
 
-    End Sub
     Public Function GetHeading(ByVal inputValue As Single) As Single
         If bHeadingReverse = True Then
             GetHeading = inputValue - 180
@@ -757,6 +806,7 @@ Module modGlobal
         End If
     End Function
     Public Function GetYaw(ByVal inputValue As Single) As Single
+        inputValue = inputValue - nYawOffset
         If bYawReverse = True Then
             GetYaw = inputValue - 180
             If GetYaw < 0 Then

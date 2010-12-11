@@ -16,11 +16,33 @@ Module modDirectX
     Sub createDevice(ByVal width As Integer, ByVal height As Integer, ByVal bpp As Integer, ByVal fhWnd As System.IntPtr, ByVal windowed As Boolean)
         'screen description
         Try
+
+            ' Get the ordinal for the  default adapter
+            Dim adapterOrdinal As Integer = Manager.Adapters.Default.Adapter
+            ' Get our device capabilities so we  can check them to set up the 
+            ' CreateFlags    
+            Dim caps As Caps = Manager.GetDeviceCaps(adapterOrdinal, DeviceType.Hardware)
+            Dim createFlags As CreateFlags
+            ' Check the capabilities of the  graphcis card is capable of    
+            ' performing the vertex-processing  operations    
+            ' The HardwareVertexProcessing  choice is the best    
+            If caps.DeviceCaps.SupportsHardwareTransformAndLight Then
+                createFlags = createFlags.HardwareVertexProcessing
+            Else
+                createFlags = createFlags.SoftwareVertexProcessing
+            End If
+            ' If the graphics card supports  vertex processing check if the device' can    
+            ' do rasterization, matrix  transformations, and lighting and shading ' operations    
+            ' This combination provides the  fastest game experience   
+            If caps.DeviceCaps.SupportsPureDevice AndAlso createFlags = createFlags.HardwareVertexProcessing Then
+                createFlags = createFlags Or createFlags.PureDevice
+            End If
+
             deviceSetting.BackBufferCount = 1 'backbuffer number
             deviceSetting.AutoDepthStencilFormat = DepthFormat.D16 'Z/Stencil buffer formats
             deviceSetting.EnableAutoDepthStencil = True 'active Z/Stencil buffer 
             deviceSetting.DeviceWindowHandle = fhWnd 'handle del form
-            deviceSetting.SwapEffect = SwapEffect.Flip 'rendering type
+            deviceSetting.SwapEffect = SwapEffect.Discard 'rendering type
 
             If windowed Then
                 deviceSetting.Windowed = True 'setting for windowed mode 
@@ -36,13 +58,18 @@ Module modDirectX
 
             End If
             'presentation type
-            deviceSetting.PresentationInterval = PresentInterval.Immediate
+            'deviceSetting.PresentationInterval = PresentInterval.Immediate
             'create device
-            device = New Device(0, DeviceType.Hardware, fhWnd, CreateFlags.HardwareVertexProcessing, deviceSetting)
-        Catch
+            device = New Device(Manager.Adapters.Default.Adapter, DeviceType.Hardware, fhWnd, createFlags, deviceSetting)
+            'device.Clear(ClearFlags.Target Or ClearFlags.ZBuffer, Color.LightGray, 1.0F, 0)
+            'device.Present()
+        Catch err2 As Exception
+            Try
+                device = New Device(Manager.Adapters.Default.Adapter, DeviceType.Reference, fhWnd, CreateFlags.SoftwareVertexProcessing, deviceSetting)
+            Catch ex As Exception
+                MsgBox("Failed to Create DirectX Device" & vbCrLf & vbCrLf & "Error Message: " & err2.ToString, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "CreateDevice Failed")
+            End Try
         End Try
-
-
     End Sub
 
     'must be executed when form is resized
@@ -110,7 +137,8 @@ Module modDirectX
                     End If
                 Next
             End With
-        Catch
+        Catch err2 As Exception
+            Debug.Print(err2.Message)
         End Try
     End Function
 End Module

@@ -6,6 +6,7 @@ Module modSettings
     Public bRollReverse As Boolean = False
     Public bYawReverse As Boolean = False
     Public bHeadingReverse As Boolean = False
+    Public nThrottleChannel As Integer = 1
 
     Public bFlightExtrude As Boolean = True
     Public sFlightColor As String = "ff00ffff"
@@ -46,6 +47,7 @@ Module modSettings
         bRollReverse = GetRegSetting(sRootRegistry & "\Settings", "Roll Reverse", False)
         bYawReverse = GetRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", False)
         bHeadingReverse = GetRegSetting(sRootRegistry & "\Settings", "Heading Reverse", False)
+        nThrottleChannel = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Throttle Channel", "1"))
 
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
@@ -88,6 +90,7 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Roll Reverse", bRollReverse)
         SaveRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", bYawReverse)
         SaveRegSetting(sRootRegistry & "\Settings", "Heading Reverse", bHeadingReverse)
+        SaveRegSetting(sRootRegistry & "\Settings", "Throttle Channel", nThrottleChannel)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Extrude", bFlightExtrude)
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Color", sFlightColor)
@@ -159,7 +162,7 @@ Module modSettings
     'Private Sub cbo3DModel_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
     '    Call SaveRegSetting(sRootRegistry & "\Settings", "3D Model", cbo3DModel.Text)
     '    s3DModel = cbo3DModel.Text
-    '    _3DMesh1.DrawMesh(IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nYaw, True, s3DModel, GetRootPath & "3D Models\")
+    '    _3DMesh1.DrawMesh(me.handle,IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nYaw, True, s3DModel, GetRootPath & "3D Models\")
     '    WebBrowser1.Invoke(New MyDelegate(AddressOf loadModel))
     'End Sub
 

@@ -69,7 +69,7 @@ Namespace AvionicsInstrumentControlDemo
 
                 ' Pre Display computings
 
-                Dim ptBoule As New Point(25, -210)
+                Dim ptBoule As New Point(25, -350)
                 Dim ptRotation As New Point(150, 150)
 
                 Dim scale As Single = CSng(Me.Width) / bmpCadran.Width

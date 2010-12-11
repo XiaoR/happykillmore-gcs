@@ -111,14 +111,14 @@ Partial Class frmMain
         Me.lblServo3 = New System.Windows.Forms.Label
         Me.lblServo2 = New System.Windows.Forms.Label
         Me.lblServo1 = New System.Windows.Forms.Label
-        Me.Label23 = New System.Windows.Forms.Label
-        Me.Label21 = New System.Windows.Forms.Label
-        Me.Label20 = New System.Windows.Forms.Label
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.lblServoLabel8 = New System.Windows.Forms.Label
+        Me.lblServoLabel7 = New System.Windows.Forms.Label
+        Me.lblServoLabel6 = New System.Windows.Forms.Label
+        Me.lblServoLabel5 = New System.Windows.Forms.Label
+        Me.lblServoLabel4 = New System.Windows.Forms.Label
+        Me.lblServoLabel3 = New System.Windows.Forms.Label
+        Me.lblServoLabel2 = New System.Windows.Forms.Label
+        Me.lblServoLabel1 = New System.Windows.Forms.Label
         Me.tbarServo8 = New System.Windows.Forms.TrackBar
         Me.tbarServo7 = New System.Windows.Forms.TrackBar
         Me.tbarServo6 = New System.Windows.Forms.TrackBar
@@ -129,6 +129,7 @@ Partial Class frmMain
         Me.tbarServo1 = New System.Windows.Forms.TrackBar
         Me.tabInstrumentView = New System.Windows.Forms.TabControl
         Me.tabInstruments = New System.Windows.Forms.TabPage
+        Me.cmdSetNorth = New System.Windows.Forms.Button
         Me._3DMesh1 = New HK_GCS._3DMesh
         Me.VerticalSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl
         Me.HeadingIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl
@@ -170,6 +171,9 @@ Partial Class frmMain
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser
         Me.tabViewLiveCamera = New System.Windows.Forms.TabPage
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
+        Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
+        Me.cmdLiveCameraProperties1 = New System.Windows.Forms.Button
+        Me.cboLiveCameraSelect1 = New System.Windows.Forms.ComboBox
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -210,6 +214,8 @@ Partial Class frmMain
         'serialPortIn
         '
         Me.serialPortIn.DtrEnable = True
+        Me.serialPortIn.ReceivedBytesThreshold = 4096
+        Me.serialPortIn.RtsEnable = True
         '
         'cmdExpandInstruments
         '
@@ -775,7 +781,7 @@ Partial Class frmMain
         'lblBandwidth
         '
         Me.lblBandwidth.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBandwidth.Location = New System.Drawing.Point(174, 99)
+        Me.lblBandwidth.Location = New System.Drawing.Point(174, 93)
         Me.lblBandwidth.Name = "lblBandwidth"
         Me.lblBandwidth.Size = New System.Drawing.Size(81, 12)
         Me.lblBandwidth.TabIndex = 29
@@ -791,7 +797,7 @@ Partial Class frmMain
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(11, 121)
+        Me.Label31.Location = New System.Drawing.Point(11, 118)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(40, 13)
         Me.Label31.TabIndex = 27
@@ -802,7 +808,7 @@ Partial Class frmMain
         '
         Me.cboBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboBaudRate.FormattingEnabled = True
-        Me.cboBaudRate.Location = New System.Drawing.Point(75, 43)
+        Me.cboBaudRate.Location = New System.Drawing.Point(75, 39)
         Me.cboBaudRate.Name = "cboBaudRate"
         Me.cboBaudRate.Size = New System.Drawing.Size(80, 21)
         Me.cboBaudRate.TabIndex = 25
@@ -817,7 +823,7 @@ Partial Class frmMain
         '
         'Label12
         '
-        Me.Label12.Location = New System.Drawing.Point(11, 95)
+        Me.Label12.Location = New System.Drawing.Point(11, 93)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(55, 13)
         Me.Label12.TabIndex = 23
@@ -826,7 +832,7 @@ Partial Class frmMain
         '
         'lblGPSType
         '
-        Me.lblGPSType.Location = New System.Drawing.Point(75, 72)
+        Me.lblGPSType.Location = New System.Drawing.Point(75, 68)
         Me.lblGPSType.Name = "lblGPSType"
         Me.lblGPSType.Size = New System.Drawing.Size(96, 13)
         Me.lblGPSType.TabIndex = 22
@@ -834,7 +840,7 @@ Partial Class frmMain
         '
         'Label11
         '
-        Me.Label11.Location = New System.Drawing.Point(11, 69)
+        Me.Label11.Location = New System.Drawing.Point(11, 68)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(59, 13)
         Me.Label11.TabIndex = 21
@@ -862,7 +868,7 @@ Partial Class frmMain
         '
         'cmdConnect
         '
-        Me.cmdConnect.Location = New System.Drawing.Point(177, 67)
+        Me.cmdConnect.Location = New System.Drawing.Point(177, 63)
         Me.cmdConnect.Name = "cmdConnect"
         Me.cmdConnect.Size = New System.Drawing.Size(78, 23)
         Me.cmdConnect.TabIndex = 17
@@ -871,7 +877,7 @@ Partial Class frmMain
         '
         'cmdSearch
         '
-        Me.cmdSearch.Location = New System.Drawing.Point(177, 42)
+        Me.cmdSearch.Location = New System.Drawing.Point(177, 38)
         Me.cmdSearch.Name = "cmdSearch"
         Me.cmdSearch.Size = New System.Drawing.Size(78, 23)
         Me.cmdSearch.TabIndex = 16
@@ -881,7 +887,7 @@ Partial Class frmMain
         'lblComPort
         '
         Me.lblComPort.AutoSize = True
-        Me.lblComPort.Location = New System.Drawing.Point(11, 17)
+        Me.lblComPort.Location = New System.Drawing.Point(11, 18)
         Me.lblComPort.Name = "lblComPort"
         Me.lblComPort.Size = New System.Drawing.Size(56, 13)
         Me.lblComPort.TabIndex = 15
@@ -999,14 +1005,14 @@ Partial Class frmMain
         Me.tabPortServos.Controls.Add(Me.lblServo3)
         Me.tabPortServos.Controls.Add(Me.lblServo2)
         Me.tabPortServos.Controls.Add(Me.lblServo1)
-        Me.tabPortServos.Controls.Add(Me.Label23)
-        Me.tabPortServos.Controls.Add(Me.Label21)
-        Me.tabPortServos.Controls.Add(Me.Label20)
-        Me.tabPortServos.Controls.Add(Me.Label8)
-        Me.tabPortServos.Controls.Add(Me.Label7)
-        Me.tabPortServos.Controls.Add(Me.Label3)
-        Me.tabPortServos.Controls.Add(Me.Label2)
-        Me.tabPortServos.Controls.Add(Me.Label1)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel8)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel7)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel6)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel5)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel4)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel3)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel2)
+        Me.tabPortServos.Controls.Add(Me.lblServoLabel1)
         Me.tabPortServos.Controls.Add(Me.tbarServo8)
         Me.tabPortServos.Controls.Add(Me.tbarServo7)
         Me.tabPortServos.Controls.Add(Me.tbarServo6)
@@ -1086,77 +1092,85 @@ Partial Class frmMain
         Me.lblServo1.TabIndex = 16
         Me.lblServo1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label23
+        'lblServoLabel8
         '
-        Me.Label23.Location = New System.Drawing.Point(6, 134)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(24, 13)
-        Me.Label23.TabIndex = 15
-        Me.Label23.Text = "S8:"
-        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel8.Location = New System.Drawing.Point(6, 134)
+        Me.lblServoLabel8.Name = "lblServoLabel8"
+        Me.lblServoLabel8.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel8.TabIndex = 15
+        Me.lblServoLabel8.Text = "S8:"
+        Me.lblServoLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label21
+        'lblServoLabel7
         '
-        Me.Label21.Location = New System.Drawing.Point(6, 116)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(24, 13)
-        Me.Label21.TabIndex = 14
-        Me.Label21.Text = "S7:"
-        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel7.Location = New System.Drawing.Point(6, 116)
+        Me.lblServoLabel7.Name = "lblServoLabel7"
+        Me.lblServoLabel7.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel7.TabIndex = 14
+        Me.lblServoLabel7.Text = "S7:"
+        Me.lblServoLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label20
+        'lblServoLabel6
         '
-        Me.Label20.Location = New System.Drawing.Point(6, 98)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(24, 13)
-        Me.Label20.TabIndex = 13
-        Me.Label20.Text = "S6:"
-        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel6.Location = New System.Drawing.Point(6, 98)
+        Me.lblServoLabel6.Name = "lblServoLabel6"
+        Me.lblServoLabel6.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel6.TabIndex = 13
+        Me.lblServoLabel6.Text = "S6:"
+        Me.lblServoLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label8
+        'lblServoLabel5
         '
-        Me.Label8.Location = New System.Drawing.Point(6, 80)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(24, 13)
-        Me.Label8.TabIndex = 12
-        Me.Label8.Text = "S5:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel5.Location = New System.Drawing.Point(6, 80)
+        Me.lblServoLabel5.Name = "lblServoLabel5"
+        Me.lblServoLabel5.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel5.TabIndex = 12
+        Me.lblServoLabel5.Text = "S5:"
+        Me.lblServoLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label7
+        'lblServoLabel4
         '
-        Me.Label7.Location = New System.Drawing.Point(6, 62)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(24, 13)
-        Me.Label7.TabIndex = 11
-        Me.Label7.Text = "S4:"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel4.Location = New System.Drawing.Point(6, 62)
+        Me.lblServoLabel4.Name = "lblServoLabel4"
+        Me.lblServoLabel4.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel4.TabIndex = 11
+        Me.lblServoLabel4.Text = "S4:"
+        Me.lblServoLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label3
+        'lblServoLabel3
         '
-        Me.Label3.Location = New System.Drawing.Point(6, 44)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(24, 13)
-        Me.Label3.TabIndex = 10
-        Me.Label3.Text = "S3:"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel3.Location = New System.Drawing.Point(6, 44)
+        Me.lblServoLabel3.Name = "lblServoLabel3"
+        Me.lblServoLabel3.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel3.TabIndex = 10
+        Me.lblServoLabel3.Text = "S3:"
+        Me.lblServoLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label2
+        'lblServoLabel2
         '
-        Me.Label2.Location = New System.Drawing.Point(6, 26)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(24, 13)
-        Me.Label2.TabIndex = 9
-        Me.Label2.Text = "S2:"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel2.Location = New System.Drawing.Point(6, 26)
+        Me.lblServoLabel2.Name = "lblServoLabel2"
+        Me.lblServoLabel2.Size = New System.Drawing.Size(24, 13)
+        Me.lblServoLabel2.TabIndex = 9
+        Me.lblServoLabel2.Text = "S2:"
+        Me.lblServoLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label1
+        'lblServoLabel1
         '
-        Me.Label1.Location = New System.Drawing.Point(6, 7)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(24, 14)
-        Me.Label1.TabIndex = 8
-        Me.Label1.Text = "S1:"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblServoLabel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblServoLabel1.Location = New System.Drawing.Point(6, 7)
+        Me.lblServoLabel1.Name = "lblServoLabel1"
+        Me.lblServoLabel1.Size = New System.Drawing.Size(24, 14)
+        Me.lblServoLabel1.TabIndex = 8
+        Me.lblServoLabel1.Text = "S1:"
+        Me.lblServoLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'tbarServo8
         '
@@ -1285,6 +1299,7 @@ Partial Class frmMain
         'tabInstruments
         '
         Me.tabInstruments.BackColor = System.Drawing.Color.Transparent
+        Me.tabInstruments.Controls.Add(Me.cmdSetNorth)
         Me.tabInstruments.Controls.Add(Me._3DMesh1)
         Me.tabInstruments.Controls.Add(Me.VerticalSpeedIndicatorInstrumentControl1)
         Me.tabInstruments.Controls.Add(Me.HeadingIndicatorInstrumentControl1)
@@ -1298,6 +1313,16 @@ Partial Class frmMain
         Me.tabInstruments.TabIndex = 0
         Me.tabInstruments.Text = "Instruments"
         Me.tabInstruments.UseVisualStyleBackColor = True
+        '
+        'cmdSetNorth
+        '
+        Me.cmdSetNorth.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSetNorth.Location = New System.Drawing.Point(505, 343)
+        Me.cmdSetNorth.Name = "cmdSetNorth"
+        Me.cmdSetNorth.Size = New System.Drawing.Size(57, 23)
+        Me.cmdSetNorth.TabIndex = 14
+        Me.cmdSetNorth.Text = "Zero Yaw"
+        Me.cmdSetNorth.UseVisualStyleBackColor = True
         '
         '_3DMesh1
         '
@@ -1696,6 +1721,8 @@ Partial Class frmMain
         '
         'tabViewLiveCamera
         '
+        Me.tabViewLiveCamera.Controls.Add(Me.cmdLiveCameraProperties1)
+        Me.tabViewLiveCamera.Controls.Add(Me.cboLiveCameraSelect1)
         Me.tabViewLiveCamera.Controls.Add(Me.DirectShowControl1)
         Me.tabViewLiveCamera.Location = New System.Drawing.Point(4, 22)
         Me.tabViewLiveCamera.Name = "tabViewLiveCamera"
@@ -1707,10 +1734,32 @@ Partial Class frmMain
         '
         'DirectShowControl1
         '
-        Me.DirectShowControl1.Location = New System.Drawing.Point(7, 7)
+        Me.DirectShowControl1.Location = New System.Drawing.Point(7, 35)
         Me.DirectShowControl1.Name = "DirectShowControl1"
-        Me.DirectShowControl1.Size = New System.Drawing.Size(540, 486)
+        Me.DirectShowControl1.Size = New System.Drawing.Size(540, 458)
         Me.DirectShowControl1.TabIndex = 0
+        '
+        'tmrComPort
+        '
+        Me.tmrComPort.Interval = 50
+        '
+        'cmdLiveCameraProperties1
+        '
+        Me.cmdLiveCameraProperties1.Location = New System.Drawing.Point(254, 6)
+        Me.cmdLiveCameraProperties1.Name = "cmdLiveCameraProperties1"
+        Me.cmdLiveCameraProperties1.Size = New System.Drawing.Size(84, 21)
+        Me.cmdLiveCameraProperties1.TabIndex = 5
+        Me.cmdLiveCameraProperties1.Text = "Properties"
+        Me.cmdLiveCameraProperties1.UseVisualStyleBackColor = True
+        '
+        'cboLiveCameraSelect1
+        '
+        Me.cboLiveCameraSelect1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboLiveCameraSelect1.FormattingEnabled = True
+        Me.cboLiveCameraSelect1.Location = New System.Drawing.Point(26, 6)
+        Me.cboLiveCameraSelect1.Name = "cboLiveCameraSelect1"
+        Me.cboLiveCameraSelect1.Size = New System.Drawing.Size(221, 21)
+        Me.cboLiveCameraSelect1.TabIndex = 4
         '
         'frmMain
         '
@@ -1893,14 +1942,14 @@ Partial Class frmMain
     Friend WithEvents tbarServo3 As System.Windows.Forms.TrackBar
     Friend WithEvents tbarServo2 As System.Windows.Forms.TrackBar
     Friend WithEvents tbarServo1 As System.Windows.Forms.TrackBar
-    Friend WithEvents Label23 As System.Windows.Forms.Label
-    Friend WithEvents Label21 As System.Windows.Forms.Label
-    Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel8 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel7 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel6 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel5 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel4 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel3 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel2 As System.Windows.Forms.Label
+    Friend WithEvents lblServoLabel1 As System.Windows.Forms.Label
     Friend WithEvents lblServo8 As System.Windows.Forms.Label
     Friend WithEvents lblServo7 As System.Windows.Forms.Label
     Friend WithEvents lblServo6 As System.Windows.Forms.Label
@@ -1909,4 +1958,8 @@ Partial Class frmMain
     Friend WithEvents lblServo3 As System.Windows.Forms.Label
     Friend WithEvents lblServo2 As System.Windows.Forms.Label
     Friend WithEvents lblServo1 As System.Windows.Forms.Label
+    Friend WithEvents cmdSetNorth As System.Windows.Forms.Button
+    Friend WithEvents tmrComPort As System.Windows.Forms.Timer
+    Friend WithEvents cmdLiveCameraProperties1 As System.Windows.Forms.Button
+    Friend WithEvents cboLiveCameraSelect1 As System.Windows.Forms.ComboBox
 End Class

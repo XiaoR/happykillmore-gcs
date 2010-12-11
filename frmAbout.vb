@@ -21,6 +21,12 @@ Public Class frmAbout
         mnuTitle.Text = "HappyKillmore's" & vbCrLf & "Ground Control Station"
         lblVersion.Text = "Version: " & Version
 
+        If bIsSplash = True Then
+            Me.Text = "Starting HappyKillmore's GCS..."
+        Else
+            Me.Text = "About"
+        End If
+
         cmdOk.Visible = Not bIsSplash
         ProgressBar1.Visible = bIsSplash
         lblStatus.Visible = bIsSplash
