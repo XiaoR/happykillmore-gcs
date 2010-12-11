@@ -1,5 +1,6 @@
 Public Class cMessage
     Public Enum e_MessageType
+        e_MessageType_Test = -1
         e_MessageType_None = 0
         e_MessageType_NMEA = 1
         e_MessageType_SiRF

@@ -16,6 +16,7 @@ Namespace DirectShowControl
             Running
             Init
         End Enum
+        Public theDevice As IBaseFilter = Nothing
 
         Private CurrentState As PlayState = PlayState.Stopped
         Private WM_GRAPHNOTIFY As Integer = Convert.ToInt32("0X8000", 16) + 1
@@ -34,10 +35,10 @@ Namespace DirectShowControl
             'CaptureVideo()
         End Sub
 
-        Public Function StartCapture() As Boolean
+        Public Function StartCapture(ByVal index As Integer) As Boolean
             Try
                 AddHandler Me.Resize, New System.EventHandler(AddressOf WebCamControl_Resize)
-                CaptureVideo()
+                CaptureVideo(index)
 
                 components = New System.ComponentModel.Container()
                 Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -51,9 +52,9 @@ Namespace DirectShowControl
             End Try
         End Function
 
-        Private Sub CaptureVideo()
+        Public Sub CaptureVideo(ByVal index As Integer)
             Dim hr As Integer = 0
-            Dim sourceFilter As IBaseFilter = Nothing
+            Dim localtheDevice As IBaseFilter
             Try
                 ' create the necessary DirectShow interfaces
                 GetInterfaces()
@@ -61,16 +62,24 @@ Namespace DirectShowControl
                 hr = Me.captureGraphBuilder.SetFiltergraph(Me.graphBuilder)
                 DsError.ThrowExceptionForHR(hr)
 
-                sourceFilter = FindCaptureDevice()
+                If index = 1 Then
+                    theDevice1 = Nothing
+                    theDevice1 = FindCaptureDevice(index)
+                    localtheDevice = theDevice1
+                Else
+                    theDevice2 = Nothing
+                    theDevice2 = FindCaptureDevice(index)
+                    localtheDevice = theDevice2
+                End If
 
-                hr = Me.graphBuilder.AddFilter(sourceFilter, "HK GCS Video")
+                hr = Me.graphBuilder.AddFilter(localtheDevice, "Video Device #" & index)
                 DsError.ThrowExceptionForHR(hr)
 
-                hr = Me.captureGraphBuilder.RenderStream(PinCategory.Preview, MediaType.Video, sourceFilter, Nothing, Nothing)
+                hr = Me.captureGraphBuilder.RenderStream(PinCategory.Preview, MediaType.Video, localtheDevice, Nothing, Nothing)
                 Debug.WriteLine(DsError.GetErrorText(hr))
                 DsError.ThrowExceptionForHR(hr)
 
-                Marshal.ReleaseComObject(sourceFilter)
+                Marshal.ReleaseComObject(localtheDevice)
 
                 SetupVideoWindow()
 
@@ -80,6 +89,7 @@ Namespace DirectShowControl
                 Me.CurrentState = PlayState.Running
             Catch ex As Exception
                 'MessageBox.Show("An unrecoverable error has occurred." & vbCr & vbLf & ex.ToString())
+                Debug.Print(ex.ToString)
                 ReleaseInterfaces()
             End Try
         End Sub
@@ -97,9 +107,9 @@ Namespace DirectShowControl
             DsError.ThrowExceptionForHR(hr)
         End Sub
 
-        Private Function FindCaptureDevice() As IBaseFilter
+        Private Function FindCaptureDevice(ByVal index As Integer) As IBaseFilter
             Dim classEnum As UCOMIEnumMoniker = Nothing
-            Dim moniker As UCOMIMoniker() = New UCOMIMoniker(0) {}
+            Dim moniker As UCOMIMoniker() = New UCOMIMoniker(1) {}
             Dim source As Object = Nothing
 
             Dim devEnum As ICreateDevEnum = DirectCast(New CreateDevEnum(), ICreateDevEnum)
@@ -115,12 +125,12 @@ Namespace DirectShowControl
 
             If classEnum.[Next](moniker.Length, moniker, none) = 0 Then
                 Dim iid As Guid = GetType(IBaseFilter).GUID
-                moniker(0).BindToObject(Nothing, Nothing, iid, source)
+                moniker(index).BindToObject(Nothing, Nothing, iid, source)
             Else
                 Throw New ApplicationException("Unable to access video capture device!")
             End If
 
-            Marshal.ReleaseComObject(moniker(0))
+            Marshal.ReleaseComObject(moniker(index))
             Marshal.ReleaseComObject(classEnum)
 
             Return DirectCast(source, IBaseFilter)

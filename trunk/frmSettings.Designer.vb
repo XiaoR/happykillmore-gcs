@@ -63,6 +63,8 @@ Partial Class frmSettings
         Me.Label10 = New System.Windows.Forms.Label
         Me.tbarMissionWidth = New System.Windows.Forms.TrackBar
         Me.cmdMissionColor = New System.Windows.Forms.Button
+        Me.cboThrottleChannel = New System.Windows.Forms.ComboBox
+        Me.Label12 = New System.Windows.Forms.Label
         Me.grpFlightPath.SuspendLayout()
         CType(Me.tbarFlightOpacity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -201,6 +203,8 @@ Partial Class frmSettings
         '
         'grpGeneral
         '
+        Me.grpGeneral.Controls.Add(Me.cboThrottleChannel)
+        Me.grpGeneral.Controls.Add(Me.Label12)
         Me.grpGeneral.Controls.Add(Me.Label4)
         Me.grpGeneral.Controls.Add(Me.chkHeadingReverse)
         Me.grpGeneral.Controls.Add(Me.Label2)
@@ -513,6 +517,25 @@ Partial Class frmSettings
         Me.cmdMissionColor.TabIndex = 14
         Me.cmdMissionColor.UseVisualStyleBackColor = False
         '
+        'cboThrottleChannel
+        '
+        Me.cboThrottleChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboThrottleChannel.FormattingEnabled = True
+        Me.cboThrottleChannel.Location = New System.Drawing.Point(111, 243)
+        Me.cboThrottleChannel.Name = "cboThrottleChannel"
+        Me.cboThrottleChannel.Size = New System.Drawing.Size(65, 21)
+        Me.cboThrottleChannel.TabIndex = 60
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(14, 246)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(88, 13)
+        Me.Label12.TabIndex = 61
+        Me.Label12.Text = "Throttle Channel:"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'frmSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -581,4 +604,6 @@ Partial Class frmSettings
     Friend WithEvents tbarFlightOpacity As System.Windows.Forms.TrackBar
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents tbarMissionOpacity As System.Windows.Forms.TrackBar
+    Friend WithEvents cboThrottleChannel As System.Windows.Forms.ComboBox
+    Friend WithEvents Label12 As System.Windows.Forms.Label
 End Class

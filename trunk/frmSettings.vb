@@ -31,6 +31,15 @@ Public Class frmSettings
             .Text = nMaxSpeed
         End With
 
+        With cboThrottleChannel
+            .Items.Clear()
+            .Items.Add("None")
+            For nCount = 1 To 8
+                .Items.Add("CH#" & nCount)
+            Next
+            .SelectedIndex = nThrottleChannel
+        End With
+
         chkPitchReverse.Checked = bPitchReverse
         chkRollReverse.Checked = bRollReverse
         chkYawReverse.Checked = bYawReverse
@@ -72,6 +81,7 @@ Public Class frmSettings
         bRollReverse = chkRollReverse.Checked
         bYawReverse = chkYawReverse.Checked
         bHeadingReverse = chkHeadingReverse.Checked
+        nThrottleChannel = cboThrottleChannel.SelectedIndex
 
         nMapUpdateRate = cboMapUpdateRate.SelectedIndex + 1
 

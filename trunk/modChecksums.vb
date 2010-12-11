@@ -23,11 +23,8 @@ Module modChecksums
         Next nCount
 
         '    Debug.Print "nA=" & Hex(nA) & ",nB=" & Hex(nB)
-        GetSiRFChecksum = Hex(nA)
-        For nCount = Len(GetSiRFChecksum) + 1 To 4
-            GetSiRFChecksum = "0" & GetSiRFChecksum
-        Next nCount
-        GetSiRFChecksum = Chr("&h" & Mid(GetSiRFChecksum, 1, 2)) & Chr("&h" & Mid(GetSiRFChecksum, 3, 2))
+        GetSiRFChecksum = Hex(nA).PadLeft(4, "0")
+        GetSiRFChecksum = AddCharacter("&h" & Mid(GetSiRFChecksum, 1, 2)) & AddCharacter("&h" & Mid(GetSiRFChecksum, 3, 2))
     End Function
     Public Function GetuBloxChecksum(ByVal inputString As String) As String
         Dim nLength As Integer
@@ -48,6 +45,6 @@ Module modChecksums
         nB = nB And &HFF
 
         '    Debug.Print "nA=" & Hex(nA) & ",nB=" & Hex(nB)
-        GetuBloxChecksum = Chr(nA) & Chr(nB)
+        GetuBloxChecksum = AddCharacter(nA) & AddCharacter(nB)
     End Function
 End Module

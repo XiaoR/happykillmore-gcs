@@ -8,8 +8,6 @@ Public Class _3DMesh
     Dim bHasRun As Boolean = False
     Dim bLocked As Boolean = False
 
-    Private Sub _3DMesh_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-    End Sub
     Sub loadObject(ByVal modelName As String, ByVal rootPath As String)
         Dim sFilename As String
         Dim sFilePath As String

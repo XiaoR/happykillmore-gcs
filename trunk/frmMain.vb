@@ -1,14 +1,19 @@
 Imports System.IO
 Imports DirectShowLib
 Imports System.Runtime.InteropServices
+Imports System.Threading
+Imports System
+Imports System.Globalization
+
 Public Class frmMain
-    Public Shared Function OleCreatePropertyFrame(ByVal hwndOwner As IntPtr, ByVal x As Integer, ByVal y As Integer, ByVal lpszCaption As String, ByVal cObjects As Integer, ByRef ppUnk As Object, ByVal cPages As Integer, ByVal lpPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal lpvReserved As IntPtr) As Integer
-    End Function
+    'Public Declare Function OleCreatePropertyFrame Lib "oleaut32.dll" (ByVal hwndOwner As IntPtr, ByVal x As Integer, ByVal y As Integer, ByVal lpszCaption As String, ByVal cObjects As Integer, ByRef ppUnk As Object, ByVal cPages As Integer, ByVal lpPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal lpvReserved As IntPtr) As Integer
+    'Declare Function OleCreatePropertyFrame Lib "oleaut32.dll" (ByVal hwndOwner As IntPtr, ByVal x As Long, ByVal y As Long, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszCaption As String, ByVal cObjects As Integer, <MarshalAs(UnmanagedType.Interface, ArraySubType:=UnmanagedType.IUnknown)> ByRef ppUnk As System.IntPtr, ByVal cPages As Long, ByVal pPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal pvReserved As IntPtr) As Integer
+    Declare Function OleCreatePropertyFrame Lib "oleaut32.dll" (ByVal hwndOwner As IntPtr, ByVal x As Long, ByVal y As Long, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszCaption As String, ByVal cObjects As Integer, ByRef ppUnk As Object, ByVal cPages As Long, ByVal pPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal pvReserved As IntPtr) As Integer
 
     Private mediaControl As IMediaControl = Nothing
-    Private graphBuilder As IGraphBuilder = Nothing
-    Private theDevice As IBaseFilter = Nothing
+    'Private graphBuilder As IGraphBuilder = Nothing
     Private theCompressor As IBaseFilter = Nothing
+    Public caGUID As DsCAUUID = New DsCAUUID()
 
     Dim bShutdown As Boolean = False
 
@@ -60,7 +65,8 @@ Public Class frmMain
     Dim nDataPoints As Long
     Dim bIsRecording As Boolean = False
 
-    Dim sSelectedCamera As String
+    Dim sSelectedCamera1 As String
+    Dim sSelectedCamera2 As String
 
     'Dim eOutputDistance As e_DistanceFormat
     'Dim eOutputSpeed As e_SpeedFormat
@@ -85,6 +91,20 @@ Public Class frmMain
     Dim nLastBandwidthCheck As Long
 
     Dim bExpandInstruments As Boolean = False
+
+    Private GraphBuilder2 As ICaptureGraphBuilder2 = New CaptureGraphBuilder2
+    Private GraphBuilder As IGraphBuilder = New FilterGraph
+    Private m_filtergraph As IFilterGraph2 = New FilterGraph
+    Private CapFilter As IBaseFilter = Nothing
+    Private mediaCtrl As DirectShowLib.IMediaControl = Nothing
+    Private vmr9 As IBaseFilter = New VideoMixingRenderer9
+    Private hr As Integer
+    Private SampGrabber As ISampleGrabber = New SampleGrabber
+    Private baseGrabFlt As IBaseFilter = SampGrabber
+    Private windowlessCtrl As IVMRWindowlessControl9 = Nothing
+    Private capGraph As ICaptureGraphBuilder2 = Nothing
+
+
 
     Private Sub SetPlayerState(ByVal newState As e_PlayerState, Optional ByVal fileExists As Boolean = False, Optional ByVal fullPlay As Boolean = False)
         Dim bRecord As Boolean
@@ -259,6 +279,9 @@ Public Class frmMain
         frmAbout.bIsSplash = True
         frmAbout.Show()
 
+        'Application.CurrentCulture = New CultureInfo("en-US")
+        'Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
+
         Me.Visible = False
         nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 1100)
         nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 675)
@@ -277,7 +300,8 @@ Public Class frmMain
         SplitContainer1.Panel2MinSize = 340
 
         eSelectedInstrument = GetRegSetting(sRootRegistry & "\Settings", "Selected Instrument", e_SelectedInstrument.e_SelectedInstrument_3DMesh)
-        sSelectedCamera = GetRegSetting(sRootRegistry & "\Settings", "Selected Camera", "")
+        sSelectedCamera1 = GetRegSetting(sRootRegistry & "\Settings", "Selected Camera 1", "")
+        sSelectedCamera2 = GetRegSetting(sRootRegistry & "\Settings", "Selected Camera 2", "")
 
         frmAbout.UpdateStatus("Building Map Files", 10)
         If Dir(GetRootPath() & "Maps.html") = "" Then
@@ -638,14 +662,14 @@ Public Class frmMain
             'TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(-roll, 0, "TURN COORDINATOR", "L", "R")
             _3DMesh1.DrawMesh(GetPitch(pitch), GetRoll(roll), GetYaw(yaw))
 
-            SetServoSlider(tbarServo1, lblServo1, nServo1)
-            SetServoSlider(tbarServo2, lblServo2, nServo2)
-            SetServoSlider(tbarServo3, lblServo3, nServo3)
-            SetServoSlider(tbarServo4, lblServo4, nServo4)
-            SetServoSlider(tbarServo5, lblServo5, nServo5)
-            SetServoSlider(tbarServo6, lblServo6, nServo6)
-            SetServoSlider(tbarServo7, lblServo7, nServo7)
-            SetServoSlider(tbarServo8, lblServo8, nServo8)
+            SetServoSlider(tbarServo1, lblServo1, nServo(0))
+            SetServoSlider(tbarServo2, lblServo2, nServo(1))
+            SetServoSlider(tbarServo3, lblServo3, nServo(2))
+            SetServoSlider(tbarServo4, lblServo4, nServo(3))
+            SetServoSlider(tbarServo5, lblServo5, nServo(4))
+            SetServoSlider(tbarServo6, lblServo6, nServo(5))
+            SetServoSlider(tbarServo7, lblServo7, nServo(6))
+            SetServoSlider(tbarServo8, lblServo8, nServo(7))
         Catch
         End Try
     End Sub
@@ -661,7 +685,7 @@ Public Class frmMain
         Else
             lblMode.Text = mode
         End If
-        lblThrottle.Text = throttle
+        lblThrottle.Text = throttle.ToString("0.00%")
     End Sub
     Private Function GetNextFileTime() As Date
         Dim nCount As Long
@@ -846,7 +870,7 @@ Public Class frmMain
     End Sub
     Public Sub setPlaneLocation()
         Try
-            webDocument.InvokeScript("drawAndCenter", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
+            webDocument.InvokeScript("drawAndCenter", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
@@ -954,6 +978,9 @@ Public Class frmMain
         End If
     End Function
     Private Sub serialPortIn_DataReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles serialPortIn.DataReceived
+        'ReadSerialData()
+    End Sub
+    Private Sub ReadSerialData()
         Dim bWasSearching As Boolean
         Dim nReadCount As Integer
         Dim nReadResult As Integer
@@ -963,6 +990,7 @@ Public Class frmMain
         Dim nExistingLen As Integer
         Dim nOldTop As Long
         Dim nBandwith As Single
+        Dim sNewString As String
 
         If bShutdown = True Then
             Exit Sub
@@ -978,21 +1006,27 @@ Public Class frmMain
                 Dim cData(nReadCount - 1) As Byte
 
                 nInputStringLength = nInputStringLength + nReadCount
-                serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591) ' System.Text.Encoding.GetEncoding(65001)
+                serialPortIn.Encoding = System.Text.Encoding.UTF8 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
                 nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
 
-                For Each b As Byte In cData
-                    If b <> 0 Then
-                        'System.Diagnostics.Debug.Assert(False)
-                    End If
-                    sBuffer = sBuffer & Chr(b)        'Ascii String
-                    If tabInstrumentView.SelectedIndex = 2 Then
-                        sCommandLineBuffer = sCommandLineBuffer & Chr(b)
-                    Else
-                        sCommandLineBuffer = ""
-                    End If
-                    'nInputStringLength = nInputStringLength + 1
-                Next
+                sNewString = System.Text.Encoding.Default.GetString(cData)
+                sBuffer = sBuffer & sNewString
+                'For Each b As Byte In cData
+
+                '    'AddCharacter(b)
+                '    'If b >= 128 And b <= 159 Then     '&H80<=indata<=&H9F
+                '    '    sBuffer = sBuffer & Chr(b)
+                '    'Else
+                '    '    sBuffer = sBuffer & ChrW(b)
+                '    'End If
+                '    'sBuffer = sBuffer & Chr(b)        'Ascii String
+                If tabInstrumentView.SelectedIndex = 2 Then
+                    sCommandLineBuffer = sCommandLineBuffer & sNewString
+                Else
+                    sCommandLineBuffer = ""
+                End If
+                'nInputStringLength = nInputStringLength + Len(sNewString)
+                'Next
 
                 nSentenceCount = 0
                 oMessage = GetNextSentence(sBuffer)
@@ -1076,7 +1110,7 @@ Public Class frmMain
                     nInputStringLength = 0
                 End If
             End If
-        End If
+            End If
 
     End Sub
     Private Sub UpdateVariables(ByVal oMessage As cMessage)
@@ -1091,17 +1125,17 @@ Public Class frmMain
         Dim bFireGPS As Boolean = False
         Dim bFireWaypoint As Boolean = False
 
-        If Now.Ticks - nLastAttitude > (1000 / (cboAttitude.SelectedIndex)) * 10000 And cboAttitude.SelectedIndex <> 0 Then
-            bFireAttitude = True
-        End If
+        'If Now.Ticks - nLastAttitude > (1000 / (cboAttitude.SelectedIndex)) * 10000 And cboAttitude.SelectedIndex <> 0 Then
+        bFireAttitude = True
+        'End If
 
-        If Now.Ticks - nLastGPS > (1000 / (cboGPS.SelectedIndex)) * 10000 And cboGPS.SelectedIndex <> 0 Then
-            bFireGPS = True
-        End If
+        'If Now.Ticks - nLastGPS > (1000 / (cboGPS.SelectedIndex)) * 10000 And cboGPS.SelectedIndex <> 0 Then
+        bFireGPS = True
+        'End If
 
-        If Now.Ticks - nLastWaypoint > (1000 / (cboWaypoint.SelectedIndex)) * 10000 And cboWaypoint.SelectedIndex <> 0 Then
-            bFireWaypoint = True
-        End If
+        'If Now.Ticks - nLastWaypoint > (1000 / (cboWaypoint.SelectedIndex)) * 10000 And cboWaypoint.SelectedIndex <> 0 Then
+        bFireWaypoint = True
+        'End If
 
         GpS_Parser1_RawPacket(oMessage.RawMessage)
         If serialPortIn.IsOpen = False Then
@@ -1125,46 +1159,46 @@ Public Class frmMain
                         lblGPSMessage.Text = UCase(sSplit(0))
                         Select Case UCase(sSplit(0))
                             Case "GPRMC"
-                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                nLatitude = ConvertLatLongFormat(sSplit(3), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                                 If sSplit(4) = "S" Then
                                     nLatitude = nLatitude * -1
                                 End If
-                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(5)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                nLongitude = ConvertLatLongFormat(sSplit(5), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                                 If sSplit(6) = "W" Then
                                     nLongitude = nLongitude * -1
                                 End If
                                 nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_Knots, eSpeedUnits)
-                                nHeading = Convert.ToSingle(sSplit(8))
+                                nHeading = Convert.ToSingle(ConvertPeriodToLocal(sSplit(8)))
                                 nYaw = nHeading
                                 bNewGPS = True
                             Case "GPGGA"
-                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(2)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                nLatitude = ConvertLatLongFormat(sSplit(2), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                                 If sSplit(3) = "S" Then
                                     nLatitude = nLatitude * -1
                                 End If
-                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(4)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                nLongitude = ConvertLatLongFormat(sSplit(4), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                                 If sSplit(5) = "W" Then
                                     nLongitude = nLongitude * -1
                                 End If
                                 nFix = Convert.ToInt32(sSplit(6))
-                                nSats = Convert.ToSingle(sSplit(7))
-                                nHDOP = Convert.ToSingle(sSplit(8))
+                                nSats = ConvertPeriodToLocal(sSplit(7))
+                                nHDOP = ConvertPeriodToLocal(sSplit(8))
                                 nAltitude = ConvertDistance(sSplit(9), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                 bNewGPS = True
                             Case "GPGLL"
-                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(1)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
+                                nLatitude = ConvertLatLongFormat(sSplit(1), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, True)
                                 If sSplit(2) = "S" Then
                                     nLatitude = nLatitude * -1
                                 End If
-                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(3)), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
+                                nLongitude = ConvertLatLongFormat(sSplit(3), e_LatLongFormat.e_LatLongFormat_DDMM_MMMM, eOutputLatLongFormat, False)
                                 If sSplit(4) = "W" Then
                                     nLongitude = nLongitude * -1
                                 End If
                                 bNewGPS = True
                             Case "GPVTG"
-                                nHeading = Convert.ToSingle(sSplit(1))
+                                nHeading = Convert.ToSingle(ConvertPeriodToLocal(sSplit(1)))
                                 nYaw = nHeading
-                                nGroundSpeed = ConvertSpeed(sSplit(7), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                                nGroundSpeed = ConvertSpeed(sSplit(5), e_SpeedFormat.e_SpeedFormat_Knots, eSpeedUnits)
                                 bNewGPS = True
                         End Select
 
@@ -1257,68 +1291,72 @@ Public Class frmMain
                             Try
                                 For nCount = 0 To UBound(sSplit)
                                     sValues = Split(sSplit(nCount), ":")
-                                    Select Case UCase(sValues(0))
-                                        Case "RLL"
-                                            nRoll = -Convert.ToSingle(sValues(1))
-                                            bNewAttitude = True
-                                        Case "PCH"
-                                            nPitch = -Convert.ToSingle(sValues(1))
-                                            bNewAttitude = True
-                                        Case "CRS", "COG"
-                                            nHeading = Convert.ToSingle(sValues(1))
-                                            If nHeading < 0 Then
-                                                nHeading = nHeading + 360
-                                            End If
-                                            nYaw = nHeading
-                                            bNewAttitude = True
+                                    If UBound(sValues) = 1 Then
+                                        sValues(1) = ConvertPeriodToLocal(sValues(1))
+                                        Select Case UCase(sValues(0))
+                                            Case "RLL"
+                                                nRoll = -Convert.ToSingle(sValues(1))
+                                                bNewAttitude = True
+                                            Case "PCH"
+                                                nPitch = -Convert.ToSingle(sValues(1))
+                                                bNewAttitude = True
+                                            Case "CRS", "COG"
+                                                nHeading = Convert.ToSingle(sValues(1))
+                                                If nHeading < 0 Then
+                                                    nHeading = nHeading + 360
+                                                End If
+                                                nYaw = nHeading
+                                                bNewAttitude = True
 
-                                        Case "LAT"
-                                            nLatitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                                            bNewGPS = True
-                                        Case "LON"
-                                            nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                                            bNewGPS = True
-                                        Case "SOG", "SPD"
-                                            nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                            bNewGPS = True
-                                        Case "ASP"
-                                            nAirSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                            bNewGPS = True
-                                        Case "FIX", "LOC"
-                                            nFix = System.Math.Abs(Convert.ToInt32(sValues(1)) - 1)
-                                            bNewGPS = True
-                                        Case "ALT"
-                                            nAltitude = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                            bNewGPS = True
-                                        Case "SAT"
-                                            nSats = Convert.ToInt32(sValues(1))
-                                            bNewGPS = True
-                                        Case "BTV"
-                                            nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
-                                            bNewWaypoint = True
-                                        Case "HDO"
-                                            nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
-                                            bNewGPS = True
+                                            Case "LAT"
+                                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                                bNewGPS = True
+                                            Case "LON"
+                                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                                bNewGPS = True
+                                            Case "SOG", "SPD"
+                                                nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                                bNewGPS = True
+                                            Case "ASP"
+                                                nAirSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                                bNewGPS = True
+                                            Case "FIX", "LOC"
+                                                nFix = System.Math.Abs(Convert.ToInt32(sValues(1)) - 1)
+                                                bNewGPS = True
+                                            Case "ALT"
+                                                nAltitude = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                                bNewGPS = True
+                                            Case "SAT"
+                                                nSats = Convert.ToInt32(sValues(1))
+                                                bNewGPS = True
+                                            Case "BTV"
+                                                nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
+                                                bNewWaypoint = True
+                                            Case "HDO"
+                                                nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
+                                                bNewGPS = True
 
-                                        Case "TXS", "STT"
-                                            sModeNumber = sValues(1)
-                                            'sMode = ""
-                                            bNewWaypoint = True
-                                        Case "WPN"
-                                            nWaypoint = Convert.ToInt32(sValues(1))
-                                            bNewWaypoint = True
-                                        Case "THH"
-                                            nThrottle = Convert.ToString(sValues(1))
-                                            bNewWaypoint = True
-                                        Case "DST"
-                                            nDistance = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                            bNewWaypoint = True
-                                        Case "ALH"
-                                            nWaypointAlt = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                            bNewWaypoint = True
-                                    End Select
+                                            Case "TXS", "STT"
+                                                sModeNumber = sValues(1)
+                                                'sMode = ""
+                                                bNewWaypoint = True
+                                            Case "WPN"
+                                                nWaypoint = Convert.ToInt32(sValues(1))
+                                                bNewWaypoint = True
+                                            Case "THH"
+                                                nThrottle = Convert.ToSingle(sValues(1)) / 100
+                                                bNewWaypoint = True
+                                            Case "DST"
+                                                nDistance = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                                bNewWaypoint = True
+                                            Case "ALH"
+                                                nWaypointAlt = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                                bNewWaypoint = True
+                                        End Select
+                                    End If
                                 Next
-                            Catch
+                            Catch err2 As Exception
+                                Debug.Print(err2.Message)
                             End Try
                         End If
 
@@ -1429,30 +1467,46 @@ Public Class frmMain
                                             End If
                                         Case 28
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo1 = Convert.ToInt16(sTemp) / 2
+                                            nServo(0) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel1.Text = "I1:"
                                         Case 29
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo2 = Convert.ToInt16(sTemp) / 2
+                                            nServo(1) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel2.Text = "I2:"
                                         Case 30
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo3 = Convert.ToInt16(sTemp) / 2
+                                            nServo(2) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel3.Text = "I3:"
                                         Case 31
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo4 = Convert.ToInt16(sTemp) / 2
-                                        Case 32
-                                            sTemp = Mid(sSplit(nCount), 4)
-                                            nServo5 = Convert.ToInt16(sTemp) / 2
+                                            nServo(3) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel4.Text = "I4:"
                                         Case 33
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo6 = Convert.ToInt16(sTemp) / 2
+                                            nServo(4) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel5.Text = "O1:"
                                         Case 34
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo7 = Convert.ToInt16(sTemp) / 2
+                                            nServo(5) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel6.Text = "O2:"
                                         Case 35
                                             sTemp = Mid(sSplit(nCount), 4)
-                                            nServo8 = Convert.ToInt16(sTemp) / 2
+                                            nServo(6) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel7.Text = "O3:"
+                                        Case 36
+                                            sTemp = Mid(sSplit(nCount), 4)
+                                            nServo(7) = Convert.ToInt16(sTemp) / 2
+                                            lblServoLabel8.Text = "O4:"
                                     End Select
                                 Next nCount
+                                If nThrottleChannel > 0 Then
+                                    If nServo(nThrottleChannel - 1) <> 0 Then
+                                        nThrottle = (nServo(nThrottleChannel - 1) - tbarServo1.Minimum) / (tbarServo1.Maximum - tbarServo1.Minimum)
+                                    Else
+                                        nThrottle = 0
+                                    End If
+                                    bFireWaypoint = True
+                                End If
                                 bNewGPS = True
                                 bNewAttitude = True
                                 bNewWaypoint = True
@@ -1539,15 +1593,33 @@ Public Class frmMain
                                     bNewWaypoint = True
                                 Case 35
                                     lblGPSMessage.Text = "Channel Raw"
-                                    nServo1 = CInt("&h" & Hex(Asc(Mid(.Packet, 7, 1))) & Hex(Asc(Mid(.Packet, 8, 1))))
-                                    nServo2 = CInt("&h" & Hex(Asc(Mid(.Packet, 9, 1))) & Hex(Asc(Mid(.Packet, 10, 1))))
-                                    nServo3 = CInt("&h" & Hex(Asc(Mid(.Packet, 11, 1))) & Hex(Asc(Mid(.Packet, 12, 1))))
-                                    nServo4 = CInt("&h" & Hex(Asc(Mid(.Packet, 13, 1))) & Hex(Asc(Mid(.Packet, 14, 1))))
-                                    nServo5 = CInt("&h" & Hex(Asc(Mid(.Packet, 15, 1))) & Hex(Asc(Mid(.Packet, 16, 1))))
-                                    nServo6 = CInt("&h" & Hex(Asc(Mid(.Packet, 17, 1))) & Hex(Asc(Mid(.Packet, 18, 1))))
-                                    nServo7 = CInt("&h" & Hex(Asc(Mid(.Packet, 19, 1))) & Hex(Asc(Mid(.Packet, 20, 1))))
-                                    nServo8 = CInt("&h" & Hex(Asc(Mid(.Packet, 21, 1))) & Hex(Asc(Mid(.Packet, 22, 1))))
+                                    nServo(0) = CInt("&h" & Hex(Asc(Mid(.Packet, 7, 1))) & Hex(Asc(Mid(.Packet, 8, 1))))
+                                    nServo(1) = CInt("&h" & Hex(Asc(Mid(.Packet, 9, 1))) & Hex(Asc(Mid(.Packet, 10, 1))))
+                                    nServo(2) = CInt("&h" & Hex(Asc(Mid(.Packet, 11, 1))) & Hex(Asc(Mid(.Packet, 12, 1))))
+                                    nServo(3) = CInt("&h" & Hex(Asc(Mid(.Packet, 13, 1))) & Hex(Asc(Mid(.Packet, 14, 1))))
+                                    nServo(4) = CInt("&h" & Hex(Asc(Mid(.Packet, 15, 1))) & Hex(Asc(Mid(.Packet, 16, 1))))
+                                    nServo(5) = CInt("&h" & Hex(Asc(Mid(.Packet, 17, 1))) & Hex(Asc(Mid(.Packet, 18, 1))))
+                                    nServo(6) = CInt("&h" & Hex(Asc(Mid(.Packet, 19, 1))) & Hex(Asc(Mid(.Packet, 20, 1))))
+                                    nServo(7) = CInt("&h" & Hex(Asc(Mid(.Packet, 21, 1))) & Hex(Asc(Mid(.Packet, 22, 1))))
+
+                                    lblServoLabel1.Text = "I1:"
+                                    lblServoLabel2.Text = "I2:"
+                                    lblServoLabel3.Text = "I3:"
+                                    lblServoLabel4.Text = "I4:"
+                                    lblServoLabel5.Text = "I5:"
+                                    lblServoLabel6.Text = "I6:"
+                                    lblServoLabel7.Text = "I7:"
+                                    lblServoLabel8.Text = "I8:"
+
                                     bFireAttitude = True
+                                    If nThrottleChannel > 0 Then
+                                        If nServo(nThrottleChannel - 1) <> 0 Then
+                                            nThrottle = (nServo(nThrottleChannel - 1) - tbarServo1.Minimum) / (tbarServo1.Maximum - tbarServo1.Minimum)
+                                        Else
+                                            nThrottle = 0
+                                        End If
+                                        bFireWaypoint = True
+                                    End If
                                 Case 39
                                     lblGPSMessage.Text = "Waypoint"
                                     nWaypoint = CInt("&h" & Hex(Asc(Mid(.Packet, 9, 1))) & Hex(Asc(Mid(.Packet, 10, 1))))
@@ -1609,8 +1681,8 @@ Public Class frmMain
                 nLastAttitude = Now.Ticks
                 bNewAttitude = False
                 GpS_Parser1_AttitudeChange1(nPitch, nRoll, nYaw)
-                If nServo1 <> 0 Then
-                    lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw & ",Servo1=" & nServo1 & ",Servo2=" & nServo2 & ",Servo3=" & nServo3 & ",Servo4=" & nServo4 & ",Servo5=" & nServo5 & ",Servo6=" & nServo6 & ",Servo7=" & nServo7 & ",Servo8=" & nServo8)
+                If nServo(0) <> 0 Then
+                    lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw & ",Servo1=" & nServo(0) & ",Servo2=" & nServo(1) & ",Servo3=" & nServo(2) & ",Servo4=" & nServo(3) & ",Servo5=" & nServo(4) & ",Servo6=" & nServo(5) & ",Servo7=" & nServo(6) & ",Servo8=" & nServo(7))
                 Else
                     lstEvents.Items.Insert(0, "Pitch=" & nPitch & ",Roll=" & nRoll & ",Yaw=" & nYaw)
                 End If
@@ -1627,7 +1699,7 @@ Public Class frmMain
                 nLastGPS = Now.Ticks
                 bNewGPS = False
                 GpS_Parser1_GpsData1(nLatitude, nLongitude, nAltitude, nGroundSpeed, nHeading, nSats, nFix, nHDOP, nAltChange, nAirSpeed)
-                lstEvents.Items.Insert(0, "Lat=" & nLatitude & ",Long=" & nLongitude & ",Alt=" & nAltitude & ",Spd=" & nGroundSpeed & ",Hdg=" & nHeading & ",Sats=" & nSats & ",Fix=" & nFix & ",HDOP=" & nHDOP)
+                lstEvents.Items.Insert(0, "Lat=" & Convert.ToDouble(nLatitude).ToString("0.000000") & ",Long=" & Convert.ToDouble(nLongitude).ToString("0.000000") & ",Alt=" & nAltitude & ",Spd=" & nGroundSpeed & ",Hdg=" & nHeading & ",Sats=" & nSats & ",Fix=" & nFix & ",HDOP=" & nHDOP)
             End If
         End If
 
@@ -1648,6 +1720,7 @@ Public Class frmMain
         'System.Windows.Forms.Application.DoEvents()
     End Sub
     Private Sub serialPortIn_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles serialPortIn.Disposed
+        tmrComPort.Enabled = False
         If bShutdown = True Then
             Exit Sub
         End If
@@ -1682,6 +1755,7 @@ Public Class frmMain
         tmrSearch.Enabled = False
         If serialPortIn.IsOpen = True Then
             cmdConnect.Text = "Connect"
+            tmrComPort.Enabled = False
             Try
                 serialPortIn.Close()
             Catch e2 As Exception
@@ -1696,6 +1770,7 @@ Public Class frmMain
             lblGPSType.Text = ""
             lblGPSMessage.Text = ""
             tmrSearch_Tick(sender, e)
+            tmrComPort.Enabled = True
         End If
         lblBandwidth.Text = ""
     End Sub
@@ -1919,9 +1994,10 @@ Public Class frmMain
         frmMain_Resize(sender, e)
         Select Case tabMapView.SelectedIndex
             Case 1
-                'LoadComboWithCameras(cboLiveCameraSelect1)
                 If bFirstVideoCapture1 = False Then
-                    bFirstVideoCapture1 = DirectShowControl1.StartCapture()
+                    LoadComboWithCameras(cboLiveCameraSelect1, sSelectedCamera1, True)
+                    bFirstVideoCapture1 = True
+                    'bFirstVideoCapture1 = DirectShowControl1.StartCapture(cboLiveCameraSelect2.SelectedIndex)
                 End If
             Case Else
                 If bFirstVideoCapture1 = True Then
@@ -2166,9 +2242,10 @@ Public Class frmMain
         frmMain_Resize(sender, e)
         Select Case tabInstrumentView.SelectedIndex
             Case 3
-                LoadComboWithCameras(cboLiveCameraSelect2, sSelectedCamera)
                 If bFirstVideoCapture2 = False Then
-                    bFirstVideoCapture2 = DirectShowControl2.StartCapture()
+                    LoadComboWithCameras(cboLiveCameraSelect2, sSelectedCamera2, True)
+                    bFirstVideoCapture2 = True
+                    'bFirstVideoCapture2 = DirectShowControl2.StartCapture(cboLiveCameraSelect2.SelectedIndex)
                 End If
             Case Else
                 If bFirstVideoCapture2 = True Then
@@ -2361,6 +2438,9 @@ Public Class frmMain
                         MoveControl(VerticalSpeedIndicatorInstrumentControl1, nInstrumentSize, nInstrumentSize, AttitudeIndicatorInstrumentControl1.Top + nInstrumentSize + 6, 6)
                         MoveControl(_3DMesh1, nInstrumentSize, nInstrumentSize, AttitudeIndicatorInstrumentControl1.Top + nInstrumentSize + 6, VerticalSpeedIndicatorInstrumentControl1.Left + nInstrumentSize + 6)
                 End Select
+                cmdSetNorth.Left = _3DMesh1.Left + _3DMesh1.Width - cmdSetNorth.Width - 2
+                cmdSetNorth.Top = _3DMesh1.Top + _3DMesh1.Height - cmdSetNorth.Height - 2
+
             Case 1
                 grpSerialSettings.Top = tabInstrumentView.Height - grpSerialSettings.Height - 35
                 lstEvents.Height = (grpSerialSettings.Top - 46) / 2
@@ -2395,6 +2475,9 @@ Public Class frmMain
                 WebBrowser1.Height = chkViewNoTracking.Top - 15
             Case 1
                 FitDirectShow(DirectShowControl1, tabMapView.Width - 30, tabMapView.Height - 48)
+                cmdLiveCameraProperties1.Left = DirectShowControl1.Left + DirectShowControl1.Width - cmdLiveCameraProperties1.Width
+                cboLiveCameraSelect1.Left = DirectShowControl1.Left
+                cboLiveCameraSelect1.Width = cmdLiveCameraProperties1.Left - cboLiveCameraSelect1.Left - 6
         End Select
 
         If bUltraSmall = True And bExpandInstruments = False Then
@@ -2491,19 +2574,174 @@ Public Class frmMain
         frmMain_Resize(sender, e)
     End Sub
 
+    Private Sub cboLiveCameraSelect1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLiveCameraSelect1.SelectedIndexChanged
+        sSelectedCamera1 = cboLiveCameraSelect1.Text
+        SaveRegSetting(sRootRegistry & "\Settings", "Selected Camera 1", sSelectedCamera1)
+
+        DirectShowControl1.ReleaseInterfaces()
+        DirectShowControl1.StartCapture(cboLiveCameraSelect1.SelectedIndex)
+    End Sub
+
     Private Sub cboLiveCameraSelect2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLiveCameraSelect2.SelectedIndexChanged
-        sSelectedCamera = cboLiveCameraSelect2.Text
-        SaveRegSetting(sRootRegistry & "\Settings", "Selected Camera", sSelectedCamera)
+        sSelectedCamera2 = cboLiveCameraSelect2.Text
+        SaveRegSetting(sRootRegistry & "\Settings", "Selected Camera 2", sSelectedCamera2)
+
+        DirectShowControl2.ReleaseInterfaces()
+        DirectShowControl2.StartCapture(cboLiveCameraSelect2.SelectedIndex)
+
+        ''Release COM objects
+        'If Not theDevice Is Nothing Then
+        '    Marshal.ReleaseComObject(theDevice)
+        '    theDevice = Nothing
+        'End If
+        ''Create the filter for the selected video input device
+        'Dim devicepath As String = cboLiveCameraSelect2.SelectedItem.ToString()
+        'theDevice = CreateFilter(FilterCategory.VideoInputDevice, devicepath)
+
+
+        'Dim capdevices() As DirectShowLib.DsDevice
+        'Dim VMR9filterconfig As DirectShowLib.IVMRFilterConfig9
+        'Dim media As AMMediaType = New AMMediaType()
+
+
+
+        '' Get the collection of video devices
+        'capdevices = DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)
+
+
+
+        '' Get the graphbuilder object
+        'm_filtergraph = DirectCast(New FilterGraph(), IFilterGraph2)
+
+
+        'mediaCtrl = DirectCast(m_filtergraph, IMediaControl)
+
+
+
+        '' Get the ICaptureGraphBuilder2
+        'capGraph = DirectCast(New CaptureGraphBuilder2(), ICaptureGraphBuilder2)
+
+
+
+        '' Get the SampleGrabber interface
+        'SampGrabber = DirectCast(New SampleGrabber(), ISampleGrabber)
+
+
+
+        '' Start building the graph
+        'hr = capGraph.SetFiltergraph(DirectCast(m_filtergraph, IGraphBuilder))
+        'DsError.ThrowExceptionForHR(hr)
+
+
+
+        '' Add the video device
+        'hr = m_filtergraph.AddSourceFilterForMoniker(capdevices(0).Mon, Nothing, capdevices(0).Name, CapFilter)
+        'DsError.ThrowExceptionForHR(hr)
+
+
+
+        'baseGrabFlt = DirectCast(SampGrabber, IBaseFilter)
+
+        'media.majorType = MediaType.Video
+        'media.subType = MediaSubType.RGB24
+        'media.formatType = FormatType.VideoInfo
+
+        'hr = SampGrabber.SetMediaType(media)
+        'DsError.ThrowExceptionForHR(hr)
+        'hr = SampGrabber.SetOneShot(False)
+        'hr = SampGrabber.SetBufferSamples(True)
+
+
+
+        '' Add the frame grabber to the graph
+        'hr = m_filtergraph.AddFilter(baseGrabFlt, "Ds.NET Grabber")
+        'DsError.ThrowExceptionForHR(hr)
+
+
+
+        '' Get the VRM9 video renderer sans window
+        'VMR9filterconfig = DirectCast(vmr9, IVMRFilterConfig9)
+        'hr = VMR9filterconfig.SetRenderingMode(VMR9Mode.Windowless)
+
+
+        '' Ajout du renderer dans le graph
+        'hr = m_filtergraph.AddFilter(vmr9, "Video Mixing Renderer 9")
+
+
+
+        ''Get the VRM9 video renderer sans window
+        'windowlessCtrl = DirectCast(vmr9, IVMRWindowlessControl9)
+        'hr = windowlessCtrl.SetVideoClippingWindow(Me.Handle)
+
+
+        '' Set position
+        'hr = windowlessCtrl.SetVideoPosition(Nothing, New Rectangle(0, 0, Me.Width, Me.Height))
+        '' Set Aspect-Ratio
+        'hr = windowlessCtrl.SetAspectRatioMode(VMR9AspectRatioMode.LetterBox)
+
+
+
+        'hr = capGraph.RenderStream(PinCategory.Preview, MediaType.Video, CapFilter, baseGrabFlt, vmr9)
+
+        'hr = mediaCtrl.Run()
+
 
     End Sub
+
+    Private Function CreateFilter(ByVal category As Guid, ByVal friendlyname As String) As IBaseFilter
+        Dim source As Object = Nothing
+        Dim iid As Guid = GetType(IBaseFilter).GUID
+        For Each device As DsDevice In DsDevice.GetDevicesOfCat(category)
+            If device.Name.CompareTo(friendlyname) = 0 Then
+                device.Mon.BindToObject(Nothing, Nothing, iid, source)
+                Exit For
+            End If
+        Next
+
+        Return DirectCast(source, IBaseFilter)
+    End Function
+
+
+
+    '----------------------------------------------------------------
+    ' Converted from C# to VB .NET using CSharpToVBConverter(1.2).
+    ' Developed by: Kamal Patel (http://www.KamalPatel.net) 
+    '----------------------------------------------------------------
+
     Private Sub DisplayPropertyPage(ByVal dev As IBaseFilter)
         'Get the ISpecifyPropertyPages for the filter
-        Dim pProp As ISpecifyPropertyPages = TryCast(dev, ISpecifyPropertyPages)
         Dim hr As Integer = 0
+        Dim filter As Object = Nothing
+        Dim cat As Guid
+        Dim med As Guid
+        Dim iid As Guid
+        Dim pProp As ISpecifyPropertyPages
+        Dim i As Short
+        Dim iPointer As Long
+        Dim oPointer As System.IntPtr
+
+        'cat = PinCategory.Capture
+        'med = MediaType.Interleaved
+        'iid = GetType(IAMStreamConfig).GUID
+        'hr = GraphBuilder2.FindInterface( _
+        '    DsGuid.FromGuid(cat), DsGuid.FromGuid(med), CapFilter, DsGuid.FromGuid(iid), filter)
+        'If Not (hr = 0) Then
+        '    med = MediaType.Video
+        '    hr = GraphBuilder2.FindInterface( _
+        '        DsGuid.FromGuid(cat), DsGuid.FromGuid(med), CapFilter, DsGuid.FromGuid(iid), filter)
+        '    If Not (hr = 0) Then
+        '        filter = Nothing
+        '    End If
+        'End If
+
+        'filter = CapFilter
+
+
+        pProp = DirectCast(dev, ISpecifyPropertyPages)
 
         If pProp Is Nothing Then
             'If the filter doesn't implement ISpecifyPropertyPages, try displaying IAMVfwCompressDialogs instead!
-            Dim compressDialog As IAMVfwCompressDialogs = TryCast(dev, IAMVfwCompressDialogs)
+            Dim compressDialog As IAMVfwCompressDialogs
             If compressDialog IsNot Nothing Then
 
                 hr = compressDialog.ShowDialog(VfwCompressDialogs.Config, IntPtr.Zero)
@@ -2518,14 +2756,16 @@ Public Class frmMain
         DsError.ThrowExceptionForHR(hr)
 
         ' Get the propertypages from the property bag
-        Dim caGUID As DsCAUUID
+        'Dim caGUID As DsCAUUID = New DsCAUUID()
+
         hr = pProp.GetPages(caGUID)
         DsError.ThrowExceptionForHR(hr)
+        iPointer = caGUID.cElems
+        oPointer = caGUID.pElems
 
         ' Create and display the OlePropertyFrame
-        Dim oDevice As Object = DirectCast(dev, Object)
-        hr = OleCreatePropertyFrame(Me.Handle, 0, 0, filterInfo.achName, 1, oDevice, _
-         caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero)
+        Dim oDevice As Object = filter
+        hr = OleCreatePropertyFrame(Me.Handle, 30, 30, Nothing, 1, oDevice, iPointer, oPointer, 0, 0, IntPtr.Zero)
         DsError.ThrowExceptionForHR(hr)
 
         ' Release COM objects
@@ -2536,8 +2776,65 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub cmdLiveCameraProperties1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdLiveCameraProperties1.Click
+        DisplayPropertyPage(theDevice1)
+    End Sub
+
     Private Sub cmdLiveCameraProperties2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdLiveCameraProperties2.Click
-        DisplayPropertyPage(theDevice)
+        DisplayPropertyPage(theDevice2)
+        'Dim filter As Object = Nothing
+        'Dim cat As Guid
+        'Dim med As Guid
+        'Dim iid As Guid
+        'Dim caGUID As DsCAUUID = New DsCAUUID()
+        'Dim pProp As ISpecifyPropertyPages
+        'Dim i As Short
+
+        ''Get the ISpecifyPropertyPages for the filter
+        'i = 0
+        'Select Case i
+        '    Case 0 ' 0. the video renderer
+        '        filter = vmr9
+        '    Case 1 ' 1. the video capture filter
+        '        filter = CapFilter
+        '    Case 2 ' 2. the video capture pin
+        '        cat = PinCategory.Capture
+        '        med = MediaType.Interleaved
+        '        iid = GetType(IAMStreamConfig).GUID
+        '        hr = GraphBuilder2.FindInterface( _
+        '            DsGuid.FromGuid(cat), DsGuid.FromGuid(med), CapFilter, DsGuid.FromGuid(iid), filter)
+        '        If Not (hr = 0) Then
+        '            med = MediaType.Video
+        '            hr = GraphBuilder2.FindInterface( _
+        '                DsGuid.FromGuid(cat), DsGuid.FromGuid(med), CapFilter, DsGuid.FromGuid(iid), filter)
+        '            If Not (hr = 0) Then
+        '                filter = Nothing
+        '            End If
+        '        End If
+        'End Select
+
+
+        'pProp = DirectCast(filter, ISpecifyPropertyPages)
+
+        'caGUID.cElems = 9
+        'caGUID.pElems = New System.IntPtr
+
+        '' Determine if the object supports the interface
+        '' and has at least 1 property page
+        'If Not (pProp Is Nothing) Then
+        '    hr = pProp.GetPages(caGUID)
+        '    If (Not (hr = 0) Or (caGUID.cElems <= 0)) Then
+        '        pProp = Nothing
+        '    End If
+
+
+        '    Dim o As Object = filter
+        '    hr = OleCreatePropertyFrame(Me.Handle, 30, 30, Nothing, 1, o, caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero)
+        'End If
+
+        'If Not (caGUID.pElems = IntPtr.Zero) Then
+        '    Marshal.FreeCoTaskMem(caGUID.pElems)
+        'End If
     End Sub
 
     Private Sub chkRecord_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRecord.CheckedChanged
@@ -2611,5 +2908,13 @@ Public Class frmMain
             tmrPlayback.Enabled = False
             SetPlayerState(e_PlayerState.e_PlayerState_Pause)
         End If
+    End Sub
+
+    Private Sub cmdSetNorth_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetNorth.Click
+        nYawOffset = nYaw
+    End Sub
+
+    Private Sub tmrComPort_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrComPort.Tick
+        ReadSerialData()
     End Sub
 End Class
