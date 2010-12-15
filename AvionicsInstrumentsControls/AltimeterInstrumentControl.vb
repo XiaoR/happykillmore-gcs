@@ -33,7 +33,7 @@ Namespace AvionicsInstrumentControlDemo
         Private bmpLongNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.LongNeedleAltimeter)
         Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Bandeau_Dérouleur)
 
-        Private sUnitLabel As String = "Feet"
+        Private sUnitLabel As String '= GetResString(, "Feet")
 #End Region
 
 #Region "Contructor"

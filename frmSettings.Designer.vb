@@ -24,586 +24,658 @@ Partial Class frmSettings
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSettings))
         Me.grpFlightPath = New System.Windows.Forms.GroupBox
-        Me.Label11 = New System.Windows.Forms.Label
+        Me.lblFlightOpacity = New System.Windows.Forms.Label
         Me.tbarFlightOpacity = New System.Windows.Forms.TrackBar
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.lblFlightExtrude = New System.Windows.Forms.Label
         Me.chkFlightExtrude = New System.Windows.Forms.CheckBox
         Me.cboMapUpdateRate = New System.Windows.Forms.ComboBox
-        Me.Label30 = New System.Windows.Forms.Label
-        Me.Label25 = New System.Windows.Forms.Label
-        Me.Label24 = New System.Windows.Forms.Label
+        Me.lblMapUpdateRate = New System.Windows.Forms.Label
+        Me.lblFlightPathThickness = New System.Windows.Forms.Label
+        Me.lblFlightPathColor = New System.Windows.Forms.Label
         Me.tbarFlightWidth = New System.Windows.Forms.TrackBar
         Me.cmdFlightColor = New System.Windows.Forms.Button
         Me.grpGeneral = New System.Windows.Forms.GroupBox
-        Me.Label4 = New System.Windows.Forms.Label
+        Me.cboThrottleChannel = New System.Windows.Forms.ComboBox
+        Me.lblThrottleChannel = New System.Windows.Forms.Label
+        Me.lblHeading = New System.Windows.Forms.Label
         Me.chkHeadingReverse = New System.Windows.Forms.CheckBox
-        Me.Label2 = New System.Windows.Forms.Label
+        Me.lblYaw = New System.Windows.Forms.Label
         Me.chkYawReverse = New System.Windows.Forms.CheckBox
-        Me.Label29 = New System.Windows.Forms.Label
+        Me.lblRoll = New System.Windows.Forms.Label
         Me.chkRollReverse = New System.Windows.Forms.CheckBox
-        Me.Label27 = New System.Windows.Forms.Label
+        Me.lblPitch = New System.Windows.Forms.Label
         Me.chkPitchReverse = New System.Windows.Forms.CheckBox
         Me.cbo3DModel = New System.Windows.Forms.ComboBox
-        Me.Label21 = New System.Windows.Forms.Label
+        Me.lbl3DModel = New System.Windows.Forms.Label
         Me.cboMaxSpeed = New System.Windows.Forms.ComboBox
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
+        Me.lblMaxSpeed = New System.Windows.Forms.Label
+        Me.lblSpeedUnits = New System.Windows.Forms.Label
         Me.cboSpeedUnits = New System.Windows.Forms.ComboBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.lblDistanceUnits = New System.Windows.Forms.Label
         Me.cboDistanceUnits = New System.Windows.Forms.ComboBox
         Me.cmdSave = New System.Windows.Forms.Button
         Me.cmdCancel = New System.Windows.Forms.Button
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Label6 = New System.Windows.Forms.Label
+        Me.grpMissionPath = New System.Windows.Forms.GroupBox
+        Me.lblMissionOpacity = New System.Windows.Forms.Label
         Me.tbarMissionOpacity = New System.Windows.Forms.TrackBar
-        Me.Label5 = New System.Windows.Forms.Label
+        Me.lblMissionExtrude = New System.Windows.Forms.Label
         Me.chkMissionExtrude = New System.Windows.Forms.CheckBox
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
+        Me.lblMissionPathThickness = New System.Windows.Forms.Label
+        Me.lblMissionPathColor = New System.Windows.Forms.Label
         Me.tbarMissionWidth = New System.Windows.Forms.TrackBar
         Me.cmdMissionColor = New System.Windows.Forms.Button
-        Me.cboThrottleChannel = New System.Windows.Forms.ComboBox
-        Me.Label12 = New System.Windows.Forms.Label
+        Me.grpInstrumentSelection = New System.Windows.Forms.GroupBox
+        Me.chkInstBattery = New System.Windows.Forms.CheckBox
+        Me.chkInstTurn = New System.Windows.Forms.CheckBox
+        Me.chkInst3DModel = New System.Windows.Forms.CheckBox
+        Me.chkInstVertical = New System.Windows.Forms.CheckBox
+        Me.chkInstHeading = New System.Windows.Forms.CheckBox
+        Me.chkInstAttitude = New System.Windows.Forms.CheckBox
+        Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
+        Me.chkInstSpeed = New System.Windows.Forms.CheckBox
+        Me.grpBatteryThrottle = New System.Windows.Forms.GroupBox
+        Me.cboThrottleColor = New System.Windows.Forms.ComboBox
+        Me.lblThrottleColor = New System.Windows.Forms.Label
+        Me.cboMAHColor = New System.Windows.Forms.ComboBox
+        Me.lblMahColor = New System.Windows.Forms.Label
+        Me.lblMahMax = New System.Windows.Forms.Label
+        Me.txtMAHMax = New System.Windows.Forms.TextBox
+        Me.lblMahMin = New System.Windows.Forms.Label
+        Me.txtMAHMin = New System.Windows.Forms.TextBox
+        Me.cboAmperageColor = New System.Windows.Forms.ComboBox
+        Me.lblAmperageColor = New System.Windows.Forms.Label
+        Me.lblAmperageMax = New System.Windows.Forms.Label
+        Me.txtAmperageMax = New System.Windows.Forms.TextBox
+        Me.cboVoltageColor = New System.Windows.Forms.ComboBox
+        Me.lblVoltageColor = New System.Windows.Forms.Label
+        Me.lblVoltageMax = New System.Windows.Forms.Label
+        Me.txtVoltageMax = New System.Windows.Forms.TextBox
+        Me.lblVoltageMin = New System.Windows.Forms.Label
+        Me.txtVoltageMin = New System.Windows.Forms.TextBox
         Me.grpFlightPath.SuspendLayout()
         CType(Me.tbarFlightOpacity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpGeneral.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.grpMissionPath.SuspendLayout()
         CType(Me.tbarMissionOpacity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarMissionWidth, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpInstrumentSelection.SuspendLayout()
+        Me.grpBatteryThrottle.SuspendLayout()
         Me.SuspendLayout()
         '
         'grpFlightPath
         '
-        Me.grpFlightPath.Controls.Add(Me.Label11)
+        Me.grpFlightPath.Controls.Add(Me.lblFlightOpacity)
         Me.grpFlightPath.Controls.Add(Me.tbarFlightOpacity)
-        Me.grpFlightPath.Controls.Add(Me.Label1)
+        Me.grpFlightPath.Controls.Add(Me.lblFlightExtrude)
         Me.grpFlightPath.Controls.Add(Me.chkFlightExtrude)
         Me.grpFlightPath.Controls.Add(Me.cboMapUpdateRate)
-        Me.grpFlightPath.Controls.Add(Me.Label30)
-        Me.grpFlightPath.Controls.Add(Me.Label25)
-        Me.grpFlightPath.Controls.Add(Me.Label24)
+        Me.grpFlightPath.Controls.Add(Me.lblMapUpdateRate)
+        Me.grpFlightPath.Controls.Add(Me.lblFlightPathThickness)
+        Me.grpFlightPath.Controls.Add(Me.lblFlightPathColor)
         Me.grpFlightPath.Controls.Add(Me.tbarFlightWidth)
         Me.grpFlightPath.Controls.Add(Me.cmdFlightColor)
-        Me.grpFlightPath.Location = New System.Drawing.Point(241, 12)
+        resources.ApplyResources(Me.grpFlightPath, "grpFlightPath")
         Me.grpFlightPath.Name = "grpFlightPath"
-        Me.grpFlightPath.Size = New System.Drawing.Size(217, 172)
-        Me.grpFlightPath.TabIndex = 47
         Me.grpFlightPath.TabStop = False
-        Me.grpFlightPath.Text = "Google Earth Flight Path"
         '
-        'Label11
+        'lblFlightOpacity
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(39, 143)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(71, 13)
-        Me.Label11.TabIndex = 55
-        Me.Label11.Text = "Path Opacity:"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblFlightOpacity, "lblFlightOpacity")
+        Me.lblFlightOpacity.Name = "lblFlightOpacity"
         '
         'tbarFlightOpacity
         '
-        Me.tbarFlightOpacity.AutoSize = False
-        Me.tbarFlightOpacity.BackColor = System.Drawing.SystemColors.ControlLightLight
+        resources.ApplyResources(Me.tbarFlightOpacity, "tbarFlightOpacity")
+        Me.tbarFlightOpacity.BackColor = System.Drawing.SystemColors.Control
         Me.tbarFlightOpacity.LargeChange = 1
-        Me.tbarFlightOpacity.Location = New System.Drawing.Point(115, 136)
         Me.tbarFlightOpacity.Maximum = 255
         Me.tbarFlightOpacity.Minimum = 1
         Me.tbarFlightOpacity.Name = "tbarFlightOpacity"
-        Me.tbarFlightOpacity.Size = New System.Drawing.Size(90, 28)
-        Me.tbarFlightOpacity.TabIndex = 13
         Me.tbarFlightOpacity.TickFrequency = 26
         Me.tbarFlightOpacity.TickStyle = System.Windows.Forms.TickStyle.None
         Me.tbarFlightOpacity.Value = 1
         '
-        'Label1
+        'lblFlightExtrude
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(64, 115)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(46, 13)
-        Me.Label1.TabIndex = 53
-        Me.Label1.Text = "Extrude:"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblFlightExtrude, "lblFlightExtrude")
+        Me.lblFlightExtrude.Name = "lblFlightExtrude"
         '
         'chkFlightExtrude
         '
-        Me.chkFlightExtrude.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkFlightExtrude.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkFlightExtrude.Location = New System.Drawing.Point(116, 111)
+        resources.ApplyResources(Me.chkFlightExtrude, "chkFlightExtrude")
         Me.chkFlightExtrude.Name = "chkFlightExtrude"
-        Me.chkFlightExtrude.Size = New System.Drawing.Size(59, 21)
-        Me.chkFlightExtrude.TabIndex = 12
-        Me.chkFlightExtrude.Text = "No"
-        Me.chkFlightExtrude.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkFlightExtrude.UseVisualStyleBackColor = True
         '
         'cboMapUpdateRate
         '
         Me.cboMapUpdateRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboMapUpdateRate.FormattingEnabled = True
-        Me.cboMapUpdateRate.Location = New System.Drawing.Point(116, 25)
+        resources.ApplyResources(Me.cboMapUpdateRate, "cboMapUpdateRate")
         Me.cboMapUpdateRate.Name = "cboMapUpdateRate"
-        Me.cboMapUpdateRate.Size = New System.Drawing.Size(65, 21)
-        Me.cboMapUpdateRate.TabIndex = 9
         '
-        'Label30
+        'lblMapUpdateRate
         '
-        Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(15, 28)
-        Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(95, 13)
-        Me.Label30.TabIndex = 50
-        Me.Label30.Text = "Map Update Rate:"
-        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMapUpdateRate, "lblMapUpdateRate")
+        Me.lblMapUpdateRate.Name = "lblMapUpdateRate"
         '
-        'Label25
+        'lblFlightPathThickness
         '
-        Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(26, 86)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(84, 13)
-        Me.Label25.TabIndex = 49
-        Me.Label25.Text = "Path Thickness:"
-        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblFlightPathThickness, "lblFlightPathThickness")
+        Me.lblFlightPathThickness.Name = "lblFlightPathThickness"
         '
-        'Label24
+        'lblFlightPathColor
         '
-        Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(23, 57)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(87, 13)
-        Me.Label24.TabIndex = 48
-        Me.Label24.Text = "Flight Path Color:"
-        Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblFlightPathColor, "lblFlightPathColor")
+        Me.lblFlightPathColor.Name = "lblFlightPathColor"
         '
         'tbarFlightWidth
         '
-        Me.tbarFlightWidth.AutoSize = False
-        Me.tbarFlightWidth.BackColor = System.Drawing.SystemColors.ControlLightLight
+        resources.ApplyResources(Me.tbarFlightWidth, "tbarFlightWidth")
+        Me.tbarFlightWidth.BackColor = System.Drawing.SystemColors.Control
         Me.tbarFlightWidth.LargeChange = 1
-        Me.tbarFlightWidth.Location = New System.Drawing.Point(116, 79)
         Me.tbarFlightWidth.Minimum = 1
         Me.tbarFlightWidth.Name = "tbarFlightWidth"
-        Me.tbarFlightWidth.Size = New System.Drawing.Size(90, 28)
-        Me.tbarFlightWidth.TabIndex = 11
         Me.tbarFlightWidth.TickFrequency = 26
         Me.tbarFlightWidth.TickStyle = System.Windows.Forms.TickStyle.None
         Me.tbarFlightWidth.Value = 1
         '
         'cmdFlightColor
         '
-        Me.cmdFlightColor.Location = New System.Drawing.Point(116, 50)
+        resources.ApplyResources(Me.cmdFlightColor, "cmdFlightColor")
         Me.cmdFlightColor.Name = "cmdFlightColor"
-        Me.cmdFlightColor.Size = New System.Drawing.Size(90, 23)
-        Me.cmdFlightColor.TabIndex = 10
         Me.cmdFlightColor.UseVisualStyleBackColor = False
         '
         'grpGeneral
         '
         Me.grpGeneral.Controls.Add(Me.cboThrottleChannel)
-        Me.grpGeneral.Controls.Add(Me.Label12)
-        Me.grpGeneral.Controls.Add(Me.Label4)
+        Me.grpGeneral.Controls.Add(Me.lblThrottleChannel)
+        Me.grpGeneral.Controls.Add(Me.lblHeading)
         Me.grpGeneral.Controls.Add(Me.chkHeadingReverse)
-        Me.grpGeneral.Controls.Add(Me.Label2)
+        Me.grpGeneral.Controls.Add(Me.lblYaw)
         Me.grpGeneral.Controls.Add(Me.chkYawReverse)
-        Me.grpGeneral.Controls.Add(Me.Label29)
+        Me.grpGeneral.Controls.Add(Me.lblRoll)
         Me.grpGeneral.Controls.Add(Me.chkRollReverse)
-        Me.grpGeneral.Controls.Add(Me.Label27)
+        Me.grpGeneral.Controls.Add(Me.lblPitch)
         Me.grpGeneral.Controls.Add(Me.chkPitchReverse)
         Me.grpGeneral.Controls.Add(Me.cbo3DModel)
-        Me.grpGeneral.Controls.Add(Me.Label21)
+        Me.grpGeneral.Controls.Add(Me.lbl3DModel)
         Me.grpGeneral.Controls.Add(Me.cboMaxSpeed)
-        Me.grpGeneral.Controls.Add(Me.Label8)
-        Me.grpGeneral.Controls.Add(Me.Label7)
+        Me.grpGeneral.Controls.Add(Me.lblMaxSpeed)
+        Me.grpGeneral.Controls.Add(Me.lblSpeedUnits)
         Me.grpGeneral.Controls.Add(Me.cboSpeedUnits)
-        Me.grpGeneral.Controls.Add(Me.Label3)
+        Me.grpGeneral.Controls.Add(Me.lblDistanceUnits)
         Me.grpGeneral.Controls.Add(Me.cboDistanceUnits)
-        Me.grpGeneral.Location = New System.Drawing.Point(12, 12)
+        resources.ApplyResources(Me.grpGeneral, "grpGeneral")
         Me.grpGeneral.Name = "grpGeneral"
-        Me.grpGeneral.Size = New System.Drawing.Size(223, 320)
-        Me.grpGeneral.TabIndex = 48
         Me.grpGeneral.TabStop = False
-        Me.grpGeneral.Text = "General"
         '
-        'Label4
+        'cboThrottleChannel
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(54, 220)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(50, 13)
-        Me.Label4.TabIndex = 59
-        Me.Label4.Text = "Heading:"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.cboThrottleChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboThrottleChannel.FormattingEnabled = True
+        resources.ApplyResources(Me.cboThrottleChannel, "cboThrottleChannel")
+        Me.cboThrottleChannel.Name = "cboThrottleChannel"
+        '
+        'lblThrottleChannel
+        '
+        resources.ApplyResources(Me.lblThrottleChannel, "lblThrottleChannel")
+        Me.lblThrottleChannel.Name = "lblThrottleChannel"
+        '
+        'lblHeading
+        '
+        resources.ApplyResources(Me.lblHeading, "lblHeading")
+        Me.lblHeading.Name = "lblHeading"
         '
         'chkHeadingReverse
         '
-        Me.chkHeadingReverse.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkHeadingReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkHeadingReverse.Location = New System.Drawing.Point(110, 213)
+        resources.ApplyResources(Me.chkHeadingReverse, "chkHeadingReverse")
         Me.chkHeadingReverse.Name = "chkHeadingReverse"
-        Me.chkHeadingReverse.Size = New System.Drawing.Size(69, 24)
-        Me.chkHeadingReverse.TabIndex = 8
-        Me.chkHeadingReverse.Text = "Normal"
-        Me.chkHeadingReverse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkHeadingReverse.UseVisualStyleBackColor = True
         '
-        'Label2
+        'lblYaw
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(73, 193)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(31, 13)
-        Me.Label2.TabIndex = 57
-        Me.Label2.Text = "Yaw:"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblYaw, "lblYaw")
+        Me.lblYaw.Name = "lblYaw"
         '
         'chkYawReverse
         '
-        Me.chkYawReverse.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkYawReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkYawReverse.Location = New System.Drawing.Point(111, 186)
+        resources.ApplyResources(Me.chkYawReverse, "chkYawReverse")
         Me.chkYawReverse.Name = "chkYawReverse"
-        Me.chkYawReverse.Size = New System.Drawing.Size(69, 24)
-        Me.chkYawReverse.TabIndex = 7
-        Me.chkYawReverse.Text = "Normal"
-        Me.chkYawReverse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkYawReverse.UseVisualStyleBackColor = True
         '
-        'Label29
+        'lblRoll
         '
-        Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(76, 166)
-        Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(28, 13)
-        Me.Label29.TabIndex = 55
-        Me.Label29.Text = "Roll:"
-        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblRoll, "lblRoll")
+        Me.lblRoll.Name = "lblRoll"
         '
         'chkRollReverse
         '
-        Me.chkRollReverse.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkRollReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkRollReverse.Location = New System.Drawing.Point(110, 159)
+        resources.ApplyResources(Me.chkRollReverse, "chkRollReverse")
         Me.chkRollReverse.Name = "chkRollReverse"
-        Me.chkRollReverse.Size = New System.Drawing.Size(69, 24)
-        Me.chkRollReverse.TabIndex = 6
-        Me.chkRollReverse.Text = "Normal"
-        Me.chkRollReverse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkRollReverse.UseVisualStyleBackColor = True
         '
-        'Label27
+        'lblPitch
         '
-        Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(70, 138)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(34, 13)
-        Me.Label27.TabIndex = 53
-        Me.Label27.Text = "Pitch:"
-        Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblPitch, "lblPitch")
+        Me.lblPitch.Name = "lblPitch"
         '
         'chkPitchReverse
         '
-        Me.chkPitchReverse.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkPitchReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkPitchReverse.Location = New System.Drawing.Point(110, 132)
+        resources.ApplyResources(Me.chkPitchReverse, "chkPitchReverse")
         Me.chkPitchReverse.Name = "chkPitchReverse"
-        Me.chkPitchReverse.Size = New System.Drawing.Size(70, 24)
-        Me.chkPitchReverse.TabIndex = 5
-        Me.chkPitchReverse.Text = "Normal"
-        Me.chkPitchReverse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkPitchReverse.UseVisualStyleBackColor = True
         '
         'cbo3DModel
         '
         Me.cbo3DModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbo3DModel.FormattingEnabled = True
-        Me.cbo3DModel.Location = New System.Drawing.Point(110, 106)
+        resources.ApplyResources(Me.cbo3DModel, "cbo3DModel")
         Me.cbo3DModel.Name = "cbo3DModel"
-        Me.cbo3DModel.Size = New System.Drawing.Size(104, 21)
         Me.cbo3DModel.Sorted = True
-        Me.cbo3DModel.TabIndex = 4
         '
-        'Label21
+        'lbl3DModel
         '
-        Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(48, 112)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(56, 13)
-        Me.Label21.TabIndex = 50
-        Me.Label21.Text = "3D Model:"
-        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lbl3DModel, "lbl3DModel")
+        Me.lbl3DModel.Name = "lbl3DModel"
         '
         'cboMaxSpeed
         '
         Me.cboMaxSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboMaxSpeed.FormattingEnabled = True
-        Me.cboMaxSpeed.Location = New System.Drawing.Point(110, 80)
+        resources.ApplyResources(Me.cboMaxSpeed, "cboMaxSpeed")
         Me.cboMaxSpeed.Name = "cboMaxSpeed"
-        Me.cboMaxSpeed.Size = New System.Drawing.Size(65, 21)
-        Me.cboMaxSpeed.TabIndex = 3
         '
-        'Label8
+        'lblMaxSpeed
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(40, 85)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(64, 13)
-        Me.Label8.TabIndex = 48
-        Me.Label8.Text = "Max Speed:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMaxSpeed, "lblMaxSpeed")
+        Me.lblMaxSpeed.Name = "lblMaxSpeed"
         '
-        'Label7
+        'lblSpeedUnits
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(36, 58)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(68, 13)
-        Me.Label7.TabIndex = 47
-        Me.Label7.Text = "Speed Units:"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblSpeedUnits, "lblSpeedUnits")
+        Me.lblSpeedUnits.Name = "lblSpeedUnits"
         '
         'cboSpeedUnits
         '
         Me.cboSpeedUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboSpeedUnits.FormattingEnabled = True
-        Me.cboSpeedUnits.Location = New System.Drawing.Point(110, 54)
+        resources.ApplyResources(Me.cboSpeedUnits, "cboSpeedUnits")
         Me.cboSpeedUnits.Name = "cboSpeedUnits"
-        Me.cboSpeedUnits.Size = New System.Drawing.Size(65, 21)
-        Me.cboSpeedUnits.TabIndex = 2
         '
-        'Label3
+        'lblDistanceUnits
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(14, 31)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(90, 13)
-        Me.Label3.TabIndex = 45
-        Me.Label3.Text = "Units of Measure:"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblDistanceUnits, "lblDistanceUnits")
+        Me.lblDistanceUnits.Name = "lblDistanceUnits"
         '
         'cboDistanceUnits
         '
         Me.cboDistanceUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboDistanceUnits.FormattingEnabled = True
-        Me.cboDistanceUnits.Location = New System.Drawing.Point(110, 28)
+        resources.ApplyResources(Me.cboDistanceUnits, "cboDistanceUnits")
         Me.cboDistanceUnits.Name = "cboDistanceUnits"
-        Me.cboDistanceUnits.Size = New System.Drawing.Size(65, 21)
-        Me.cboDistanceUnits.TabIndex = 1
         '
         'cmdSave
         '
-        Me.cmdSave.Location = New System.Drawing.Point(12, 338)
+        resources.ApplyResources(Me.cmdSave, "cmdSave")
         Me.cmdSave.Name = "cmdSave"
-        Me.cmdSave.Size = New System.Drawing.Size(75, 23)
-        Me.cmdSave.TabIndex = 18
-        Me.cmdSave.Text = "Save"
         Me.cmdSave.UseVisualStyleBackColor = True
         '
         'cmdCancel
         '
-        Me.cmdCancel.Location = New System.Drawing.Point(383, 338)
+        resources.ApplyResources(Me.cmdCancel, "cmdCancel")
         Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
-        Me.cmdCancel.TabIndex = 19
-        Me.cmdCancel.Text = "Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'grpMissionPath
         '
-        Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Controls.Add(Me.tbarMissionOpacity)
-        Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Controls.Add(Me.chkMissionExtrude)
-        Me.GroupBox1.Controls.Add(Me.Label9)
-        Me.GroupBox1.Controls.Add(Me.Label10)
-        Me.GroupBox1.Controls.Add(Me.tbarMissionWidth)
-        Me.GroupBox1.Controls.Add(Me.cmdMissionColor)
-        Me.GroupBox1.Location = New System.Drawing.Point(242, 190)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(216, 142)
-        Me.GroupBox1.TabIndex = 51
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Mission Path"
+        Me.grpMissionPath.Controls.Add(Me.lblMissionOpacity)
+        Me.grpMissionPath.Controls.Add(Me.tbarMissionOpacity)
+        Me.grpMissionPath.Controls.Add(Me.lblMissionExtrude)
+        Me.grpMissionPath.Controls.Add(Me.chkMissionExtrude)
+        Me.grpMissionPath.Controls.Add(Me.lblMissionPathThickness)
+        Me.grpMissionPath.Controls.Add(Me.lblMissionPathColor)
+        Me.grpMissionPath.Controls.Add(Me.tbarMissionWidth)
+        Me.grpMissionPath.Controls.Add(Me.cmdMissionColor)
+        resources.ApplyResources(Me.grpMissionPath, "grpMissionPath")
+        Me.grpMissionPath.Name = "grpMissionPath"
+        Me.grpMissionPath.TabStop = False
         '
-        'Label6
+        'lblMissionOpacity
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(37, 110)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(71, 13)
-        Me.Label6.TabIndex = 55
-        Me.Label6.Text = "Path Opacity:"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMissionOpacity, "lblMissionOpacity")
+        Me.lblMissionOpacity.Name = "lblMissionOpacity"
         '
         'tbarMissionOpacity
         '
-        Me.tbarMissionOpacity.AutoSize = False
-        Me.tbarMissionOpacity.BackColor = System.Drawing.SystemColors.ControlLightLight
+        resources.ApplyResources(Me.tbarMissionOpacity, "tbarMissionOpacity")
+        Me.tbarMissionOpacity.BackColor = System.Drawing.SystemColors.Control
         Me.tbarMissionOpacity.LargeChange = 1
-        Me.tbarMissionOpacity.Location = New System.Drawing.Point(114, 103)
         Me.tbarMissionOpacity.Maximum = 255
         Me.tbarMissionOpacity.Minimum = 1
         Me.tbarMissionOpacity.Name = "tbarMissionOpacity"
-        Me.tbarMissionOpacity.Size = New System.Drawing.Size(90, 28)
-        Me.tbarMissionOpacity.TabIndex = 17
         Me.tbarMissionOpacity.TickFrequency = 26
         Me.tbarMissionOpacity.TickStyle = System.Windows.Forms.TickStyle.None
         Me.tbarMissionOpacity.Value = 1
         '
-        'Label5
+        'lblMissionExtrude
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(62, 84)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(46, 13)
-        Me.Label5.TabIndex = 53
-        Me.Label5.Text = "Extrude:"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMissionExtrude, "lblMissionExtrude")
+        Me.lblMissionExtrude.Name = "lblMissionExtrude"
         '
         'chkMissionExtrude
         '
-        Me.chkMissionExtrude.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkMissionExtrude.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.chkMissionExtrude.Location = New System.Drawing.Point(114, 80)
+        resources.ApplyResources(Me.chkMissionExtrude, "chkMissionExtrude")
         Me.chkMissionExtrude.Name = "chkMissionExtrude"
-        Me.chkMissionExtrude.Size = New System.Drawing.Size(59, 21)
-        Me.chkMissionExtrude.TabIndex = 16
-        Me.chkMissionExtrude.Text = "No"
-        Me.chkMissionExtrude.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.chkMissionExtrude.UseVisualStyleBackColor = True
         '
-        'Label9
+        'lblMissionPathThickness
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(24, 55)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(84, 13)
-        Me.Label9.TabIndex = 49
-        Me.Label9.Text = "Path Thickness:"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMissionPathThickness, "lblMissionPathThickness")
+        Me.lblMissionPathThickness.Name = "lblMissionPathThickness"
         '
-        'Label10
+        'lblMissionPathColor
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(11, 26)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(97, 13)
-        Me.Label10.TabIndex = 48
-        Me.Label10.Text = "Mission Path Color:"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.lblMissionPathColor, "lblMissionPathColor")
+        Me.lblMissionPathColor.Name = "lblMissionPathColor"
         '
         'tbarMissionWidth
         '
-        Me.tbarMissionWidth.AutoSize = False
-        Me.tbarMissionWidth.BackColor = System.Drawing.SystemColors.ControlLightLight
+        resources.ApplyResources(Me.tbarMissionWidth, "tbarMissionWidth")
+        Me.tbarMissionWidth.BackColor = System.Drawing.SystemColors.Control
         Me.tbarMissionWidth.LargeChange = 1
-        Me.tbarMissionWidth.Location = New System.Drawing.Point(114, 48)
         Me.tbarMissionWidth.Minimum = 1
         Me.tbarMissionWidth.Name = "tbarMissionWidth"
-        Me.tbarMissionWidth.Size = New System.Drawing.Size(90, 28)
-        Me.tbarMissionWidth.TabIndex = 15
         Me.tbarMissionWidth.TickFrequency = 26
         Me.tbarMissionWidth.TickStyle = System.Windows.Forms.TickStyle.None
         Me.tbarMissionWidth.Value = 1
         '
         'cmdMissionColor
         '
-        Me.cmdMissionColor.Location = New System.Drawing.Point(114, 19)
+        resources.ApplyResources(Me.cmdMissionColor, "cmdMissionColor")
         Me.cmdMissionColor.Name = "cmdMissionColor"
-        Me.cmdMissionColor.Size = New System.Drawing.Size(90, 23)
-        Me.cmdMissionColor.TabIndex = 14
         Me.cmdMissionColor.UseVisualStyleBackColor = False
         '
-        'cboThrottleChannel
+        'grpInstrumentSelection
         '
-        Me.cboThrottleChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboThrottleChannel.FormattingEnabled = True
-        Me.cboThrottleChannel.Location = New System.Drawing.Point(111, 243)
-        Me.cboThrottleChannel.Name = "cboThrottleChannel"
-        Me.cboThrottleChannel.Size = New System.Drawing.Size(65, 21)
-        Me.cboThrottleChannel.TabIndex = 60
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstBattery)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstTurn)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInst3DModel)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstVertical)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstHeading)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstAttitude)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstAltimeter)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstSpeed)
+        resources.ApplyResources(Me.grpInstrumentSelection, "grpInstrumentSelection")
+        Me.grpInstrumentSelection.Name = "grpInstrumentSelection"
+        Me.grpInstrumentSelection.TabStop = False
         '
-        'Label12
+        'chkInstBattery
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(14, 246)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(88, 13)
-        Me.Label12.TabIndex = 61
-        Me.Label12.Text = "Throttle Channel:"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.chkInstBattery, "chkInstBattery")
+        Me.chkInstBattery.Name = "chkInstBattery"
+        Me.chkInstBattery.UseVisualStyleBackColor = True
+        '
+        'chkInstTurn
+        '
+        resources.ApplyResources(Me.chkInstTurn, "chkInstTurn")
+        Me.chkInstTurn.Name = "chkInstTurn"
+        Me.chkInstTurn.UseVisualStyleBackColor = True
+        '
+        'chkInst3DModel
+        '
+        resources.ApplyResources(Me.chkInst3DModel, "chkInst3DModel")
+        Me.chkInst3DModel.Name = "chkInst3DModel"
+        Me.chkInst3DModel.UseVisualStyleBackColor = True
+        '
+        'chkInstVertical
+        '
+        resources.ApplyResources(Me.chkInstVertical, "chkInstVertical")
+        Me.chkInstVertical.Name = "chkInstVertical"
+        Me.chkInstVertical.UseVisualStyleBackColor = True
+        '
+        'chkInstHeading
+        '
+        resources.ApplyResources(Me.chkInstHeading, "chkInstHeading")
+        Me.chkInstHeading.Name = "chkInstHeading"
+        Me.chkInstHeading.UseVisualStyleBackColor = True
+        '
+        'chkInstAttitude
+        '
+        resources.ApplyResources(Me.chkInstAttitude, "chkInstAttitude")
+        Me.chkInstAttitude.Name = "chkInstAttitude"
+        Me.chkInstAttitude.UseVisualStyleBackColor = True
+        '
+        'chkInstAltimeter
+        '
+        resources.ApplyResources(Me.chkInstAltimeter, "chkInstAltimeter")
+        Me.chkInstAltimeter.Name = "chkInstAltimeter"
+        Me.chkInstAltimeter.UseVisualStyleBackColor = True
+        '
+        'chkInstSpeed
+        '
+        resources.ApplyResources(Me.chkInstSpeed, "chkInstSpeed")
+        Me.chkInstSpeed.Name = "chkInstSpeed"
+        Me.chkInstSpeed.UseVisualStyleBackColor = True
+        '
+        'grpBatteryThrottle
+        '
+        Me.grpBatteryThrottle.Controls.Add(Me.cboThrottleColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblThrottleColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.cboMAHColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblMahColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblMahMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.txtMAHMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblMahMin)
+        Me.grpBatteryThrottle.Controls.Add(Me.txtMAHMin)
+        Me.grpBatteryThrottle.Controls.Add(Me.cboAmperageColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblAmperageColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblAmperageMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.txtAmperageMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.cboVoltageColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageColor)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.txtVoltageMax)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageMin)
+        Me.grpBatteryThrottle.Controls.Add(Me.txtVoltageMin)
+        resources.ApplyResources(Me.grpBatteryThrottle, "grpBatteryThrottle")
+        Me.grpBatteryThrottle.Name = "grpBatteryThrottle"
+        Me.grpBatteryThrottle.TabStop = False
+        '
+        'cboThrottleColor
+        '
+        Me.cboThrottleColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboThrottleColor.FormattingEnabled = True
+        resources.ApplyResources(Me.cboThrottleColor, "cboThrottleColor")
+        Me.cboThrottleColor.Name = "cboThrottleColor"
+        '
+        'lblThrottleColor
+        '
+        resources.ApplyResources(Me.lblThrottleColor, "lblThrottleColor")
+        Me.lblThrottleColor.Name = "lblThrottleColor"
+        '
+        'cboMAHColor
+        '
+        Me.cboMAHColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMAHColor.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMAHColor, "cboMAHColor")
+        Me.cboMAHColor.Name = "cboMAHColor"
+        '
+        'lblMahColor
+        '
+        resources.ApplyResources(Me.lblMahColor, "lblMahColor")
+        Me.lblMahColor.Name = "lblMahColor"
+        '
+        'lblMahMax
+        '
+        resources.ApplyResources(Me.lblMahMax, "lblMahMax")
+        Me.lblMahMax.Name = "lblMahMax"
+        '
+        'txtMAHMax
+        '
+        resources.ApplyResources(Me.txtMAHMax, "txtMAHMax")
+        Me.txtMAHMax.Name = "txtMAHMax"
+        '
+        'lblMahMin
+        '
+        resources.ApplyResources(Me.lblMahMin, "lblMahMin")
+        Me.lblMahMin.Name = "lblMahMin"
+        '
+        'txtMAHMin
+        '
+        resources.ApplyResources(Me.txtMAHMin, "txtMAHMin")
+        Me.txtMAHMin.Name = "txtMAHMin"
+        '
+        'cboAmperageColor
+        '
+        Me.cboAmperageColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboAmperageColor.FormattingEnabled = True
+        resources.ApplyResources(Me.cboAmperageColor, "cboAmperageColor")
+        Me.cboAmperageColor.Name = "cboAmperageColor"
+        '
+        'lblAmperageColor
+        '
+        resources.ApplyResources(Me.lblAmperageColor, "lblAmperageColor")
+        Me.lblAmperageColor.Name = "lblAmperageColor"
+        '
+        'lblAmperageMax
+        '
+        resources.ApplyResources(Me.lblAmperageMax, "lblAmperageMax")
+        Me.lblAmperageMax.Name = "lblAmperageMax"
+        '
+        'txtAmperageMax
+        '
+        resources.ApplyResources(Me.txtAmperageMax, "txtAmperageMax")
+        Me.txtAmperageMax.Name = "txtAmperageMax"
+        '
+        'cboVoltageColor
+        '
+        Me.cboVoltageColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboVoltageColor.FormattingEnabled = True
+        resources.ApplyResources(Me.cboVoltageColor, "cboVoltageColor")
+        Me.cboVoltageColor.Name = "cboVoltageColor"
+        '
+        'lblVoltageColor
+        '
+        resources.ApplyResources(Me.lblVoltageColor, "lblVoltageColor")
+        Me.lblVoltageColor.Name = "lblVoltageColor"
+        '
+        'lblVoltageMax
+        '
+        resources.ApplyResources(Me.lblVoltageMax, "lblVoltageMax")
+        Me.lblVoltageMax.Name = "lblVoltageMax"
+        '
+        'txtVoltageMax
+        '
+        resources.ApplyResources(Me.txtVoltageMax, "txtVoltageMax")
+        Me.txtVoltageMax.Name = "txtVoltageMax"
+        '
+        'lblVoltageMin
+        '
+        resources.ApplyResources(Me.lblVoltageMin, "lblVoltageMin")
+        Me.lblVoltageMin.Name = "lblVoltageMin"
+        '
+        'txtVoltageMin
+        '
+        resources.ApplyResources(Me.txtVoltageMin, "txtVoltageMin")
+        Me.txtVoltageMin.Name = "txtVoltageMin"
         '
         'frmSettings
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(467, 368)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.grpBatteryThrottle)
+        Me.Controls.Add(Me.grpInstrumentSelection)
+        Me.Controls.Add(Me.grpMissionPath)
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmdSave)
         Me.Controls.Add(Me.grpGeneral)
         Me.Controls.Add(Me.grpFlightPath)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmSettings"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Settings"
         Me.grpFlightPath.ResumeLayout(False)
-        Me.grpFlightPath.PerformLayout()
         CType(Me.tbarFlightOpacity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpGeneral.ResumeLayout(False)
-        Me.grpGeneral.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.grpMissionPath.ResumeLayout(False)
         CType(Me.tbarMissionOpacity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarMissionWidth, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grpInstrumentSelection.ResumeLayout(False)
+        Me.grpInstrumentSelection.PerformLayout()
+        Me.grpBatteryThrottle.ResumeLayout(False)
+        Me.grpBatteryThrottle.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents grpFlightPath As System.Windows.Forms.GroupBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblFlightExtrude As System.Windows.Forms.Label
     Friend WithEvents chkFlightExtrude As System.Windows.Forms.CheckBox
     Friend WithEvents cboMapUpdateRate As System.Windows.Forms.ComboBox
-    Friend WithEvents Label30 As System.Windows.Forms.Label
-    Friend WithEvents Label25 As System.Windows.Forms.Label
-    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents lblMapUpdateRate As System.Windows.Forms.Label
+    Friend WithEvents lblFlightPathThickness As System.Windows.Forms.Label
+    Friend WithEvents lblFlightPathColor As System.Windows.Forms.Label
     Friend WithEvents tbarFlightWidth As System.Windows.Forms.TrackBar
     Friend WithEvents cmdFlightColor As System.Windows.Forms.Button
     Friend WithEvents grpGeneral As System.Windows.Forms.GroupBox
-    Friend WithEvents Label29 As System.Windows.Forms.Label
+    Friend WithEvents lblRoll As System.Windows.Forms.Label
     Friend WithEvents chkRollReverse As System.Windows.Forms.CheckBox
-    Friend WithEvents Label27 As System.Windows.Forms.Label
+    Friend WithEvents lblPitch As System.Windows.Forms.Label
     Friend WithEvents chkPitchReverse As System.Windows.Forms.CheckBox
     Friend WithEvents cbo3DModel As System.Windows.Forms.ComboBox
-    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents lbl3DModel As System.Windows.Forms.Label
     Friend WithEvents cboMaxSpeed As System.Windows.Forms.ComboBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents lblMaxSpeed As System.Windows.Forms.Label
+    Friend WithEvents lblSpeedUnits As System.Windows.Forms.Label
     Friend WithEvents cboSpeedUnits As System.Windows.Forms.ComboBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents lblDistanceUnits As System.Windows.Forms.Label
     Friend WithEvents cboDistanceUnits As System.Windows.Forms.ComboBox
     Friend WithEvents cmdSave As System.Windows.Forms.Button
     Friend WithEvents cmdCancel As System.Windows.Forms.Button
     Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
-    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents lblHeading As System.Windows.Forms.Label
     Friend WithEvents chkHeadingReverse As System.Windows.Forms.CheckBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblYaw As System.Windows.Forms.Label
     Friend WithEvents chkYawReverse As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents grpMissionPath As System.Windows.Forms.GroupBox
+    Friend WithEvents lblMissionExtrude As System.Windows.Forms.Label
     Friend WithEvents chkMissionExtrude As System.Windows.Forms.CheckBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionPathThickness As System.Windows.Forms.Label
+    Friend WithEvents lblMissionPathColor As System.Windows.Forms.Label
     Friend WithEvents tbarMissionWidth As System.Windows.Forms.TrackBar
     Friend WithEvents cmdMissionColor As System.Windows.Forms.Button
-    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents lblFlightOpacity As System.Windows.Forms.Label
     Friend WithEvents tbarFlightOpacity As System.Windows.Forms.TrackBar
-    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionOpacity As System.Windows.Forms.Label
     Friend WithEvents tbarMissionOpacity As System.Windows.Forms.TrackBar
     Friend WithEvents cboThrottleChannel As System.Windows.Forms.ComboBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents lblThrottleChannel As System.Windows.Forms.Label
+    Friend WithEvents grpInstrumentSelection As System.Windows.Forms.GroupBox
+    Friend WithEvents chkInst3DModel As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstVertical As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstHeading As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstAttitude As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstAltimeter As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstSpeed As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstBattery As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstTurn As System.Windows.Forms.CheckBox
+    Friend WithEvents grpBatteryThrottle As System.Windows.Forms.GroupBox
+    Friend WithEvents txtVoltageMin As System.Windows.Forms.TextBox
+    Friend WithEvents cboThrottleColor As System.Windows.Forms.ComboBox
+    Friend WithEvents lblThrottleColor As System.Windows.Forms.Label
+    Friend WithEvents cboMAHColor As System.Windows.Forms.ComboBox
+    Friend WithEvents lblMahColor As System.Windows.Forms.Label
+    Friend WithEvents lblMahMax As System.Windows.Forms.Label
+    Friend WithEvents txtMAHMax As System.Windows.Forms.TextBox
+    Friend WithEvents lblMahMin As System.Windows.Forms.Label
+    Friend WithEvents txtMAHMin As System.Windows.Forms.TextBox
+    Friend WithEvents cboAmperageColor As System.Windows.Forms.ComboBox
+    Friend WithEvents lblAmperageColor As System.Windows.Forms.Label
+    Friend WithEvents lblAmperageMax As System.Windows.Forms.Label
+    Friend WithEvents txtAmperageMax As System.Windows.Forms.TextBox
+    Friend WithEvents cboVoltageColor As System.Windows.Forms.ComboBox
+    Friend WithEvents lblVoltageColor As System.Windows.Forms.Label
+    Friend WithEvents lblVoltageMax As System.Windows.Forms.Label
+    Friend WithEvents txtVoltageMax As System.Windows.Forms.TextBox
+    Friend WithEvents lblVoltageMin As System.Windows.Forms.Label
 End Class

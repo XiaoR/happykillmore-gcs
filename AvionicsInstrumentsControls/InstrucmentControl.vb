@@ -171,14 +171,34 @@ Namespace AvionicsInstrumentControlDemo
                 ' yOffset Computing	
                 If prevDigit = 9 Then
                     fader = 0 ' 0.33
-                    yOffset = CInt(Math.Truncate(-((fader + currentDigit) * digitBoxHeight)))
+                    yOffset = CInt(Math.Truncate(-((fader + currentDigit) * digitBoxHeight))) - 1
                 Else
-                    yOffset = CInt(-(currentDigit * digitBoxHeight))
+                    yOffset = CInt(-(currentDigit * digitBoxHeight)) - 1
                 End If
 
                 ' Display Image
                 pe.Graphics.DrawImage(imgBand, (ptImg.X + xOffset) * scaleFactor, (ptImg.Y + yOffset) * scaleFactor, imgBand.Width * scaleFactor, imgBand.Height * scaleFactor)
             Next
+        End Sub
+
+        Protected Sub ShowMeterLevel(ByVal pe As PaintEventArgs, ByVal imgBand As Image, ByVal meterValue As Single, ByVal minValue As Single, ByVal maxValue As Single, ByVal ptImg As Point, ByVal openingHeight As Integer, ByVal scaleFactor As Single)
+
+            Dim yOffset As Integer
+
+            Try
+                ' yOffset Computing	
+                yOffset = (-(imgBand.Height / 2)) + openingHeight - Convert.ToInt32(meterValue - minValue) / (maxValue - minValue) * (openingHeight)
+            Catch
+                yOffset = 0
+            End Try
+            If yOffset > (-(imgBand.Height / 2)) + openingHeight Then
+                yOffset = (-(imgBand.Height / 2)) + openingHeight
+            ElseIf yOffset < -imgBand.Height + openingHeight Then
+                yOffset = -imgBand.Height + openingHeight
+            End If
+
+            ' Display Image
+            pe.Graphics.DrawImage(imgBand, (ptImg.X) * scaleFactor, (ptImg.Y + yOffset) * scaleFactor, imgBand.Width * scaleFactor, imgBand.Height * scaleFactor)
         End Sub
 
         Protected Sub DisplayRoundMark(ByVal pe As PaintEventArgs, ByVal imgMark As Image, ByVal insControlMarksDefinition As InstrumentControlMarksDefinition, ByVal ptImg As Point, ByVal radiusPx As Integer, ByVal displayText As [Boolean], _

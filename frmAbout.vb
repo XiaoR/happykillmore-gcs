@@ -1,6 +1,16 @@
 Public Class frmAbout
     Public bIsSplash As Boolean = False
 
+    Public Sub ResetForm()
+        GetResString(lblProjectHomepageLabel, "Project_Homepage")
+        GetResString(lblHappyKillmoreEmailLabel, "HappyKillmores_Email")
+        GetResString(lbl3DModelLabel, "_3D_Models_From")
+        GetResString(lblSupportedProtocolsLabel, "Supported_Protocols")
+        GetResString(lblOriginalInstrumentLabel, "Original_Instruments")
+
+        GetResString(cmdOk, "OK")
+    End Sub
+
     Private Sub lblGoogleCode_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblGoogleCode.Click
         System.Diagnostics.Process.Start(lblGoogleCode.Text)
     End Sub
@@ -17,19 +27,30 @@ Public Class frmAbout
         System.Diagnostics.Process.Start(lblOpenPilot.Text)
     End Sub
 
+    Private Sub frmAbout_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.F9 And bIsSplash = False Then
+            If Dir(GetRootPath() & "Resource Editor.exe", FileAttribute.Normal) <> "" Then
+                System.Diagnostics.Process.Start(GetRootPath() & "Resource Editor.exe")
+            End If
+        End If
+    End Sub
+
     Private Sub frmAbout_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        mnuTitle.Text = "HappyKillmore's" & vbCrLf & "Ground Control Station"
-        lblVersion.Text = "Version: " & Version
+        ResetForm()
+
+        mnuTitle.Text = "HappyKillmore's" & vbCrLf & GetResString(, "Ground_Control_Station")
+        lblVersion.Text = GetResString(, "Version", True) & " " & Version
 
         If bIsSplash = True Then
-            Me.Text = "Starting HappyKillmore's GCS..."
+            Me.Text = GetResString(, "Starting_GCS", , , , "HappyKillmore's GCS") & "..."
         Else
-            Me.Text = "About"
+            Me.Text = GetResString(, "About")
+            lblStatus.Text = GetResString(, "Current_Culture", True) & " " & System.Globalization.CultureInfo.CurrentCulture.Name
         End If
 
         cmdOk.Visible = Not bIsSplash
         ProgressBar1.Visible = bIsSplash
-        lblStatus.Visible = bIsSplash
+        'lblStatus.Visible = bIsSplash
     End Sub
 
     Private Sub cmdOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOk.Click

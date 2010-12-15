@@ -32,6 +32,7 @@ Namespace AvionicsInstrumentControlDemo
         Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedIndicator_Background)
         Private bmpGroundNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.GroundSpeedNeedle)
         Private bmpAirNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedNeedle)
+        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Bandeau_Dérouleur)
 
         Private nMaxSpeed As Single = 80
         Private sUnitLabel As String = "MPH"
@@ -70,6 +71,7 @@ Namespace AvionicsInstrumentControlDemo
             MyBase.OnPaint(pe)
 
             ' Pre Display computings
+            Dim ptCounter As New Point(165, 135)
             Dim ptRotation As New Point(150, 150)
             Dim ptimgNeedle As New Point(136, 39)
 
@@ -82,6 +84,8 @@ Namespace AvionicsInstrumentControlDemo
             Dim alphaNeedle As Double
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
+
+            ScrollCounter(pe, bmpScroll, 3, Convert.ToInt16(groundSpeed), ptCounter, scale)
 
             ' diplay mask
             Dim maskPen As New Pen(Me.BackColor, 30 * scale)
@@ -118,13 +122,14 @@ Namespace AvionicsInstrumentControlDemo
             End Using
 
             If airSpeed > -1 Then
-                alphaNeedle = InterpolPhyToAngle(airSpeed * 100, 0, nMaxSpeed * 100, 180, 468)
+                alphaNeedle = InterpolPhyToAngle(airSpeed, 0, nMaxSpeed, 180.0, 468.0)
                 RotateImage(pe, bmpAirNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
             End If
 
-            alphaNeedle = InterpolPhyToAngle(groundSpeed * 100, 0.0, nMaxSpeed * 100, 180, 468)
+            alphaNeedle = InterpolPhyToAngle(groundSpeed, 0.0, nMaxSpeed, 180.0, 468.0)
             ' display small needle
             RotateImage(pe, bmpGroundNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
+            'Debug.Print("alphaNeedle=" & alphaNeedle)
 
         End Sub
 

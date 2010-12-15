@@ -6,6 +6,7 @@ Public Class cMessage
         e_MessageType_SiRF
         e_MessageType_uBlox
         e_MessageType_MediaTek
+        e_MessageType_MediaTekv16
         e_MessageType_ArduPilot_Attitude
         e_MessageType_ArduPilot_GPS
         e_MessageType_ArduIMU_Binary
@@ -17,6 +18,8 @@ Public Class cMessage
         e_MessageType_UDB
         e_MessageType_UDB_SetHome
         e_MessageType_MAV
+        e_MessageType_FY21AP
+        e_MessageType_AttoPilot
     End Enum
 
     Public ValidMessage As Boolean

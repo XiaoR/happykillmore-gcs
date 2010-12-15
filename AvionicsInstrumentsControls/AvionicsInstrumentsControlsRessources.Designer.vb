@@ -92,6 +92,62 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property BatteryBlue() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryBlue", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryCyan() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryCyan", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryGreen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryGreen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryIndicator_Background() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryIndicator_Background", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryOrange() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryOrange", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryPurple() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryPurple", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryRed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryRed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property BatteryYellow() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BatteryYellow", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property GroundSpeedNeedle() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GroundSpeedNeedle", resourceCulture)

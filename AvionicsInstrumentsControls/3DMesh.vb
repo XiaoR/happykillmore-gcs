@@ -1,5 +1,6 @@
 Imports Microsoft.DirectX
 Imports Microsoft.DirectX.Direct3D
+Imports System.io
 Public Class _3DMesh
     Dim angle As Single 'rotation angle
     Dim model As oggX
@@ -7,54 +8,76 @@ Public Class _3DMesh
     Dim oBackColor As System.Drawing.Color
     Dim bHasRun As Boolean = False
     Dim bLocked As Boolean = False
+    Private Sub CreateSettingsFile(ByVal rootpath As String, ByVal modelname As String, ByVal filename As String, ByVal scale As Integer, ByVal backcolor As String)
+        Dim sOutputFile As StreamWriter
 
+        If Dir(rootpath & modelname, FileAttribute.Directory) <> "" Then
+            sOutputFile = New StreamWriter(rootpath & modelname & "\Settings.txt")
+            sOutputFile.WriteLine("Filename=" & filename)
+            sOutputFile.WriteLine("Scale=" & scale)
+            sOutputFile.WriteLine("BackColor=" & backcolor)
+            sOutputFile.Close()
+            sOutputFile = Nothing
+        End If
+    End Sub
     Sub loadObject(ByVal modelName As String, ByVal rootPath As String)
         Dim sFilename As String
         Dim sFilePath As String
+        Dim sFileContents As String
+        Dim sSplit() As String
+        Dim sSplit2() As String
+        Dim nCount As Integer
+        Dim sColor As String
 
         Try
-            Select Case modelName
-                Case "AeroQuad"
-                    sFilename = "aeroquad.x"
-                    sFilePath = rootPath & "aeroquad"
-                    nScaleFactor = 65
-                    oBackColor = Color.LightGray
+            sFilename = modelName & ".x"
+            sFilePath = rootPath & modelName
+            nScaleFactor = 70
+            oBackColor = Color.LightGray
 
-                Case "FunJet"
-                    sFilename = "funjet.x"
-                    sFilePath = rootPath & "funjet"
-                    nScaleFactor = 75
-                    oBackColor = Color.LightGray
+            If Dir(rootPath & modelName & "\Settings.txt", FileAttribute.Normal) = "" Then
+                Select Case modelName
+                    Case "AeroQuad"
+                        CreateSettingsFile(rootPath, modelName, "aeroquad.x", 65, GetColor(Color.LightGray, , False))
+                    Case "FunJet"
+                        CreateSettingsFile(rootPath, modelName, "funjet.x", 75, GetColor(Color.LightGray, , False))
+                    Case "T-Rex 450"
+                        CreateSettingsFile(rootPath, modelName, "trex450.x", 70, GetColor(Color.LightGray, , False))
+                    Case "EasyStar"
+                        CreateSettingsFile(rootPath, modelName, "EasyStar.x", 75, GetColor(Color.LightGray, , False))
+                    Case Else
+                        CreateSettingsFile(rootPath, modelName, modelName & ".x", 70, GetColor(Color.LightGray, , False))
+                End Select
+            Else
+                Try
+                    sFileContents = GetFileContents(rootPath & modelName & "\Settings.txt")
+                    sSplit = Split(sFileContents, vbCrLf)
+                    For nCount = 0 To UBound(sSplit)
+                        sSplit2 = Split(sSplit(nCount), "=")
+                        Select Case UCase(sSplit2(0))
+                            Case "FILENAME"
+                                sFilename = sSplit2(1)
+                                sFilePath = rootPath & modelName
+                            Case "SCALE"
+                                nScaleFactor = Convert.ToInt32(sSplit2(1))
+                            Case "BACKCOLOR"
+                                sColor = sSplit2(1)
+                                oBackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sColor, 5, 2), 16), Convert.ToInt32(Mid(sColor, 3, 2), 16), Convert.ToInt32(Mid(sColor, 1, 2), 16))
+                        End Select
+                    Next
+                Catch
+                End Try
+            End If
 
-                Case "T-Rex 450"
-                    sFilename = "trex450.x"
-                    sFilePath = rootPath & "Trex450"
-                    nScaleFactor = 70
-                    oBackColor = Color.LightGray
-
-                Case "Firecracker"
-                    sFilename = "Firecracker.x"
-                    sFilePath = rootPath & "Firecracker"
-                    nScaleFactor = 70
-                    oBackColor = Color.LightGray
-
-                Case "-mi- Yellow Plane"
-                    sFilename = "Mi Plane.x"
-                    sFilePath = rootPath & "Mi Plane"
-                    nScaleFactor = 50
-                    oBackColor = Color.DarkGray
-
-                Case Else
-                    sFilename = "easystar.x"
-                    sFilePath = rootPath & "easystar"
-                    nScaleFactor = 75
-                    oBackColor = Color.LightGray
-            End Select
-
+            If Dir(sFilePath & "\" & sFilename, FileAttribute.Normal) = "" Then
+                sFilename = "Easystar.x"
+                sFilePath = rootPath & "Easystar"
+            End If
             'create a model
             model = createMesh(sFilePath & "\" & sFilename, True, True, sFilePath)
 
         Catch
+            Debug.Print("Here")
         End Try
 
     End Sub

@@ -112,6 +112,11 @@ Namespace DirectShowControl
             Dim moniker As UCOMIMoniker() = New UCOMIMoniker(1) {}
             Dim source As Object = Nothing
 
+
+            Dim capdevices() As DirectShowLib.DsDevice
+            capdevices = DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)
+            moniker = New UCOMIMoniker(UBound(capdevices)) {}
+
             Dim devEnum As ICreateDevEnum = DirectCast(New CreateDevEnum(), ICreateDevEnum)
             Dim hr As Integer = devEnum.CreateClassEnumerator(FilterCategory.VideoInputDevice, classEnum, CDef.None)
             DsError.ThrowExceptionForHR(hr)

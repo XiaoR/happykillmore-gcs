@@ -8,12 +8,15 @@ Module modSettings
     Public bHeadingReverse As Boolean = False
     Public nThrottleChannel As Integer = 1
 
+    Public bInstruments(0 To e_Instruments_Max) As Boolean
+    Public b3DModelFailed As Boolean = False
+
     Public bFlightExtrude As Boolean = True
-    Public sFlightColor As String = "ff00ffff"
+    Public sFlightColor As String
     Public nFlightWidth As Integer = 2
 
     Public bMissionExtrude As Boolean = True
-    Public sMissionColor As String = "ff0000ff"
+    Public sMissionColor As String
     Public nMissionWidth As Integer = 1
 
     Public eDistanceUnits As e_DistanceFormat = e_DistanceFormat.e_DistanceFormat_Feet
@@ -41,6 +44,8 @@ Module modSettings
     End Enum
 
     Public Sub LoadSettings()
+        Dim nCount As Integer
+
         sModelName = GetRegSetting(sRootRegistry & "\Settings", "3D Model", "EasyStar")
         nMaxSpeed = GetRegSetting(sRootRegistry & "\Settings", "Max Speed", "120")
         bPitchReverse = GetRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", False)
@@ -52,38 +57,68 @@ Module modSettings
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
         bFlightExtrude = GetRegSetting(sRootRegistry & "\Settings", "Flight Extrude", True)
-        sFlightColor = GetRegSetting(sRootRegistry & "\Settings", "Flight Color", "FF00FFFF")
+        sFlightColor = GetRegSetting(sRootRegistry & "\Settings", "Flight Color", "8A00FFFF")
         nFlightWidth = GetRegSetting(sRootRegistry & "\Settings", "Flight Width", 2)
 
         bMissionExtrude = GetRegSetting(sRootRegistry & "\Settings", "Mission Extrude", True)
-        sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "FF0000FF")
+        sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "720000FF")
         nMissionWidth = GetRegSetting(sRootRegistry & "\Settings", "Mission Width", 1)
 
         eDistanceUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Distance Units", "0"))
         Select Case eDistanceUnits
             Case e_DistanceFormat.e_DistanceFormat_Feet
-                sDistanceUnits = "Feet"
+                sDistanceUnits = GetResString(, "Feet")
             Case e_DistanceFormat.e_DistanceFormat_Meters
-                sDistanceUnits = "Meters"
+                sDistanceUnits = GetResString(, "Meters")
         End Select
         frmMain.AltimeterInstrumentControl1.SetAlimeterParameters(nAltitude, sDistanceUnits)
 
         eSpeedUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Speed Units", "2"))
         Select Case eSpeedUnits
             Case e_SpeedFormat.e_SpeedFormat_Knots
-                sSpeedUnits = "Knots"
+                sSpeedUnits = GetResString(, "Knots")
             Case e_SpeedFormat.e_SpeedFormat_KPH
-                sSpeedUnits = "KPH"
+                sSpeedUnits = GetResString(, "KPH")
             Case e_SpeedFormat.e_SpeedFormat_MPerSec
-                sSpeedUnits = "m/s"
+                sSpeedUnits = GetResString(, "m_s")
             Case e_SpeedFormat.e_SpeedFormat_MPH
-                sSpeedUnits = "MPH"
+                sSpeedUnits = GetResString(, "MPH")
         End Select
-        frmMain.AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, nMaxSpeed, "Speed", sSpeedUnits)
+
+        'If bInstruments(e_Instruments.e_Instruments_Speed) = True Then
+        frmMain.AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, nMaxSpeed, GetResString(, "Speed"), sSpeedUnits)
+        'End If
+        'If bInstruments(e_Instruments.e_Instruments_Turn) = True Then
+        frmMain.TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(GetRoll(-nRoll), 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
+        'End If
+        'If bInstruments(e_Instruments.e_Instruments_Vertical) = True Then
+        frmMain.VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(nAltChange, LCase(GetResString(, "Vertical_Speed")), GetResString(, "Up"), GetResString(, "Down"), "100ft/min")
+        'End If
+        frmMain.BatteryIndicatorInstrumentControl1.SetBatteryIndicatorParameters(Replace(GetResString(, "Battery_Throttle"), "&&", "&"), nBattery, nBatteryMin, nBatteryMax, oBatteryColor, nAmperage, 0, nAmperageMax, oAmperageColor, nMAH, nMAHMin, nMAHMax, oMAHColor, nThrottle, oThrottleColor)
+
+
+        For nCount = 0 To UBound(bInstruments)
+            bInstruments(nCount) = GetRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, IIf(nCount <= 5, True, False))
+        Next
+
+        nBatteryMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Max", ConvertPeriodToLocal("12.5")))
+        nBatteryMin = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Min", 9))
+        oBatteryColor = GetRegSetting(sRootRegistry & "\Settings", "Battery Color", e_InstrumentColor.e_InstrumentColor_Green)
+
+        nAmperageMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Amperage Max", 30))
+        oAmperageColor = GetRegSetting(sRootRegistry & "\Settings", "Amperage Color", e_InstrumentColor.e_InstrumentColor_Red)
+
+        nMAHMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "MAH Max", 2500))
+        nMAHMin = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "MAH Min", 0))
+        oMAHColor = GetRegSetting(sRootRegistry & "\Settings", "MAH Color", e_InstrumentColor.e_InstrumentColor_Cyan)
+
+        oThrottleColor = GetRegSetting(sRootRegistry & "\Settings", "Throttle Color", e_InstrumentColor.e_InstrumentColor_Orange)
 
     End Sub
 
     Public Sub SaveSettings()
+        Dim nCount As Integer
+
         SaveRegSetting(sRootRegistry & "\Settings", "3D Model", sModelName)
         SaveRegSetting(sRootRegistry & "\Settings", "Max Speed", nMaxSpeed)
         SaveRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", bPitchReverse)
@@ -104,89 +139,35 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Speed Units", eSpeedUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Map Update Hz", nMapUpdateRate)
 
+        For nCount = 0 To UBound(bInstruments)
+            SaveRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, bInstruments(nCount))
+        Next
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Battery Max", nBatteryMax)
+        SaveRegSetting(sRootRegistry & "\Settings", "Battery Min", nBatteryMin)
+        SaveRegSetting(sRootRegistry & "\Settings", "Battery Color", oBatteryColor)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Amperage Max", nAmperageMax)
+        SaveRegSetting(sRootRegistry & "\Settings", "Amperage Color", oAmperageColor)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "MAH Max", nMAHMax)
+        SaveRegSetting(sRootRegistry & "\Settings", "MAH Min", nMAHMin)
+        SaveRegSetting(sRootRegistry & "\Settings", "MAH Color", oMAHColor)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Throttle Color", oThrottleColor)
+
         LoadSettings()
+        frmMain.ResizeForm()
     End Sub
 
-    Public Function GetColor(ByVal inputColor As System.Drawing.Color, ByVal opacity As Integer) As String
-        GetColor = Hex(opacity).PadLeft(2, "0")
+    Public Function GetColor(ByVal inputColor As System.Drawing.Color, Optional ByVal opacity As Integer = 255, Optional ByVal withOpacity As Boolean = True) As String
+        If withOpacity = True Then
+            GetColor = Hex(opacity).PadLeft(2, "0")
+        Else
+            GetColor = ""
+        End If
         GetColor = GetColor & Hex(inputColor.B).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.G).PadLeft(2, "0")
         GetColor = GetColor & Hex(inputColor.R).PadLeft(2, "0")
     End Function
-
-    'Private Sub cboDistanceUnits_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Distance Units", asdasdasd)
-    '    eOutputDistance = cboDistanceUnits.SelectedIndex
-    '    If eMapSelection = e_MapSelection.e_MapSelection_GoogleMaps Then
-    '        webDocument.GetElementById("metersFeet").SetAttribute("value", cboDistanceUnits.SelectedIndex.ToString)
-    '        cmdClearMap_Click(sender, e)
-    '    End If
-    '    AltimeterInstrumentControl1.SetAlimeterParameters(nAltitude, cboDistanceUnits.Text)
-    'End Sub
-
-    'Private Sub cboSpeedUnits_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Speed Units", cboSpeedUnits.SelectedIndex)
-    '    eOutputSpeed = cboSpeedUnits.SelectedIndex
-    '    AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, Convert.ToInt32(cboMaxSpeed.Text), "Speed", cboSpeedUnits.Text)
-    'End Sub
-
-    'Private Sub cboMaxSpeed_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Max Speed", cboMaxSpeed.SelectedIndex)
-    '    AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, Convert.ToInt32(cboMaxSpeed.Text), "Speed", cboSpeedUnits.Text)
-    'End Sub
-    'Private Sub chkFlightExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    bFlightExtrude = chkFlightExtrude.Checked
-    '    If chkFlightExtrude.Checked = True Then
-    '        chkFlightExtrude.Text = "Yes"
-    '    Else
-    '        chkFlightExtrude.Text = "No"
-    '    End If
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Flight Extrude", bFlightExtrude)
-    'End Sub
-
-    'Private Sub UpdateLineColor()
-    '    Dim sTemp As String
-
-    '    sTemp = Hex(cmdFlightColor.BackColor.ToArgb).PadLeft(8, "0")
-    '    sFlightColor = Hex("255").PadLeft(2, "0") & Mid(sTemp, 7, 2) & Mid(sTemp, 5, 2) & Mid(sTemp, 3, 2)
-
-    '    'sTemp = Hex(cmdWaypointColor.BackColor.ToArgb).PadLeft(8, "0")
-    '    'sWaypointColor = Hex("255").PadLeft(2, "0") & Mid(sTemp, 7, 2) & Mid(sTemp, 5, 2) & Mid(sTemp, 3, 2)
-
-    'End Sub
-
-    'Private Sub tbarFlightWidth_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    nFlightWidth = tbarFlightWidth.Value
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Flight Width", nFlightWidth)
-    'End Sub
-    'Private Sub cbo3DModel_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "3D Model", cbo3DModel.Text)
-    '    s3DModel = cbo3DModel.Text
-    '    _3DMesh1.DrawMesh(me.handle,IIf(bPitchReverse = True, -1, 1) * nPitch, IIf(bRollReverse = True, -1, 1) * nRoll, nYaw, True, s3DModel, GetRootPath & "3D Models\")
-    '    WebBrowser1.Invoke(New MyDelegate(AddressOf loadModel))
-    'End Sub
-
-    'Private Sub chkPitchReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    bPitchReverse = chkPitchReverse.Checked
-    '    If chkPitchReverse.Checked = True Then
-    '        chkPitchReverse.Text = "Reversed"
-    '    Else
-    '        chkPitchReverse.Text = "Normal"
-    '    End If
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", bPitchReverse)
-    'End Sub
-
-    'Private Sub chkRollReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    bRollReverse = chkRollReverse.Checked
-    '    If chkRollReverse.Checked = True Then
-    '        chkRollReverse.Text = "Reversed"
-    '    Else
-    '        chkRollReverse.Text = "Normal"
-    '    End If
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Roll Reverse", bRollReverse)
-    'End Sub
-    'Private Sub cboMapUpdateRate_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Call SaveRegSetting(sRootRegistry & "\Settings", "Map Update Hz", nMapUpdateRate)
-    'End Sub
-
 End Module

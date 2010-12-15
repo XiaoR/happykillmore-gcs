@@ -130,6 +130,30 @@
   <data name="Bandeau_Dérouleur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\bandeau_dérouleur.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BatteryBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batteryblue.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryCyan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batterycyan.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batterygreen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryIndicator_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batteryindicator_background.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batteryorange.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryPurple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batterypurple.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batteryred.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BatteryYellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\batteryyellow.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GroundSpeedNeedle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\groundspeedneedle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

@@ -60,3 +60,5 @@ Z:\HK_GCS\HK_GCS\obj\Release\HK_GCS.vbproj.GenerateResource.Cache
 Z:\HK_GCS\HK_GCS\obj\Release\Ground Control Station.exe
 Z:\HK_GCS\HK_GCS\obj\Release\Ground Control Station.xml
 Z:\HK_GCS\HK_GCS\obj\Release\Ground Control Station.pdb
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.Strings.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.Strings.resources
