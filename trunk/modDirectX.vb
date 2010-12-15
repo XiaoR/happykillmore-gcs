@@ -66,8 +66,11 @@ Module modDirectX
         Catch err2 As Exception
             Try
                 device = New Device(Manager.Adapters.Default.Adapter, DeviceType.Reference, fhWnd, CreateFlags.SoftwareVertexProcessing, deviceSetting)
+                b3DModelFailed = False
             Catch ex As Exception
-                MsgBox("Failed to Create DirectX Device" & vbCrLf & vbCrLf & "Error Message: " & err2.ToString, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "CreateDevice Failed")
+                bInstruments(e_Instruments.e_Instruments_3DModel) = False
+                b3DModelFailed = True
+                'MsgBox("Failed to Create DirectX Device" & vbCrLf & vbCrLf & "Error Message: " & err2.ToString, MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "CreateDevice Failed")
             End Try
         End Try
     End Sub

@@ -8,6 +8,17 @@ Module modMAVlink
             bByte(4 - nCount) = CByte(Asc(inputString.Substring(nCount - 1, 1)))
         Next
         ConvertMavlinkToSingle = BitConverter.ToSingle(bByte, 0)
+        If Double.IsNaN(ConvertMavlinkToSingle) Then
+            ConvertMavlinkToSingle = 0
+        End If
+    End Function
+    Public Function ConvertMavlinkToInteger(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Integer
+        ConvertMavlinkToInteger = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))) & Hex(Asc(Mid(inputString, 2, 1))))
+        If is2sCompliment = True Then
+            If ConvertMavlinkToInteger > CInt("&h7FFF") Then
+                ConvertMavlinkToInteger = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToInteger) + 1)
+            End If
+        End If
     End Function
     Public Function GetMavAction(ByVal inputAction As Integer) As String
         Select Case inputAction

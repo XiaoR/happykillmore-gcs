@@ -1,11 +1,26 @@
 Imports System.IO
 Imports DirectShowLib
+Imports System.Globalization
+Imports System.Resources
 
 Module modGlobal
     Public theDevice1 As IBaseFilter
     Public theDevice2 As IBaseFilter
     Public Const pi As Double = 3.14159265
     Public sRootRegistry As String = "SOFTWARE\HK_GCS"
+
+    Public Const e_Instruments_Max = 7
+    Public Enum e_Instruments
+        e_Instruments_None = -1
+        e_Instruments_3DModel = 0
+        e_Instruments_Attitude
+        e_Instruments_Speed
+        e_Instruments_Altimeter
+        e_Instruments_Heading
+        e_Instruments_Vertical
+        e_Instruments_Turn
+        e_Instruments_Battery
+    End Enum
     Public Enum e_PlayerState
         e_PlayerState_None = 0
         e_PlayerState_RecordReady
@@ -23,22 +38,53 @@ Module modGlobal
         e_MissionFileType_None = 0
         e_MissionFileType_GCS
         e_MissionFileType_UDB
+        e_MissionFileType_FY21APII
     End Enum
     Public Enum e_InstrumentLayout
         e_InstrumentLayout_Horizontal = 0
         e_InstrumentLayout_Square
         e_InstrumentLayout_Vertical
+        e_InstrumentLayout_SingleColumn
     End Enum
-    Public Enum e_SelectedInstrument
-        e_SelectedInstrument_Attitude = 0
-        e_SelectedInstrument_3DMesh
+
+    Public Const e_InstrumentColor_Max As Integer = 6
+    Public Enum e_InstrumentColor
+        e_InstrumentColor_Blue = 0
+        e_InstrumentColor_Cyan
+        e_InstrumentColor_Green
+        e_InstrumentColor_Orange
+        e_InstrumentColor_Purple
+        e_InstrumentColor_Red
+        e_InstrumentColor_Yellow
     End Enum
+    Public resourceMgr As ResourceManager
 
     Public nPitch As Single
     Public nRoll As Single
     Public nYaw As Single
 
     Public nYawOffset As Single
+
+    Public aLastAtlitudes(0 To 9) As Single
+    Public nLastAltIndex As Integer
+
+    Public nBattery As Single
+    Public nBatteryMax As Single = 12.5
+    Public nBatteryMin As Single = 9
+    Public oBatteryColor As e_InstrumentColor
+
+    Public nAmperage As Single
+    Public nAmperageMax As Single = 30
+    Public oAmperageColor As e_InstrumentColor
+
+    Public nMAH As Long
+    Public nMAHMax As Long = 2500
+    Public nMAHMin As Long = 500
+    Public oMAHColor As e_InstrumentColor
+    Public oThrottleColor As e_InstrumentColor
+
+    Public nAltChange As Single
+    Public nThrottle As Single
 
     Public bShowBinary As Boolean = True
     Public nLatitude As String
@@ -48,16 +94,79 @@ Module modGlobal
     Public nAirSpeed As Single
     Public nHeading As Single
     Public nSats As Integer
-    Public nBattery As Single
     Public sMode As String
     Public sModeNumber As String
     Public nFix As Integer
     Public nHDOP As Single
     Public nWaypointIndex As Integer
     Public nWaypointTotal As Integer
-    Public nServo(0 To 7) As Integer
+    Public nServoInput(0 To 7) As Integer
+    Public nServoOutput(0 To 7) As Integer
+    Public nSensor(0 To 13) As Long
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
 
+    Public Function LookupInstrumentColorName(ByVal inputColor As e_InstrumentColor) As String
+        Select Case inputColor
+            Case e_InstrumentColor.e_InstrumentColor_Blue
+                LookupInstrumentColorName = GetResString(, "Blue")
+            Case e_InstrumentColor.e_InstrumentColor_Cyan
+                LookupInstrumentColorName = GetResString(, "Cyan")
+            Case e_InstrumentColor.e_InstrumentColor_Green
+                LookupInstrumentColorName = GetResString(, "Green")
+            Case e_InstrumentColor.e_InstrumentColor_Orange
+                LookupInstrumentColorName = GetResString(, "Orange")
+            Case e_InstrumentColor.e_InstrumentColor_Purple
+                LookupInstrumentColorName = GetResString(, "Purple")
+            Case e_InstrumentColor.e_InstrumentColor_Red
+                LookupInstrumentColorName = GetResString(, "Red")
+            Case e_InstrumentColor.e_InstrumentColor_Yellow
+                LookupInstrumentColorName = GetResString(, "Yellow")
+        End Select
+    End Function
+    Public Function GetResString(Optional ByVal inputControl As Object = Nothing, Optional ByVal resString As String = "", Optional ByVal includeColon As Boolean = False, Optional ByVal stripUnderscore As Boolean = False, Optional ByVal blankIfMissing As Boolean = False, Optional ByVal firstReplace As String = "", Optional ByVal secondReplace As String = "", Optional ByVal addVerticalCarriageReturns As Boolean = False, Optional ByVal defaultValue As String = "") As String
+        Dim sParentName As String
+        Dim oControl As Object
+
+        Try
+            If resString <> "" Then
+                GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), System.Globalization.CultureInfo.CurrentCulture)
+                If GetResString Is Nothing Then
+                    Debug.Print(resString)
+                End If
+                'GetResString = My.Resources.English.ResourceManager.GetString(Replace(resString, " ", "_"))
+                'Else
+                '    oControl = inputControl.parent
+                '    Do While Not TypeOf oControl Is Form
+                '        oControl = oControl.parent
+                '    Loop
+                '    GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), System.Globalization.CultureInfo.CurrentCulture)
+                '    'GetResString = My.Resources.English.ResourceManager.GetString(oControl.name & "_" & inputControl.name)
+            End If
+            If stripUnderscore = True Then
+                GetResString = Replace(GetResString, "&&", Chr(1))
+                GetResString = Replace(GetResString, "&", "")
+                GetResString = Replace(GetResString, Chr(1), "&&")
+            End If
+            GetResString = Replace(GetResString, "^", vbCrLf)
+            If firstReplace <> "" Then
+                GetResString = Replace(GetResString, "&1", firstReplace)
+            End If
+            If secondReplace <> "" Then
+                GetResString = Replace(GetResString, "&2", secondReplace)
+            End If
+            If includeColon = True Then
+                GetResString = GetResString & ":"
+            End If
+            If Not inputControl Is Nothing Then
+                inputControl.text = GetResString
+            End If
+            'GetResString = ""
+        Catch
+            If resString = "" Then
+                resString = defaultValue
+            End If
+        End Try
+    End Function
     Public Function ConvertSpeed(ByVal inputValue As String, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
         Dim nTemp As Double
 
@@ -160,7 +269,7 @@ Module modGlobal
 
         End If
     End Function
-    Public Function ConvertHexToDec(ByVal inputValue As String, Optional ByVal reverseBytes As Boolean = True, Optional ByVal signedNumber As Boolean = True) As String
+     Public Function ConvertHexToDec(ByVal inputValue As String, Optional ByVal reverseBytes As Boolean = True, Optional ByVal signedNumber As Boolean = True) As String
         Dim sTemp As String
         Dim sTemp2 As String
         Dim nCount As Integer
@@ -178,12 +287,20 @@ Module modGlobal
             sTwos = sTwos & "FF"
         Next
         ConvertHexToDec = Convert.ToInt64(sTemp2, 16)
+
+
         If ConvertHexToDec > 2 ^ (Len(inputValue) * 8 - 1) And signedNumber = True Then
+            'ConvertHexToDec = 0 - (ConvertHexToDec And &H7FFF)
             ConvertHexToDec = Convert.ToInt64(ConvertHexToDec) - Convert.ToInt64(sTwos, 16) - 1
         End If
 
     End Function
-
+    Public Function ConvertHexToDecFY21AP(ByVal inputValue As String) As String
+        ConvertHexToDecFY21AP = ConvertHexToDec(inputValue, False)
+        If ConvertHexToDecFY21AP And &H8000 Then
+            ConvertHexToDecFY21AP = 0 - (ConvertHexToDecFY21AP And &H7FFF)
+        End If
+    End Function
     Public Function GetNextSentence(ByRef sBuffer As String) As cMessage
         Dim sTemp As String = ""
         Dim nLastStart As Integer
@@ -206,7 +323,7 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_Test
             End If
 
-            sHeaderCharacters = AddCharacter(85)
+            sHeaderCharacters = Chr(85)
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_MAV
@@ -228,6 +345,12 @@ Module modGlobal
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_NMEA
+            End If
+
+            sHeaderCharacters = "$A"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
             End If
 
             sHeaderCharacters = "home:"
@@ -266,10 +389,22 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
             End If
 
-            sHeaderCharacters = AddCharacter(&HB5) & AddCharacter(&H62)
+            sHeaderCharacters = Chr(&HB5) & Chr(&H62)
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
+            End If
+
+            sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
+            End If
+
+            sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_FY21AP
             End If
 
             sHeaderCharacters = "4D"
@@ -278,7 +413,7 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
             End If
 
-            sHeaderCharacters = AddCharacter(&HA0) & AddCharacter(&HA2)
+            sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_SiRF
@@ -433,6 +568,7 @@ Module modGlobal
                             .VisibleSentence = .Header & " - " & sTemp
                         End With
                     End If
+
                 Case cMessage.e_MessageType.e_MessageType_NMEA
                     sHeaderCharacters = "$GP"
                     sFooterCharacters = vbLf
@@ -458,6 +594,33 @@ Module modGlobal
                             End If
                         End With
                     End If
+
+                Case cMessage.e_MessageType.e_MessageType_AttoPilot
+                    sHeaderCharacters = "$A"
+                    sFooterCharacters = vbCr
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
+                        End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
+                            .Header = Mid(sTemp, 1, 3)
+                            .Packet = Mid(sTemp, 2, Len(Mid(sTemp, 1, InStr(sTemp, "*") - 2)))
+                            .PacketLength = Len(.Packet)
+                            .Checksum = Mid(sTemp, InStr(sTemp, "*") + 1)
+                            .VisibleSentence = "AttoPilot - " & sTemp
+                            'If .Checksum = GetChecksum(.Packet) Then
+                            .ValidMessage = True
+                            'Else
+                            '.ValidMessage = False
+                            'End If
+                        End With
+                    End If
+
                 Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
                     sHeaderCharacters = "home:"
                     sFooterCharacters = vbLf
@@ -520,8 +683,8 @@ Module modGlobal
                     End If
 
                 Case cMessage.e_MessageType.e_MessageType_SiRF
-                    sHeaderCharacters = AddCharacter(&HA0) & AddCharacter(&HA2)
-                    sFooterCharacters = AddCharacter(&HB0) & AddCharacter(&HB3)
+                    sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
+                    sFooterCharacters = Chr(&HB0) & Chr(&HB3)
                     If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
                         nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 3, 1))
                         If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
@@ -553,8 +716,78 @@ Module modGlobal
                             End With
                         End If
                     End If
+
+                Case cMessage.e_MessageType.e_MessageType_FY21AP
+                    sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
+                    sFooterCharacters = Chr(&HAA)
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 3 Then
+                        nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1))
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 2 Then
+                            nLastStart = InStr(sBuffer, sHeaderCharacters)
+                            sTemp = Mid(sBuffer, nLastStart, nPacketSize + 2)
+                            sOutput = ""
+                            If bShowBinary = True Then
+                                For nCount = 1 To Len(sTemp)
+                                    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
+                                Next
+                            Else
+                                sOutput = "{Binary Message}"
+                            End If
+                            'Debug.Print(sOutput)
+                            With GetNextSentence
+                                .RawMessage = sTemp
+                                .MessageType = cMessage.e_MessageType.e_MessageType_FY21AP
+                                .Header = "FY21AP"
+                                .ID = Asc(Mid(sTemp, 4, 1))
+                                .Packet = Mid(sTemp, 3, nPacketSize - 2)
+                                .PacketLength = Len(.Packet)
+                                .Checksum = Mid(sTemp, Len(sTemp) - 1, 1)
+                                .VisibleSentence = .Header & " - " & Trim(sOutput)
+                                If .Checksum = GetFY21APChecksum(.Packet) Then
+                                    .ValidMessage = True
+                                Else
+                                    .ValidMessage = False
+                                End If
+                            End With
+                        End If
+                    End If
+
+                Case cMessage.e_MessageType.e_MessageType_MediaTekv16
+                    sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
+                    If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 37 Then
+                        With GetNextSentence
+                            nPacketSize = 32
+                            .MessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
+                            .Header = "MTK v1.6"
+                            nSizeOffset = 5
+
+                            nLastStart = InStr(sBuffer, sHeaderCharacters)
+                            sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
+                            sOutput = ""
+                            If bShowBinary = True Then
+                                For nCount = 1 To Len(sTemp)
+                                    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
+                                Next
+                            Else
+                                sOutput = "{Binary Message}"
+                            End If
+                            With GetNextSentence
+                                .RawMessage = sTemp
+                                .Packet = Mid(sTemp, 4, Len(sTemp) - 5)
+                                .PacketLength = Len(.Packet)
+                                .Checksum = Strings.Right(sTemp, 2)
+                                .VisibleSentence = .Header & " - " & sOutput
+                                If .Checksum = GetuBloxChecksum(.Packet) Then
+                                    .ValidMessage = True
+                                Else
+                                    .ValidMessage = False
+                                End If
+                            End With
+                        End With
+                    End If
+
                 Case cMessage.e_MessageType.e_MessageType_uBlox
-                    sHeaderCharacters = AddCharacter(&HB5) & AddCharacter(&H62)
+                    sHeaderCharacters = Chr(&HB5) & Chr(&H62)
                     If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
                         With GetNextSentence
                             If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 2) <> Chr("&H1") & Chr("&H5") Then
@@ -589,7 +822,6 @@ Module modGlobal
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
                                     Else
-                                        Debug.Print(sOutput)
                                         .ValidMessage = False
                                     End If
                                 End With
@@ -638,8 +870,9 @@ Module modGlobal
                             End If
                         End With
                     End If
+
                 Case cMessage.e_MessageType.e_MessageType_MAV
-                    sHeaderCharacters = AddCharacter(85)
+                    sHeaderCharacters = Chr(85)
                     If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 1 Then
                         With GetNextSentence
                             nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1, 1)) + 2

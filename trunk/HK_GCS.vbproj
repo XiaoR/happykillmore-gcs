@@ -105,6 +105,9 @@
     <Compile Include="AvionicsInstrumentsControls\TurnCoordinatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="AvionicsInstrumentsControls\BatteryIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -165,6 +168,11 @@
     <Compile Include="cMessage.vb" />
     <Compile Include="modChecksums.vb" />
     <Compile Include="modGlobal.vb" />
+    <Compile Include="Strings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AvionicsInstrumentsControls\3DMesh.resx">
@@ -201,6 +209,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Strings.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BaseApplicationManifest Include="My Project\app.manifest" />
@@ -217,7 +231,14 @@
   <ItemGroup>
     <Content Include="Javascript\Maps.html" />
     <Content Include="Javascript\pluginhost.html" />
-    <Content Include="Resources\Bitmap1.bmp" />
+    <None Include="Resources\BatteryGreen.bmp" />
+    <None Include="Resources\BatteryIndicator_Background.bmp" />
+    <None Include="Resources\BatteryBlue.bmp" />
+    <None Include="Resources\BatteryRed.bmp" />
+    <None Include="Resources\BatteryYellow.bmp" />
+    <None Include="Resources\BatteryPurple.bmp" />
+    <None Include="Resources\BatteryOrange.bmp" />
+    <None Include="Resources\BatteryCyan.bmp" />
     <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
     <Content Include="Resources\AirSpeedIndicator_Background.bmp" />

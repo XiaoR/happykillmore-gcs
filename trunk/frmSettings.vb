@@ -1,7 +1,71 @@
 Public Class frmSettings
 
+    Private Sub ResetForm()
+        GetResString(Me, "Settings")
+
+        GetResString(grpGeneral, "General")
+        GetResString(lblDistanceUnits, "Distance_Units", True)
+        GetResString(lblSpeedUnits, "Speed_Units", True)
+        GetResString(lblMaxSpeed, "Max_Speed", True)
+        GetResString(lbl3DModel, "_3D_Model", True)
+        GetResString(lblPitch, "Pitch", True)
+        GetResString(lblRoll, "Roll", True)
+        GetResString(lblYaw, "Yaw", True)
+        GetResString(lblHeading, "Heading", True)
+        GetResString(lblThrottleChannel, "Throttle_Channel", True)
+
+        GetResString(grpFlightPath, "Google_Earth_Flight_Path")
+        GetResString(lblMapUpdateRate, "Map_Update_Rate", True)
+        GetResString(lblFlightPathColor, "Flight_Path_Color", True)
+        GetResString(lblFlightPathThickness, "Path_Thickness", True)
+        GetResString(lblFlightExtrude, "Extrude", True)
+        GetResString(lblFlightOpacity, "Path_Opacity", True)
+
+        GetResString(grpMissionPath, "Mission_Path")
+        GetResString(lblMissionPathColor, "Flight_Path_Color", True)
+        GetResString(lblMissionPathThickness, "Path_Thickness", True)
+        GetResString(lblMissionExtrude, "Extrude", True)
+        GetResString(lblMissionOpacity, "Path_Opacity", True)
+
+        GetResString(grpInstrumentSelection, "Instrument_Selection")
+        GetResString(chkInstSpeed, "AirGround_Speed")
+        GetResString(chkInstAltimeter, "Altimeter")
+        GetResString(chkInstAttitude, "Attitude")
+        GetResString(chkInstHeading, "Heading")
+        GetResString(chkInstVertical, "Vertical_Speed")
+        GetResString(chkInst3DModel, "_3D_Model")
+        GetResString(chkInstTurn, "Turn_Coordinator")
+        GetResString(chkInstBattery, "Battery_Throttle")
+
+        GetResString(grpBatteryThrottle, "Battery_Throttle_Settings")
+        GetResString(lblVoltageMin, "Min_Voltage", True)
+        GetResString(lblVoltageMax, "Max_Voltage", True)
+        GetResString(lblVoltageColor, "Voltage_Color", True)
+
+        GetResString(lblAmperageMax, "Max_Amperage", True)
+        GetResString(lblAmperageColor, "Amperage_Color", True)
+
+        GetResString(lblMahMin, "Min_MAH", True)
+        GetResString(lblMahMax, "Max_MAH", True)
+        GetResString(lblMahColor, "MAH_Color", True)
+
+        GetResString(lblThrottleColor, "Throttle_Color", True)
+
+        GetResString(cmdSave, "Save")
+        GetResString(cmdCancel, "Cancel")
+
+        GetResString(chkPitchReverse, "Normal")
+        GetResString(chkRollReverse, "Normal")
+        GetResString(chkYawReverse, "Normal")
+        GetResString(chkHeadingReverse, "Normal")
+
+    End Sub
     Private Sub frmSettings_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim nCount As Integer
+        Dim sFolderName As String
+
+        ResetForm()
+
         For nCount = 1 To 20
             If nCount <= 5 Then
                 cboMapUpdateRate.Items.Add(nCount & " Hz")
@@ -11,12 +75,13 @@ Public Class frmSettings
 
         With cbo3DModel
             .Items.Clear()
-            .Items.Add("EasyStar")
-            .Items.Add("FunJet")
-            '.Items.Add("-mi- Yellow Plane")
-            .Items.Add("Firecracker")
-            .Items.Add("T-Rex 450")
-            .Items.Add("AeroQuad")
+            sFolderName = Dir(GetRootPath() & "3D Models\", FileAttribute.Directory)
+            Do While sFolderName <> ""
+                If Microsoft.VisualBasic.Left(sFolderName, 1) <> "." Then
+                    .Items.Add(sFolderName)
+                End If
+                sFolderName = Dir()
+            Loop
             Try
                 .Text = sModelName
             Catch
@@ -33,12 +98,36 @@ Public Class frmSettings
 
         With cboThrottleChannel
             .Items.Clear()
-            .Items.Add("None")
+            .Items.Add(GetResString(, "None"))
             For nCount = 1 To 8
                 .Items.Add("CH#" & nCount)
             Next
             .SelectedIndex = nThrottleChannel
         End With
+
+        cboVoltageColor.Items.Clear()
+        cboAmperageColor.Items.Clear()
+        cboMAHColor.Items.Clear()
+        cboThrottleColor.Items.Clear()
+        For nCount = 0 To e_InstrumentColor_Max
+            cboVoltageColor.Items.Add(LookupInstrumentColorName(nCount))
+            cboAmperageColor.Items.Add(LookupInstrumentColorName(nCount))
+            cboMAHColor.Items.Add(LookupInstrumentColorName(nCount))
+            cboThrottleColor.Items.Add(LookupInstrumentColorName(nCount))
+        Next
+
+        cboVoltageColor.SelectedIndex = oBatteryColor
+        cboAmperageColor.SelectedIndex = oAmperageColor
+        cboMAHColor.SelectedIndex = oMAHColor
+        cboThrottleColor.SelectedIndex = oThrottleColor
+
+        txtVoltageMax.Text = nBatteryMax
+        txtVoltageMin.Text = nBatteryMin
+
+        txtAmperageMax.Text = nAmperageMax
+
+        txtMAHMax.Text = nMAHMax
+        txtMAHMin.Text = nMAHMin
 
         chkPitchReverse.Checked = bPitchReverse
         chkRollReverse.Checked = bRollReverse
@@ -56,18 +145,29 @@ Public Class frmSettings
         tbarMissionOpacity.Value = Convert.ToInt32(Mid(sMissionColor, 1, 2), 16)
 
         With cboDistanceUnits
-            .Items.Add("Feet")
-            .Items.Add("Meters")
+            .Items.Add(GetResString(, "Feet"))
+            .Items.Add(GetResString(, "Meters"))
             .SelectedIndex = eDistanceUnits
         End With
 
         With cboSpeedUnits
-            .Items.Add("Knots")
-            .Items.Add("KPH")
-            .Items.Add("MPH")
-            .Items.Add("M/S")
+            .Items.Add(GetResString(, "Knots"))
+            .Items.Add(GetResString(, "KPH"))
+            .Items.Add(GetResString(, "MPH"))
+            .Items.Add(GetResString(, "m_s"))
             .SelectedIndex = eSpeedUnits
         End With
+
+        chkInst3DModel.Enabled = Not b3DModelFailed
+        chkInstSpeed.Checked = bInstruments(e_Instruments.e_Instruments_Speed)
+        chkInstAltimeter.Checked = bInstruments(e_Instruments.e_Instruments_Altimeter)
+        chkInstAttitude.Checked = bInstruments(e_Instruments.e_Instruments_Attitude)
+        chkInstHeading.Checked = bInstruments(e_Instruments.e_Instruments_Heading)
+        chkInst3DModel.Checked = bInstruments(e_Instruments.e_Instruments_3DModel)
+        chkInstVertical.Checked = bInstruments(e_Instruments.e_Instruments_Vertical)
+        chkInstTurn.Checked = bInstruments(e_Instruments.e_Instruments_Turn)
+        chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
+
     End Sub
 
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
@@ -99,6 +199,29 @@ Public Class frmSettings
             frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.loadModel))
         End If
 
+        bInstruments(e_Instruments.e_Instruments_Speed) = chkInstSpeed.Checked
+        bInstruments(e_Instruments.e_Instruments_Altimeter) = chkInstAltimeter.Checked
+        bInstruments(e_Instruments.e_Instruments_Attitude) = chkInstAttitude.Checked
+        bInstruments(e_Instruments.e_Instruments_Heading) = chkInstHeading.Checked
+        bInstruments(e_Instruments.e_Instruments_3DModel) = chkInst3DModel.Checked
+        bInstruments(e_Instruments.e_Instruments_Vertical) = chkInstVertical.Checked
+        bInstruments(e_Instruments.e_Instruments_Turn) = chkInstTurn.Checked
+        bInstruments(e_Instruments.e_Instruments_Battery) = chkInstBattery.Checked
+
+        On Error Resume Next
+        nBatteryMax = Convert.ToSingle(txtVoltageMax.Text)
+        nBatteryMin = Convert.ToSingle(txtVoltageMin.Text)
+        oBatteryColor = cboVoltageColor.SelectedIndex
+
+        nAmperageMax = Convert.ToSingle(txtAmperageMax.Text)
+
+        nMAHMax = Convert.ToSingle(txtMAHMax.Text)
+        nMAHMin = Convert.ToSingle(txtMAHMin.Text)
+        oMAHColor = cboMAHColor.SelectedIndex
+
+        oThrottleColor = cboThrottleColor.SelectedIndex
+        On Error GoTo 0
+
         SaveSettings()
         Me.Dispose()
     End Sub
@@ -111,48 +234,48 @@ Public Class frmSettings
 
     Private Sub chkPitchReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPitchReverse.CheckedChanged
         If chkPitchReverse.Checked = True Then
-            chkPitchReverse.Text = "Reversed"
+            GetResString(chkPitchReverse, "Reversed")
         Else
-            chkPitchReverse.Text = "Normal"
+            GetResString(chkPitchReverse, "Normal")
         End If
     End Sub
 
     Private Sub chkRollReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRollReverse.CheckedChanged
         If chkRollReverse.Checked = True Then
-            chkRollReverse.Text = "Reversed"
+            GetResString(chkRollReverse, "Reversed")
         Else
-            chkRollReverse.Text = "Normal"
+            GetResString(chkRollReverse, "Normal")
         End If
     End Sub
     Private Sub chkFlightExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFlightExtrude.CheckedChanged
         If chkFlightExtrude.Checked = True Then
-            chkFlightExtrude.Text = "Yes"
+            chkFlightExtrude.Text = GetResString(, "Yes")
         Else
-            chkFlightExtrude.Text = "No"
+            chkFlightExtrude.Text = GetResString(, "No")
         End If
     End Sub
 
     Private Sub chkYawReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkYawReverse.CheckedChanged
         If chkYawReverse.Checked = True Then
-            chkYawReverse.Text = "Reversed"
+            GetResString(chkYawReverse, "Reversed")
         Else
-            chkYawReverse.Text = "Normal"
+            GetResString(chkYawReverse, "Normal")
         End If
     End Sub
 
     Private Sub chkHeadingReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHeadingReverse.CheckedChanged
         If chkHeadingReverse.Checked = True Then
-            chkHeadingReverse.Text = "Reversed"
+            GetResString(chkHeadingReverse, "Reversed")
         Else
-            chkHeadingReverse.Text = "Normal"
+            GetResString(chkHeadingReverse, "Normal")
         End If
     End Sub
 
     Private Sub chkMissionExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkMissionExtrude.CheckedChanged
         If chkMissionExtrude.Checked = True Then
-            chkMissionExtrude.Text = "Yes"
+            chkMissionExtrude.Text = GetResString(, "Yes")
         Else
-            chkMissionExtrude.Text = "No"
+            chkMissionExtrude.Text = GetResString(, "No")
         End If
     End Sub
 

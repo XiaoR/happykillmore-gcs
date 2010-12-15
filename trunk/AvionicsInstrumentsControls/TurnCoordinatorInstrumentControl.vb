@@ -76,6 +76,8 @@ Namespace AvionicsInstrumentControlDemo
             Dim ptImgBall As New Point(136, 216)
             Dim ptMarks As New Point(134, 216)
 
+            Const nMaxRollAngle As Single = 22.5
+
             Me.BackColor = GetSystemColor("F5F4F1")
 
             bmpCadran.MakeTransparent(Color.Yellow)
@@ -83,7 +85,7 @@ Namespace AvionicsInstrumentControlDemo
             bmpAircraft.MakeTransparent(Color.Yellow)
             bmpMarks.MakeTransparent(Color.Yellow)
 
-            Dim alphaAircraft As Double = InterpolPhyToAngle(TurnRate, -45, 45, -45, 45)
+            Dim alphaAircraft As Double = InterpolPhyToAngle(TurnRate, -nMaxRollAngle, nMaxRollAngle, -nMaxRollAngle, nMaxRollAngle)
             Dim alphaBall As Double = InterpolPhyToAngle(TurnQuality, -10, 10, -11, 11)
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
@@ -95,7 +97,9 @@ Namespace AvionicsInstrumentControlDemo
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
-            Using the_font As New Font("Small Fonts", 6, FontStyle.Regular)
+            Dim fontSize As Single
+            fontSize = Me.Width / 180 * 6
+            Using the_font As New Font("Small Fonts", fontSize, FontStyle.Regular)
                 Using string_format As New StringFormat()
                     string_format.Alignment = StringAlignment.Center
                     string_format.LineAlignment = StringAlignment.Near
@@ -103,7 +107,8 @@ Namespace AvionicsInstrumentControlDemo
                 End Using
             End Using
 
-            Using the_font As New Font("Arial", 11, FontStyle.Bold)
+            fontSize = Me.Width / 180 * 11
+            Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 pe.Graphics.DrawString(sLeftLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.125, bmpCadran.Height * scale * 0.66)
                 pe.Graphics.DrawString(sRightLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.8, bmpCadran.Height * scale * 0.66)
             End Using
