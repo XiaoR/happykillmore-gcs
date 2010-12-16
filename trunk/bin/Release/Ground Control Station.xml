@@ -122,11 +122,11 @@ GroundControlStation
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Battery_Throttle">
 	<summary>
-  Looks up a localized string similar to Battery &amp;&amp;Throttle.
+  Looks up a localized string similar to Battery &amp;&amp; Throttle.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Battery_Throttle_Settings">
 	<summary>
-  Looks up a localized string similar to Battery &amp;&amp;Throttle Settings.
+  Looks up a localized string similar to Battery &amp;&amp; Throttle Settings.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Baud_Rate">
 	<summary>
@@ -212,13 +212,17 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Data Points.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Default_Language">
+	<summary>
+  Looks up a localized string similar to Default Language.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Disconnect">
 	<summary>
   Looks up a localized string similar to Disconnect.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Disconnect_from">
 	<summary>
-  Looks up a localized string similar to Disconnect from &amp;1.
+  Looks up a localized string similar to Disconnected from &amp;1.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Distance">
 	<summary>
@@ -378,7 +382,11 @@ GroundControlStation
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.KPH">
 	<summary>
-  Looks up a localized string similar to KPH.
+  Looks up a localized string similar to km/h.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Language">
+	<summary>
+  Looks up a localized string similar to Language.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Latitude">
 	<summary>
@@ -450,7 +458,7 @@ GroundControlStation
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Max_Amperage">
 	<summary>
-  Looks up a localized string similar to Max Amerage.
+  Looks up a localized string similar to Max Amperage.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Max_Attitude">
 	<summary>

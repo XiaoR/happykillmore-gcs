@@ -112,7 +112,7 @@ Namespace AvionicsInstrumentControlDemo
                 End Using
             End Using
 
-            fontSize = Me.Width / 180 * 10
+            fontSize = Me.Width / 180 * 9
             Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 pe.Graphics.DrawString(sInstrumentLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.54 * scale, bmpCadran.Width * 0.66 * scale)
             End Using

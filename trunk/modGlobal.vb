@@ -64,6 +64,8 @@ Module modGlobal
     Public nYaw As Single
 
     Public nYawOffset As Single
+    Public sLanguageFile As String
+    Public oCulture As CultureInfo
 
     Public aLastAtlitudes(0 To 9) As Single
     Public nLastAltIndex As Integer
@@ -129,7 +131,7 @@ Module modGlobal
 
         Try
             If resString <> "" Then
-                GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), System.Globalization.CultureInfo.CurrentCulture)
+                GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), oCulture)
                 If GetResString Is Nothing Then
                     Debug.Print(resString)
                 End If

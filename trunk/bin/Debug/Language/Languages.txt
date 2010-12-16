@@ -1,0 +1,7 @@
+es-ES;Español
+da-DK;Deutsch
+pt-BR;Português Brasileiro
+pt-PT;Português
+it-CH;Italiano
+fi-FI;Finnish
+zh-CN;Chinese (China)

@@ -208,7 +208,7 @@
     <value>150, 113</value>
   </data>
   <data name="chkFlightExtrude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 21</value>
+    <value>78, 21</value>
   </data>
   <data name="chkFlightExtrude.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -361,7 +361,7 @@
     <value>150, 52</value>
   </data>
   <data name="cmdFlightColor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
+    <value>78, 23</value>
   </data>
   <data name="cmdFlightColor.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -379,7 +379,7 @@
     <value>9</value>
   </data>
   <data name="grpFlightPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 12</value>
+    <value>288, 16</value>
   </data>
   <data name="grpFlightPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 172</value>
@@ -402,8 +402,59 @@
   <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="lblLanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 24</value>
+  </data>
+  <data name="lblLanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
+  </data>
+  <data name="lblLanguageLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="lblLanguageLabel.Text" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="lblLanguageLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblLanguageLabel.Name" xml:space="preserve">
+    <value>lblLanguageLabel</value>
+  </data>
+  <data name="&gt;&gt;lblLanguageLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLanguageLabel.Parent" xml:space="preserve">
+    <value>grpGeneral</value>
+  </data>
+  <data name="&gt;&gt;lblLanguageLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboLanguage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>126, 21</value>
+  </data>
+  <data name="cboLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 21</value>
+  </data>
+  <data name="cboLanguage.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Name" xml:space="preserve">
+    <value>cboLanguage</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.Parent" xml:space="preserve">
+    <value>grpGeneral</value>
+  </data>
+  <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="cboThrottleChannel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>124, 243</value>
+    <value>127, 263</value>
   </data>
   <data name="cboThrottleChannel.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 21</value>
@@ -421,13 +472,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboThrottleChannel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblThrottleChannel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>2</value>
   </data>
   <data name="lblThrottleChannel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 246</value>
+    <value>13, 266</value>
   </data>
   <data name="lblThrottleChannel.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -451,13 +499,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblThrottleChannel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lblHeading.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>3</value>
   </data>
   <data name="lblHeading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 220</value>
+    <value>13, 240</value>
   </data>
   <data name="lblHeading.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -481,7 +526,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblHeading.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="chkHeadingReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -490,10 +535,10 @@
     <value>MiddleCenter</value>
   </data>
   <data name="chkHeadingReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 213</value>
+    <value>126, 233</value>
   </data>
   <data name="chkHeadingReverse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 24</value>
+    <value>91, 24</value>
   </data>
   <data name="chkHeadingReverse.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -514,13 +559,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkHeadingReverse.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="lblYaw.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>5</value>
   </data>
   <data name="lblYaw.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 193</value>
+    <value>13, 213</value>
   </data>
   <data name="lblYaw.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -544,7 +586,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblYaw.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="chkYawReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -553,10 +595,10 @@
     <value>MiddleCenter</value>
   </data>
   <data name="chkYawReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>124, 186</value>
+    <value>127, 206</value>
   </data>
   <data name="chkYawReverse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 24</value>
+    <value>91, 24</value>
   </data>
   <data name="chkYawReverse.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -577,13 +619,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkYawReverse.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lblRoll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>7</value>
   </data>
   <data name="lblRoll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 166</value>
+    <value>13, 186</value>
   </data>
   <data name="lblRoll.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -607,7 +646,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblRoll.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="chkRollReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -616,10 +655,10 @@
     <value>MiddleCenter</value>
   </data>
   <data name="chkRollReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 159</value>
+    <value>126, 179</value>
   </data>
   <data name="chkRollReverse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 24</value>
+    <value>91, 24</value>
   </data>
   <data name="chkRollReverse.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -640,13 +679,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkRollReverse.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="lblPitch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>9</value>
   </data>
   <data name="lblPitch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 138</value>
+    <value>13, 158</value>
   </data>
   <data name="lblPitch.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -670,7 +706,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblPitch.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="chkPitchReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -679,10 +715,10 @@
     <value>MiddleCenter</value>
   </data>
   <data name="chkPitchReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 132</value>
+    <value>126, 152</value>
   </data>
   <data name="chkPitchReverse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 24</value>
+    <value>91, 24</value>
   </data>
   <data name="chkPitchReverse.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -703,10 +739,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkPitchReverse.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="cbo3DModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 106</value>
+    <value>126, 126</value>
   </data>
   <data name="cbo3DModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 21</value>
@@ -724,13 +760,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cbo3DModel.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="lbl3DModel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>12</value>
   </data>
   <data name="lbl3DModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 112</value>
+    <value>13, 132</value>
   </data>
   <data name="lbl3DModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -754,10 +787,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lbl3DModel.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="cboMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 80</value>
+    <value>126, 100</value>
   </data>
   <data name="cboMaxSpeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 21</value>
@@ -775,13 +808,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboMaxSpeed.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="lblMaxSpeed.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>14</value>
   </data>
   <data name="lblMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 85</value>
+    <value>13, 105</value>
   </data>
   <data name="lblMaxSpeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -805,13 +835,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblMaxSpeed.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="lblSpeedUnits.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>15</value>
   </data>
   <data name="lblSpeedUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 58</value>
+    <value>13, 78</value>
   </data>
   <data name="lblSpeedUnits.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 15</value>
@@ -835,13 +862,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblSpeedUnits.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="cboSpeedUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 54</value>
+    <value>126, 74</value>
   </data>
   <data name="cboSpeedUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 21</value>
+    <value>91, 21</value>
   </data>
   <data name="cboSpeedUnits.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -856,13 +883,10 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboSpeedUnits.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="lblDistanceUnits.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>17</value>
   </data>
   <data name="lblDistanceUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 31</value>
+    <value>13, 51</value>
   </data>
   <data name="lblDistanceUnits.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -886,13 +910,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblDistanceUnits.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="cboDistanceUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 28</value>
+    <value>126, 48</value>
   </data>
   <data name="cboDistanceUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 21</value>
+    <value>91, 21</value>
   </data>
   <data name="cboDistanceUnits.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -907,13 +931,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboDistanceUnits.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="grpGeneral.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
   </data>
   <data name="grpGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 315</value>
+    <value>270, 315</value>
   </data>
   <data name="grpGeneral.TabIndex" type="System.Int32, mscorlib">
     <value>48</value>
@@ -958,7 +982,7 @@
     <value>4</value>
   </data>
   <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>806, 333</value>
+    <value>853, 333</value>
   </data>
   <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 23</value>
@@ -1072,7 +1096,7 @@
     <value>149, 80</value>
   </data>
   <data name="chkMissionExtrude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 21</value>
+    <value>78, 21</value>
   </data>
   <data name="chkMissionExtrude.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -1177,7 +1201,7 @@
     <value>149, 19</value>
   </data>
   <data name="cmdMissionColor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
+    <value>78, 23</value>
   </data>
   <data name="cmdMissionColor.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1195,7 +1219,7 @@
     <value>7</value>
   </data>
   <data name="grpMissionPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>242, 190</value>
+    <value>289, 191</value>
   </data>
   <data name="grpMissionPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>245, 137</value>
@@ -1435,7 +1459,7 @@
     <value>7</value>
   </data>
   <data name="grpInstrumentSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 14</value>
+    <value>540, 16</value>
   </data>
   <data name="grpInstrumentSelection.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 128</value>
@@ -1891,7 +1915,7 @@
     <value>17</value>
   </data>
   <data name="grpBatteryThrottle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 150</value>
+    <value>540, 150</value>
   </data>
   <data name="grpBatteryThrottle.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 177</value>
@@ -1921,7 +1945,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>900, 363</value>
+    <value>943, 362</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

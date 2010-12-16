@@ -93,6 +93,8 @@ Partial Class frmSettings
         Me.txtVoltageMax = New System.Windows.Forms.TextBox
         Me.lblVoltageMin = New System.Windows.Forms.Label
         Me.txtVoltageMin = New System.Windows.Forms.TextBox
+        Me.lblLanguageLabel = New System.Windows.Forms.Label
+        Me.cboLanguage = New System.Windows.Forms.ComboBox
         Me.grpFlightPath.SuspendLayout()
         CType(Me.tbarFlightOpacity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarFlightWidth, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -189,6 +191,8 @@ Partial Class frmSettings
         '
         'grpGeneral
         '
+        Me.grpGeneral.Controls.Add(Me.lblLanguageLabel)
+        Me.grpGeneral.Controls.Add(Me.cboLanguage)
         Me.grpGeneral.Controls.Add(Me.cboThrottleChannel)
         Me.grpGeneral.Controls.Add(Me.lblThrottleChannel)
         Me.grpGeneral.Controls.Add(Me.lblHeading)
@@ -581,6 +585,18 @@ Partial Class frmSettings
         resources.ApplyResources(Me.txtVoltageMin, "txtVoltageMin")
         Me.txtVoltageMin.Name = "txtVoltageMin"
         '
+        'lblLanguageLabel
+        '
+        resources.ApplyResources(Me.lblLanguageLabel, "lblLanguageLabel")
+        Me.lblLanguageLabel.Name = "lblLanguageLabel"
+        '
+        'cboLanguage
+        '
+        Me.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboLanguage.FormattingEnabled = True
+        resources.ApplyResources(Me.cboLanguage, "cboLanguage")
+        Me.cboLanguage.Name = "cboLanguage"
+        '
         'frmSettings
         '
         resources.ApplyResources(Me, "$this")
@@ -678,4 +694,6 @@ Partial Class frmSettings
     Friend WithEvents lblVoltageMax As System.Windows.Forms.Label
     Friend WithEvents txtVoltageMax As System.Windows.Forms.TextBox
     Friend WithEvents lblVoltageMin As System.Windows.Forms.Label
+    Friend WithEvents lblLanguageLabel As System.Windows.Forms.Label
+    Friend WithEvents cboLanguage As System.Windows.Forms.ComboBox
 End Class
