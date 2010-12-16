@@ -108,6 +108,14 @@ Public Class frmMain
 
 
     Public Sub ResetForm()
+        sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+        If sLanguageFile = "Default" Then
+            oCulture = System.Globalization.CultureInfo.CurrentCulture
+        Else
+            oCulture = CultureInfo.CreateSpecificCulture(sLanguageFile)
+        End If
+        resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
+
         GetResString(mnuFile, "File")
         GetResString(mnuSettings, "Settings")
         GetResString(mnuExit, "Exit_Label")
@@ -379,16 +387,15 @@ Public Class frmMain
         Dim nWidth As Long
         Dim nHeight As Long
         Dim nSplitter As Long
+        Dim aLanguages() As String
 
-        resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
+        Me.Visible = False
+        ResetForm()
 
         bStartup = True
         frmAbout.bIsSplash = True
         frmAbout.Show()
 
-        ResetForm()
-
-        Me.Visible = False
         nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 1100)
         nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 675)
         nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", Screen.PrimaryScreen.WorkingArea.Height / 2 - nHeight / 2)
@@ -425,23 +432,23 @@ Public Class frmMain
 
         Try
             InitServoCombos()
-            cboServo1.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 1", "Servo 1 In")
-            cboServo2.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 2", "Servo 2 In")
-            cboServo3.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 3", "Servo 3 In")
-            cboServo4.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 4", "Servo 4 In")
-            cboServo5.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 5", "Servo 1 Out")
-            cboServo6.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 6", "Servo 2 Out")
-            cboServo7.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 7", "Servo 3 Out")
-            cboServo8.Text = GetRegSetting(sRootRegistry & "\Settings", "Servo 8", "Servo 4 Out")
+            cboServo1.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "1", 1)
+            cboServo2.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "2", 2)
+            cboServo3.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "3", 3)
+            cboServo4.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "4", 4)
+            cboServo5.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "5", 5)
+            cboServo6.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "6", 10)
+            cboServo7.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "7", 11)
+            cboServo8.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Servo", "8", 12)
 
-            cboSensors1.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 1", "X Accel")
-            cboSensors2.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 2", "Y Accel")
-            cboSensors3.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 3", "Z Accel")
-            cboSensors4.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 4", "X Gyro")
-            cboSensors5.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 5", "Y Gyro")
-            cboSensors6.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 6", "Z Gyro")
-            cboSensors7.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 7", "None")
-            cboSensors8.Text = GetRegSetting(sRootRegistry & "\Settings", "Sensor 8", "None")
+            cboSensors1.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "1", 17)
+            cboSensors2.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "2", 18)
+            cboSensors3.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "3", 19)
+            cboSensors4.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "4", 20)
+            cboSensors5.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "5", 21)
+            cboSensors6.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "6", 22)
+            cboSensors7.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "7", 0)
+            cboSensors8.SelectedIndex = GetRegSetting(sRootRegistry & "\Settings\Sensor", "8", 0)
         Catch
         End Try
 
@@ -564,6 +571,7 @@ Public Class frmMain
         'DirectShowControl1.StartCapture()
 
     End Sub
+
     Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "")
         Dim i As Integer
         Dim sSavedComPort As String
@@ -648,7 +656,7 @@ Public Class frmMain
             If .SelectedPath <> "" Then
                 txtOutputFolder.Text = .SelectedPath & "\"
                 Call SaveRegSetting(sRootRegistry & "\Settings", "OutputFolder", txtOutputFolder.Text)
-                cmdOutputFolder_Click(Nothing, Nothing)
+                cmdReloadOutputFileList_Click(Nothing, Nothing)
             End If
         End With
     End Sub
@@ -2843,7 +2851,7 @@ Public Class frmMain
             grpMisc.Width = tabInstrumentView.Width - 12
 
             If tabPortControl.TabPages.Count < 6 Then
-                tabPortControl.TabPages.Add("tabPortStatus", GetResString("Status"))
+                tabPortControl.TabPages.Add("tabPortStatus", GetResString(, "Status"))
                 oTab = tabPortControl.TabPages(tabPortControl.TabPages.Count - 1)
                 oTab.BackColor = Color.FromName("Control")
             End If
@@ -3489,14 +3497,14 @@ Public Class frmMain
 
         UpdateServoSliders()
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 1", cboServo1.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 2", cboServo2.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 3", cboServo3.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 4", cboServo4.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 5", cboServo5.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 6", cboServo6.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 7", cboServo7.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Servo 8", cboServo8.Text)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 1", cboServo1.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 2", cboServo2.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 3", cboServo3.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 4", cboServo4.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 5", cboServo5.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 6", cboServo6.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 7", cboServo7.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Servo", " 8", cboServo8.SelectedIndex)
     End Sub
 
     Private Sub cboSensors1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboSensors1.SelectedIndexChanged, cboSensors2.SelectedIndexChanged, cboSensors3.SelectedIndexChanged, cboSensors4.SelectedIndexChanged, cboSensors5.SelectedIndexChanged, cboSensors6.SelectedIndexChanged, cboSensors7.SelectedIndexChanged, cboSensors8.SelectedIndexChanged
@@ -3506,14 +3514,14 @@ Public Class frmMain
 
         UpdateServoSliders()
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 1", cboSensors1.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 2", cboSensors2.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 3", cboSensors3.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 4", cboSensors4.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 5", cboSensors5.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 6", cboSensors6.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 7", cboSensors7.Text)
-        SaveRegSetting(sRootRegistry & "\Settings", "Sensor 8", cboSensors8.Text)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "1", cboSensors1.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "2", cboSensors2.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "3", cboSensors3.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "4", cboSensors4.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "5", cboSensors5.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "6", cboSensors6.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "7", cboSensors7.SelectedIndex)
+        SaveRegSetting(sRootRegistry & "\Settings\Sensor", "8", cboSensors8.SelectedIndex)
     End Sub
 
     Private Sub cmdTest_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdTest.Click

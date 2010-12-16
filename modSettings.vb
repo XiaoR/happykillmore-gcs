@@ -46,6 +46,8 @@ Module modSettings
     Public Sub LoadSettings()
         Dim nCount As Integer
 
+        sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+
         sModelName = GetRegSetting(sRootRegistry & "\Settings", "3D Model", "EasyStar")
         nMaxSpeed = GetRegSetting(sRootRegistry & "\Settings", "Max Speed", "120")
         bPitchReverse = GetRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", False)
@@ -101,7 +103,7 @@ Module modSettings
             bInstruments(nCount) = GetRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, IIf(nCount <= 5, True, False))
         Next
 
-        nBatteryMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Max", ConvertPeriodToLocal("12.5")))
+        nBatteryMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Max", "12.5"))
         nBatteryMin = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Min", 9))
         oBatteryColor = GetRegSetting(sRootRegistry & "\Settings", "Battery Color", e_InstrumentColor.e_InstrumentColor_Green)
 
@@ -118,6 +120,8 @@ Module modSettings
 
     Public Sub SaveSettings()
         Dim nCount As Integer
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Language File", sLanguageFile)
 
         SaveRegSetting(sRootRegistry & "\Settings", "3D Model", sModelName)
         SaveRegSetting(sRootRegistry & "\Settings", "Max Speed", nMaxSpeed)
@@ -156,6 +160,7 @@ Module modSettings
 
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Color", oThrottleColor)
 
+        frmMain.ResetForm()
         LoadSettings()
         frmMain.ResizeForm()
     End Sub

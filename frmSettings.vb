@@ -1,9 +1,10 @@
 Public Class frmSettings
-
+    Dim aLanguages(0) As String
     Private Sub ResetForm()
         GetResString(Me, "Settings")
 
         GetResString(grpGeneral, "General")
+        GetResString(lblLanguageLabel, "Language", True)
         GetResString(lblDistanceUnits, "Distance_Units", True)
         GetResString(lblSpeedUnits, "Speed_Units", True)
         GetResString(lblMaxSpeed, "Max_Speed", True)
@@ -65,6 +66,8 @@ Public Class frmSettings
         Dim sFolderName As String
 
         ResetForm()
+
+        LoadLanguages(cboLanguage)
 
         For nCount = 1 To 20
             If nCount <= 5 Then
@@ -169,11 +172,42 @@ Public Class frmSettings
         chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
 
     End Sub
+    Private Sub LoadLanguages(ByVal inputCombo As ComboBox)
+        Dim sFileContents As String
+        Dim sSplit() As String
+        Dim sSplit2() As String
+        Dim nCount As Integer
 
+        sFileContents = GetFileContents(GetRootPath() & "Language\Languages.txt")
+        sSplit = Split(sFileContents, vbCrLf)
+        ReDim aLanguages(0 To UBound(sSplit) + 1)
+        With inputCombo
+            .Items.Clear()
+            .Items.Add(GetResString(, "Default Language"))
+            aLanguages(0) = "Default"
+            For nCount = 0 To UBound(sSplit)
+                If Trim(sSplit(nCount)) <> "" Then
+                    sSplit2 = Split(sSplit(nCount), ";")
+                    .Items.Add(sSplit2(1))
+                    aLanguages(.Items.Count - 1) = sSplit2(0)
+
+                    If sLanguageFile = sSplit2(0) Then
+                        .SelectedIndex = .Items.Count - 1
+                    End If
+                End If
+            Next
+
+            If .SelectedIndex = -1 Then
+                .SelectedIndex = 0
+            End If
+        End With
+    End Sub
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
         Me.Dispose()
     End Sub
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
+        Dim nCount As Integer
+
         eDistanceUnits = cboDistanceUnits.SelectedIndex
         eSpeedUnits = cboSpeedUnits.SelectedIndex
         nMaxSpeed = Convert.ToInt32(cboMaxSpeed.Text)
@@ -198,6 +232,8 @@ Public Class frmSettings
             frmMain._3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), True, sModelName, GetRootPath() & "3D Models\")
             frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.loadModel))
         End If
+
+        sLanguageFile = aLanguages(cboLanguage.SelectedIndex)
 
         bInstruments(e_Instruments.e_Instruments_Speed) = chkInstSpeed.Checked
         bInstruments(e_Instruments.e_Instruments_Altimeter) = chkInstAltimeter.Checked

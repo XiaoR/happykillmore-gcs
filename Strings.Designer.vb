@@ -272,7 +272,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Battery &amp;&amp;Throttle.
+        '''  Looks up a localized string similar to Battery &amp;&amp; Throttle.
         '''</summary>
         Friend Shared ReadOnly Property Battery_Throttle() As String
             Get
@@ -281,7 +281,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Battery &amp;&amp;Throttle Settings.
+        '''  Looks up a localized string similar to Battery &amp;&amp; Throttle Settings.
         '''</summary>
         Friend Shared ReadOnly Property Battery_Throttle_Settings() As String
             Get
@@ -479,6 +479,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Default Language.
+        '''</summary>
+        Friend Shared ReadOnly Property Default_Language() As String
+            Get
+                Return ResourceManager.GetString("Default_Language", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Disconnect.
         '''</summary>
         Friend Shared ReadOnly Property Disconnect() As String
@@ -488,7 +497,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Disconnect from &amp;1.
+        '''  Looks up a localized string similar to Disconnected from &amp;1.
         '''</summary>
         Friend Shared ReadOnly Property Disconnect_from() As String
             Get
@@ -848,11 +857,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to KPH.
+        '''  Looks up a localized string similar to km/h.
         '''</summary>
         Friend Shared ReadOnly Property KPH() As String
             Get
                 Return ResourceManager.GetString("KPH", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Language.
+        '''</summary>
+        Friend Shared ReadOnly Property Language() As String
+            Get
+                Return ResourceManager.GetString("Language", resourceCulture)
             End Get
         End Property
         
@@ -1010,7 +1028,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Max Amerage.
+        '''  Looks up a localized string similar to Max Amperage.
         '''</summary>
         Friend Shared ReadOnly Property Max_Amperage() As String
             Get
