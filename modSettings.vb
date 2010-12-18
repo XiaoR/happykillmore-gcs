@@ -66,6 +66,12 @@ Module modSettings
         sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "720000FF")
         nMissionWidth = GetRegSetting(sRootRegistry & "\Settings", "Mission Width", 1)
 
+        bGEBorders = GetRegSetting(sRootRegistry & "\Settings", "GE Borders", True)
+        bGEBuildings = GetRegSetting(sRootRegistry & "\Settings", "GE Buildings", True)
+        bGERoads = GetRegSetting(sRootRegistry & "\Settings", "GE Roads", True)
+        bGETerrain = GetRegSetting(sRootRegistry & "\Settings", "GE Terrain", True)
+        bGETrees = GetRegSetting(sRootRegistry & "\Settings", "GE Trees", True)
+
         eDistanceUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Distance Units", "0"))
         Select Case eDistanceUnits
             Case e_DistanceFormat.e_DistanceFormat_Feet
@@ -116,6 +122,12 @@ Module modSettings
 
         oThrottleColor = GetRegSetting(sRootRegistry & "\Settings", "Throttle Color", e_InstrumentColor.e_InstrumentColor_Orange)
 
+        sSpeechVoice = GetRegSetting(sRootRegistry & "\Settings", "Speech Voice", "Microsoft Sam")
+        bAnnounceWaypoints = GetRegSetting(sRootRegistry & "\Settings", "Speech Waypoint Enabled", False)
+        sSpeechWaypoint = GetRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", GetResString(, "Announce_Waypoints_Default"))
+        bAnnounceModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", False)
+        sSpeechModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", GetResString(, "Announce_ModeChange_Default"))
+
     End Sub
 
     Public Sub SaveSettings()
@@ -143,6 +155,12 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Speed Units", eSpeedUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Map Update Hz", nMapUpdateRate)
 
+        SaveRegSetting(sRootRegistry & "\Settings", "GE Borders", bGEBorders)
+        SaveRegSetting(sRootRegistry & "\Settings", "GE Buildings", bGEBuildings)
+        SaveRegSetting(sRootRegistry & "\Settings", "GE Roads", bGERoads)
+        SaveRegSetting(sRootRegistry & "\Settings", "GE Terrain", bGETerrain)
+        SaveRegSetting(sRootRegistry & "\Settings", "GE Trees", bGETrees)
+
         For nCount = 0 To UBound(bInstruments)
             SaveRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, bInstruments(nCount))
         Next
@@ -159,6 +177,12 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "MAH Color", oMAHColor)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Color", oThrottleColor)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Voice", sSpeechVoice)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Waypoint Enabled", bAnnounceWaypoints)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", sSpeechWaypoint)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", bAnnounceModeChange)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", sSpeechModeChange)
 
         frmMain.ResetForm()
         LoadSettings()

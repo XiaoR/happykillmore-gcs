@@ -67,6 +67,7 @@
     <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@
     <Compile Include="modMAVlink.vb" />
     <Compile Include="modRegistry.vb" />
     <Compile Include="modSettings.vb" />
+    <Compile Include="modSpeech.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -239,6 +241,7 @@
     <None Include="Resources\BatteryPurple.bmp" />
     <None Include="Resources\BatteryOrange.bmp" />
     <None Include="Resources\BatteryCyan.bmp" />
+    <None Include="Resources\Images\Play.gif" />
     <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
     <Content Include="Resources\AirSpeedIndicator_Background.bmp" />

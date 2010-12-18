@@ -118,319 +118,91 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblFlightOpacity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 145</value>
+  <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 388</value>
   </data>
-  <data name="lblFlightOpacity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 13</value>
+  <data name="cmdSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 23</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblFlightOpacity.TabIndex" type="System.Int32, mscorlib">
-    <value>55</value>
+  <data name="cmdSave.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
-  <data name="lblFlightOpacity.Text" xml:space="preserve">
-    <value>Path Opacity:</value>
+  <data name="cmdSave.Text" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="lblFlightOpacity.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <data name="&gt;&gt;cmdSave.Name" xml:space="preserve">
+    <value>cmdSave</value>
   </data>
-  <data name="&gt;&gt;lblFlightOpacity.Name" xml:space="preserve">
-    <value>lblFlightOpacity</value>
-  </data>
-  <data name="&gt;&gt;lblFlightOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightOpacity.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightOpacity.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tbarFlightOpacity.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="tbarFlightOpacity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>149, 138</value>
-  </data>
-  <data name="tbarFlightOpacity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 28</value>
-  </data>
-  <data name="tbarFlightOpacity.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Name" xml:space="preserve">
-    <value>tbarFlightOpacity</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lblFlightExtrude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 117</value>
-  </data>
-  <data name="lblFlightExtrude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 13</value>
-  </data>
-  <data name="lblFlightExtrude.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <data name="lblFlightExtrude.Text" xml:space="preserve">
-    <value>Extrude:</value>
-  </data>
-  <data name="lblFlightExtrude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Name" xml:space="preserve">
-    <value>lblFlightExtrude</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkFlightExtrude.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
-    <value>Button</value>
-  </data>
-  <data name="chkFlightExtrude.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="chkFlightExtrude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 113</value>
-  </data>
-  <data name="chkFlightExtrude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 21</value>
-  </data>
-  <data name="chkFlightExtrude.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="chkFlightExtrude.Text" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="chkFlightExtrude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Name" xml:space="preserve">
-    <value>chkFlightExtrude</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="cboMapUpdateRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 27</value>
-  </data>
-  <data name="cboMapUpdateRate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 21</value>
-  </data>
-  <data name="cboMapUpdateRate.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Name" xml:space="preserve">
-    <value>cboMapUpdateRate</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="lblMapUpdateRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 30</value>
-  </data>
-  <data name="lblMapUpdateRate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 12</value>
-  </data>
-  <data name="lblMapUpdateRate.TabIndex" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="lblMapUpdateRate.Text" xml:space="preserve">
-    <value>Map Update Rate:</value>
-  </data>
-  <data name="lblMapUpdateRate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Name" xml:space="preserve">
-    <value>lblMapUpdateRate</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lblFlightPathThickness.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 88</value>
-  </data>
-  <data name="lblFlightPathThickness.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 13</value>
-  </data>
-  <data name="lblFlightPathThickness.TabIndex" type="System.Int32, mscorlib">
-    <value>49</value>
-  </data>
-  <data name="lblFlightPathThickness.Text" xml:space="preserve">
-    <value>Path Thickness:</value>
-  </data>
-  <data name="lblFlightPathThickness.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Name" xml:space="preserve">
-    <value>lblFlightPathThickness</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="lblFlightPathColor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 59</value>
-  </data>
-  <data name="lblFlightPathColor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 13</value>
-  </data>
-  <data name="lblFlightPathColor.TabIndex" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="lblFlightPathColor.Text" xml:space="preserve">
-    <value>Flight Path Color:</value>
-  </data>
-  <data name="lblFlightPathColor.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Name" xml:space="preserve">
-    <value>lblFlightPathColor</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tbarFlightWidth.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="tbarFlightWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 81</value>
-  </data>
-  <data name="tbarFlightWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 28</value>
-  </data>
-  <data name="tbarFlightWidth.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Name" xml:space="preserve">
-    <value>tbarFlightWidth</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="cmdFlightColor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 52</value>
-  </data>
-  <data name="cmdFlightColor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 23</value>
-  </data>
-  <data name="cmdFlightColor.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.Name" xml:space="preserve">
-    <value>cmdFlightColor</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.Type" xml:space="preserve">
+  <data name="&gt;&gt;cmdSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cmdFlightColor.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="grpFlightPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>288, 16</value>
-  </data>
-  <data name="grpFlightPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 172</value>
-  </data>
-  <data name="grpFlightPath.TabIndex" type="System.Int32, mscorlib">
-    <value>47</value>
-  </data>
-  <data name="grpFlightPath.Text" xml:space="preserve">
-    <value>Google Earth Flight Path</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Name" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cmdSave.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;cmdSave.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="lblLanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 388</value>
+  </data>
+  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 23</value>
+  </data>
+  <data name="cmdCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="cmdCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;cmdCancel.Name" xml:space="preserve">
+    <value>cmdCancel</value>
+  </data>
+  <data name="&gt;&gt;cmdCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cmdCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="ColorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblLanguage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblLanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblLanguage.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 24</value>
   </data>
-  <data name="lblLanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblLanguage.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
-  <data name="lblLanguageLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblLanguage.TabIndex" type="System.Int32, mscorlib">
     <value>63</value>
   </data>
-  <data name="lblLanguageLabel.Text" xml:space="preserve">
+  <data name="lblLanguage.Text" xml:space="preserve">
     <value>Language:</value>
   </data>
-  <data name="lblLanguageLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblLanguage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblLanguageLabel.Name" xml:space="preserve">
-    <value>lblLanguageLabel</value>
+  <data name="&gt;&gt;lblLanguage.Name" xml:space="preserve">
+    <value>lblLanguage</value>
   </data>
-  <data name="&gt;&gt;lblLanguageLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblLanguage.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblLanguageLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblLanguage.Parent" xml:space="preserve">
     <value>grpGeneral</value>
   </data>
-  <data name="&gt;&gt;lblLanguageLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblLanguage.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="cboLanguage.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="cboLanguage.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 21</value>
@@ -453,6 +225,9 @@
   <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="cboThrottleChannel.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="cboThrottleChannel.Location" type="System.Drawing.Point, System.Drawing">
     <value>127, 263</value>
   </data>
@@ -473,6 +248,9 @@
   </data>
   <data name="&gt;&gt;cboThrottleChannel.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="lblThrottleChannel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblThrottleChannel.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 266</value>
@@ -501,31 +279,34 @@
   <data name="&gt;&gt;lblThrottleChannel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lblHeading.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblHeadingReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblHeadingReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 240</value>
   </data>
-  <data name="lblHeading.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblHeadingReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
-  <data name="lblHeading.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblHeadingReverse.TabIndex" type="System.Int32, mscorlib">
     <value>59</value>
   </data>
-  <data name="lblHeading.Text" xml:space="preserve">
+  <data name="lblHeadingReverse.Text" xml:space="preserve">
     <value>Heading:</value>
   </data>
-  <data name="lblHeading.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblHeadingReverse.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblHeading.Name" xml:space="preserve">
-    <value>lblHeading</value>
+  <data name="&gt;&gt;lblHeadingReverse.Name" xml:space="preserve">
+    <value>lblHeadingReverse</value>
   </data>
-  <data name="&gt;&gt;lblHeading.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblHeadingReverse.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblHeading.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblHeadingReverse.Parent" xml:space="preserve">
     <value>grpGeneral</value>
   </data>
-  <data name="&gt;&gt;lblHeading.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblHeadingReverse.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="chkHeadingReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
@@ -533,6 +314,9 @@
   </data>
   <data name="chkHeadingReverse.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
+  </data>
+  <data name="chkHeadingReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkHeadingReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 233</value>
@@ -561,31 +345,34 @@
   <data name="&gt;&gt;chkHeadingReverse.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="lblYaw.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblYawReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblYawReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 213</value>
   </data>
-  <data name="lblYaw.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblYawReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
-  <data name="lblYaw.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblYawReverse.TabIndex" type="System.Int32, mscorlib">
     <value>57</value>
   </data>
-  <data name="lblYaw.Text" xml:space="preserve">
+  <data name="lblYawReverse.Text" xml:space="preserve">
     <value>Yaw:</value>
   </data>
-  <data name="lblYaw.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblYawReverse.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblYaw.Name" xml:space="preserve">
-    <value>lblYaw</value>
+  <data name="&gt;&gt;lblYawReverse.Name" xml:space="preserve">
+    <value>lblYawReverse</value>
   </data>
-  <data name="&gt;&gt;lblYaw.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblYawReverse.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblYaw.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblYawReverse.Parent" xml:space="preserve">
     <value>grpGeneral</value>
   </data>
-  <data name="&gt;&gt;lblYaw.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblYawReverse.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="chkYawReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
@@ -593,6 +380,9 @@
   </data>
   <data name="chkYawReverse.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
+  </data>
+  <data name="chkYawReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkYawReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>127, 206</value>
@@ -621,31 +411,34 @@
   <data name="&gt;&gt;chkYawReverse.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="lblRoll.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblRollReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblRollReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 186</value>
   </data>
-  <data name="lblRoll.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblRollReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
-  <data name="lblRoll.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblRollReverse.TabIndex" type="System.Int32, mscorlib">
     <value>55</value>
   </data>
-  <data name="lblRoll.Text" xml:space="preserve">
+  <data name="lblRollReverse.Text" xml:space="preserve">
     <value>Roll:</value>
   </data>
-  <data name="lblRoll.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblRollReverse.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblRoll.Name" xml:space="preserve">
-    <value>lblRoll</value>
+  <data name="&gt;&gt;lblRollReverse.Name" xml:space="preserve">
+    <value>lblRollReverse</value>
   </data>
-  <data name="&gt;&gt;lblRoll.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblRollReverse.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblRoll.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblRollReverse.Parent" xml:space="preserve">
     <value>grpGeneral</value>
   </data>
-  <data name="&gt;&gt;lblRoll.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblRollReverse.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="chkRollReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
@@ -653,6 +446,9 @@
   </data>
   <data name="chkRollReverse.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
+  </data>
+  <data name="chkRollReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkRollReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 179</value>
@@ -681,31 +477,34 @@
   <data name="&gt;&gt;chkRollReverse.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="lblPitch.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblPitchReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblPitchReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 158</value>
   </data>
-  <data name="lblPitch.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblPitchReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
-  <data name="lblPitch.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblPitchReverse.TabIndex" type="System.Int32, mscorlib">
     <value>53</value>
   </data>
-  <data name="lblPitch.Text" xml:space="preserve">
+  <data name="lblPitchReverse.Text" xml:space="preserve">
     <value>Pitch:</value>
   </data>
-  <data name="lblPitch.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblPitchReverse.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblPitch.Name" xml:space="preserve">
-    <value>lblPitch</value>
+  <data name="&gt;&gt;lblPitchReverse.Name" xml:space="preserve">
+    <value>lblPitchReverse</value>
   </data>
-  <data name="&gt;&gt;lblPitch.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblPitchReverse.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblPitch.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblPitchReverse.Parent" xml:space="preserve">
     <value>grpGeneral</value>
   </data>
-  <data name="&gt;&gt;lblPitch.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblPitchReverse.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
   <data name="chkPitchReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
@@ -713,6 +512,9 @@
   </data>
   <data name="chkPitchReverse.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
+  </data>
+  <data name="chkPitchReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkPitchReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 152</value>
@@ -741,6 +543,9 @@
   <data name="&gt;&gt;chkPitchReverse.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="cbo3DModel.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="cbo3DModel.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 126</value>
   </data>
@@ -761,6 +566,9 @@
   </data>
   <data name="&gt;&gt;cbo3DModel.ZOrder" xml:space="preserve">
     <value>12</value>
+  </data>
+  <data name="lbl3DModel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lbl3DModel.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 132</value>
@@ -810,6 +618,9 @@
   <data name="&gt;&gt;cboMaxSpeed.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+  <data name="lblMaxSpeed.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 105</value>
   </data>
@@ -836,6 +647,9 @@
   </data>
   <data name="&gt;&gt;lblMaxSpeed.ZOrder" xml:space="preserve">
     <value>15</value>
+  </data>
+  <data name="lblSpeedUnits.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblSpeedUnits.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 78</value>
@@ -884,6 +698,9 @@
   </data>
   <data name="&gt;&gt;cboSpeedUnits.ZOrder" xml:space="preserve">
     <value>17</value>
+  </data>
+  <data name="lblDistanceUnits.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblDistanceUnits.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 51</value>
@@ -934,16 +751,13 @@
     <value>19</value>
   </data>
   <data name="grpGeneral.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+    <value>17, 9</value>
   </data>
   <data name="grpGeneral.Size" type="System.Drawing.Size, System.Drawing">
     <value>270, 315</value>
   </data>
   <data name="grpGeneral.TabIndex" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="grpGeneral.Text" xml:space="preserve">
-    <value>General</value>
+    <value>49</value>
   </data>
   <data name="&gt;&gt;grpGeneral.Name" xml:space="preserve">
     <value>grpGeneral</value>
@@ -952,62 +766,395 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;grpGeneral.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;grpGeneral.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>0</value>
   </data>
-  <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 333</value>
+  <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
   </data>
-  <data name="cmdSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
+  <data name="tabGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
-  <data name="cmdSave.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 345</value>
   </data>
-  <data name="cmdSave.Text" xml:space="preserve">
-    <value>Save</value>
+  <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;cmdSave.Name" xml:space="preserve">
-    <value>cmdSave</value>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>General</value>
   </data>
-  <data name="&gt;&gt;cmdSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tabGeneral.Name" xml:space="preserve">
+    <value>tabGeneral</value>
   </data>
-  <data name="&gt;&gt;cmdSave.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;tabGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cmdSave.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="&gt;&gt;tabGeneral.Parent" xml:space="preserve">
+    <value>tabSettings</value>
   </data>
-  <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>853, 333</value>
+  <data name="&gt;&gt;tabGeneral.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
+  <data name="lblGETerrain.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="cmdCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+  <data name="lblGETerrain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 131</value>
   </data>
-  <data name="cmdCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="lblGETerrain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
   </data>
-  <data name="&gt;&gt;cmdCancel.Name" xml:space="preserve">
-    <value>cmdCancel</value>
+  <data name="lblGETerrain.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
   </data>
-  <data name="&gt;&gt;cmdCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblGETerrain.Text" xml:space="preserve">
+    <value>Terrain:</value>
   </data>
-  <data name="&gt;&gt;cmdCancel.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="lblGETerrain.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;cmdCancel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblGETerrain.Name" xml:space="preserve">
+    <value>lblGETerrain</value>
+  </data>
+  <data name="&gt;&gt;lblGETerrain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGETerrain.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;lblGETerrain.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkGETerrain.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkGETerrain.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkGETerrain.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkGETerrain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 129</value>
+  </data>
+  <data name="chkGETerrain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkGETerrain.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="chkGETerrain.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkGETerrain.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkGETerrain.Name" xml:space="preserve">
+    <value>chkGETerrain</value>
+  </data>
+  <data name="&gt;&gt;chkGETerrain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkGETerrain.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;chkGETerrain.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblGEBorders.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGEBorders.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 104</value>
+  </data>
+  <data name="lblGEBorders.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="lblGEBorders.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="lblGEBorders.Text" xml:space="preserve">
+    <value>Borders:</value>
+  </data>
+  <data name="lblGEBorders.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblGEBorders.Name" xml:space="preserve">
+    <value>lblGEBorders</value>
+  </data>
+  <data name="&gt;&gt;lblGEBorders.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGEBorders.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;lblGEBorders.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkGEBorders.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkGEBorders.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkGEBorders.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkGEBorders.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 102</value>
+  </data>
+  <data name="chkGEBorders.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkGEBorders.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="chkGEBorders.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkGEBorders.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkGEBorders.Name" xml:space="preserve">
+    <value>chkGEBorders</value>
+  </data>
+  <data name="&gt;&gt;chkGEBorders.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkGEBorders.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;chkGEBorders.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <metadata name="ColorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="lblGETrees.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGETrees.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 77</value>
+  </data>
+  <data name="lblGETrees.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="lblGETrees.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="lblGETrees.Text" xml:space="preserve">
+    <value>Trees:</value>
+  </data>
+  <data name="lblGETrees.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblGETrees.Name" xml:space="preserve">
+    <value>lblGETrees</value>
+  </data>
+  <data name="&gt;&gt;lblGETrees.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGETrees.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;lblGETrees.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkGETrees.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkGETrees.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkGETrees.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkGETrees.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 75</value>
+  </data>
+  <data name="chkGETrees.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkGETrees.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="chkGETrees.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkGETrees.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkGETrees.Name" xml:space="preserve">
+    <value>chkGETrees</value>
+  </data>
+  <data name="&gt;&gt;chkGETrees.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkGETrees.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;chkGETrees.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblGEBuildings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGEBuildings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 50</value>
+  </data>
+  <data name="lblGEBuildings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="lblGEBuildings.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="lblGEBuildings.Text" xml:space="preserve">
+    <value>Buildings:</value>
+  </data>
+  <data name="lblGEBuildings.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblGEBuildings.Name" xml:space="preserve">
+    <value>lblGEBuildings</value>
+  </data>
+  <data name="&gt;&gt;lblGEBuildings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGEBuildings.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;lblGEBuildings.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="chkGEBuildings.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkGEBuildings.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkGEBuildings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkGEBuildings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 48</value>
+  </data>
+  <data name="chkGEBuildings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkGEBuildings.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="chkGEBuildings.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkGEBuildings.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkGEBuildings.Name" xml:space="preserve">
+    <value>chkGEBuildings</value>
+  </data>
+  <data name="&gt;&gt;chkGEBuildings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkGEBuildings.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;chkGEBuildings.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblGERoads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGERoads.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 23</value>
+  </data>
+  <data name="lblGERoads.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="lblGERoads.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="lblGERoads.Text" xml:space="preserve">
+    <value>Roads:</value>
+  </data>
+  <data name="lblGERoads.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblGERoads.Name" xml:space="preserve">
+    <value>lblGERoads</value>
+  </data>
+  <data name="&gt;&gt;lblGERoads.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGERoads.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;lblGERoads.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="chkGERoads.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkGERoads.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkGERoads.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkGERoads.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 21</value>
+  </data>
+  <data name="chkGERoads.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkGERoads.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="chkGERoads.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkGERoads.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkGERoads.Name" xml:space="preserve">
+    <value>chkGERoads</value>
+  </data>
+  <data name="&gt;&gt;chkGERoads.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkGERoads.Parent" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;chkGERoads.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="grpGoogleEarthFeatures.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 15</value>
+  </data>
+  <data name="grpGoogleEarthFeatures.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 172</value>
+  </data>
+  <data name="grpGoogleEarthFeatures.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="grpGoogleEarthFeatures.Text" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Name" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
+  </data>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Parent" xml:space="preserve">
+    <value>tabGoogleEarth</value>
+  </data>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblMissionOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblMissionOpacity.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 108</value>
   </data>
@@ -1038,6 +1185,9 @@
   <data name="tbarMissionOpacity.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="tbarMissionOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="tbarMissionOpacity.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 103</value>
   </data>
@@ -1058,6 +1208,9 @@
   </data>
   <data name="&gt;&gt;tbarMissionOpacity.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="lblMissionExtrude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblMissionExtrude.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 82</value>
@@ -1092,6 +1245,9 @@
   <data name="chkMissionExtrude.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
+  <data name="chkMissionExtrude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="chkMissionExtrude.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 80</value>
   </data>
@@ -1119,6 +1275,9 @@
   <data name="&gt;&gt;chkMissionExtrude.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="lblMissionPathThickness.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblMissionPathThickness.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 53</value>
   </data>
@@ -1145,6 +1304,9 @@
   </data>
   <data name="&gt;&gt;lblMissionPathThickness.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="lblMissionPathColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblMissionPathColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 24</value>
@@ -1176,6 +1338,9 @@
   <data name="tbarMissionWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="tbarMissionWidth.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="tbarMissionWidth.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 48</value>
   </data>
@@ -1196,6 +1361,9 @@
   </data>
   <data name="&gt;&gt;tbarMissionWidth.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="cmdMissionColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="cmdMissionColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 19</value>
@@ -1219,13 +1387,13 @@
     <value>7</value>
   </data>
   <data name="grpMissionPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>289, 191</value>
+    <value>20, 190</value>
   </data>
   <data name="grpMissionPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>245, 137</value>
   </data>
   <data name="grpMissionPath.TabIndex" type="System.Int32, mscorlib">
-    <value>51</value>
+    <value>53</value>
   </data>
   <data name="grpMissionPath.Text" xml:space="preserve">
     <value>Mission Path</value>
@@ -1237,249 +1405,345 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;grpMissionPath.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabGoogleEarth</value>
   </data>
   <data name="&gt;&gt;grpMissionPath.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="chkInstBattery.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkInstBattery.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 96</value>
-  </data>
-  <data name="chkInstBattery.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 17</value>
-  </data>
-  <data name="chkInstBattery.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="chkInstBattery.Text" xml:space="preserve">
-    <value>Battery &amp;&amp;Throttle</value>
-  </data>
-  <data name="&gt;&gt;chkInstBattery.Name" xml:space="preserve">
-    <value>chkInstBattery</value>
-  </data>
-  <data name="&gt;&gt;chkInstBattery.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstBattery.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstBattery.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="chkInstTurn.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkInstTurn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 72</value>
-  </data>
-  <data name="chkInstTurn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 17</value>
-  </data>
-  <data name="chkInstTurn.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="chkInstTurn.Text" xml:space="preserve">
-    <value>Turn Coordinator</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.Name" xml:space="preserve">
-    <value>chkInstTurn</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="chkInst3DModel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lblFlightOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="chkInst3DModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 48</value>
+  <data name="lblFlightOpacity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 145</value>
   </data>
-  <data name="chkInst3DModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 17</value>
+  <data name="lblFlightOpacity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
   </data>
-  <data name="chkInst3DModel.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+  <data name="lblFlightOpacity.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
   </data>
-  <data name="chkInst3DModel.Text" xml:space="preserve">
-    <value>3D Model</value>
+  <data name="lblFlightOpacity.Text" xml:space="preserve">
+    <value>Path Opacity:</value>
   </data>
-  <data name="&gt;&gt;chkInst3DModel.Name" xml:space="preserve">
-    <value>chkInst3DModel</value>
+  <data name="lblFlightOpacity.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;chkInst3DModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblFlightOpacity.Name" xml:space="preserve">
+    <value>lblFlightOpacity</value>
   </data>
-  <data name="&gt;&gt;chkInst3DModel.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;lblFlightOpacity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInst3DModel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblFlightOpacity.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;lblFlightOpacity.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tbarFlightOpacity.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarFlightOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarFlightOpacity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 138</value>
+  </data>
+  <data name="tbarFlightOpacity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 28</value>
+  </data>
+  <data name="tbarFlightOpacity.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightOpacity.Name" xml:space="preserve">
+    <value>tbarFlightOpacity</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightOpacity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightOpacity.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightOpacity.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblFlightExtrude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblFlightExtrude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 117</value>
+  </data>
+  <data name="lblFlightExtrude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="lblFlightExtrude.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="lblFlightExtrude.Text" xml:space="preserve">
+    <value>Extrude:</value>
+  </data>
+  <data name="lblFlightExtrude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblFlightExtrude.Name" xml:space="preserve">
+    <value>lblFlightExtrude</value>
+  </data>
+  <data name="&gt;&gt;lblFlightExtrude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFlightExtrude.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;lblFlightExtrude.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="chkInstVertical.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="chkFlightExtrude.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
   </data>
-  <data name="chkInstVertical.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 24</value>
+  <data name="chkFlightExtrude.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="chkInstVertical.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 17</value>
+  <data name="chkFlightExtrude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="chkInstVertical.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+  <data name="chkFlightExtrude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 113</value>
   </data>
-  <data name="chkInstVertical.Text" xml:space="preserve">
-    <value>Vertical Speed</value>
+  <data name="chkFlightExtrude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
   </data>
-  <data name="&gt;&gt;chkInstVertical.Name" xml:space="preserve">
-    <value>chkInstVertical</value>
+  <data name="chkFlightExtrude.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
-  <data name="&gt;&gt;chkInstVertical.Type" xml:space="preserve">
+  <data name="chkFlightExtrude.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkFlightExtrude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkFlightExtrude.Name" xml:space="preserve">
+    <value>chkFlightExtrude</value>
+  </data>
+  <data name="&gt;&gt;chkFlightExtrude.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInstVertical.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;chkFlightExtrude.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
   </data>
-  <data name="&gt;&gt;chkInstVertical.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;chkFlightExtrude.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="chkInstHeading.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="cboMapUpdateRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 27</value>
   </data>
-  <data name="chkInstHeading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 96</value>
+  <data name="cboMapUpdateRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
   </data>
-  <data name="chkInstHeading.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 17</value>
+  <data name="cboMapUpdateRate.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
-  <data name="chkInstHeading.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+  <data name="&gt;&gt;cboMapUpdateRate.Name" xml:space="preserve">
+    <value>cboMapUpdateRate</value>
   </data>
-  <data name="chkInstHeading.Text" xml:space="preserve">
-    <value>Heading</value>
+  <data name="&gt;&gt;cboMapUpdateRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInstHeading.Name" xml:space="preserve">
-    <value>chkInstHeading</value>
+  <data name="&gt;&gt;cboMapUpdateRate.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
   </data>
-  <data name="&gt;&gt;chkInstHeading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cboMapUpdateRate.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="chkInstAttitude.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lblMapUpdateRate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="chkInstAttitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 72</value>
+  <data name="lblMapUpdateRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 30</value>
   </data>
-  <data name="chkInstAttitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 17</value>
+  <data name="lblMapUpdateRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 12</value>
   </data>
-  <data name="chkInstAttitude.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+  <data name="lblMapUpdateRate.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
   </data>
-  <data name="chkInstAttitude.Text" xml:space="preserve">
-    <value>Attitude</value>
+  <data name="lblMapUpdateRate.Text" xml:space="preserve">
+    <value>Map Update Rate:</value>
   </data>
-  <data name="&gt;&gt;chkInstAttitude.Name" xml:space="preserve">
-    <value>chkInstAttitude</value>
+  <data name="lblMapUpdateRate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;chkInstAttitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblMapUpdateRate.Name" xml:space="preserve">
+    <value>lblMapUpdateRate</value>
   </data>
-  <data name="&gt;&gt;chkInstAttitude.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;lblMapUpdateRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInstAttitude.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblMapUpdateRate.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;lblMapUpdateRate.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="chkInstAltimeter.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lblFlightPathThickness.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="chkInstAltimeter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 48</value>
+  <data name="lblFlightPathThickness.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 88</value>
   </data>
-  <data name="chkInstAltimeter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 17</value>
+  <data name="lblFlightPathThickness.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
   </data>
-  <data name="chkInstAltimeter.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+  <data name="lblFlightPathThickness.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
   </data>
-  <data name="chkInstAltimeter.Text" xml:space="preserve">
-    <value>Altimeter</value>
+  <data name="lblFlightPathThickness.Text" xml:space="preserve">
+    <value>Path Thickness:</value>
   </data>
-  <data name="&gt;&gt;chkInstAltimeter.Name" xml:space="preserve">
-    <value>chkInstAltimeter</value>
+  <data name="lblFlightPathThickness.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;chkInstAltimeter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblFlightPathThickness.Name" xml:space="preserve">
+    <value>lblFlightPathThickness</value>
   </data>
-  <data name="&gt;&gt;chkInstAltimeter.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;lblFlightPathThickness.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInstAltimeter.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblFlightPathThickness.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;lblFlightPathThickness.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="chkInstSpeed.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lblFlightPathColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="chkInstSpeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 24</value>
+  <data name="lblFlightPathColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 59</value>
   </data>
-  <data name="chkInstSpeed.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 17</value>
+  <data name="lblFlightPathColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
   </data>
-  <data name="chkInstSpeed.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="lblFlightPathColor.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
   </data>
-  <data name="chkInstSpeed.Text" xml:space="preserve">
-    <value>Air/Ground Speed</value>
+  <data name="lblFlightPathColor.Text" xml:space="preserve">
+    <value>Flight Path Color:</value>
   </data>
-  <data name="&gt;&gt;chkInstSpeed.Name" xml:space="preserve">
-    <value>chkInstSpeed</value>
+  <data name="lblFlightPathColor.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;chkInstSpeed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblFlightPathColor.Name" xml:space="preserve">
+    <value>lblFlightPathColor</value>
   </data>
-  <data name="&gt;&gt;chkInstSpeed.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;lblFlightPathColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkInstSpeed.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblFlightPathColor.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;lblFlightPathColor.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="grpInstrumentSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>540, 16</value>
+  <data name="tbarFlightWidth.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="grpInstrumentSelection.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 128</value>
+  <data name="tbarFlightWidth.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="grpInstrumentSelection.TabIndex" type="System.Int32, mscorlib">
+  <data name="tbarFlightWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 81</value>
+  </data>
+  <data name="tbarFlightWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 28</value>
+  </data>
+  <data name="tbarFlightWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightWidth.Name" xml:space="preserve">
+    <value>tbarFlightWidth</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightWidth.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;tbarFlightWidth.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cmdFlightColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdFlightColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 52</value>
+  </data>
+  <data name="cmdFlightColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdFlightColor.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;cmdFlightColor.Name" xml:space="preserve">
+    <value>cmdFlightColor</value>
+  </data>
+  <data name="&gt;&gt;cmdFlightColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdFlightColor.Parent" xml:space="preserve">
+    <value>grpFlightPath</value>
+  </data>
+  <data name="&gt;&gt;cmdFlightColor.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="grpFlightPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 15</value>
+  </data>
+  <data name="grpFlightPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>246, 172</value>
+  </data>
+  <data name="grpFlightPath.TabIndex" type="System.Int32, mscorlib">
     <value>52</value>
   </data>
-  <data name="grpInstrumentSelection.Text" xml:space="preserve">
-    <value>Instrument Selection</value>
+  <data name="grpFlightPath.Text" xml:space="preserve">
+    <value>Google Earth Flight Path</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Name" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="&gt;&gt;grpFlightPath.Name" xml:space="preserve">
+    <value>grpFlightPath</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Type" xml:space="preserve">
+  <data name="&gt;&gt;grpFlightPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;grpFlightPath.Parent" xml:space="preserve">
+    <value>tabGoogleEarth</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tabGoogleEarth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabGoogleEarth.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabGoogleEarth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 345</value>
+  </data>
+  <data name="tabGoogleEarth.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabGoogleEarth.Text" xml:space="preserve">
+    <value>Google Earth</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Name" xml:space="preserve">
+    <value>tabGoogleEarth</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="cboThrottleColor.Location" type="System.Drawing.Point, System.Drawing">
@@ -1502,6 +1766,9 @@
   </data>
   <data name="&gt;&gt;cboThrottleColor.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="lblThrottleColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblThrottleColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>197, 112</value>
@@ -1551,6 +1818,9 @@
   <data name="&gt;&gt;cboMAHColor.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="lblMahColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblMahColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>197, 84</value>
   </data>
@@ -1577,6 +1847,9 @@
   </data>
   <data name="&gt;&gt;lblMahColor.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="lblMahMax.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblMahMax.Location" type="System.Drawing.Point, System.Drawing">
     <value>197, 56</value>
@@ -1625,6 +1898,9 @@
   </data>
   <data name="&gt;&gt;txtMAHMax.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="lblMahMin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblMahMin.Location" type="System.Drawing.Point, System.Drawing">
     <value>197, 28</value>
@@ -1695,6 +1971,9 @@
   <data name="&gt;&gt;cboAmperageColor.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="lblAmperageColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblAmperageColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 144</value>
   </data>
@@ -1721,6 +2000,9 @@
   </data>
   <data name="&gt;&gt;lblAmperageColor.ZOrder" xml:space="preserve">
     <value>9</value>
+  </data>
+  <data name="lblAmperageMax.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblAmperageMax.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 115</value>
@@ -1791,6 +2073,9 @@
   <data name="&gt;&gt;cboVoltageColor.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
+  <data name="lblVoltageColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lblVoltageColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 86</value>
   </data>
@@ -1817,6 +2102,9 @@
   </data>
   <data name="&gt;&gt;lblVoltageColor.ZOrder" xml:space="preserve">
     <value>13</value>
+  </data>
+  <data name="lblVoltageMax.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblVoltageMax.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 57</value>
@@ -1865,6 +2153,9 @@
   </data>
   <data name="&gt;&gt;txtVoltageMax.ZOrder" xml:space="preserve">
     <value>15</value>
+  </data>
+  <data name="lblVoltageMin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblVoltageMin.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 28</value>
@@ -1915,13 +2206,13 @@
     <value>17</value>
   </data>
   <data name="grpBatteryThrottle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>540, 150</value>
+    <value>15, 145</value>
   </data>
   <data name="grpBatteryThrottle.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 177</value>
   </data>
   <data name="grpBatteryThrottle.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
+    <value>54</value>
   </data>
   <data name="grpBatteryThrottle.Text" xml:space="preserve">
     <value>Battery &amp;&amp; Throttle Settings</value>
@@ -1933,10 +2224,814 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;grpBatteryThrottle.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;grpBatteryThrottle.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="chkInstBattery.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstBattery.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstBattery.Location" type="System.Drawing.Point, System.Drawing">
+    <value>214, 96</value>
+  </data>
+  <data name="chkInstBattery.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 17</value>
+  </data>
+  <data name="chkInstBattery.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="chkInstBattery.Text" xml:space="preserve">
+    <value>Battery &amp;&amp;Throttle</value>
+  </data>
+  <data name="&gt;&gt;chkInstBattery.Name" xml:space="preserve">
+    <value>chkInstBattery</value>
+  </data>
+  <data name="&gt;&gt;chkInstBattery.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstBattery.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstBattery.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkInstTurn.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstTurn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstTurn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>214, 72</value>
+  </data>
+  <data name="chkInstTurn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 17</value>
+  </data>
+  <data name="chkInstTurn.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="chkInstTurn.Text" xml:space="preserve">
+    <value>Turn Coordinator</value>
+  </data>
+  <data name="&gt;&gt;chkInstTurn.Name" xml:space="preserve">
+    <value>chkInstTurn</value>
+  </data>
+  <data name="&gt;&gt;chkInstTurn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstTurn.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstTurn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chkInst3DModel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInst3DModel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInst3DModel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>214, 48</value>
+  </data>
+  <data name="chkInst3DModel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 17</value>
+  </data>
+  <data name="chkInst3DModel.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="chkInst3DModel.Text" xml:space="preserve">
+    <value>3D Model</value>
+  </data>
+  <data name="&gt;&gt;chkInst3DModel.Name" xml:space="preserve">
+    <value>chkInst3DModel</value>
+  </data>
+  <data name="&gt;&gt;chkInst3DModel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInst3DModel.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInst3DModel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkInstVertical.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstVertical.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstVertical.Location" type="System.Drawing.Point, System.Drawing">
+    <value>214, 24</value>
+  </data>
+  <data name="chkInstVertical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 17</value>
+  </data>
+  <data name="chkInstVertical.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="chkInstVertical.Text" xml:space="preserve">
+    <value>Vertical Speed</value>
+  </data>
+  <data name="&gt;&gt;chkInstVertical.Name" xml:space="preserve">
+    <value>chkInstVertical</value>
+  </data>
+  <data name="&gt;&gt;chkInstVertical.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstVertical.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstVertical.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkInstHeading.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstHeading.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstHeading.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 96</value>
+  </data>
+  <data name="chkInstHeading.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 17</value>
+  </data>
+  <data name="chkInstHeading.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="chkInstHeading.Text" xml:space="preserve">
+    <value>Heading</value>
+  </data>
+  <data name="&gt;&gt;chkInstHeading.Name" xml:space="preserve">
+    <value>chkInstHeading</value>
+  </data>
+  <data name="&gt;&gt;chkInstHeading.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstHeading.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstHeading.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkInstAttitude.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstAttitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstAttitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 72</value>
+  </data>
+  <data name="chkInstAttitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 17</value>
+  </data>
+  <data name="chkInstAttitude.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="chkInstAttitude.Text" xml:space="preserve">
+    <value>Attitude</value>
+  </data>
+  <data name="&gt;&gt;chkInstAttitude.Name" xml:space="preserve">
+    <value>chkInstAttitude</value>
+  </data>
+  <data name="&gt;&gt;chkInstAttitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstAttitude.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstAttitude.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chkInstAltimeter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstAltimeter.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstAltimeter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 48</value>
+  </data>
+  <data name="chkInstAltimeter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 17</value>
+  </data>
+  <data name="chkInstAltimeter.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="chkInstAltimeter.Text" xml:space="preserve">
+    <value>Altimeter</value>
+  </data>
+  <data name="&gt;&gt;chkInstAltimeter.Name" xml:space="preserve">
+    <value>chkInstAltimeter</value>
+  </data>
+  <data name="&gt;&gt;chkInstAltimeter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstAltimeter.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstAltimeter.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="chkInstSpeed.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkInstSpeed.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkInstSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 24</value>
+  </data>
+  <data name="chkInstSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 17</value>
+  </data>
+  <data name="chkInstSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="chkInstSpeed.Text" xml:space="preserve">
+    <value>Air/Ground Speed</value>
+  </data>
+  <data name="&gt;&gt;chkInstSpeed.Name" xml:space="preserve">
+    <value>chkInstSpeed</value>
+  </data>
+  <data name="&gt;&gt;chkInstSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkInstSpeed.Parent" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;chkInstSpeed.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="grpInstrumentSelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 11</value>
+  </data>
+  <data name="grpInstrumentSelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 128</value>
+  </data>
+  <data name="grpInstrumentSelection.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="grpInstrumentSelection.Text" xml:space="preserve">
+    <value>Instrument Selection</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Name" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Parent" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabInstruments.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabInstruments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 345</value>
+  </data>
+  <data name="tabInstruments.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabInstruments.Text" xml:space="preserve">
+    <value>Instruments</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Name" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblHelp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Underline</value>
+  </data>
+  <data name="lblHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 20</value>
+  </data>
+  <data name="lblHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 19</value>
+  </data>
+  <data name="lblHelp.TabIndex" type="System.Int32, mscorlib">
+    <value>69</value>
+  </data>
+  <data name="lblHelp.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="lblHelp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Name" xml:space="preserve">
+    <value>lblHelp</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cmdModeChangePlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdModeChangePlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdModeChangePlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdModeChangePlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 133</value>
+  </data>
+  <data name="cmdModeChangePlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdModeChangePlay.TabIndex" type="System.Int32, mscorlib">
+    <value>68</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Name" xml:space="preserve">
+    <value>cmdModeChangePlay</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtAnnouceModeChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 134</value>
+  </data>
+  <data name="txtAnnouceModeChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>429, 20</value>
+  </data>
+  <data name="txtAnnouceModeChange.TabIndex" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceModeChange.Name" xml:space="preserve">
+    <value>txtAnnouceModeChange</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceModeChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceModeChange.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceModeChange.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkAnnouceModeChange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnouceModeChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnouceModeChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 111</value>
+  </data>
+  <data name="chkAnnouceModeChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 17</value>
+  </data>
+  <data name="chkAnnouceModeChange.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="chkAnnouceModeChange.Text" xml:space="preserve">
+    <value>Announce Mode Change</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceModeChange.Name" xml:space="preserve">
+    <value>chkAnnouceModeChange</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceModeChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceModeChange.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceModeChange.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cmdWaypointPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdWaypointPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdWaypointPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdWaypointPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 74</value>
+  </data>
+  <data name="cmdWaypointPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdWaypointPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Name" xml:space="preserve">
+    <value>cmdWaypointPlay</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtAnnouceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 75</value>
+  </data>
+  <data name="txtAnnouceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>429, 20</value>
+  </data>
+  <data name="txtAnnouceWaypoints.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceWaypoints.Name" xml:space="preserve">
+    <value>txtAnnouceWaypoints</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceWaypoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceWaypoints.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnouceWaypoints.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chkAnnouceWaypoints.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnouceWaypoints.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnouceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 52</value>
+  </data>
+  <data name="chkAnnouceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 17</value>
+  </data>
+  <data name="chkAnnouceWaypoints.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="chkAnnouceWaypoints.Text" xml:space="preserve">
+    <value>Announce Waypoints</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceWaypoints.Name" xml:space="preserve">
+    <value>chkAnnouceWaypoints</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceWaypoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceWaypoints.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnouceWaypoints.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cboVoice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 18</value>
+  </data>
+  <data name="cboVoice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 21</value>
+  </data>
+  <data name="cboVoice.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Name" xml:space="preserve">
+    <value>cboVoice</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblVoice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblVoice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 20</value>
+  </data>
+  <data name="lblVoice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 19</value>
+  </data>
+  <data name="lblVoice.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="lblVoice.Text" xml:space="preserve">
+    <value>Voice:</value>
+  </data>
+  <data name="lblVoice.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Name" xml:space="preserve">
+    <value>lblVoice</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tabSpeech.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabSpeech.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 345</value>
+  </data>
+  <data name="tabSpeech.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tabSpeech.Text" xml:space="preserve">
+    <value>Speech</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Name" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 11</value>
+  </data>
+  <data name="tabSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>499, 371</value>
+  </data>
+  <data name="tabSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Name" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 145</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="Label11.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Path Opacity:</value>
+  </data>
+  <data name="Label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
+    <value>Label11</value>
+  </data>
+  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TrackBar1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TrackBar1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="TrackBar1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 138</value>
+  </data>
+  <data name="TrackBar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 28</value>
+  </data>
+  <data name="TrackBar1.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;TrackBar1.Name" xml:space="preserve">
+    <value>TrackBar1</value>
+  </data>
+  <data name="&gt;&gt;TrackBar1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 117</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="Label12.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Extrude:</value>
+  </data>
+  <data name="Label12.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label12.Name" xml:space="preserve">
+    <value>Label12</value>
+  </data>
+  <data name="&gt;&gt;Label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CheckBox5.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="CheckBox5.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="CheckBox5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CheckBox5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 113</value>
+  </data>
+  <data name="CheckBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="CheckBox5.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="CheckBox5.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="CheckBox5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;CheckBox5.Name" xml:space="preserve">
+    <value>CheckBox5</value>
+  </data>
+  <data name="&gt;&gt;CheckBox5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ComboBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 27</value>
+  </data>
+  <data name="ComboBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="ComboBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;ComboBox7.Name" xml:space="preserve">
+    <value>ComboBox7</value>
+  </data>
+  <data name="&gt;&gt;ComboBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 30</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 12</value>
+  </data>
+  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Map Update Rate:</value>
+  </data>
+  <data name="Label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label13.Name" xml:space="preserve">
+    <value>Label13</value>
+  </data>
+  <data name="&gt;&gt;Label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 88</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="Label14.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Path Thickness:</value>
+  </data>
+  <data name="Label14.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label14.Name" xml:space="preserve">
+    <value>Label14</value>
+  </data>
+  <data name="&gt;&gt;Label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 59</value>
+  </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="Label15.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>Flight Path Color:</value>
+  </data>
+  <data name="Label15.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label15.Name" xml:space="preserve">
+    <value>Label15</value>
+  </data>
+  <data name="&gt;&gt;Label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TrackBar2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TrackBar2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="TrackBar2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 81</value>
+  </data>
+  <data name="TrackBar2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 28</value>
+  </data>
+  <data name="TrackBar2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;TrackBar2.Name" xml:space="preserve">
+    <value>TrackBar2</value>
+  </data>
+  <data name="&gt;&gt;TrackBar2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 52</value>
+  </data>
+  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="Button1.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Button1.Name" xml:space="preserve">
+    <value>Button1</value>
+  </data>
+  <data name="&gt;&gt;Button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1945,7 +3040,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>943, 362</value>
+    <value>523, 422</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

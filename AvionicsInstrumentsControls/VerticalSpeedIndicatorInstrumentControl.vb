@@ -89,7 +89,7 @@ Namespace AvionicsInstrumentControlDemo
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
             Dim fontSize As Single
-            fontSize = Me.Width / 180 * 10
+            fontSize = Me.Width / 180 * 8
             Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                 Using string_format As New StringFormat()
                     string_format.Alignment = StringAlignment.Center

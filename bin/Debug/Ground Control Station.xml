@@ -80,6 +80,22 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Amps.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_ModeChange">
+	<summary>
+  Looks up a localized string similar to Announce Mode Change.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_ModeChange_Default">
+	<summary>
+  Looks up a localized string similar to Changed mode to {mode}.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Waypoints">
+	<summary>
+  Looks up a localized string similar to Announce Waypoints.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Waypoints_Default">
+	<summary>
+  Looks up a localized string similar to Arrived at waypoint {wpn}.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.AP_Mega_Binary">
 	<summary>
   Looks up a localized string similar to AP Mega Binary.
@@ -256,6 +272,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Extrude.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Features">
+	<summary>
+  Looks up a localized string similar to Features.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Feet">
 	<summary>
   Looks up a localized string similar to Feet.
@@ -276,6 +296,26 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Full.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GE_Borders">
+	<summary>
+  Looks up a localized string similar to Borders.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GE_Buildings">
+	<summary>
+  Looks up a localized string similar to 3D Buildings.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GE_Roads">
+	<summary>
+  Looks up a localized string similar to Roads.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GE_Terrain">
+	<summary>
+  Looks up a localized string similar to Terrain.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GE_Trees">
+	<summary>
+  Looks up a localized string similar to 3D Trees.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.General">
 	<summary>
   Looks up a localized string similar to General.
@@ -287,6 +327,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Global_Position">
 	<summary>
   Looks up a localized string similar to Global Position.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Google_Earth">
+	<summary>
+  Looks up a localized string similar to Google Earth.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Google_Earth_Flight_Path">
 	<summary>
@@ -311,6 +355,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.GPS_Status">
 	<summary>
   Looks up a localized string similar to GPS Status.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.GPS_Time">
+	<summary>
+  Looks up a localized string similar to GPS Time.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.GPS_Type">
 	<summary>
@@ -424,6 +472,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Locked.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Loiter">
+	<summary>
+  Looks up a localized string similar to Loiter.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Longitude">
 	<summary>
   Looks up a localized string similar to Longitude.
@@ -488,6 +540,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Meters.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.min">
+	<summary>
+  Looks up a localized string similar to min.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Min_MAH">
 	<summary>
   Looks up a localized string similar to Min mAh.
@@ -495,6 +551,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Min_Voltage">
 	<summary>
   Looks up a localized string similar to Min Voltage.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.mins">
+	<summary>
+  Looks up a localized string similar to mins.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Mission">
 	<summary>
@@ -616,6 +676,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Raw IMU.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.RC_Channels_Scaled">
+	<summary>
+  Looks up a localized string similar to R/C Channels Scaled.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Record">
 	<summary>
   Looks up a localized string similar to Record.
@@ -652,6 +716,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Resizing Form.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Return_Home">
+	<summary>
+  Looks up a localized string similar to Return Home.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Reversed">
 	<summary>
   Looks up a localized string similar to Reversed.
@@ -687,6 +755,14 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Search_COM">
 	<summary>
   Looks up a localized string similar to Search COM.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.sec">
+	<summary>
+  Looks up a localized string similar to sec.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.secs">
+	<summary>
+  Looks up a localized string similar to secs.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Select_Data_File_Directory">
 	<summary>
@@ -736,6 +812,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Shrink.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Speech">
+	<summary>
+  Looks up a localized string similar to Speech.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Speed">
 	<summary>
   Looks up a localized string similar to Speed.
@@ -743,6 +823,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Speed_Units">
 	<summary>
   Looks up a localized string similar to Speed Units.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Stabilized">
+	<summary>
+  Looks up a localized string similar to Stabilized.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Starting_GCS">
 	<summary>
@@ -780,6 +864,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Telemetry GPS.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Thro">
+	<summary>
+  Looks up a localized string similar to Thro.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Throttle">
 	<summary>
   Looks up a localized string similar to Throttle.
@@ -812,6 +900,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to up.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.UTC">
+	<summary>
+  Looks up a localized string similar to UTC.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Version">
 	<summary>
   Looks up a localized string similar to Version.
@@ -823,6 +915,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.View_File">
 	<summary>
   Looks up a localized string similar to View File.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Voice">
+	<summary>
+  Looks up a localized string similar to Voice.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Voltage_Color">
 	<summary>

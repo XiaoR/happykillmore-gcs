@@ -1,0 +1,789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="_2D_Lock" xml:space="preserve">
+    <value>2D 鎖定</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="_3D_Lock" xml:space="preserve">
+    <value>3D 鎖定</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="_3D_Model" xml:space="preserve">
+    <value>3D 模型</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="_3D_Models_From" xml:space="preserve">
+    <value>OpenPilot 計畫的3D 模型</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>關於</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Accel_Mult" xml:space="preserve">
+    <value>&amp;1 軸加速度</value>
+  </data>
+  <data name="Air_Speed" xml:space="preserve">
+    <value>空速</value>
+  </data>
+  <data name="AirGround_Speed" xml:space="preserve">
+    <value>空/地 速</value>
+  </data>
+  <data name="Already_Exists" xml:space="preserve">
+    <value>&amp;1 已存在.^覆蓋檔案?</value>
+  </data>
+  <data name="Altimeter" xml:space="preserve">
+    <value>高度計</value>
+  </data>
+  <data name="Altitude_Hold_Mode" xml:space="preserve">
+    <value>高度保持模式</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Amperage_Color" xml:space="preserve">
+    <value>安培計顏色</value>
+  </data>
+  <data name="Amps" xml:space="preserve">
+    <value>安培</value>
+  </data>
+  <data name="AP_Mega_Binary" xml:space="preserve">
+    <value>AP Mega 二進位檔</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="ArduIMU_Binary" xml:space="preserve">
+    <value>ArduIMU 二進位檔</value>
+  </data>
+  <data name="ArduPilot_Message" xml:space="preserve">
+    <value>ArduPilot 訊息</value>
+  </data>
+  <data name="Assisted_RC" xml:space="preserve">
+    <value>遙控輔助操作模式</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="Attitude" xml:space="preserve">
+    <value>姿態</value>
+  </data>
+  <data name="Attitude_Data" xml:space="preserve">
+    <value>姿態資料</value>
+  </data>
+  <data name="Auto_Balance_Mode" xml:space="preserve">
+    <value>自動平衡模式</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Auto_Scroll" xml:space="preserve">
+    <value>自動捲動</value>
+  </data>
+  <data name="Autonomous" xml:space="preserve">
+    <value>自主飛行</value>
+  </data>
+  <data name="Battery" xml:space="preserve">
+    <value>電池</value>
+  </data>
+  <data name="Battery_Throttle" xml:space="preserve">
+    <value>電池與油門</value>
+  </data>
+  <data name="Battery_Throttle_Settings" xml:space="preserve">
+    <value>電池與油門設定</value>
+  </data>
+  <data name="Baud_Rate" xml:space="preserve">
+    <value>傳輸速率</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>藍色</value>
+  </data>
+  <data name="Building_Map_Files" xml:space="preserve">
+    <value>建立地圖檔</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Carriage_Return" xml:space="preserve">
+    <value>歸位</value>
+  </data>
+  <data name="Center_On_Plane" xml:space="preserve">
+    <value>飛機置中</value>
+  </data>
+  <data name="Change_Model_Scale" xml:space="preserve">
+    <value>改變模型比例</value>
+  </data>
+  <data name="Channel_Raw" xml:space="preserve">
+    <value>未修飾頻道</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Chase_Cam" xml:space="preserve">
+    <value>從機後觀看</value>
+  </data>
+  <data name="Checking_baud" xml:space="preserve">
+    <value>檢查傳輸速率</value>
+  </data>
+  <data name="Clear_Map" xml:space="preserve">
+    <value>清除地圖</value>
+  </data>
+  <data name="COM_Port" xml:space="preserve">
+    <value>通訊埠</value>
+  </data>
+  <data name="Command_Line" xml:space="preserve">
+    <value>命令列</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>連接</value>
+  </data>
+  <data name="Connected_to" xml:space="preserve">
+    <value>在 &amp;2連接到 &amp;1</value>
+  </data>
+  <data name="Current_Culture" xml:space="preserve">
+    <value>目前的文化</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Current_Waypoint" xml:space="preserve">
+    <value>目前的路徑點</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Custom_Binary" xml:space="preserve">
+    <value>自訂二進制</value>
+  </data>
+  <data name="Cyan" xml:space="preserve">
+    <value>青色</value>
+  </data>
+  <data name="Data_File" xml:space="preserve">
+    <value>資料檔</value>
+  </data>
+  <data name="Data_Points" xml:space="preserve">
+    <value>資料點</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>斷線</value>
+  </data>
+  <data name="Disconnect_from" xml:space="preserve">
+    <value>將 &amp;1斷線</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>距離</value>
+  </data>
+  <data name="Distance_Units" xml:space="preserve">
+    <value>距離單位</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>向下</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Draw_Full_Mission" xml:space="preserve">
+    <value>標示完整任務</value>
+  </data>
+  <data name="Error_Message" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="Exit_Label" xml:space="preserve">
+    <value>離開</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>延展</value>
+  </data>
+  <data name="Extrude" xml:space="preserve">
+    <value>突出</value>
+  </data>
+  <data name="Feet" xml:space="preserve">
+    <value>英呎</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>檔案</value>
+  </data>
+  <data name="First_Person" xml:space="preserve">
+    <value>第一人稱</value>
+  </data>
+  <data name="Flight_Path_Color" xml:space="preserve">
+    <value>飛行路徑顏色</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>完整</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>一般</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Geonavigation_Data" xml:space="preserve">
+    <value>地表導航資訊</value>
+    <comment>SiRF Message Type</comment>
+  </data>
+  <data name="Global_Position" xml:space="preserve">
+    <value>全球定位</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Google_Earth_Flight_Path" xml:space="preserve">
+    <value>Google Earth 飛行路徑</value>
+  </data>
+  <data name="GPS_Data" xml:space="preserve">
+    <value>GPS 資料</value>
+  </data>
+  <data name="GPS_Lock" xml:space="preserve">
+    <value>GPS 定位</value>
+  </data>
+  <data name="GPS_Message" xml:space="preserve">
+    <value>GPS 訊息</value>
+  </data>
+  <data name="GPS_Raw" xml:space="preserve">
+    <value>GPS 粗略</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Status" xml:space="preserve">
+    <value>GPS 狀態</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Type" xml:space="preserve">
+    <value>GPS 型式</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>綠色</value>
+  </data>
+  <data name="Ground_Control_Station" xml:space="preserve">
+    <value>地面控制站</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Ground_Speed" xml:space="preserve">
+    <value>對地速度</value>
+  </data>
+  <data name="Gyro_Mult" xml:space="preserve">
+    <value>&amp;1 軸陀螺儀</value>
+  </data>
+  <data name="HappyKillmores_Email" xml:space="preserve">
+    <value>HappyKillmore's 電子郵件</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="HDOP" xml:space="preserve">
+    <value>水平DOP</value>
+  </data>
+  <data name="Heading" xml:space="preserve">
+    <value>頭向</value>
+  </data>
+  <data name="Heatbeat_Data" xml:space="preserve">
+    <value>Heatbeat 數據</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>幫助</value>
+  </data>
+  <data name="Highly_Assisted" xml:space="preserve">
+    <value>強力輔助</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="In_Label" xml:space="preserve">
+    <value>進入</value>
+  </data>
+  <data name="Instrument_Selection" xml:space="preserve">
+    <value>儀表選擇</value>
+  </data>
+  <data name="Instruments" xml:space="preserve">
+    <value>儀表</value>
+  </data>
+  <data name="Invalid_File" xml:space="preserve">
+    <value>無效檔案</value>
+  </data>
+  <data name="Invalid_Mission_File_Format" xml:space="preserve">
+    <value>無效任務檔案格式</value>
+  </data>
+  <data name="Knots" xml:space="preserve">
+    <value>節</value>
+  </data>
+  <data name="KPH" xml:space="preserve">
+    <value>公里/小時</value>
+    <comment>Kilometers Per Hour</comment>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>緯度</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>左</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Line_Feed" xml:space="preserve">
+    <value>跳行</value>
+  </data>
+  <data name="Line_Feed_Carriage_Return" xml:space="preserve">
+    <value>跳行且歸位</value>
+  </data>
+  <data name="Live_Camera" xml:space="preserve">
+    <value>即時視訊</value>
+  </data>
+  <data name="Loading_COM_Ports" xml:space="preserve">
+    <value>載入通訊埠</value>
+  </data>
+  <data name="Loading_Settings" xml:space="preserve">
+    <value>載入設定</value>
+  </data>
+  <data name="Location_Data" xml:space="preserve">
+    <value>位置資訊</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>定位完成</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>經度</value>
+  </data>
+  <data name="m_s" xml:space="preserve">
+    <value>公尺/秒</value>
+    <comment>Meters Per Second</comment>
+  </data>
+  <data name="Mag_Mult" xml:space="preserve">
+    <value>&amp;1 磁力計</value>
+  </data>
+  <data name="mAh" xml:space="preserve">
+    <value>mAh</value>
+  </data>
+  <data name="MAH_Color" xml:space="preserve">
+    <value>mAh 顯示顏色</value>
+  </data>
+  <data name="Manual_Mode" xml:space="preserve">
+    <value>手動模式</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="Map_Update_Rate" xml:space="preserve">
+    <value>地圖更新率</value>
+  </data>
+  <data name="Map_View" xml:space="preserve">
+    <value>地圖觀看</value>
+  </data>
+  <data name="Max_Amperage" xml:space="preserve">
+    <value>最大安培數</value>
+  </data>
+  <data name="Max_Attitude" xml:space="preserve">
+    <value>最大姿態角</value>
+  </data>
+  <data name="Max_GPS" xml:space="preserve">
+    <value>最大GPS</value>
+  </data>
+  <data name="Max_MAH" xml:space="preserve">
+    <value>最大 mAh</value>
+  </data>
+  <data name="Max_Speed" xml:space="preserve">
+    <value>最高速度</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Max_Voltage" xml:space="preserve">
+    <value>最高電壓</value>
+  </data>
+  <data name="Max_Waypoint" xml:space="preserve">
+    <value>最大路徑點</value>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>公尺</value>
+  </data>
+  <data name="Min_MAH" xml:space="preserve">
+    <value>最小 mAh</value>
+  </data>
+  <data name="Min_Voltage" xml:space="preserve">
+    <value>最低電壓</value>
+  </data>
+  <data name="Mission" xml:space="preserve">
+    <value>任務</value>
+  </data>
+  <data name="Mission_Path" xml:space="preserve">
+    <value>任務路徑</value>
+  </data>
+  <data name="Mission_Path_Color" xml:space="preserve">
+    <value>任務路徑顏色</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>模式</value>
+  </data>
+  <data name="Mode_Change" xml:space="preserve">
+    <value>改變模式</value>
+  </data>
+  <data name="MPH" xml:space="preserve">
+    <value>英里/小時</value>
+    <comment>Miles Per Hour</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="No_line_ending" xml:space="preserve">
+    <value>無列結束</value>
+    <comment>Commandline Tab</comment>
+  </data>
+  <data name="No_Tracking" xml:space="preserve">
+    <value>無追蹤</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>正常</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Not_Locked" xml:space="preserve">
+    <value>尚未定位</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open_Downloads" xml:space="preserve">
+    <value>開啟下載列表</value>
+  </data>
+  <data name="Open_Homepage" xml:space="preserve">
+    <value>開啟計畫網頁</value>
+  </data>
+  <data name="Orange" xml:space="preserve">
+    <value>橙色</value>
+  </data>
+  <data name="Original_Instruments" xml:space="preserve">
+    <value>Guillaume CHOUTEAU的原始儀表程式碼</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Out_Label" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Overhead" xml:space="preserve">
+    <value>俯視</value>
+  </data>
+  <data name="Overwrite_File" xml:space="preserve">
+    <value>覆蓋檔案</value>
+  </data>
+  <data name="Path_Opacity" xml:space="preserve">
+    <value>路徑不透明度</value>
+  </data>
+  <data name="Path_Thickness" xml:space="preserve">
+    <value>路徑寬度</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>暫停</value>
+  </data>
+  <data name="Pitch" xml:space="preserve">
+    <value>俯仰</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>播放</value>
+  </data>
+  <data name="Project_Homepage" xml:space="preserve">
+    <value>計畫網頁</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>屬性</value>
+  </data>
+  <data name="Purple" xml:space="preserve">
+    <value>紫色</value>
+  </data>
+  <data name="Raw_Data" xml:space="preserve">
+    <value>原始資訊</value>
+  </data>
+  <data name="Raw_IMU" xml:space="preserve">
+    <value>IMU原始資訊</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>紀錄</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>紅色</value>
+  </data>
+  <data name="Reload_Com_Port_List" xml:space="preserve">
+    <value>重載通訊埠列表</value>
+  </data>
+  <data name="Reload_Letter" xml:space="preserve">
+    <value>R</value>
+    <comment>Very small button (Only 1 Character!)</comment>
+  </data>
+  <data name="Reload_Mission" xml:space="preserve">
+    <value>重新啟動任務</value>
+  </data>
+  <data name="Reload_Mission_Directory" xml:space="preserve">
+    <value>重新啟動任務目錄</value>
+  </data>
+  <data name="Reload_Output_File_List" xml:space="preserve">
+    <value>重載檔案輸出列表</value>
+  </data>
+  <data name="Reset_Run_Timer" xml:space="preserve">
+    <value>重置執行時間</value>
+  </data>
+  <data name="Resizing_Form" xml:space="preserve">
+    <value>改變表單大小</value>
+  </data>
+  <data name="Reversed" xml:space="preserve">
+    <value>反向</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Rewind_To_Beginning" xml:space="preserve">
+    <value>回到起始點</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>右</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Roll" xml:space="preserve">
+    <value>滾轉</value>
+  </data>
+  <data name="Run_Time" xml:space="preserve">
+    <value>執行時間</value>
+  </data>
+  <data name="Satellites" xml:space="preserve">
+    <value>衛星</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>存檔</value>
+  </data>
+  <data name="Search_Baud" xml:space="preserve">
+    <value>尋找傳輸率</value>
+  </data>
+  <data name="Search_COM" xml:space="preserve">
+    <value>尋找通訊埠</value>
+  </data>
+  <data name="Select_Data_File_Directory" xml:space="preserve">
+    <value>選擇資料檔目錄</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>傳送</value>
+  </data>
+  <data name="Sensors" xml:space="preserve">
+    <value>感測器</value>
+  </data>
+  <data name="Serial_Data" xml:space="preserve">
+    <value>序列資料</value>
+  </data>
+  <data name="Serial_Settings" xml:space="preserve">
+    <value>序列設定</value>
+  </data>
+  <data name="Servo_Mult" xml:space="preserve">
+    <value>伺服器 &amp;1</value>
+  </data>
+  <data name="Servos" xml:space="preserve">
+    <value>伺服器</value>
+  </data>
+  <data name="Set_Home" xml:space="preserve">
+    <value>設定Home</value>
+  </data>
+  <data name="Setting_Up_Comboboxes" xml:space="preserve">
+    <value>設定組合框</value>
+  </data>
+  <data name="Setting_Up_Webbrowser" xml:space="preserve">
+    <value>設定網頁瀏覽器</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Shrink" xml:space="preserve">
+    <value>縮小</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Speed_Units" xml:space="preserve">
+    <value>速度單位</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Starting_GCS" xml:space="preserve">
+    <value>開始 &amp;1</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="Step_Back" xml:space="preserve">
+    <value>前一步驟</value>
+  </data>
+  <data name="Step_Forward" xml:space="preserve">
+    <value>下一步驟</value>
+  </data>
+  <data name="Stop_Recording" xml:space="preserve">
+    <value>停止紀錄</value>
+  </data>
+  <data name="Supported_Protocols" xml:space="preserve">
+    <value>有支援的協定</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="System_Status" xml:space="preserve">
+    <value>系統狀態</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Target_Alt" xml:space="preserve">
+    <value>目標高度</value>
+  </data>
+  <data name="Telemetry_GPS" xml:space="preserve">
+    <value>GPS 遙測數據..</value>
+    <comment>FY21AP Message Type</comment>
+  </data>
+  <data name="Throttle" xml:space="preserve">
+    <value>油門</value>
+  </data>
+  <data name="Throttle_Channel" xml:space="preserve">
+    <value>油門通道</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Throttle_Color" xml:space="preserve">
+    <value>油門顯示顏色</value>
+  </data>
+  <data name="Translated_Data" xml:space="preserve">
+    <value>轉譯資料</value>
+  </data>
+  <data name="Turn_Coordinator" xml:space="preserve">
+    <value>轉彎協調器</value>
+  </data>
+  <data name="Type_F13" xml:space="preserve">
+    <value>Type F13</value>
+    <comment>UavDevBoard Message Type</comment>
+  </data>
+  <data name="uBlox_Binary" xml:space="preserve">
+    <value>uBlox 二進位</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>上</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Vertical_Speed" xml:space="preserve">
+    <value>垂直速度</value>
+  </data>
+  <data name="View_File" xml:space="preserve">
+    <value>檔案瀏覽</value>
+  </data>
+  <data name="Voltage_Color" xml:space="preserve">
+    <value>電壓顯示顏色</value>
+  </data>
+  <data name="Volts" xml:space="preserve">
+    <value>伏特</value>
+  </data>
+  <data name="Waypoint" xml:space="preserve">
+    <value>路徑點</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Waypoint_Data" xml:space="preserve">
+    <value>路徑點資料</value>
+  </data>
+  <data name="Waypoint_Mode" xml:space="preserve">
+    <value>路徑點模式</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Yaw" xml:space="preserve">
+    <value>偏航</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>黃色</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Zero_Yaw" xml:space="preserve">
+    <value>零偏航角</value>
+  </data>
+</root>

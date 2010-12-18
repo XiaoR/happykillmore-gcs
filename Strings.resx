@@ -169,6 +169,18 @@
     <value>Amps</value>
     <comment>Short - 6 characters or less</comment>
   </data>
+  <data name="Announce_ModeChange" xml:space="preserve">
+    <value>Announce Mode Change</value>
+  </data>
+  <data name="Announce_ModeChange_Default" xml:space="preserve">
+    <value>Changed mode to {mode}</value>
+  </data>
+  <data name="Announce_Waypoints" xml:space="preserve">
+    <value>Announce Waypoints</value>
+  </data>
+  <data name="Announce_Waypoints_Default" xml:space="preserve">
+    <value>Arrived at waypoint {wpn}</value>
+  </data>
   <data name="AP_Mega_Binary" xml:space="preserve">
     <value>AP Mega Binary</value>
     <comment>APM Message Type</comment>
@@ -337,6 +349,9 @@
   <data name="Extrude" xml:space="preserve">
     <value>Extrude</value>
   </data>
+  <data name="Features" xml:space="preserve">
+    <value>Features</value>
+  </data>
   <data name="Feet" xml:space="preserve">
     <value>Feet</value>
     <comment>Feet/Meters</comment>
@@ -356,6 +371,26 @@
     <value>Full</value>
     <comment>Very SHORT (5 characters max) - Button name for Draw Full Mission</comment>
   </data>
+  <data name="GE_Borders" xml:space="preserve">
+    <value>Borders</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Buildings" xml:space="preserve">
+    <value>3D Buildings</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Roads" xml:space="preserve">
+    <value>Roads</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Terrain" xml:space="preserve">
+    <value>Terrain</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Trees" xml:space="preserve">
+    <value>3D Trees</value>
+    <comment>Google Earth Feature</comment>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
     <comment>General Preferences - Non specific</comment>
@@ -367,6 +402,9 @@
   <data name="Global_Position" xml:space="preserve">
     <value>Global Position</value>
     <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Google_Earth" xml:space="preserve">
+    <value>Google Earth</value>
   </data>
   <data name="Google_Earth_Flight_Path" xml:space="preserve">
     <value>Google Earth Flight Path</value>
@@ -391,6 +429,10 @@
   <data name="GPS_Status" xml:space="preserve">
     <value>GPS Status</value>
     <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Time" xml:space="preserve">
+    <value>GPS Time</value>
+    <comment>Current time sent by GPS</comment>
   </data>
   <data name="GPS_Type" xml:space="preserve">
     <value>GPS Type</value>
@@ -495,6 +537,9 @@
     <value>Locked</value>
     <comment>GPS Lock</comment>
   </data>
+  <data name="Loiter" xml:space="preserve">
+    <value>Loiter</value>
+  </data>
   <data name="Longitude" xml:space="preserve">
     <value>Longitude</value>
   </data>
@@ -558,6 +603,10 @@
     <value>Meters</value>
     <comment>Meters/Feet</comment>
   </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+    <comment>Short for minutes (non plural)</comment>
+  </data>
   <data name="Min_MAH" xml:space="preserve">
     <value>Min mAh</value>
     <comment>Minimum mAh on battery meter</comment>
@@ -565,6 +614,10 @@
   <data name="Min_Voltage" xml:space="preserve">
     <value>Min Voltage</value>
     <comment>Minimum voltage on battery meter</comment>
+  </data>
+  <data name="mins" xml:space="preserve">
+    <value>mins</value>
+    <comment>Short for minutes (plural)</comment>
   </data>
   <data name="Mission" xml:space="preserve">
     <value>Mission</value>
@@ -673,6 +726,10 @@
     <value>Raw IMU</value>
     <comment>MAVline Message Type</comment>
   </data>
+  <data name="RC_Channels_Scaled" xml:space="preserve">
+    <value>R/C Channels Scaled</value>
+    <comment>MAVlink message for servo outputs</comment>
+  </data>
   <data name="Record" xml:space="preserve">
     <value>Record</value>
   </data>
@@ -702,6 +759,9 @@
   <data name="Resizing_Form" xml:space="preserve">
     <value>Resizing Form</value>
   </data>
+  <data name="Return_Home" xml:space="preserve">
+    <value>Return Home</value>
+  </data>
   <data name="Reversed" xml:space="preserve">
     <value>Reversed</value>
     <comment>Settings Form</comment>
@@ -730,6 +790,14 @@
   </data>
   <data name="Search_COM" xml:space="preserve">
     <value>Search COM</value>
+  </data>
+  <data name="sec" xml:space="preserve">
+    <value>sec</value>
+    <comment>Short for seconds (non plural)</comment>
+  </data>
+  <data name="secs" xml:space="preserve">
+    <value>secs</value>
+    <comment>Short for seconds plural)</comment>
   </data>
   <data name="Select_Data_File_Directory" xml:space="preserve">
     <value>Select Data File Directory</value>
@@ -770,12 +838,18 @@
   <data name="Shrink" xml:space="preserve">
     <value>Shrink</value>
   </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Speech</value>
+  </data>
   <data name="Speed" xml:space="preserve">
     <value>Speed</value>
   </data>
   <data name="Speed_Units" xml:space="preserve">
     <value>Speed Units</value>
     <comment>MPH, km/h, m/s</comment>
+  </data>
+  <data name="Stabilized" xml:space="preserve">
+    <value>Stabilized</value>
   </data>
   <data name="Starting_GCS" xml:space="preserve">
     <value>Starting &amp;1</value>
@@ -809,6 +883,10 @@
     <value>Telemetry GPS</value>
     <comment>FY21AP Message Type</comment>
   </data>
+  <data name="Thro" xml:space="preserve">
+    <value>Thro</value>
+    <comment>Short for Throttle</comment>
+  </data>
   <data name="Throttle" xml:space="preserve">
     <value>Throttle</value>
   </data>
@@ -839,6 +917,10 @@
     <value>up</value>
     <comment>For Vertical Speed</comment>
   </data>
+  <data name="UTC" xml:space="preserve">
+    <value>UTC</value>
+    <comment>Coordinated Universal Time (Greenich Mean Time - No Timezone Offset) - SHORT!</comment>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
     <comment>About Form</comment>
@@ -849,6 +931,9 @@
   </data>
   <data name="View_File" xml:space="preserve">
     <value>View File</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>Voice</value>
   </data>
   <data name="Voltage_Color" xml:space="preserve">
     <value>Voltage Color</value>

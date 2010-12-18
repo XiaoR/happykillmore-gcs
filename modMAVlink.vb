@@ -13,12 +13,41 @@ Module modMAVlink
         End If
     End Function
     Public Function ConvertMavlinkToInteger(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Integer
-        ConvertMavlinkToInteger = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))) & Hex(Asc(Mid(inputString, 2, 1))))
+        ConvertMavlinkToInteger = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 2, 1))).PadLeft(2, "0"))
         If is2sCompliment = True Then
             If ConvertMavlinkToInteger > CInt("&h7FFF") Then
                 ConvertMavlinkToInteger = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToInteger) + 1)
             End If
         End If
+    End Function
+    Public Function ConvertMavlinkToLong(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Long
+        Dim sTemp As String = ""
+        Dim bByte(0 To 7) As Byte
+        Dim nCount As Integer
+
+        sTemp = ""
+        For nCount = 1 To Len(inputString)
+            sTemp = sTemp & Hex(Asc(Mid(inputString, nCount, 1))).PadLeft(2, "0")
+        Next
+
+        ConvertMavlinkToLong = CLng("&h" & sTemp)
+        If is2sCompliment = True Then
+            If ConvertMavlinkToLong > CInt("&h7FFFFFFF") Then
+                ConvertMavlinkToLong = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToLong) + 1)
+            End If
+        End If
+    End Function
+    Public Sub GetMAVlinkDateTime(ByVal inputValue As Long)
+        Dim dTempDate As Date
+
+        Dim cf As System.Globalization.CultureInfo
+        cf = New System.Globalization.CultureInfo("en-US")
+        dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
+        dGPSDate = dTempDate.Date
+        dGPSTime = dTempDate.ToLongTimeString
+    End Sub
+    Public Function MavlinkScaledToStandard(ByVal inputValue As Integer) As Integer
+        MavlinkScaledToStandard = (((inputValue + 10000) / 20000) * 1000) + 1000
     End Function
     Public Function GetMavAction(ByVal inputAction As Integer) As String
         Select Case inputAction

@@ -29,8 +29,8 @@ Public Class frmAbout
 
     Private Sub frmAbout_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.F9 And bIsSplash = False Then
-            If Dir(GetRootPath() & "Resource Editor.exe", FileAttribute.Normal) <> "" Then
-                System.Diagnostics.Process.Start(GetRootPath() & "Resource Editor.exe")
+            If Dir(GetRootPath() & "Language\Resource Editor.exe", FileAttribute.Normal) <> "" Then
+                System.Diagnostics.Process.Start(GetRootPath() & "Language\Resource Editor.exe")
             End If
         End If
     End Sub

@@ -20,6 +20,7 @@ Public Class cMessage
         e_MessageType_MAV
         e_MessageType_FY21AP
         e_MessageType_AttoPilot
+        e_MessageType_Gluonpilot
     End Enum
 
     Public ValidMessage As Boolean
