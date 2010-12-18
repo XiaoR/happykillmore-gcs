@@ -2,7 +2,7 @@
 
 HappyKillmore's Ground Control station was built with one underlying goal. Make it simple to use. The average user only needs to know what COM port and baud rate to select and that's it. Click the connect button and they're up and running. 
 
-http://www.happykillmore.com/software/hk_gcs/Small800X480_withexpand.gif
+http://www.happykillmore.com/software/hk_gcs/Small800X480.gif
 
 = Details =
 
