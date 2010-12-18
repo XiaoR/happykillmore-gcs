@@ -1,4 +1,4 @@
-== Ground Control Station Manual ==
+== HappyKillmore's Ground Control Station Manual ==
 
  * [home Home]
  * [SpeechSettings Speech Settings]
