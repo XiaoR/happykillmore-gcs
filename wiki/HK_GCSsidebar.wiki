@@ -1,5 +1,0 @@
-== !HappyKillmore's GCS Manual ==
-
- * *Setup*
- * [Speech Speech Settings]
-
