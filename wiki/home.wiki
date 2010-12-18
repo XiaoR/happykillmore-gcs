@@ -1,11 +1,46 @@
 = Introduction =
 
-HappyKillmore's Ground Control station was built with one underlying goal. Make it simple to use.
-
+HappyKillmore's Ground Control station was built with one underlying goal. Make it simple to use. The average user only needs to know what COM port and baud rate to select and that's it. Click the connect button and they're up and running. 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * *System Pre-requisites*
+  * [http://www.microsoft.com/downloads/en/details.aspx?familyid=5b2c0358-915b-4eb5-9b1d-10e506da9d0f&displaylang=en .NET 2.0 Framework] (Note: Vista and Windows 7 users, this is already insalled)
+  * [http://www.google.com/earth/explore/products/plugin.html Google Earth Plug-in]
+
+ * *Supported GPS Protocols*
+  * NMEA
+  * uBlox
+  * SiRF (GeoNav only)
+  * MediaTek v1 (DIYdrones.com Custom Binary)
+  * MediaTek v1.6 (DIYdrones.com Custom Binary)
+
+ * *Supported IMU Protocols*
+  * ArduIMU
+
+ * *Supported Auto-Pilot Protocols*
+  * ArduPilot Legacy (ASCII)
+  * ArduPilot Mega Binary
+  * MatrixPilot (UavDevBoard)
+  * AttoPilot
+  * MAVlink
+  * FY21AP II
+
+ * *Supported Languages*
+  * English
+  * Chinese-PRC
+  * Chinese-Traditional
+  * Danish
+  * Español
+  * Finnish
+  * Française
+  * Italiano
+  * Polski
+  * Português Brasileiro
+  * Português
+  * Romana
+  * Russian
+  * Slovensky
+  * Türkçe
+  * Urdu
+
