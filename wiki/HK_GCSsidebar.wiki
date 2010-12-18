@@ -1,4 +1,4 @@
 == !HappyKillmore's GCS Manual ==
 
- * [Home Home]
+ * [home Home]
  * [SpeechSettings Speech Settings]
