@@ -1,7 +1,16 @@
-es-ES;Español
-da-DK;Deutsch
+en;English
+zh-CN;Chinese-PRC
+zh-TW;Chinese-Traditional
+da;Danish
+es;Español
+fi;Finnish
+fr;Française
+it;Italiano
+pl;Polski
 pt-BR;Português Brasileiro
 pt-PT;Português
-it-CH;Italiano
-fi-FI;Finnish
-zh-CN;Chinese (China)
+ro;Romana
+ru;Russian
+sk;Slovensky
+tr;Türkçe
+ur;Urdu

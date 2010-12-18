@@ -1,20 +1,22 @@
+Imports System.Speech
 Public Class frmSettings
     Dim aLanguages(0) As String
     Private Sub ResetForm()
         GetResString(Me, "Settings")
 
-        GetResString(grpGeneral, "General")
-        GetResString(lblLanguageLabel, "Language", True)
+        GetResString(tabGeneral, "General")
+        GetResString(lblLanguage, "Language", True)
         GetResString(lblDistanceUnits, "Distance_Units", True)
         GetResString(lblSpeedUnits, "Speed_Units", True)
         GetResString(lblMaxSpeed, "Max_Speed", True)
         GetResString(lbl3DModel, "_3D_Model", True)
-        GetResString(lblPitch, "Pitch", True)
-        GetResString(lblRoll, "Roll", True)
-        GetResString(lblYaw, "Yaw", True)
-        GetResString(lblHeading, "Heading", True)
+        GetResString(lblPitchReverse, "Pitch", True)
+        GetResString(lblRollReverse, "Roll", True)
+        GetResString(lblYawReverse, "Yaw", True)
+        GetResString(lblHeadingReverse, "Heading", True)
         GetResString(lblThrottleChannel, "Throttle_Channel", True)
 
+        GetResString(tabGoogleEarth, "Google_Earth")
         GetResString(grpFlightPath, "Google_Earth_Flight_Path")
         GetResString(lblMapUpdateRate, "Map_Update_Rate", True)
         GetResString(lblFlightPathColor, "Flight_Path_Color", True)
@@ -28,6 +30,14 @@ Public Class frmSettings
         GetResString(lblMissionExtrude, "Extrude", True)
         GetResString(lblMissionOpacity, "Path_Opacity", True)
 
+        GetResString(grpGoogleEarthFeatures, "Features")
+        GetResString(lblGEBorders, "GE_Borders", True)
+        GetResString(lblGEBuildings, "GE_Buildings", True)
+        GetResString(lblGERoads, "GE_Roads", True)
+        GetResString(lblGETerrain, "GE_Terrain", True)
+        GetResString(lblGETrees, "GE_Trees", True)
+
+        GetResString(tabInstruments, "Instruments")
         GetResString(grpInstrumentSelection, "Instrument_Selection")
         GetResString(chkInstSpeed, "AirGround_Speed")
         GetResString(chkInstAltimeter, "Altimeter")
@@ -60,14 +70,36 @@ Public Class frmSettings
         GetResString(chkYawReverse, "Normal")
         GetResString(chkHeadingReverse, "Normal")
 
+        GetResString(tabSpeech, "Speech")
+        GetResString(lblVoice, "Voice", True)
+        GetResString(chkAnnouceWaypoints, "Announce_Waypoints")
+        GetResString(chkAnnouceModeChange, "Announce_ModeChange")
+        GetResString(lblHelp, "Help")
+
+
     End Sub
     Private Sub frmSettings_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim nCount As Integer
         Dim sFolderName As String
 
+        Dim strAllVoices() As String = ReturnAllSpeechSynthesisVoices()
+
         ResetForm()
 
         LoadLanguages(cboLanguage)
+
+        With cboVoice
+            .Items.Clear()
+            For Each Str As String In strAllVoices
+                .Items.Add(Str)
+                If UCase(sSpeechVoice) = UCase(Str) Then
+                    .SelectedIndex = .Items.Count - 1
+                End If
+            Next
+            If .SelectedIndex = -1 And .Items.Count > 0 Then
+                .SelectedIndex = 0
+            End If
+        End With
 
         For nCount = 1 To 20
             If nCount <= 5 Then
@@ -147,6 +179,12 @@ Public Class frmSettings
         tbarMissionWidth.Value = nMissionWidth
         tbarMissionOpacity.Value = Convert.ToInt32(Mid(sMissionColor, 1, 2), 16)
 
+        chkGEBorders.Checked = bGEBorders
+        chkGEBuildings.Checked = bGEBuildings
+        chkGERoads.Checked = bGERoads
+        chkGETerrain.Checked = bGETerrain
+        chkGETrees.Checked = bGETrees
+
         With cboDistanceUnits
             .Items.Add(GetResString(, "Feet"))
             .Items.Add(GetResString(, "Meters"))
@@ -170,6 +208,13 @@ Public Class frmSettings
         chkInstVertical.Checked = bInstruments(e_Instruments.e_Instruments_Vertical)
         chkInstTurn.Checked = bInstruments(e_Instruments.e_Instruments_Turn)
         chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
+
+        chkAnnouceWaypoints.Checked = bAnnounceWaypoints
+        txtAnnouceWaypoints.Text = sSpeechWaypoint
+        chkAnnouceWaypoints_CheckedChanged(Nothing, Nothing)
+        chkAnnouceModeChange.Checked = bAnnounceModeChange
+        txtAnnouceModeChange.Text = sSpeechModeChange
+        chkAnnouceModeChange_CheckedChanged(Nothing, Nothing)
 
     End Sub
     Private Sub LoadLanguages(ByVal inputCombo As ComboBox)
@@ -256,6 +301,19 @@ Public Class frmSettings
         oMAHColor = cboMAHColor.SelectedIndex
 
         oThrottleColor = cboThrottleColor.SelectedIndex
+
+        sSpeechVoice = cboVoice.Text
+        bAnnounceWaypoints = chkAnnouceWaypoints.Checked
+        sSpeechWaypoint = txtAnnouceWaypoints.Text
+        bAnnounceModeChange = chkAnnouceModeChange.Checked
+        sSpeechModeChange = txtAnnouceModeChange.Text
+
+        bGEBorders = chkGEBorders.Checked
+        bGEBuildings = chkGEBuildings.Checked
+        bGERoads = chkGERoads.Checked
+        bGETerrain = chkGETerrain.Checked
+        bGETrees = chkGETrees.Checked
+        frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.LoadGEFeatures))
         On Error GoTo 0
 
         SaveSettings()
@@ -268,50 +326,11 @@ Public Class frmSettings
         End If
     End Sub
 
-    Private Sub chkPitchReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPitchReverse.CheckedChanged
-        If chkPitchReverse.Checked = True Then
-            GetResString(chkPitchReverse, "Reversed")
-        Else
-            GetResString(chkPitchReverse, "Normal")
-        End If
-    End Sub
-
-    Private Sub chkRollReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRollReverse.CheckedChanged
+    Private Sub chkRollReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRollReverse.CheckedChanged, chkPitchReverse.CheckedChanged, chkYawReverse.CheckedChanged, chkHeadingReverse.CheckedChanged
         If chkRollReverse.Checked = True Then
             GetResString(chkRollReverse, "Reversed")
         Else
             GetResString(chkRollReverse, "Normal")
-        End If
-    End Sub
-    Private Sub chkFlightExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFlightExtrude.CheckedChanged
-        If chkFlightExtrude.Checked = True Then
-            chkFlightExtrude.Text = GetResString(, "Yes")
-        Else
-            chkFlightExtrude.Text = GetResString(, "No")
-        End If
-    End Sub
-
-    Private Sub chkYawReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkYawReverse.CheckedChanged
-        If chkYawReverse.Checked = True Then
-            GetResString(chkYawReverse, "Reversed")
-        Else
-            GetResString(chkYawReverse, "Normal")
-        End If
-    End Sub
-
-    Private Sub chkHeadingReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHeadingReverse.CheckedChanged
-        If chkHeadingReverse.Checked = True Then
-            GetResString(chkHeadingReverse, "Reversed")
-        Else
-            GetResString(chkHeadingReverse, "Normal")
-        End If
-    End Sub
-
-    Private Sub chkMissionExtrude_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkMissionExtrude.CheckedChanged
-        If chkMissionExtrude.Checked = True Then
-            chkMissionExtrude.Text = GetResString(, "Yes")
-        Else
-            chkMissionExtrude.Text = GetResString(, "No")
         End If
     End Sub
 
@@ -319,5 +338,35 @@ Public Class frmSettings
         If Me.ColorDialog1.ShowDialog = DialogResult.OK Then
             cmdMissionColor.BackColor = ColorDialog1.Color
         End If
+    End Sub
+
+    Private Sub chkAnnouceWaypoints_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnouceWaypoints.CheckedChanged
+        txtAnnouceWaypoints.Enabled = chkAnnouceWaypoints.Checked
+        cmdWaypointPlay.Enabled = chkAnnouceWaypoints.Checked
+    End Sub
+
+    Private Sub cmdWaypointPlay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWaypointPlay.Click
+        PlayMessage(txtAnnouceWaypoints.Text, cboVoice.Text)
+    End Sub
+
+    Private Sub cmdModeChangPlaye_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdModeChangePlay.Click
+        PlayMessage(txtAnnouceModeChange.Text, cboVoice.Text)
+    End Sub
+
+    Private Sub chkAnnouceModeChange_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnouceModeChange.CheckedChanged
+        txtAnnouceModeChange.Enabled = chkAnnouceModeChange.Checked
+        cmdModeChangePlay.Enabled = chkAnnouceModeChange.Checked
+    End Sub
+
+    Private Sub chkGERoads_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged
+        If sender.Checked = True Then
+            sender.Text = GetResString(, "Yes")
+        Else
+            sender.Text = GetResString(, "No")
+        End If
+    End Sub
+
+    Private Sub lblHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblHelp.Click
+        System.Diagnostics.Process.Start("http://code.google.com/p/happykillmore-gcs/wiki/SpeechSettings")
     End Sub
 End Class

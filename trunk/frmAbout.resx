@@ -213,7 +213,7 @@
     <value>43</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>NMEA, uBlox, EM406 (SiRF), ArduPilot, ArduIMU Binary, MediaTek (Custom Binary), ArduPilot Mega, MatrixPilot, MAVlink, FY21AP II, AttoPilot</value>
+    <value>NMEA, uBlox, EM406 (SiRF), ArduPilot, ArduIMU Binary, MediaTek (Custom Binary), ArduPilot Mega, MatrixPilot, MAVlink, FY21AP II, AttoPilot, Gluonpilot</value>
   </data>
   <data name="&gt;&gt;Label6.Name" xml:space="preserve">
     <value>Label6</value>

@@ -32,8 +32,11 @@ Partial Class frmMain
         Me.cmdExpandInstruments = New System.Windows.Forms.Button
         Me.cmdResetRuntime = New System.Windows.Forms.Button
         Me.cmdReloadComPorts = New System.Windows.Forms.Button
+        Me.cmdReloadOutputFileList = New System.Windows.Forms.Button
+        Me.chkFullDataFile = New System.Windows.Forms.CheckBox
         Me.chkStepForward = New System.Windows.Forms.CheckBox
         Me.chkStepBack = New System.Windows.Forms.CheckBox
+        Me.chkReverse = New System.Windows.Forms.CheckBox
         Me.chkPause = New System.Windows.Forms.CheckBox
         Me.chkPlay = New System.Windows.Forms.CheckBox
         Me.cmdOutputFolder = New System.Windows.Forms.Button
@@ -41,9 +44,7 @@ Partial Class frmMain
         Me.cmdReloadMissionDirectory = New System.Windows.Forms.Button
         Me.cmdReloadMissions = New System.Windows.Forms.Button
         Me.tbarModelScale = New System.Windows.Forms.TrackBar
-        Me.chkReverse = New System.Windows.Forms.CheckBox
-        Me.chkFullDataFile = New System.Windows.Forms.CheckBox
-        Me.cmdReloadOutputFileList = New System.Windows.Forms.Button
+        Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
         Me.mnuFile = New System.Windows.Forms.ToolStripDropDownButton
@@ -55,6 +56,41 @@ Partial Class frmMain
         Me.mnuOpenDownloads = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem
+        Me.tabInstrumentView = New System.Windows.Forms.TabControl
+        Me.tabInstruments = New System.Windows.Forms.TabPage
+        Me.BatteryIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
+        Me.TurnCoordinatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl
+        Me.cmdSetNorth = New System.Windows.Forms.Button
+        Me._3DMesh1 = New HK_GCS._3DMesh
+        Me.VerticalSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl
+        Me.HeadingIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl
+        Me.AttitudeIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl
+        Me.AltimeterInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl
+        Me.AirSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl
+        Me.tabSerialData = New System.Windows.Forms.TabPage
+        Me.grpSerialSettings = New System.Windows.Forms.GroupBox
+        Me.cboWaypoint = New System.Windows.Forms.ComboBox
+        Me.cboGPS = New System.Windows.Forms.ComboBox
+        Me.cboAttitude = New System.Windows.Forms.ComboBox
+        Me.lblMaxWaypoint = New System.Windows.Forms.Label
+        Me.lblMaxGPS = New System.Windows.Forms.Label
+        Me.lblMaxAttitude = New System.Windows.Forms.Label
+        Me.lblTranslatedData = New System.Windows.Forms.Label
+        Me.lblRawData = New System.Windows.Forms.Label
+        Me.lstEvents = New System.Windows.Forms.ListBox
+        Me.lstInbound = New System.Windows.Forms.ListBox
+        Me.tabCommandLine = New System.Windows.Forms.TabPage
+        Me.cmdCommandLineSend = New System.Windows.Forms.Button
+        Me.cboCommandLineCommand = New System.Windows.Forms.ComboBox
+        Me.chkCommandLineAutoScroll = New System.Windows.Forms.CheckBox
+        Me.cboCommandLineDelim = New System.Windows.Forms.ComboBox
+        Me.lstCommandLineOutput = New System.Windows.Forms.ListBox
+        Me.tabInstrumentLiveCamera = New System.Windows.Forms.TabPage
+        Me.cmdLiveCameraProperties2 = New System.Windows.Forms.Button
+        Me.cboLiveCameraSelect2 = New System.Windows.Forms.ComboBox
+        Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
+        Me.grpGPSTime = New System.Windows.Forms.GroupBox
+        Me.lblGPSTime = New System.Windows.Forms.Label
         Me.grpMisc = New System.Windows.Forms.GroupBox
         Me.lblAmperage = New System.Windows.Forms.Label
         Me.lblAmpsLabel = New System.Windows.Forms.Label
@@ -159,39 +195,6 @@ Partial Class frmMain
         Me.tbarSensor3 = New System.Windows.Forms.TrackBar
         Me.tbarSensor2 = New System.Windows.Forms.TrackBar
         Me.tbarSensor1 = New System.Windows.Forms.TrackBar
-        Me.tabInstrumentView = New System.Windows.Forms.TabControl
-        Me.tabInstruments = New System.Windows.Forms.TabPage
-        Me.BatteryIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
-        Me.TurnCoordinatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl
-        Me.cmdSetNorth = New System.Windows.Forms.Button
-        Me._3DMesh1 = New HK_GCS._3DMesh
-        Me.VerticalSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl
-        Me.HeadingIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl
-        Me.AttitudeIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl
-        Me.AltimeterInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl
-        Me.AirSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl
-        Me.tabSerialData = New System.Windows.Forms.TabPage
-        Me.grpSerialSettings = New System.Windows.Forms.GroupBox
-        Me.cboWaypoint = New System.Windows.Forms.ComboBox
-        Me.cboGPS = New System.Windows.Forms.ComboBox
-        Me.cboAttitude = New System.Windows.Forms.ComboBox
-        Me.lblMaxWaypoint = New System.Windows.Forms.Label
-        Me.lblMaxGPS = New System.Windows.Forms.Label
-        Me.lblMaxAttitude = New System.Windows.Forms.Label
-        Me.lblTranslatedData = New System.Windows.Forms.Label
-        Me.lblRawData = New System.Windows.Forms.Label
-        Me.lstEvents = New System.Windows.Forms.ListBox
-        Me.lstInbound = New System.Windows.Forms.ListBox
-        Me.tabCommandLine = New System.Windows.Forms.TabPage
-        Me.cmdCommandLineSend = New System.Windows.Forms.Button
-        Me.cboCommandLineCommand = New System.Windows.Forms.ComboBox
-        Me.chkCommandLineAutoScroll = New System.Windows.Forms.CheckBox
-        Me.cboCommandLineDelim = New System.Windows.Forms.ComboBox
-        Me.lstCommandLineOutput = New System.Windows.Forms.ListBox
-        Me.tabInstrumentLiveCamera = New System.Windows.Forms.TabPage
-        Me.cmdLiveCameraProperties2 = New System.Windows.Forms.Button
-        Me.cboLiveCameraSelect2 = New System.Windows.Forms.ComboBox
-        Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.cmdExit = New System.Windows.Forms.Button
         Me.cmdSetHome = New System.Windows.Forms.Button
         Me.cmdClearMap = New System.Windows.Forms.Button
@@ -207,12 +210,18 @@ Partial Class frmMain
         Me.cmdLiveCameraProperties1 = New System.Windows.Forms.Button
         Me.cboLiveCameraSelect1 = New System.Windows.Forms.ComboBox
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
-        Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
+        Me.tabInstrumentView.SuspendLayout()
+        Me.tabInstruments.SuspendLayout()
+        Me.tabSerialData.SuspendLayout()
+        Me.grpSerialSettings.SuspendLayout()
+        Me.tabCommandLine.SuspendLayout()
+        Me.tabInstrumentLiveCamera.SuspendLayout()
+        Me.grpGPSTime.SuspendLayout()
         Me.grpMisc.SuspendLayout()
         Me.tabPortControl.SuspendLayout()
         Me.tabPortComPort.SuspendLayout()
@@ -237,12 +246,6 @@ Partial Class frmMain
         CType(Me.tbarSensor3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabInstrumentView.SuspendLayout()
-        Me.tabInstruments.SuspendLayout()
-        Me.tabSerialData.SuspendLayout()
-        Me.grpSerialSettings.SuspendLayout()
-        Me.tabCommandLine.SuspendLayout()
-        Me.tabInstrumentLiveCamera.SuspendLayout()
         Me.tabMapView.SuspendLayout()
         Me.tabViewMapView.SuspendLayout()
         Me.tabViewLiveCamera.SuspendLayout()
@@ -281,6 +284,20 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.cmdReloadComPorts, resources.GetString("cmdReloadComPorts.ToolTip"))
         Me.cmdReloadComPorts.UseVisualStyleBackColor = True
         '
+        'cmdReloadOutputFileList
+        '
+        resources.ApplyResources(Me.cmdReloadOutputFileList, "cmdReloadOutputFileList")
+        Me.cmdReloadOutputFileList.Name = "cmdReloadOutputFileList"
+        Me.ToolTip1.SetToolTip(Me.cmdReloadOutputFileList, resources.GetString("cmdReloadOutputFileList.ToolTip"))
+        Me.cmdReloadOutputFileList.UseVisualStyleBackColor = True
+        '
+        'chkFullDataFile
+        '
+        resources.ApplyResources(Me.chkFullDataFile, "chkFullDataFile")
+        Me.chkFullDataFile.Name = "chkFullDataFile"
+        Me.ToolTip1.SetToolTip(Me.chkFullDataFile, resources.GetString("chkFullDataFile.ToolTip"))
+        Me.chkFullDataFile.UseVisualStyleBackColor = True
+        '
         'chkStepForward
         '
         resources.ApplyResources(Me.chkStepForward, "chkStepForward")
@@ -294,6 +311,13 @@ Partial Class frmMain
         Me.chkStepBack.Name = "chkStepBack"
         Me.ToolTip1.SetToolTip(Me.chkStepBack, resources.GetString("chkStepBack.ToolTip"))
         Me.chkStepBack.UseVisualStyleBackColor = True
+        '
+        'chkReverse
+        '
+        resources.ApplyResources(Me.chkReverse, "chkReverse")
+        Me.chkReverse.Name = "chkReverse"
+        Me.ToolTip1.SetToolTip(Me.chkReverse, resources.GetString("chkReverse.ToolTip"))
+        Me.chkReverse.UseVisualStyleBackColor = True
         '
         'chkPause
         '
@@ -348,26 +372,9 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.tbarModelScale, resources.GetString("tbarModelScale.ToolTip"))
         Me.tbarModelScale.Value = 10
         '
-        'chkReverse
+        'tmrComPort
         '
-        resources.ApplyResources(Me.chkReverse, "chkReverse")
-        Me.chkReverse.Name = "chkReverse"
-        Me.ToolTip1.SetToolTip(Me.chkReverse, resources.GetString("chkReverse.ToolTip"))
-        Me.chkReverse.UseVisualStyleBackColor = True
-        '
-        'chkFullDataFile
-        '
-        resources.ApplyResources(Me.chkFullDataFile, "chkFullDataFile")
-        Me.chkFullDataFile.Name = "chkFullDataFile"
-        Me.ToolTip1.SetToolTip(Me.chkFullDataFile, resources.GetString("chkFullDataFile.ToolTip"))
-        Me.chkFullDataFile.UseVisualStyleBackColor = True
-        '
-        'cmdReloadOutputFileList
-        '
-        resources.ApplyResources(Me.cmdReloadOutputFileList, "cmdReloadOutputFileList")
-        Me.cmdReloadOutputFileList.Name = "cmdReloadOutputFileList"
-        Me.ToolTip1.SetToolTip(Me.cmdReloadOutputFileList, resources.GetString("cmdReloadOutputFileList.ToolTip"))
-        Me.cmdReloadOutputFileList.UseVisualStyleBackColor = True
+        Me.tmrComPort.Interval = 50
         '
         'SplitContainer1
         '
@@ -379,9 +386,10 @@ Partial Class frmMain
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.ToolStrip1)
         Me.SplitContainer1.Panel1.Controls.Add(Me.cmdExpandInstruments)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.tabInstrumentView)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.grpGPSTime)
         Me.SplitContainer1.Panel1.Controls.Add(Me.grpMisc)
         Me.SplitContainer1.Panel1.Controls.Add(Me.tabPortControl)
-        Me.SplitContainer1.Panel1.Controls.Add(Me.tabInstrumentView)
         '
         'SplitContainer1.Panel2
         '
@@ -446,6 +454,248 @@ Partial Class frmMain
         '
         Me.mnuAbout.Name = "mnuAbout"
         resources.ApplyResources(Me.mnuAbout, "mnuAbout")
+        '
+        'tabInstrumentView
+        '
+        Me.tabInstrumentView.Controls.Add(Me.tabInstruments)
+        Me.tabInstrumentView.Controls.Add(Me.tabSerialData)
+        Me.tabInstrumentView.Controls.Add(Me.tabCommandLine)
+        Me.tabInstrumentView.Controls.Add(Me.tabInstrumentLiveCamera)
+        resources.ApplyResources(Me.tabInstrumentView, "tabInstrumentView")
+        Me.tabInstrumentView.Name = "tabInstrumentView"
+        Me.tabInstrumentView.SelectedIndex = 0
+        '
+        'tabInstruments
+        '
+        Me.tabInstruments.BackColor = System.Drawing.Color.Transparent
+        Me.tabInstruments.Controls.Add(Me.BatteryIndicatorInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.TurnCoordinatorInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.cmdSetNorth)
+        Me.tabInstruments.Controls.Add(Me._3DMesh1)
+        Me.tabInstruments.Controls.Add(Me.VerticalSpeedIndicatorInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.HeadingIndicatorInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.AttitudeIndicatorInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.AltimeterInstrumentControl1)
+        Me.tabInstruments.Controls.Add(Me.AirSpeedIndicatorInstrumentControl1)
+        resources.ApplyResources(Me.tabInstruments, "tabInstruments")
+        Me.tabInstruments.Name = "tabInstruments"
+        Me.tabInstruments.UseVisualStyleBackColor = True
+        '
+        'BatteryIndicatorInstrumentControl1
+        '
+        Me.BatteryIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.BatteryIndicatorInstrumentControl1, "BatteryIndicatorInstrumentControl1")
+        Me.BatteryIndicatorInstrumentControl1.Name = "BatteryIndicatorInstrumentControl1"
+        '
+        'TurnCoordinatorInstrumentControl1
+        '
+        Me.TurnCoordinatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.TurnCoordinatorInstrumentControl1, "TurnCoordinatorInstrumentControl1")
+        Me.TurnCoordinatorInstrumentControl1.Name = "TurnCoordinatorInstrumentControl1"
+        '
+        'cmdSetNorth
+        '
+        resources.ApplyResources(Me.cmdSetNorth, "cmdSetNorth")
+        Me.cmdSetNorth.Name = "cmdSetNorth"
+        Me.cmdSetNorth.UseVisualStyleBackColor = True
+        '
+        '_3DMesh1
+        '
+        Me._3DMesh1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me._3DMesh1, "_3DMesh1")
+        Me._3DMesh1.Name = "_3DMesh1"
+        '
+        'VerticalSpeedIndicatorInstrumentControl1
+        '
+        Me.VerticalSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.VerticalSpeedIndicatorInstrumentControl1, "VerticalSpeedIndicatorInstrumentControl1")
+        Me.VerticalSpeedIndicatorInstrumentControl1.Name = "VerticalSpeedIndicatorInstrumentControl1"
+        '
+        'HeadingIndicatorInstrumentControl1
+        '
+        Me.HeadingIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.HeadingIndicatorInstrumentControl1, "HeadingIndicatorInstrumentControl1")
+        Me.HeadingIndicatorInstrumentControl1.Name = "HeadingIndicatorInstrumentControl1"
+        '
+        'AttitudeIndicatorInstrumentControl1
+        '
+        Me.AttitudeIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.AttitudeIndicatorInstrumentControl1, "AttitudeIndicatorInstrumentControl1")
+        Me.AttitudeIndicatorInstrumentControl1.Name = "AttitudeIndicatorInstrumentControl1"
+        '
+        'AltimeterInstrumentControl1
+        '
+        Me.AltimeterInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.AltimeterInstrumentControl1, "AltimeterInstrumentControl1")
+        Me.AltimeterInstrumentControl1.Name = "AltimeterInstrumentControl1"
+        '
+        'AirSpeedIndicatorInstrumentControl1
+        '
+        Me.AirSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.AirSpeedIndicatorInstrumentControl1, "AirSpeedIndicatorInstrumentControl1")
+        Me.AirSpeedIndicatorInstrumentControl1.Name = "AirSpeedIndicatorInstrumentControl1"
+        '
+        'tabSerialData
+        '
+        Me.tabSerialData.Controls.Add(Me.grpSerialSettings)
+        Me.tabSerialData.Controls.Add(Me.lblTranslatedData)
+        Me.tabSerialData.Controls.Add(Me.lblRawData)
+        Me.tabSerialData.Controls.Add(Me.lstEvents)
+        Me.tabSerialData.Controls.Add(Me.lstInbound)
+        resources.ApplyResources(Me.tabSerialData, "tabSerialData")
+        Me.tabSerialData.Name = "tabSerialData"
+        Me.tabSerialData.UseVisualStyleBackColor = True
+        '
+        'grpSerialSettings
+        '
+        Me.grpSerialSettings.Controls.Add(Me.cboWaypoint)
+        Me.grpSerialSettings.Controls.Add(Me.cboGPS)
+        Me.grpSerialSettings.Controls.Add(Me.cboAttitude)
+        Me.grpSerialSettings.Controls.Add(Me.lblMaxWaypoint)
+        Me.grpSerialSettings.Controls.Add(Me.lblMaxGPS)
+        Me.grpSerialSettings.Controls.Add(Me.lblMaxAttitude)
+        resources.ApplyResources(Me.grpSerialSettings, "grpSerialSettings")
+        Me.grpSerialSettings.Name = "grpSerialSettings"
+        Me.grpSerialSettings.TabStop = False
+        '
+        'cboWaypoint
+        '
+        Me.cboWaypoint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboWaypoint.FormattingEnabled = True
+        resources.ApplyResources(Me.cboWaypoint, "cboWaypoint")
+        Me.cboWaypoint.Name = "cboWaypoint"
+        '
+        'cboGPS
+        '
+        Me.cboGPS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboGPS.FormattingEnabled = True
+        resources.ApplyResources(Me.cboGPS, "cboGPS")
+        Me.cboGPS.Name = "cboGPS"
+        '
+        'cboAttitude
+        '
+        Me.cboAttitude.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboAttitude.FormattingEnabled = True
+        resources.ApplyResources(Me.cboAttitude, "cboAttitude")
+        Me.cboAttitude.Name = "cboAttitude"
+        '
+        'lblMaxWaypoint
+        '
+        resources.ApplyResources(Me.lblMaxWaypoint, "lblMaxWaypoint")
+        Me.lblMaxWaypoint.Name = "lblMaxWaypoint"
+        '
+        'lblMaxGPS
+        '
+        resources.ApplyResources(Me.lblMaxGPS, "lblMaxGPS")
+        Me.lblMaxGPS.Name = "lblMaxGPS"
+        '
+        'lblMaxAttitude
+        '
+        resources.ApplyResources(Me.lblMaxAttitude, "lblMaxAttitude")
+        Me.lblMaxAttitude.Name = "lblMaxAttitude"
+        '
+        'lblTranslatedData
+        '
+        resources.ApplyResources(Me.lblTranslatedData, "lblTranslatedData")
+        Me.lblTranslatedData.Name = "lblTranslatedData"
+        '
+        'lblRawData
+        '
+        resources.ApplyResources(Me.lblRawData, "lblRawData")
+        Me.lblRawData.Name = "lblRawData"
+        '
+        'lstEvents
+        '
+        resources.ApplyResources(Me.lstEvents, "lstEvents")
+        Me.lstEvents.FormattingEnabled = True
+        Me.lstEvents.Name = "lstEvents"
+        '
+        'lstInbound
+        '
+        resources.ApplyResources(Me.lstInbound, "lstInbound")
+        Me.lstInbound.FormattingEnabled = True
+        Me.lstInbound.Name = "lstInbound"
+        '
+        'tabCommandLine
+        '
+        Me.tabCommandLine.Controls.Add(Me.cmdCommandLineSend)
+        Me.tabCommandLine.Controls.Add(Me.cboCommandLineCommand)
+        Me.tabCommandLine.Controls.Add(Me.chkCommandLineAutoScroll)
+        Me.tabCommandLine.Controls.Add(Me.cboCommandLineDelim)
+        Me.tabCommandLine.Controls.Add(Me.lstCommandLineOutput)
+        resources.ApplyResources(Me.tabCommandLine, "tabCommandLine")
+        Me.tabCommandLine.Name = "tabCommandLine"
+        Me.tabCommandLine.UseVisualStyleBackColor = True
+        '
+        'cmdCommandLineSend
+        '
+        resources.ApplyResources(Me.cmdCommandLineSend, "cmdCommandLineSend")
+        Me.cmdCommandLineSend.Name = "cmdCommandLineSend"
+        Me.cmdCommandLineSend.UseVisualStyleBackColor = True
+        '
+        'cboCommandLineCommand
+        '
+        Me.cboCommandLineCommand.FormattingEnabled = True
+        resources.ApplyResources(Me.cboCommandLineCommand, "cboCommandLineCommand")
+        Me.cboCommandLineCommand.Name = "cboCommandLineCommand"
+        '
+        'chkCommandLineAutoScroll
+        '
+        resources.ApplyResources(Me.chkCommandLineAutoScroll, "chkCommandLineAutoScroll")
+        Me.chkCommandLineAutoScroll.Name = "chkCommandLineAutoScroll"
+        Me.chkCommandLineAutoScroll.UseVisualStyleBackColor = True
+        '
+        'cboCommandLineDelim
+        '
+        Me.cboCommandLineDelim.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboCommandLineDelim.FormattingEnabled = True
+        resources.ApplyResources(Me.cboCommandLineDelim, "cboCommandLineDelim")
+        Me.cboCommandLineDelim.Name = "cboCommandLineDelim"
+        '
+        'lstCommandLineOutput
+        '
+        resources.ApplyResources(Me.lstCommandLineOutput, "lstCommandLineOutput")
+        Me.lstCommandLineOutput.FormattingEnabled = True
+        Me.lstCommandLineOutput.Name = "lstCommandLineOutput"
+        '
+        'tabInstrumentLiveCamera
+        '
+        Me.tabInstrumentLiveCamera.Controls.Add(Me.cmdLiveCameraProperties2)
+        Me.tabInstrumentLiveCamera.Controls.Add(Me.cboLiveCameraSelect2)
+        Me.tabInstrumentLiveCamera.Controls.Add(Me.DirectShowControl2)
+        resources.ApplyResources(Me.tabInstrumentLiveCamera, "tabInstrumentLiveCamera")
+        Me.tabInstrumentLiveCamera.Name = "tabInstrumentLiveCamera"
+        Me.tabInstrumentLiveCamera.UseVisualStyleBackColor = True
+        '
+        'cmdLiveCameraProperties2
+        '
+        resources.ApplyResources(Me.cmdLiveCameraProperties2, "cmdLiveCameraProperties2")
+        Me.cmdLiveCameraProperties2.Name = "cmdLiveCameraProperties2"
+        Me.cmdLiveCameraProperties2.UseVisualStyleBackColor = True
+        '
+        'cboLiveCameraSelect2
+        '
+        Me.cboLiveCameraSelect2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboLiveCameraSelect2.FormattingEnabled = True
+        resources.ApplyResources(Me.cboLiveCameraSelect2, "cboLiveCameraSelect2")
+        Me.cboLiveCameraSelect2.Name = "cboLiveCameraSelect2"
+        '
+        'DirectShowControl2
+        '
+        resources.ApplyResources(Me.DirectShowControl2, "DirectShowControl2")
+        Me.DirectShowControl2.Name = "DirectShowControl2"
+        '
+        'grpGPSTime
+        '
+        Me.grpGPSTime.Controls.Add(Me.lblGPSTime)
+        resources.ApplyResources(Me.grpGPSTime, "grpGPSTime")
+        Me.grpGPSTime.Name = "grpGPSTime"
+        Me.grpGPSTime.TabStop = False
+        '
+        'lblGPSTime
+        '
+        resources.ApplyResources(Me.lblGPSTime, "lblGPSTime")
+        Me.lblGPSTime.Name = "lblGPSTime"
         '
         'grpMisc
         '
@@ -1243,236 +1493,6 @@ Partial Class frmMain
         Me.tbarSensor1.TabStop = False
         Me.tbarSensor1.TickStyle = System.Windows.Forms.TickStyle.None
         '
-        'tabInstrumentView
-        '
-        Me.tabInstrumentView.Controls.Add(Me.tabInstruments)
-        Me.tabInstrumentView.Controls.Add(Me.tabSerialData)
-        Me.tabInstrumentView.Controls.Add(Me.tabCommandLine)
-        Me.tabInstrumentView.Controls.Add(Me.tabInstrumentLiveCamera)
-        resources.ApplyResources(Me.tabInstrumentView, "tabInstrumentView")
-        Me.tabInstrumentView.Name = "tabInstrumentView"
-        Me.tabInstrumentView.SelectedIndex = 0
-        '
-        'tabInstruments
-        '
-        Me.tabInstruments.BackColor = System.Drawing.Color.Transparent
-        Me.tabInstruments.Controls.Add(Me.BatteryIndicatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.TurnCoordinatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.cmdSetNorth)
-        Me.tabInstruments.Controls.Add(Me._3DMesh1)
-        Me.tabInstruments.Controls.Add(Me.VerticalSpeedIndicatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.HeadingIndicatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.AttitudeIndicatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.AltimeterInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.AirSpeedIndicatorInstrumentControl1)
-        resources.ApplyResources(Me.tabInstruments, "tabInstruments")
-        Me.tabInstruments.Name = "tabInstruments"
-        Me.tabInstruments.UseVisualStyleBackColor = True
-        '
-        'BatteryIndicatorInstrumentControl1
-        '
-        Me.BatteryIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.BatteryIndicatorInstrumentControl1, "BatteryIndicatorInstrumentControl1")
-        Me.BatteryIndicatorInstrumentControl1.Name = "BatteryIndicatorInstrumentControl1"
-        '
-        'TurnCoordinatorInstrumentControl1
-        '
-        Me.TurnCoordinatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.TurnCoordinatorInstrumentControl1, "TurnCoordinatorInstrumentControl1")
-        Me.TurnCoordinatorInstrumentControl1.Name = "TurnCoordinatorInstrumentControl1"
-        '
-        'cmdSetNorth
-        '
-        resources.ApplyResources(Me.cmdSetNorth, "cmdSetNorth")
-        Me.cmdSetNorth.Name = "cmdSetNorth"
-        Me.cmdSetNorth.UseVisualStyleBackColor = True
-        '
-        '_3DMesh1
-        '
-        Me._3DMesh1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me._3DMesh1, "_3DMesh1")
-        Me._3DMesh1.Name = "_3DMesh1"
-        '
-        'VerticalSpeedIndicatorInstrumentControl1
-        '
-        Me.VerticalSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.VerticalSpeedIndicatorInstrumentControl1, "VerticalSpeedIndicatorInstrumentControl1")
-        Me.VerticalSpeedIndicatorInstrumentControl1.Name = "VerticalSpeedIndicatorInstrumentControl1"
-        '
-        'HeadingIndicatorInstrumentControl1
-        '
-        Me.HeadingIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.HeadingIndicatorInstrumentControl1, "HeadingIndicatorInstrumentControl1")
-        Me.HeadingIndicatorInstrumentControl1.Name = "HeadingIndicatorInstrumentControl1"
-        '
-        'AttitudeIndicatorInstrumentControl1
-        '
-        Me.AttitudeIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.AttitudeIndicatorInstrumentControl1, "AttitudeIndicatorInstrumentControl1")
-        Me.AttitudeIndicatorInstrumentControl1.Name = "AttitudeIndicatorInstrumentControl1"
-        '
-        'AltimeterInstrumentControl1
-        '
-        Me.AltimeterInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.AltimeterInstrumentControl1, "AltimeterInstrumentControl1")
-        Me.AltimeterInstrumentControl1.Name = "AltimeterInstrumentControl1"
-        '
-        'AirSpeedIndicatorInstrumentControl1
-        '
-        Me.AirSpeedIndicatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
-        resources.ApplyResources(Me.AirSpeedIndicatorInstrumentControl1, "AirSpeedIndicatorInstrumentControl1")
-        Me.AirSpeedIndicatorInstrumentControl1.Name = "AirSpeedIndicatorInstrumentControl1"
-        '
-        'tabSerialData
-        '
-        Me.tabSerialData.Controls.Add(Me.grpSerialSettings)
-        Me.tabSerialData.Controls.Add(Me.lblTranslatedData)
-        Me.tabSerialData.Controls.Add(Me.lblRawData)
-        Me.tabSerialData.Controls.Add(Me.lstEvents)
-        Me.tabSerialData.Controls.Add(Me.lstInbound)
-        resources.ApplyResources(Me.tabSerialData, "tabSerialData")
-        Me.tabSerialData.Name = "tabSerialData"
-        Me.tabSerialData.UseVisualStyleBackColor = True
-        '
-        'grpSerialSettings
-        '
-        Me.grpSerialSettings.Controls.Add(Me.cboWaypoint)
-        Me.grpSerialSettings.Controls.Add(Me.cboGPS)
-        Me.grpSerialSettings.Controls.Add(Me.cboAttitude)
-        Me.grpSerialSettings.Controls.Add(Me.lblMaxWaypoint)
-        Me.grpSerialSettings.Controls.Add(Me.lblMaxGPS)
-        Me.grpSerialSettings.Controls.Add(Me.lblMaxAttitude)
-        resources.ApplyResources(Me.grpSerialSettings, "grpSerialSettings")
-        Me.grpSerialSettings.Name = "grpSerialSettings"
-        Me.grpSerialSettings.TabStop = False
-        '
-        'cboWaypoint
-        '
-        Me.cboWaypoint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboWaypoint.FormattingEnabled = True
-        resources.ApplyResources(Me.cboWaypoint, "cboWaypoint")
-        Me.cboWaypoint.Name = "cboWaypoint"
-        '
-        'cboGPS
-        '
-        Me.cboGPS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboGPS.FormattingEnabled = True
-        resources.ApplyResources(Me.cboGPS, "cboGPS")
-        Me.cboGPS.Name = "cboGPS"
-        '
-        'cboAttitude
-        '
-        Me.cboAttitude.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboAttitude.FormattingEnabled = True
-        resources.ApplyResources(Me.cboAttitude, "cboAttitude")
-        Me.cboAttitude.Name = "cboAttitude"
-        '
-        'lblMaxWaypoint
-        '
-        resources.ApplyResources(Me.lblMaxWaypoint, "lblMaxWaypoint")
-        Me.lblMaxWaypoint.Name = "lblMaxWaypoint"
-        '
-        'lblMaxGPS
-        '
-        resources.ApplyResources(Me.lblMaxGPS, "lblMaxGPS")
-        Me.lblMaxGPS.Name = "lblMaxGPS"
-        '
-        'lblMaxAttitude
-        '
-        resources.ApplyResources(Me.lblMaxAttitude, "lblMaxAttitude")
-        Me.lblMaxAttitude.Name = "lblMaxAttitude"
-        '
-        'lblTranslatedData
-        '
-        resources.ApplyResources(Me.lblTranslatedData, "lblTranslatedData")
-        Me.lblTranslatedData.Name = "lblTranslatedData"
-        '
-        'lblRawData
-        '
-        resources.ApplyResources(Me.lblRawData, "lblRawData")
-        Me.lblRawData.Name = "lblRawData"
-        '
-        'lstEvents
-        '
-        resources.ApplyResources(Me.lstEvents, "lstEvents")
-        Me.lstEvents.FormattingEnabled = True
-        Me.lstEvents.Name = "lstEvents"
-        '
-        'lstInbound
-        '
-        resources.ApplyResources(Me.lstInbound, "lstInbound")
-        Me.lstInbound.FormattingEnabled = True
-        Me.lstInbound.Name = "lstInbound"
-        '
-        'tabCommandLine
-        '
-        Me.tabCommandLine.Controls.Add(Me.cmdCommandLineSend)
-        Me.tabCommandLine.Controls.Add(Me.cboCommandLineCommand)
-        Me.tabCommandLine.Controls.Add(Me.chkCommandLineAutoScroll)
-        Me.tabCommandLine.Controls.Add(Me.cboCommandLineDelim)
-        Me.tabCommandLine.Controls.Add(Me.lstCommandLineOutput)
-        resources.ApplyResources(Me.tabCommandLine, "tabCommandLine")
-        Me.tabCommandLine.Name = "tabCommandLine"
-        Me.tabCommandLine.UseVisualStyleBackColor = True
-        '
-        'cmdCommandLineSend
-        '
-        resources.ApplyResources(Me.cmdCommandLineSend, "cmdCommandLineSend")
-        Me.cmdCommandLineSend.Name = "cmdCommandLineSend"
-        Me.cmdCommandLineSend.UseVisualStyleBackColor = True
-        '
-        'cboCommandLineCommand
-        '
-        Me.cboCommandLineCommand.FormattingEnabled = True
-        resources.ApplyResources(Me.cboCommandLineCommand, "cboCommandLineCommand")
-        Me.cboCommandLineCommand.Name = "cboCommandLineCommand"
-        '
-        'chkCommandLineAutoScroll
-        '
-        resources.ApplyResources(Me.chkCommandLineAutoScroll, "chkCommandLineAutoScroll")
-        Me.chkCommandLineAutoScroll.Name = "chkCommandLineAutoScroll"
-        Me.chkCommandLineAutoScroll.UseVisualStyleBackColor = True
-        '
-        'cboCommandLineDelim
-        '
-        Me.cboCommandLineDelim.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboCommandLineDelim.FormattingEnabled = True
-        resources.ApplyResources(Me.cboCommandLineDelim, "cboCommandLineDelim")
-        Me.cboCommandLineDelim.Name = "cboCommandLineDelim"
-        '
-        'lstCommandLineOutput
-        '
-        resources.ApplyResources(Me.lstCommandLineOutput, "lstCommandLineOutput")
-        Me.lstCommandLineOutput.FormattingEnabled = True
-        Me.lstCommandLineOutput.Name = "lstCommandLineOutput"
-        '
-        'tabInstrumentLiveCamera
-        '
-        Me.tabInstrumentLiveCamera.Controls.Add(Me.cmdLiveCameraProperties2)
-        Me.tabInstrumentLiveCamera.Controls.Add(Me.cboLiveCameraSelect2)
-        Me.tabInstrumentLiveCamera.Controls.Add(Me.DirectShowControl2)
-        resources.ApplyResources(Me.tabInstrumentLiveCamera, "tabInstrumentLiveCamera")
-        Me.tabInstrumentLiveCamera.Name = "tabInstrumentLiveCamera"
-        Me.tabInstrumentLiveCamera.UseVisualStyleBackColor = True
-        '
-        'cmdLiveCameraProperties2
-        '
-        resources.ApplyResources(Me.cmdLiveCameraProperties2, "cmdLiveCameraProperties2")
-        Me.cmdLiveCameraProperties2.Name = "cmdLiveCameraProperties2"
-        Me.cmdLiveCameraProperties2.UseVisualStyleBackColor = True
-        '
-        'cboLiveCameraSelect2
-        '
-        Me.cboLiveCameraSelect2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboLiveCameraSelect2.FormattingEnabled = True
-        resources.ApplyResources(Me.cboLiveCameraSelect2, "cboLiveCameraSelect2")
-        Me.cboLiveCameraSelect2.Name = "cboLiveCameraSelect2"
-        '
-        'DirectShowControl2
-        '
-        resources.ApplyResources(Me.DirectShowControl2, "DirectShowControl2")
-        Me.DirectShowControl2.Name = "DirectShowControl2"
-        '
         'cmdExit
         '
         resources.ApplyResources(Me.cmdExit, "cmdExit")
@@ -1577,10 +1597,6 @@ Partial Class frmMain
         resources.ApplyResources(Me.DirectShowControl1, "DirectShowControl1")
         Me.DirectShowControl1.Name = "DirectShowControl1"
         '
-        'tmrComPort
-        '
-        Me.tmrComPort.Interval = 50
-        '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
@@ -1593,8 +1609,17 @@ Partial Class frmMain
         Me.SplitContainer1.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
+        Me.tabInstrumentView.ResumeLayout(False)
+        Me.tabInstruments.ResumeLayout(False)
+        Me.tabSerialData.ResumeLayout(False)
+        Me.tabSerialData.PerformLayout()
+        Me.grpSerialSettings.ResumeLayout(False)
+        Me.grpSerialSettings.PerformLayout()
+        Me.tabCommandLine.ResumeLayout(False)
+        Me.tabCommandLine.PerformLayout()
+        Me.tabInstrumentLiveCamera.ResumeLayout(False)
+        Me.grpGPSTime.ResumeLayout(False)
         Me.grpMisc.ResumeLayout(False)
-        Me.grpMisc.PerformLayout()
         Me.tabPortControl.ResumeLayout(False)
         Me.tabPortComPort.ResumeLayout(False)
         Me.tabPortDataFile.ResumeLayout(False)
@@ -1620,15 +1645,6 @@ Partial Class frmMain
         CType(Me.tbarSensor3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabInstrumentView.ResumeLayout(False)
-        Me.tabInstruments.ResumeLayout(False)
-        Me.tabSerialData.ResumeLayout(False)
-        Me.tabSerialData.PerformLayout()
-        Me.grpSerialSettings.ResumeLayout(False)
-        Me.grpSerialSettings.PerformLayout()
-        Me.tabCommandLine.ResumeLayout(False)
-        Me.tabCommandLine.PerformLayout()
-        Me.tabInstrumentLiveCamera.ResumeLayout(False)
         Me.tabMapView.ResumeLayout(False)
         Me.tabViewMapView.ResumeLayout(False)
         Me.tabViewLiveCamera.ResumeLayout(False)
@@ -1819,4 +1835,6 @@ Partial Class frmMain
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents mnuAbout As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents BatteryIndicatorInstrumentControl1 As HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
+    Friend WithEvents grpGPSTime As System.Windows.Forms.GroupBox
+    Friend WithEvents lblGPSTime As System.Windows.Forms.Label
 End Class

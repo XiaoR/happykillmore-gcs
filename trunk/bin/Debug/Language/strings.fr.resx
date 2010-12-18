@@ -1,0 +1,789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="_2D_Lock" xml:space="preserve">
+    <value>Position 2D</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="_3D_Lock" xml:space="preserve">
+    <value>Position 3D</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="_3D_Model" xml:space="preserve">
+    <value>Modèle 3D</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="_3D_Models_From" xml:space="preserve">
+    <value>Modèles 3D du Projet OpenPilot</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>A propos de</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Accel_Mult" xml:space="preserve">
+    <value>&amp;1 Accel</value>
+  </data>
+  <data name="Air_Speed" xml:space="preserve">
+    <value>Vitesse Air</value>
+  </data>
+  <data name="AirGround_Speed" xml:space="preserve">
+    <value>Vitesse Sol/Air</value>
+  </data>
+  <data name="Already_Exists" xml:space="preserve">
+    <value>&amp;1 Existe déjà.^Écraser le fichier?</value>
+  </data>
+  <data name="Altimeter" xml:space="preserve">
+    <value>Altimètre</value>
+  </data>
+  <data name="Altitude_Hold_Mode" xml:space="preserve">
+    <value>Mode Maintient d'Altitude</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Amperage_Color" xml:space="preserve">
+    <value>Couleur Ampérage</value>
+  </data>
+  <data name="Amps" xml:space="preserve">
+    <value>Ampères</value>
+  </data>
+  <data name="AP_Mega_Binary" xml:space="preserve">
+    <value>Binaire AP Mega</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="ArduIMU_Binary" xml:space="preserve">
+    <value>Binaire ArduIMU</value>
+  </data>
+  <data name="ArduPilot_Message" xml:space="preserve">
+    <value>Message ArduPilot</value>
+  </data>
+  <data name="Assisted_RC" xml:space="preserve">
+    <value>Pilotage Assisté</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="Attitude" xml:space="preserve">
+    <value>Assiette</value>
+  </data>
+  <data name="Attitude_Data" xml:space="preserve">
+    <value>Données d'Assiette</value>
+  </data>
+  <data name="Auto_Balance_Mode" xml:space="preserve">
+    <value>Mode Stabilization Automatique</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Auto_Scroll" xml:space="preserve">
+    <value>Défilement Automatique</value>
+  </data>
+  <data name="Autonomous" xml:space="preserve">
+    <value>Autonome</value>
+  </data>
+  <data name="Battery" xml:space="preserve">
+    <value>Accus</value>
+  </data>
+  <data name="Battery_Throttle" xml:space="preserve">
+    <value>Accus &amp;&amp; Gaz</value>
+  </data>
+  <data name="Battery_Throttle_Settings" xml:space="preserve">
+    <value>Accus &amp;&amp; Réglage Gaz</value>
+  </data>
+  <data name="Baud_Rate" xml:space="preserve">
+    <value>Débit</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Bleu</value>
+  </data>
+  <data name="Building_Map_Files" xml:space="preserve">
+    <value>Fichiers Cartographie</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Carriage_Return" xml:space="preserve">
+    <value>Entrée</value>
+  </data>
+  <data name="Center_On_Plane" xml:space="preserve">
+    <value>Appareil Centré Carte Mobile</value>
+  </data>
+  <data name="Change_Model_Scale" xml:space="preserve">
+    <value>Ajustement Échelle du Modèle</value>
+  </data>
+  <data name="Channel_Raw" xml:space="preserve">
+    <value>Données Brutes</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Chase_Cam" xml:space="preserve">
+    <value>Caméra Arrière</value>
+  </data>
+  <data name="Checking_baud" xml:space="preserve">
+    <value>Recherche &amp;1 Débit</value>
+  </data>
+  <data name="Clear_Map" xml:space="preserve">
+    <value>Réinitializer Carte</value>
+  </data>
+  <data name="COM_Port" xml:space="preserve">
+    <value>Port COM</value>
+  </data>
+  <data name="Command_Line" xml:space="preserve">
+    <value>Command Line</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="Connected_to" xml:space="preserve">
+    <value>Connecté &amp;1 à &amp;2</value>
+  </data>
+  <data name="Current_Culture" xml:space="preserve">
+    <value>Code Langage</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Current_Waypoint" xml:space="preserve">
+    <value>Prochain Point de Route</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Custom_Binary" xml:space="preserve">
+    <value>Binaire Modifié</value>
+  </data>
+  <data name="Cyan" xml:space="preserve">
+    <value>Cyan</value>
+  </data>
+  <data name="Data_File" xml:space="preserve">
+    <value>Fichier de Données</value>
+  </data>
+  <data name="Data_Points" xml:space="preserve">
+    <value>Points de Données</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Débrancher</value>
+  </data>
+  <data name="Disconnect_from" xml:space="preserve">
+    <value>Débrancher de &amp;1</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Distance_Units" xml:space="preserve">
+    <value>Unités de Distance</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Bas</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Draw_Full_Mission" xml:space="preserve">
+    <value>Tracer Trajet Complet</value>
+  </data>
+  <data name="Error_Message" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="Exit_Label" xml:space="preserve">
+    <value>Sortie</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Agrandir</value>
+  </data>
+  <data name="Extrude" xml:space="preserve">
+    <value>Extraire</value>
+  </data>
+  <data name="Feet" xml:space="preserve">
+    <value>Pieds</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Fichier</value>
+  </data>
+  <data name="First_Person" xml:space="preserve">
+    <value>Immersion</value>
+  </data>
+  <data name="Flight_Path_Color" xml:space="preserve">
+    <value>Couleur Tracé de Trajectoire</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Plein</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Général</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Geonavigation_Data" xml:space="preserve">
+    <value>Données Géonavigation</value>
+    <comment>SiRF Message Type</comment>
+  </data>
+  <data name="Global_Position" xml:space="preserve">
+    <value>Coordonnées</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Google_Earth_Flight_Path" xml:space="preserve">
+    <value>Trajectoire Google Earth</value>
+  </data>
+  <data name="GPS_Data" xml:space="preserve">
+    <value>Données GPS</value>
+  </data>
+  <data name="GPS_Lock" xml:space="preserve">
+    <value>Acquisition GPS</value>
+  </data>
+  <data name="GPS_Message" xml:space="preserve">
+    <value>Message GPS</value>
+  </data>
+  <data name="GPS_Raw" xml:space="preserve">
+    <value>GPS Brut</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Status" xml:space="preserve">
+    <value>État GPS</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Type" xml:space="preserve">
+    <value>Type GPS</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Vert</value>
+  </data>
+  <data name="Ground_Control_Station" xml:space="preserve">
+    <value>Centre de Contrôle</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Ground_Speed" xml:space="preserve">
+    <value>Vitesse Sol</value>
+  </data>
+  <data name="Gyro_Mult" xml:space="preserve">
+    <value>&amp;1 Gyroscope</value>
+  </data>
+  <data name="HappyKillmores_Email" xml:space="preserve">
+    <value>Courriel de HappyKillmore</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="HDOP" xml:space="preserve">
+    <value>HDOP</value>
+  </data>
+  <data name="Heading" xml:space="preserve">
+    <value>Cap</value>
+  </data>
+  <data name="Heatbeat_Data" xml:space="preserve">
+    <value>Preuve de Marche</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Highly_Assisted" xml:space="preserve">
+    <value>Vol Assisté</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="In_Label" xml:space="preserve">
+    <value>Entrée</value>
+  </data>
+  <data name="Instrument_Selection" xml:space="preserve">
+    <value>Choix d'Instruments</value>
+  </data>
+  <data name="Instruments" xml:space="preserve">
+    <value>Instruments</value>
+  </data>
+  <data name="Invalid_File" xml:space="preserve">
+    <value>Fichier Erroné</value>
+  </data>
+  <data name="Invalid_Mission_File_Format" xml:space="preserve">
+    <value>Format de Fichier Mission Erroné</value>
+  </data>
+  <data name="Knots" xml:space="preserve">
+    <value>Noeuds</value>
+  </data>
+  <data name="KPH" xml:space="preserve">
+    <value>Km/h</value>
+    <comment>Kilometers Per Hour</comment>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>G</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Line_Feed" xml:space="preserve">
+    <value>Défilements des Codes</value>
+  </data>
+  <data name="Line_Feed_Carriage_Return" xml:space="preserve">
+    <value>Défilements des Codes + Entrée</value>
+  </data>
+  <data name="Live_Camera" xml:space="preserve">
+    <value>Caméra</value>
+  </data>
+  <data name="Loading_COM_Ports" xml:space="preserve">
+    <value>Chargement Ports COM</value>
+  </data>
+  <data name="Loading_Settings" xml:space="preserve">
+    <value>Chargement Paramètres</value>
+  </data>
+  <data name="Location_Data" xml:space="preserve">
+    <value>Données de Position</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Actif</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="m_s" xml:space="preserve">
+    <value>m/s</value>
+    <comment>Meters Per Second</comment>
+  </data>
+  <data name="Mag_Mult" xml:space="preserve">
+    <value>&amp;1 Mag</value>
+  </data>
+  <data name="mAh" xml:space="preserve">
+    <value>mAh</value>
+  </data>
+  <data name="MAH_Color" xml:space="preserve">
+    <value>Couleur mAh</value>
+  </data>
+  <data name="Manual_Mode" xml:space="preserve">
+    <value>Mode Manuel</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="Map_Update_Rate" xml:space="preserve">
+    <value>Défilement de la Carte</value>
+  </data>
+  <data name="Map_View" xml:space="preserve">
+    <value>Vue de la Carte</value>
+  </data>
+  <data name="Max_Amperage" xml:space="preserve">
+    <value>Amperage Max</value>
+  </data>
+  <data name="Max_Attitude" xml:space="preserve">
+    <value>Assiette Max</value>
+  </data>
+  <data name="Max_GPS" xml:space="preserve">
+    <value>GPS Max</value>
+  </data>
+  <data name="Max_MAH" xml:space="preserve">
+    <value>mAh Max</value>
+  </data>
+  <data name="Max_Speed" xml:space="preserve">
+    <value>Vitesse Max</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Max_Voltage" xml:space="preserve">
+    <value>Voltage Max</value>
+  </data>
+  <data name="Max_Waypoint" xml:space="preserve">
+    <value>Point de Route Max</value>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>Mètres</value>
+  </data>
+  <data name="Min_MAH" xml:space="preserve">
+    <value>mAh Min</value>
+  </data>
+  <data name="Min_Voltage" xml:space="preserve">
+    <value>Voltage Min</value>
+  </data>
+  <data name="Mission" xml:space="preserve">
+    <value>Mission</value>
+  </data>
+  <data name="Mission_Path" xml:space="preserve">
+    <value>Tracé de Mission</value>
+  </data>
+  <data name="Mission_Path_Color" xml:space="preserve">
+    <value>Couleur du Tracé</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="Mode_Change" xml:space="preserve">
+    <value>Changement de Mode</value>
+  </data>
+  <data name="MPH" xml:space="preserve">
+    <value>Miles/H</value>
+    <comment>Miles Per Hour</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="No_line_ending" xml:space="preserve">
+    <value>Pas de Fin de Ligne</value>
+    <comment>Commandline Tab</comment>
+  </data>
+  <data name="No_Tracking" xml:space="preserve">
+    <value>Carte Immobile</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Not_Locked" xml:space="preserve">
+    <value>Non Validé</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Confirmer</value>
+  </data>
+  <data name="Open_Downloads" xml:space="preserve">
+    <value>Téléchargements</value>
+  </data>
+  <data name="Open_Homepage" xml:space="preserve">
+    <value>Site Principal</value>
+  </data>
+  <data name="Orange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="Original_Instruments" xml:space="preserve">
+    <value>Programation des instruments par Guillaume CHOUTEAU</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Out_Label" xml:space="preserve">
+    <value>Sortie</value>
+  </data>
+  <data name="Overhead" xml:space="preserve">
+    <value>Dessus</value>
+  </data>
+  <data name="Overwrite_File" xml:space="preserve">
+    <value>Écraser le Fichier</value>
+  </data>
+  <data name="Path_Opacity" xml:space="preserve">
+    <value>Opacitée Trajectoire</value>
+  </data>
+  <data name="Path_Thickness" xml:space="preserve">
+    <value>Épaisseur Trajectoire</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Pitch" xml:space="preserve">
+    <value>Tangage</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Lecture</value>
+  </data>
+  <data name="Project_Homepage" xml:space="preserve">
+    <value>Site Principal</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Propriétés</value>
+  </data>
+  <data name="Purple" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="Raw_Data" xml:space="preserve">
+    <value>Données Brutes</value>
+  </data>
+  <data name="Raw_IMU" xml:space="preserve">
+    <value>IMU Brut</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Rouge</value>
+  </data>
+  <data name="Reload_Com_Port_List" xml:space="preserve">
+    <value>Rafraichir Liste Ports COM</value>
+  </data>
+  <data name="Reload_Letter" xml:space="preserve">
+    <value>R</value>
+    <comment>Very small button (Only 1 Character!)</comment>
+  </data>
+  <data name="Reload_Mission" xml:space="preserve">
+    <value>Relancer Mission</value>
+  </data>
+  <data name="Reload_Mission_Directory" xml:space="preserve">
+    <value>Relancer Répertoire Missions</value>
+  </data>
+  <data name="Reload_Output_File_List" xml:space="preserve">
+    <value>Relancer Liste Fichiers Acquisition</value>
+  </data>
+  <data name="Reset_Run_Timer" xml:space="preserve">
+    <value>Réinitializer Chrono</value>
+  </data>
+  <data name="Resizing_Form" xml:space="preserve">
+    <value>Changer le Format</value>
+  </data>
+  <data name="Reversed" xml:space="preserve">
+    <value>Inversé</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Rewind_To_Beginning" xml:space="preserve">
+    <value>Rembobinner au Début</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>D</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Roll" xml:space="preserve">
+    <value>Roulis</value>
+  </data>
+  <data name="Run_Time" xml:space="preserve">
+    <value>Temp Écoulé</value>
+  </data>
+  <data name="Satellites" xml:space="preserve">
+    <value>Satellites</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sauvegarder</value>
+  </data>
+  <data name="Search_Baud" xml:space="preserve">
+    <value>Détection BAUD</value>
+  </data>
+  <data name="Search_COM" xml:space="preserve">
+    <value>Détection COM</value>
+  </data>
+  <data name="Select_Data_File_Directory" xml:space="preserve">
+    <value>Sélection Répertoires Données</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="Sensors" xml:space="preserve">
+    <value>Capteurs Inertiels</value>
+  </data>
+  <data name="Serial_Data" xml:space="preserve">
+    <value>Données Série</value>
+  </data>
+  <data name="Serial_Settings" xml:space="preserve">
+    <value>Paramètres Série</value>
+  </data>
+  <data name="Servo_Mult" xml:space="preserve">
+    <value>Servo &amp;1</value>
+  </data>
+  <data name="Servos" xml:space="preserve">
+    <value>Servos</value>
+  </data>
+  <data name="Set_Home" xml:space="preserve">
+    <value>Point de Départ</value>
+  </data>
+  <data name="Setting_Up_Comboboxes" xml:space="preserve">
+    <value>Configuration Cadres Combinés</value>
+  </data>
+  <data name="Setting_Up_Webbrowser" xml:space="preserve">
+    <value>Configuration Navigateur WEB</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Shrink" xml:space="preserve">
+    <value>Réduction</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Vitesse</value>
+  </data>
+  <data name="Speed_Units" xml:space="preserve">
+    <value>Unitées de Vitesse</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Starting_GCS" xml:space="preserve">
+    <value>Départ &amp;1</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="Step_Back" xml:space="preserve">
+    <value>Retour Arrière</value>
+  </data>
+  <data name="Step_Forward" xml:space="preserve">
+    <value>Avancer</value>
+  </data>
+  <data name="Stop_Recording" xml:space="preserve">
+    <value>Arrêt Enregistrement</value>
+  </data>
+  <data name="Supported_Protocols" xml:space="preserve">
+    <value>Protocoles</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="System_Status" xml:space="preserve">
+    <value>État Système</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Target_Alt" xml:space="preserve">
+    <value>Altitude Ciblée</value>
+  </data>
+  <data name="Telemetry_GPS" xml:space="preserve">
+    <value>Télémétrie GPS</value>
+    <comment>FY21AP Message Type</comment>
+  </data>
+  <data name="Throttle" xml:space="preserve">
+    <value>Gaz</value>
+  </data>
+  <data name="Throttle_Channel" xml:space="preserve">
+    <value>Canal Gaz</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Throttle_Color" xml:space="preserve">
+    <value>Couleur Gaz</value>
+  </data>
+  <data name="Translated_Data" xml:space="preserve">
+    <value>Données Converties</value>
+  </data>
+  <data name="Turn_Coordinator" xml:space="preserve">
+    <value>Coordinateur Virages</value>
+  </data>
+  <data name="Type_F13" xml:space="preserve">
+    <value>Tapez F13</value>
+    <comment>UavDevBoard Message Type</comment>
+  </data>
+  <data name="uBlox_Binary" xml:space="preserve">
+    <value>Binaire uBlox</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Haut</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Vertical_Speed" xml:space="preserve">
+    <value>Vitesse Verticale</value>
+  </data>
+  <data name="View_File" xml:space="preserve">
+    <value>Voir Fichier</value>
+  </data>
+  <data name="Voltage_Color" xml:space="preserve">
+    <value>Couleur Voltage</value>
+  </data>
+  <data name="Volts" xml:space="preserve">
+    <value>Volts</value>
+  </data>
+  <data name="Waypoint" xml:space="preserve">
+    <value>Point de Route</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Waypoint_Data" xml:space="preserve">
+    <value>Données Point de Route</value>
+  </data>
+  <data name="Waypoint_Mode" xml:space="preserve">
+    <value>Mode Point de Route</value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Yaw" xml:space="preserve">
+    <value>Lacet</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Jaune</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Zero_Yaw" xml:space="preserve">
+    <value>0 Lacet</value>
+  </data>
+</root>

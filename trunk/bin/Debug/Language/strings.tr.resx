@@ -1,0 +1,884 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="_2D_Lock" xml:space="preserve">
+    <value>2D Kilit</value>
+    <comment>GPS Kilidi - Yetersiz sinyalin göstergesidir</comment>
+  </data>
+  <data name="_3D_Lock" xml:space="preserve">
+    <value>3D Kilit</value>
+    <comment>GPS Kilidi - İyi sinyal kalitesinin göstergesidir</comment>
+  </data>
+  <data name="_3D_Model" xml:space="preserve">
+    <value>3D Model</value>
+    <comment>3 Boyutlu Model (örn EasyStar)</comment>
+  </data>
+  <data name="_3D_Models_From" xml:space="preserve">
+    <value>Open Pilot projesinden 3 boyulu modeller</value>
+    <comment>Openpilot projesine fantastik modelleri için teşekkür ederiz. (örn EasyStar)</comment>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>Hakkında</value>
+    <comment>Hakkında sayfası ve ekranı</comment>
+  </data>
+  <data name="Accel_Mult" xml:space="preserve">
+    <value>&amp;1 Hızlanma</value>
+    <comment>Hızlanma göstergesi (Kısa tutun)</comment>
+  </data>
+  <data name="Air_Speed" xml:space="preserve">
+    <value>Havasal Hız</value>
+    <comment>Uçağın havadaki hızı  (karasal hızdan farklıdır)</comment>
+  </data>
+  <data name="AirGround_Speed" xml:space="preserve">
+    <value>Hava/Kara Hızı</value>
+    <comment>Estruman Adı  (Gerçek karasal hız göstergesi)</comment>
+  </data>
+  <data name="Already_Exists" xml:space="preserve">
+    <value>&amp;1 dosyası mevcut.^Üzerine yazmak ister misiniz ?</value>
+    <comment>Dosyanın üzerine yaz</comment>
+  </data>
+  <data name="Altimeter" xml:space="preserve">
+    <value>Yükseklik göstergesi</value>
+    <comment>Yükseklik Göstergesi</comment>
+  </data>
+  <data name="Altitude_Hold_Mode" xml:space="preserve">
+    <value>Yükseklik sabitleme modu </value>
+    <comment>FY21AP Modları</comment>
+  </data>
+  <data name="Amperage_Color" xml:space="preserve">
+    <value>Pil Amper çizgisi rengi</value>
+    <comment>Pil sayacı için renk seçimi</comment>
+  </data>
+  <data name="Amps" xml:space="preserve">
+    <value>Amper</value>
+    <comment>6 karakler yada </comment>
+  </data>
+  <data name="AP_Mega_Binary" xml:space="preserve">
+    <value>AP Mega Binary </value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="ArduIMU_Binary" xml:space="preserve">
+    <value>ArduIMU Binary</value>
+    <comment>ArduIMU Binary Message Type</comment>
+  </data>
+  <data name="ArduPilot_Message" xml:space="preserve">
+    <value>ArduPilot Mesaj Tipi</value>
+    <comment>ArduPilot Message Type</comment>
+  </data>
+  <data name="Assisted_RC" xml:space="preserve">
+    <value>RC destekli</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="Attitude" xml:space="preserve">
+    <value>Yükseklik</value>
+    <comment>Attitude Indicator (also called artificial horizon)</comment>
+  </data>
+  <data name="Attitude_Data" xml:space="preserve">
+    <value>Yikseklik Verisi</value>
+    <comment>Data that is shown on the Artificial horizon)</comment>
+  </data>
+  <data name="Auto_Balance_Mode" xml:space="preserve">
+    <value>Otomatik dengeleme modu </value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Auto_Scroll" xml:space="preserve">
+    <value>Otomatik kaydırma</value>
+    <comment>Move the contents of the listbox automatically</comment>
+  </data>
+  <data name="Autonomous" xml:space="preserve">
+    <value>Otonom</value>
+    <comment>Auto-Pilot Auto mode</comment>
+  </data>
+  <data name="Battery" xml:space="preserve">
+    <value>Pil</value>
+    <comment>Status Window (Maybe 10 characters max)</comment>
+  </data>
+  <data name="Battery_Throttle" xml:space="preserve">
+    <value>Pil &amp;&amp; Gaz</value>
+    <comment>Name of Instrument on Settings page</comment>
+  </data>
+  <data name="Battery_Throttle_Settings" xml:space="preserve">
+    <value>Pil &amp;&amp; Gaz Ayarları</value>
+    <comment>Settings Page</comment>
+  </data>
+  <data name="Baud_Rate" xml:space="preserve">
+    <value>Veri Hızı</value>
+    <comment>Keep short (about 12 characters max, will line wrap)</comment>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Mavi</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Building_Map_Files" xml:space="preserve">
+    <value>Harita Dosyası oluşturma</value>
+    <comment>Splash screen startup message</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
+  <data name="Carriage_Return" xml:space="preserve">
+    <value>Carriage Return</value>
+    <comment>Don't worry about this one</comment>
+  </data>
+  <data name="Center_On_Plane" xml:space="preserve">
+    <value>Uçağı merkezle</value>
+    <comment>Moves Google Earth map to put plane in center</comment>
+  </data>
+  <data name="Change_Model_Scale" xml:space="preserve">
+    <value>Uçak boyutunu değiştir</value>
+    <comment>Increase/Decrease Google Earth model size</comment>
+  </data>
+  <data name="Channel_Raw" xml:space="preserve">
+    <value>Raw Kanalı</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Chase_Cam" xml:space="preserve">
+    <value>Takip kamerası</value>
+    <comment>Changes Google Earth camera view to following behind plane</comment>
+  </data>
+  <data name="Checking_baud" xml:space="preserve">
+    <value>Checking &amp;1 baud</value>
+    <comment>Status message for "Search" buttons on COM tab</comment>
+  </data>
+  <data name="Clear_Map" xml:space="preserve">
+    <value>Haritayı temizle</value>
+    <comment>Clears all lines on Google Earth</comment>
+  </data>
+  <data name="COM_Port" xml:space="preserve">
+    <value>COM Portu</value>
+  </data>
+  <data name="Command_Line" xml:space="preserve">
+    <value>Komut Satırı</value>
+    <comment>This is where commands can be sent to the plane</comment>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Bağlan</value>
+  </data>
+  <data name="Connected_to" xml:space="preserve">
+    <value>&amp;1 e &amp;2 ile bağlanıldı</value>
+    <comment>Connected message says: Connected to COM1 at 38400</comment>
+  </data>
+  <data name="Current_Culture" xml:space="preserve">
+    <value>Mevcut Dil Seçimi</value>
+    <comment>Culture file name (ie pl-PL for Polish)</comment>
+  </data>
+  <data name="Current_Waypoint" xml:space="preserve">
+    <value>Mevcut Hedef Dosyası</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Custom_Binary" xml:space="preserve">
+    <value>Custom Binary</value>
+    <comment>GPS Message Type</comment>
+  </data>
+  <data name="Cyan" xml:space="preserve">
+    <value>Cyan</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Data_File" xml:space="preserve">
+    <value>Veri Dosyası</value>
+    <comment>Saved flight data</comment>
+  </data>
+  <data name="Data_Points" xml:space="preserve">
+    <value>Veri Noktaları</value>
+    <comment>Number of GPS lat and long messages in Data File</comment>
+  </data>
+  <data name="Default_Language" xml:space="preserve">
+    <value>Varsayılan dil</value>
+    <comment>Allow Windows to Select Language File</comment>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Bağlantıyı Kes</value>
+  </data>
+  <data name="Disconnect_from" xml:space="preserve">
+    <value>&amp;1 den bağlantı kesildi</value>
+    <comment>Disconnected from COM1</comment>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Uzaklık</value>
+    <comment>How far from plane to next waypoint</comment>
+  </data>
+  <data name="Distance_Units" xml:space="preserve">
+    <value>Uzaklık Birimi</value>
+    <comment>Distance Units (ie Meters/Feet)</comment>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>aşağı</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Draw_Full_Mission" xml:space="preserve">
+    <value>Tüm görevi göster</value>
+    <comment>Draw entire mission on Google Earth</comment>
+  </data>
+  <data name="Error_Message" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="Exit_Label" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Genişlet</value>
+  </data>
+  <data name="Extrude" xml:space="preserve">
+    <value>Uzat</value>
+  </data>
+  <data name="Feet" xml:space="preserve">
+    <value>Feet</value>
+    <comment>Feet/Meters</comment>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Dosya</value>
+  </data>
+  <data name="First_Person" xml:space="preserve">
+    <value>Birincil Kişi</value>
+    <comment>Changes Google Earth camera view to inside cockpit</comment>
+  </data>
+  <data name="Flight_Path_Color" xml:space="preserve">
+    <value>Uçuş Yolu Rengi</value>
+    <comment>Color of line drawn behind plane in Google Earth</comment>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Tam</value>
+    <comment>Very SHORT (5 characters max) - Button name for Draw Full Mission</comment>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Genel</value>
+    <comment>General Preferences - Non specific</comment>
+  </data>
+  <data name="Geonavigation_Data" xml:space="preserve">
+    <value>Geonavigation Verisi</value>
+    <comment>SiRF Message Type</comment>
+  </data>
+  <data name="Global_Position" xml:space="preserve">
+    <value>Global Pozisyon</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Google_Earth_Flight_Path" xml:space="preserve">
+    <value>Google Earth Uçuş Yolu</value>
+    <comment>Line drawn behind plane in Google Earth</comment>
+  </data>
+  <data name="GPS_Data" xml:space="preserve">
+    <value>GPS Verisi</value>
+    <comment>Data from GPS</comment>
+  </data>
+  <data name="GPS_Lock" xml:space="preserve">
+    <value>GPS Kilitli</value>
+    <comment>GPS has at least 5 satellites and is ready to fly</comment>
+  </data>
+  <data name="GPS_Message" xml:space="preserve">
+    <value>GPS Msj</value>
+    <comment>GPS message - ie GPGGA or GPRMC for NMEA</comment>
+  </data>
+  <data name="GPS_Raw" xml:space="preserve">
+    <value>GPS Raw</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Status" xml:space="preserve">
+    <value>GPS Durumu</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="GPS_Type" xml:space="preserve">
+    <value>GPS Tipi</value>
+    <comment>What device is sending messages - ie NMEA, uBlox, AttoPilot, etc</comment>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Yeşil</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Ground_Control_Station" xml:space="preserve">
+    <value>Yer İstasyonu</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Ground_Speed" xml:space="preserve">
+    <value>Karasal Hız</value>
+    <comment>Speed of plane over ground</comment>
+  </data>
+  <data name="Gyro_Mult" xml:space="preserve">
+    <value>&amp;1 Gyro</value>
+    <comment>X Gyro, y Gyro, Z Gyro</comment>
+  </data>
+  <data name="HappyKillmores_Email" xml:space="preserve">
+    <value>HappyKillmore Eposta Adresi</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="HDOP" xml:space="preserve">
+    <value>HDOP</value>
+    <comment>Don't translate this one - This is a GPS term</comment>
+  </data>
+  <data name="Heading" xml:space="preserve">
+    <value>Rota Yönü</value>
+    <comment>Course over ground 0 - 359 degrees</comment>
+  </data>
+  <data name="Heatbeat_Data" xml:space="preserve">
+    <value>Hayattayım Verisi</value>
+    <comment>KeepAlive message from Auto-Pilot - I'm still alive!</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Yardım</value>
+    <comment>Help!</comment>
+  </data>
+  <data name="Highly_Assisted" xml:space="preserve">
+    <value>Yoğun Destek</value>
+    <comment>AttoPilot Modes</comment>
+  </data>
+  <data name="In_Label" xml:space="preserve">
+    <value>In</value>
+    <comment>End of Servo selection Servo 1 In</comment>
+  </data>
+  <data name="Instrument_Selection" xml:space="preserve">
+    <value>Enstruman Seçimi</value>
+  </data>
+  <data name="Instruments" xml:space="preserve">
+    <value>Enstrumanlar</value>
+  </data>
+  <data name="Invalid_File" xml:space="preserve">
+    <value>Geçersiz Dosya</value>
+  </data>
+  <data name="Invalid_Mission_File_Format" xml:space="preserve">
+    <value>Geçersiz Görev dosyası formatı</value>
+  </data>
+  <data name="Knots" xml:space="preserve">
+    <value>Knots</value>
+  </data>
+  <data name="KPH" xml:space="preserve">
+    <value>km/h</value>
+    <comment>Kilometers Per Hour</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Enlem</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>L</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Line_Feed" xml:space="preserve">
+    <value>Line Feed</value>
+    <comment>Don't worry about this one</comment>
+  </data>
+  <data name="Line_Feed_Carriage_Return" xml:space="preserve">
+    <value>Line Feed+Carriage Return</value>
+    <comment>Don't worry about this one</comment>
+  </data>
+  <data name="Live_Camera" xml:space="preserve">
+    <value>Canlı Kamera Görüntüsü</value>
+    <comment>Video camera input</comment>
+  </data>
+  <data name="Loading_COM_Ports" xml:space="preserve">
+    <value>COM Portlar yükleniyor</value>
+  </data>
+  <data name="Loading_Settings" xml:space="preserve">
+    <value>Ayarlar yükleniyor</value>
+  </data>
+  <data name="Location_Data" xml:space="preserve">
+    <value>Lokasyon Verisi</value>
+    <comment>APM Message Type</comment>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Kilitlendi</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Boylam</value>
+  </data>
+  <data name="m_s" xml:space="preserve">
+    <value>m/s</value>
+    <comment>Meters Per Second</comment>
+  </data>
+  <data name="Mag_Mult" xml:space="preserve">
+    <value>&amp;1 Mag</value>
+    <comment>X Magnetometer, Y Magnetometer, Z Magnetometer - Sensor data from IMU</comment>
+  </data>
+  <data name="mAh" xml:space="preserve">
+    <value>mAh</value>
+    <comment>Milliamp Hours</comment>
+  </data>
+  <data name="MAH_Color" xml:space="preserve">
+    <value>mAh Rengi</value>
+    <comment>Color selection on Battery/Throttle Meter for Milliamp Hours</comment>
+  </data>
+  <data name="Manual_Mode" xml:space="preserve">
+    <value>Manuel Mod</value>
+    <comment>User is controlling plane with radio</comment>
+  </data>
+  <data name="Map_Update_Rate" xml:space="preserve">
+    <value>Harita güncelleme hızı</value>
+    <comment>Speed at which Google Earth is updated</comment>
+  </data>
+  <data name="Map_View" xml:space="preserve">
+    <value>Harita Görünümü</value>
+    <comment>Google Earth is selected instead of Live Camera</comment>
+  </data>
+  <data name="Max_Amperage" xml:space="preserve">
+    <value>Max Amperage</value>
+    <comment>Maximum Amps </comment>
+  </data>
+  <data name="Max_Attitude" xml:space="preserve">
+    <value>Max Yükseklik</value>
+    <comment>Fastest the 3D model and Artificial Horizon will be updated with attitude data</comment>
+  </data>
+  <data name="Max_GPS" xml:space="preserve">
+    <value>Max GPS</value>
+    <comment>Fastest the lat, long, heading, etc will be updated with GPS data</comment>
+  </data>
+  <data name="Max_MAH" xml:space="preserve">
+    <value>Max mAh</value>
+    <comment>Max milliamp hours on battery meters</comment>
+  </data>
+  <data name="Max_Speed" xml:space="preserve">
+    <value>Max Hız</value>
+    <comment>Max speed shown on Speed Indicator (80, 120, 160, etc)</comment>
+  </data>
+  <data name="Max_Voltage" xml:space="preserve">
+    <value>Max Voltaj</value>
+    <comment>Max voltage shown on battery meter</comment>
+  </data>
+  <data name="Max_Waypoint" xml:space="preserve">
+    <value>Max Rota Noktası</value>
+    <comment>Fastest thewaypoint, distance to waypoint, etc data will be updated</comment>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>Metre</value>
+    <comment>Meters/Feet</comment>
+  </data>
+  <data name="Min_MAH" xml:space="preserve">
+    <value>Min mAh</value>
+    <comment>Minimum mAh on battery meter</comment>
+  </data>
+  <data name="Min_Voltage" xml:space="preserve">
+    <value>Min Voltaj</value>
+    <comment>Minimum voltage on battery meter</comment>
+  </data>
+  <data name="Mission" xml:space="preserve">
+    <value>Görev</value>
+    <comment>Load mission waypoints</comment>
+  </data>
+  <data name="Mission_Path" xml:space="preserve">
+    <value>Görev Hattı</value>
+    <comment>Not flight path, but waypoint path</comment>
+  </data>
+  <data name="Mission_Path_Color" xml:space="preserve">
+    <value>Görev Hattı Rengi</value>
+    <comment>Color of lines connecting waypoints</comment>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mod</value>
+  </data>
+  <data name="Mode_Change" xml:space="preserve">
+    <value>Mod Değişikliği</value>
+  </data>
+  <data name="MPH" xml:space="preserve">
+    <value>MPH</value>
+    <comment>Miles Per Hour</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="No_line_ending" xml:space="preserve">
+    <value>No line ending</value>
+    <comment>Don't worry about this one</comment>
+  </data>
+  <data name="No_Tracking" xml:space="preserve">
+    <value>Uçağı takip etme</value>
+    <comment>Camera view for Google Earth - Do not follow plane</comment>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>yok</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Not_Locked" xml:space="preserve">
+    <value>Kilitli değil</value>
+    <comment>GPS Lock</comment>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="Open_Downloads" xml:space="preserve">
+    <value>Yükleme listesini aç</value>
+  </data>
+  <data name="Open_Homepage" xml:space="preserve">
+    <value>Proje anasayfasını aç</value>
+  </data>
+  <data name="Orange" xml:space="preserve">
+    <value>Turuncu</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Original_Instruments" xml:space="preserve">
+    <value>Original Instrument Code by Guillaume CHOUTEAU</value>
+    <comment>Credits for original creator of instruments (ie Artificial Horizon)</comment>
+  </data>
+  <data name="Out_Label" xml:space="preserve">
+    <value>Çıkış</value>
+    <comment>End of Servo selection Servo 1 Out</comment>
+  </data>
+  <data name="Overhead" xml:space="preserve">
+    <value>Overhead</value>
+    <comment>Google Earth View type where camera is looking straight down on top of plane</comment>
+  </data>
+  <data name="Overwrite_File" xml:space="preserve">
+    <value>Dosyanın üzerine yaz</value>
+  </data>
+  <data name="Path_Opacity" xml:space="preserve">
+    <value>Rota Şeffaflığı</value>
+    <comment>Sets transparency of flight and mission path</comment>
+  </data>
+  <data name="Path_Thickness" xml:space="preserve">
+    <value>Rota Kalınlığı</value>
+    <comment>How thick are the lines connecting waypoints and flight data points in Google Earth</comment>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Dondur</value>
+  </data>
+  <data name="Pitch" xml:space="preserve">
+    <value>Pitch</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Oynat</value>
+  </data>
+  <data name="Project_Homepage" xml:space="preserve">
+    <value>Proje Anasayfası</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Tercihler</value>
+  </data>
+  <data name="Purple" xml:space="preserve">
+    <value>Mor</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Raw_Data" xml:space="preserve">
+    <value>Raw Veri</value>
+  </data>
+  <data name="Raw_IMU" xml:space="preserve">
+    <value>Raw IMU</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Kayıt</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Kırmızı</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Reload_Com_Port_List" xml:space="preserve">
+    <value>Com Port Listesi yenileniyor</value>
+  </data>
+  <data name="Reload_Letter" xml:space="preserve">
+    <value>R</value>
+    <comment>Very small button (Only 1 Character!)</comment>
+  </data>
+  <data name="Reload_Mission" xml:space="preserve">
+    <value>Görevi Yeniden Yükle</value>
+  </data>
+  <data name="Reload_Mission_Directory" xml:space="preserve">
+    <value>Görev Klasörünü Yenile</value>
+  </data>
+  <data name="Reload_Output_File_List" xml:space="preserve">
+    <value>Çıktı Dosyaları Listesini Güncelle</value>
+  </data>
+  <data name="Reset_Run_Timer" xml:space="preserve">
+    <value>Sayacı Sıfırla</value>
+  </data>
+  <data name="Resizing_Form" xml:space="preserve">
+    <value>Formu boyutlandır</value>
+  </data>
+  <data name="Reversed" xml:space="preserve">
+    <value>Ters Çevir</value>
+    <comment>Settings Form</comment>
+  </data>
+  <data name="Rewind_To_Beginning" xml:space="preserve">
+    <value>Başa Sar</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>R</value>
+    <comment>For Turn Coordinator (Only 1 Character!)</comment>
+  </data>
+  <data name="Roll" xml:space="preserve">
+    <value>Roll</value>
+  </data>
+  <data name="Run_Time" xml:space="preserve">
+    <value>Çalışma Süresi</value>
+  </data>
+  <data name="Satellites" xml:space="preserve">
+    <value>Uydu</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Search_Baud" xml:space="preserve">
+    <value>Baud Ara</value>
+  </data>
+  <data name="Search_COM" xml:space="preserve">
+    <value>COM Ara</value>
+  </data>
+  <data name="Select_Data_File_Directory" xml:space="preserve">
+    <value>Veri Dosyası Klasörünü Seç</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Gönder</value>
+  </data>
+  <data name="Sensors" xml:space="preserve">
+    <value>Sensörler</value>
+  </data>
+  <data name="Serial_Data" xml:space="preserve">
+    <value>Seri Port Verisi</value>
+  </data>
+  <data name="Serial_Settings" xml:space="preserve">
+    <value>Seri Port Ayarları</value>
+  </data>
+  <data name="Servo_Mult" xml:space="preserve">
+    <value>Servo &amp;1</value>
+    <comment>Servo 1, Servo 2, etc</comment>
+  </data>
+  <data name="Servos" xml:space="preserve">
+    <value>Servolar</value>
+  </data>
+  <data name="Set_Home" xml:space="preserve">
+    <value>Ev Konumunu Ayarla</value>
+  </data>
+  <data name="Setting_Up_Comboboxes" xml:space="preserve">
+    <value>Çoklu seçim kutularını ayarla</value>
+    <comment>Splash screen status message - Loading data into dropdown controls</comment>
+  </data>
+  <data name="Setting_Up_Webbrowser" xml:space="preserve">
+    <value>İnternet Gezginini ayarla</value>
+    <comment>Splash screen status message - Loading javascript into webbrowser control</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Shrink" xml:space="preserve">
+    <value>Daralt</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Hız</value>
+  </data>
+  <data name="Speed_Units" xml:space="preserve">
+    <value>Hız Birimi</value>
+    <comment>MPH, km/h, m/s</comment>
+  </data>
+  <data name="Starting_GCS" xml:space="preserve">
+    <value>&amp;1'den başlıyor</value>
+    <comment>Splash screen title Starting HappyKillmore's GCS</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="Step_Back" xml:space="preserve">
+    <value>Geri Git</value>
+  </data>
+  <data name="Step_Forward" xml:space="preserve">
+    <value>İleri Git</value>
+  </data>
+  <data name="Stop_Recording" xml:space="preserve">
+    <value>Kaydı Durdur</value>
+  </data>
+  <data name="Supported_Protocols" xml:space="preserve">
+    <value>Desteklenen Protokoller</value>
+    <comment>NMEA, uBlox, AttoPilot, UavDevBoard, etc - About Form</comment>
+  </data>
+  <data name="System_Status" xml:space="preserve">
+    <value>Sistem Durumu</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Target_Alt" xml:space="preserve">
+    <value>Hedef Yüksekliği</value>
+    <comment>Desired altitude at next waypoint</comment>
+  </data>
+  <data name="Telemetry_GPS" xml:space="preserve">
+    <value>Telemetry GPS</value>
+    <comment>FY21AP Message Type</comment>
+  </data>
+  <data name="Throttle" xml:space="preserve">
+    <value>Gaz</value>
+  </data>
+  <data name="Throttle_Channel" xml:space="preserve">
+    <value>Gaz Kanalı</value>
+    <comment>Which radio input is the throttle (1 or 3 typically)</comment>
+  </data>
+  <data name="Throttle_Color" xml:space="preserve">
+    <value>Gaz Rengi</value>
+    <comment>Color of throttle meter on battery instrument</comment>
+  </data>
+  <data name="Translated_Data" xml:space="preserve">
+    <value>Çevrilen Veri</value>
+    <comment>Data that is not the raw message from GPS/Auto-pilot</comment>
+  </data>
+  <data name="Turn_Coordinator" xml:space="preserve">
+    <value>Turn Coordinator</value>
+    <comment>http://en.wikipedia.org/wiki/Turn_coordinator</comment>
+  </data>
+  <data name="Type_F13" xml:space="preserve">
+    <value>Type F13</value>
+    <comment>UavDevBoard Message Type</comment>
+  </data>
+  <data name="uBlox_Binary" xml:space="preserve">
+    <value>uBlox Binary</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>yukarı</value>
+    <comment>For Vertical Speed</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versiyon</value>
+    <comment>About Form</comment>
+  </data>
+  <data name="Vertical_Speed" xml:space="preserve">
+    <value>Düşey Hız</value>
+    <comment>Speed of plane going up or down (not ground or air speed)</comment>
+  </data>
+  <data name="View_File" xml:space="preserve">
+    <value>Dosyayı Göster</value>
+  </data>
+  <data name="Voltage_Color" xml:space="preserve">
+    <value>Voltaj Rengi </value>
+    <comment>Color of voltage meter in battery instrument</comment>
+  </data>
+  <data name="Volts" xml:space="preserve">
+    <value>Volt</value>
+  </data>
+  <data name="Waypoint" xml:space="preserve">
+    <value>Rota Noktaları</value>
+    <comment>MAVline Message Type</comment>
+  </data>
+  <data name="Waypoint_Data" xml:space="preserve">
+    <value>Rota Noktası Verisi</value>
+  </data>
+  <data name="Waypoint_Mode" xml:space="preserve">
+    <value>Rota Noktası Modu </value>
+    <comment>FY21AP Modes</comment>
+  </data>
+  <data name="Yaw" xml:space="preserve">
+    <value>Yaw</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Sarı</value>
+    <comment>Meter Color Selection</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="Zero_Yaw" xml:space="preserve">
+    <value>0 Yaw</value>
+  </data>
+</root>

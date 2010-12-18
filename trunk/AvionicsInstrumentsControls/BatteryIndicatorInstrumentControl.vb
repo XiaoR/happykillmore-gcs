@@ -130,8 +130,8 @@ Namespace AvionicsInstrumentControlDemo
                 Using the_font As New Font("Arial", fontSize, FontStyle.Bold)
                     pe.Graphics.DrawString(nBatteryValue.ToString("0.00") & vbCrLf & GetResString(, "Volts", , , , , , , "Volts"), the_font, Brushes.Azure, (ptBattery.X + 20) * scale, 200 * scale, string_format)
                     pe.Graphics.DrawString(nAmperage.ToString("0.00") & vbCrLf & GetResString(, "Amps", , , , , , , "Amps"), the_font, Brushes.Azure, (ptAmperage.X + 20) * scale, 200 * scale, string_format)
-                    pe.Graphics.DrawString(nMahMeterMax - nMahValue & vbCrLf & "mAh", the_font, Brushes.Azure, (ptMAH.X + 20) * scale, 200 * scale, string_format)
-                    pe.Graphics.DrawString(nThrottleValue.ToString("0%"), the_font, Brushes.Azure, (ptThro.X + 20) * scale, 200 * scale, string_format)
+                    pe.Graphics.DrawString(nMahMeterMax - nMahValue & vbCrLf & GetResString(, "mAh", , , , , , , "mAh"), the_font, Brushes.Azure, (ptMAH.X + 20) * scale, 200 * scale, string_format)
+                    pe.Graphics.DrawString(nThrottleValue.ToString("0%") & vbCrLf & GetResString(, "Thro", , , , , , , "Thro"), the_font, Brushes.Azure, (ptThro.X + 20) * scale, 200 * scale, string_format)
                 End Using
             End Using
 

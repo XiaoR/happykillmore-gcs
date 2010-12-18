@@ -67,8 +67,29 @@ Module modGlobal
     Public sLanguageFile As String
     Public oCulture As CultureInfo
 
+    Public sSpeechVoice As String
+    Public bAnnounceWaypoints As Boolean
+    Public sSpeechWaypoint As String
+    Public bAnnounceModeChange As Boolean
+    Public sSpeechModeChange As String
+
+    Public nWaypoint As Integer
+    Public nWaypointAlt As Single
+    Public nDistance As Single
+
     Public aLastAtlitudes(0 To 9) As Single
     Public nLastAltIndex As Integer
+
+    Public bGEBorders As Boolean
+    Public bGEBuildings As Boolean
+    Public bGERoads As Boolean
+    Public bGETerrain As Boolean
+    Public bGETrees As Boolean
+
+    Public dGPSDate As Date
+    Public dGPSTime As Date
+    Public bUTCTime As Boolean
+    Public nTOWDayOffset As Integer = 0
 
     Public nBattery As Single
     Public nBatteryMax As Single = 12.5
@@ -87,6 +108,9 @@ Module modGlobal
 
     Public nAltChange As Single
     Public nThrottle As Single
+
+    Public sLastSpeechMode As String
+    Public nLastSpeechWaypoint As Integer = -1
 
     Public bShowBinary As Boolean = True
     Public nLatitude As String
@@ -107,6 +131,55 @@ Module modGlobal
     Public nSensor(0 To 13) As Long
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
 
+    Public Function GetNMEADate(ByVal inputString As String) As Date
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            GetNMEADate = GetNMEADate.Parse(inputString.Substring(2, 2) & "/" & inputString.Substring(0, 2) & "/" & inputString.Substring(4, 2), cf).Date
+        Catch
+        End Try
+    End Function
+    Public Function GetNMEATime(ByVal inputString As String) As Date
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            GetNMEATime = GetNMEATime.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
+        Catch
+        End Try
+    End Function
+    Public Function GetMediaTekv16Date(ByVal inputString As String) As Date
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            GetMediaTekv16Date = GetMediaTekv16Date.Parse(inputString.Substring(4, 2) & "/" & inputString.Substring(6, 2) & "/" & inputString.Substring(0, 4), cf).Date
+        Catch
+        End Try
+    End Function
+    Public Function GetMediaTekv16Time(ByVal inputString As String) As Date
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            inputString = inputString.PadLeft(8, "0")
+            GetMediaTekv16Time = GetMediaTekv16Time.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
+        Catch
+        End Try
+    End Function
+    Public Function GetuBloxTime(ByVal inputValue As Double) As Date
+        Try
+            GetuBloxTime = DateAdd(DateInterval.Second, inputValue, DateAdd(DateInterval.Day, -DateInterval.Weekday + 1, Now).Date)
+            nTOWDayOffset = DateDiff(DateInterval.Day, DateAdd(DateInterval.Day, -DateInterval.Weekday + 1, Now), GetuBloxTime)
+            GetuBloxTime = GetuBloxTime.ToLongTimeString
+        Catch
+        End Try
+    End Function
+    Public Function GetuBloxDate(ByVal inputValue As Double) As Date
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            GetuBloxDate = DateAdd(DateInterval.Day, inputValue * 7 + nTOWDayOffset, GetuBloxDate.Parse("1/6/1980", cf)).Date
+        Catch
+        End Try
+    End Function
     Public Function LookupInstrumentColorName(ByVal inputColor As e_InstrumentColor) As String
         Select Case inputColor
             Case e_InstrumentColor.e_InstrumentColor_Blue
@@ -133,6 +206,7 @@ Module modGlobal
             If resString <> "" Then
                 GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), oCulture)
                 If GetResString Is Nothing Then
+                    GetResString = Replace(resString, " ", "_")
                     Debug.Print(resString)
                 End If
                 'GetResString = My.Resources.English.ResourceManager.GetString(Replace(resString, " ", "_"))
@@ -303,6 +377,20 @@ Module modGlobal
             ConvertHexToDecFY21AP = 0 - (ConvertHexToDecFY21AP And &H7FFF)
         End If
     End Function
+    Public Function ConvertLatLongFY21AP(ByVal inputValue As String) As String
+        Dim nTemp As Double
+
+        nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H7FFF
+        nTemp = (nTemp + CDec("&h" & Hex(Asc(Mid(inputValue, 3, 1))) & Hex(Asc(Mid(inputValue, 4, 1)))) * 0.00001) / 60
+        If nTemp > 32768 Then
+            nTemp = nTemp - 32768
+        End If
+
+        If CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H8000 Then
+            nTemp = -nTemp
+        End If
+        ConvertLatLongFY21AP = nTemp.ToString("0.0000000")
+    End Function
     Public Function GetNextSentence(ByRef sBuffer As String) As cMessage
         Dim sTemp As String = ""
         Dim nLastStart As Integer
@@ -329,6 +417,12 @@ Module modGlobal
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_MAV
+            End If
+
+            sHeaderCharacters = "T"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
             End If
 
             sHeaderCharacters = "F2:"
@@ -508,7 +602,7 @@ Module modGlobal
                                 .Header = "ArduIMU"
                                 .ID = Asc(Mid(sTemp, 6, 1))
                                 .Packet = Mid(sTemp, 5, Len(sTemp) - 6)
-                                .PacketLength = Len(.Packet) - 2
+                                .PacketLength = Len(.Packet)
                                 .Checksum = Strings.Right(sTemp, 2)
                                 .VisibleSentence = .Header & " - " & sOutput
                                 If .Checksum = GetuBloxChecksum(.Packet) Then
@@ -594,6 +688,27 @@ Module modGlobal
                             Else
                                 .ValidMessage = False
                             End If
+                        End With
+                    End If
+
+                Case cMessage.e_MessageType.e_MessageType_Gluonpilot
+                    sHeaderCharacters = "T"
+                    sFooterCharacters = vbLf
+                    If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        sTemp = Mid(sBuffer, nLastStart)
+                        sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 1)
+                        If Strings.Right(sTemp, 1) = vbCr Then
+                            sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
+                        End If
+                        With GetNextSentence
+                            .RawMessage = sTemp
+                            .MessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
+                            .Header = Mid(sTemp, 1, 2)
+                            .Packet = Mid(sTemp, 4)
+                            .PacketLength = Len(.Packet)
+                            .VisibleSentence = "Gluonpilot - " & sTemp
+                            .ValidMessage = True
                         End With
                     End If
 
@@ -1064,5 +1179,18 @@ Module modGlobal
         Else
             GetRoll = inputValue
         End If
+    End Function
+    Public Function ConvertSpeech(ByVal inputString As String) As String
+        ConvertSpeech = inputString
+        If nWaypoint = 0 Then
+            ConvertSpeech = Replace(ConvertSpeech, "{wpn}", "home")
+        Else
+            ConvertSpeech = Replace(ConvertSpeech, "{wpn}", nWaypoint)
+        End If
+        ConvertSpeech = Replace(ConvertSpeech, "{asp}", Convert.ToInt32(nAirSpeed))
+        ConvertSpeech = Replace(ConvertSpeech, "{gsp}", Convert.ToInt32(nGroundSpeed))
+        ConvertSpeech = Replace(ConvertSpeech, "{mode}", sMode)
+        ConvertSpeech = Replace(ConvertSpeech, "{alt}", Convert.ToInt32(nAltitude))
+        ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToInt32(nWaypointAlt))
     End Function
 End Module

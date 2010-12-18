@@ -76,18 +76,18 @@
         ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
         ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
         
-        try
-        {
-            ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true); 
-            ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, true); 
-            ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, true); 
-            ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true); 
-            ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, true); 
+//        try
+//        {
+//            ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true); 
+//           ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, true); 
+//            ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, true); 
+//            ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true); 
+//            ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, true); 
             //ge.getOptions().setTerrainExaggeration(2.2);
-        }
-        catch(err)
-        {
-        }
+//        }
+//        catch(err)
+//        {
+//        }
 
 	    // Create the placemark 
 	    lineStringPlacemark = ge.createPlacemark(''); 
@@ -127,6 +127,20 @@
         // tell the application the plugin is ready
         //window.external.JSInitSuccessCallback_(pluginInstance);
         isLoaded = true;
+    }
+
+    function setFeatures(borders,buildings,roads,terrain,trees) {
+        try
+        {
+            ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, roads); 
+            ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, terrain); 
+            ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, buildings); 
+            ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, borders); 
+            ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, trees); 
+        }
+        catch(err)
+        {
+        }
     }
 
     function failureCallback(error) {
