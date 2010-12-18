@@ -13,14 +13,14 @@ http://www.happykillmore.com/software/hk_gcs/Small800X480.gif
   * [http://www.google.com/earth/explore/products/plugin.html Google Earth Plug-in]
 
  * *Supported GPS Protocols*
-  * NMEA
-  * uBlox
-  * SiRF (GeoNav only)
-  * MediaTek v1 (DIYdrones.com Custom Binary)
-  * MediaTek v1.6 (DIYdrones.com Custom Binary)
+  * [http://www.flytron.com/osd-headtrackers/15-simpleosd-gps-module.html NMEA]
+  * [http://store.diydrones.com/GS407_U_Blox5_GPS_4Hz_p/spk-gps-gs407.htm uBlox]
+  * [http://store.diydrones.com/EM_406_GPS_1Hz_p/em-406a.htm SiRF (GeoNav only)]
+  * [http://store.diydrones.com/MediaTek_MT3329_GPS_10Hz_Adapter_Basic_p/mt3329-02.htm MediaTek v1 (DIYdrones.com Custom Binary)]
+  * [http://store.diydrones.com/MediaTek_MT3329_GPS_10Hz_Adapter_Basic_p/mt3329-02.htm MediaTek v1.6 (DIYdrones.com Custom Binary)]
 
  * *Supported IMU Protocols*
-  * ArduIMU
+  * [http://code.google.com/p/ardu-imu/ ArduIMU]
 
  * *Supported Auto-Pilot Protocols*
   * [http://diydrones.com/profiles/blogs/ardupilot-main-page ArduPilot Legacy (ASCII)]
