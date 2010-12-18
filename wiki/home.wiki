@@ -23,12 +23,13 @@ http://www.happykillmore.com/software/hk_gcs/Small800X480.gif
   * ArduIMU
 
  * *Supported Auto-Pilot Protocols*
-  * ArduPilot Legacy (ASCII)
-  * ArduPilot Mega Binary
-  * MatrixPilot (UavDevBoard)
-  * AttoPilot
-  * MAVlink
-  * FY21AP II
+  * [http://diydrones.com/profiles/blogs/ardupilot-main-page ArduPilot Legacy (ASCII)]
+  * [http://diydrones.com/profiles/blogs/ardupilot-mega-home-page ArduPilot Mega Binary]
+  * [http://diydrones.com/page/uav-devboard MatrixPilot (UavDevBoard)]
+  * [http://www.attopilotinternational.com/ AttoPilot]
+  * [http://pixhawk.ethz.ch/wiki/software/mavlink/start MAVlink]
+  * [http://feiyutech.ning.com/ FY21AP II]
+  * [http://www.gluonpilot.com/wiki/Main_Page Gluonpilot]
 
  * *Supported Languages*
   * English
