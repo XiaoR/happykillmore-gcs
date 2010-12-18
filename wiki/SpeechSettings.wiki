@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Speech Settings =
+
+ * *Scripting Variables*
+   * {wpn} - Waypoint number (0 = Home)
+   * {asp} - Air speed
+   * {alt} - Current altitude
+   * {wpa} - Desired waypoint altitude
+   * {gsp} - Ground speed
+   * {mode} - Current mode
+
+ * Announce on Waypoint will fire any time the waypoint number changes. In the case where waypoint number is 0, the word "home" will be substituded. 
+ * Sample phrase: Arrived at waypoint {wpn} at {gsp} miles per hour. Current altitude is {alt}, desired alt is {wpa}. 
+ * Announce on Mode Change will fire any time the auto-pilot's mode changes.
