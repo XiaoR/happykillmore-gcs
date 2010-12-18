@@ -1,6 +1,8 @@
 = Introduction =
 
-HappyKillmore's Ground Control station was built with one underlying goal. Make it simple to use. The average user only needs to know what COM port and baud rate to select and that's it. Click the connect button and they're up and running. 
+HappyKillmore's Ground Control station was built with one major underlying goal. Make it simple to use. The average user only needs to know what COM port and baud rate to select and that's it. Click the connect button and they're up and running. Protocol selection is automatic.
+
+The program is graphics oriented. It is not an engineer's interface. Another goal for the software was to work on low resolution screens. Currently, the application can operate as small as 800X400 which is well suited for netbooks computers.
 
 http://www.happykillmore.com/software/hk_gcs/Small800X480.gif
 
