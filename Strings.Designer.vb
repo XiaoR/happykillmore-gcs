@@ -164,6 +164,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Altitude Offset.
+        '''</summary>
+        Friend Shared ReadOnly Property Altitude_Offset() As String
+            Get
+                Return ResourceManager.GetString("Altitude_Offset", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Amperage Color.
         '''</summary>
         Friend Shared ReadOnly Property Amperage_Color() As String
@@ -200,6 +209,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Announce Regular Interval.
+        '''</summary>
+        Friend Shared ReadOnly Property Announce_Regular_Interval() As String
+            Get
+                Return ResourceManager.GetString("Announce_Regular_Interval", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour.
+        '''</summary>
+        Friend Shared ReadOnly Property Announce_Regular_Interval_Default() As String
+            Get
+                Return ResourceManager.GetString("Announce_Regular_Interval_Default", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Announce Waypoints.
         '''</summary>
         Friend Shared ReadOnly Property Announce_Waypoints() As String
@@ -209,7 +236,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Arrived at waypoint {wpn}.
+        '''  Looks up a localized string similar to Arrived, Now heading to waypoint {wpn}.
         '''</summary>
         Friend Shared ReadOnly Property Announce_Waypoints_Default() As String
             Get
@@ -659,6 +686,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to From Home Alt.
+        '''</summary>
+        Friend Shared ReadOnly Property From_HomeAlt() As String
+            Get
+                Return ResourceManager.GetString("From_HomeAlt", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to From Sea Level.
+        '''</summary>
+        Friend Shared ReadOnly Property From_Sealevel() As String
+            Get
+                Return ResourceManager.GetString("From_Sealevel", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Full.
         '''</summary>
         Friend Shared ReadOnly Property Full() As String
@@ -934,6 +979,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Instruments() As String
             Get
                 Return ResourceManager.GetString("Instruments", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Interval.
+        '''</summary>
+        Friend Shared ReadOnly Property Interval() As String
+            Get
+                Return ResourceManager.GetString("Interval", resourceCulture)
             End Get
         End Property
         

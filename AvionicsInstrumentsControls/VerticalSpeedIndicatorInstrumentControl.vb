@@ -94,7 +94,7 @@ Namespace AvionicsInstrumentControlDemo
                 Using string_format As New StringFormat()
                     string_format.Alignment = StringAlignment.Center
                     string_format.LineAlignment = StringAlignment.Near
-                    pe.Graphics.DrawString(sUpLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.5, bmpCadran.Height * scale * 0.27, string_format)
+                    pe.Graphics.DrawString(sUpLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.5, bmpCadran.Height * scale * 0.28, string_format)
                     pe.Graphics.DrawString(sDownLabel, the_font, Brushes.Azure, bmpCadran.Height * scale * 0.5, bmpCadran.Height * scale * 0.62, string_format)
                 End Using
             End Using

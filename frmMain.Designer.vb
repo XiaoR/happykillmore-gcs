@@ -1602,6 +1602,7 @@ Partial Class frmMain
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.SplitContainer1)
+        Me.KeyPreview = True
         Me.Name = "frmMain"
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.Panel1.ResumeLayout(False)

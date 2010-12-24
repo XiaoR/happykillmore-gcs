@@ -874,7 +874,7 @@
     <value>BatteryIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -901,7 +901,7 @@
     <value>TurnCoordinatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -952,7 +952,7 @@
     <value>_3DMesh1</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Type" xml:space="preserve">
-    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -976,7 +976,7 @@
     <value>VerticalSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1000,7 +1000,7 @@
     <value>HeadingIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1024,7 +1024,7 @@
     <value>AttitudeIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1048,7 +1048,7 @@
     <value>AltimeterInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1072,7 +1072,7 @@
     <value>AirSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1648,7 +1648,7 @@
     <value>DirectShowControl2</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Parent" xml:space="preserve">
     <value>tabInstrumentLiveCamera</value>
@@ -4948,7 +4948,7 @@
     <value>DirectShowControl1</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.14.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.17.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Parent" xml:space="preserve">
     <value>tabViewLiveCamera</value>

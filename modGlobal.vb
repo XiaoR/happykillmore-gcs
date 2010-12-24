@@ -57,14 +57,28 @@ Module modGlobal
         e_InstrumentColor_Red
         e_InstrumentColor_Yellow
     End Enum
+
+    Public Enum e_AltOffset
+        e_AltOffset_SeaLevel = 0
+        e_AltOffset_HomeALt = 1
+    End Enum
+
     Public resourceMgr As ResourceManager
+
+    'Public jst As 
+
+    Public bIsAdmin As Boolean
 
     Public nPitch As Single
     Public nRoll As Single
     Public nYaw As Single
 
+    Public eAltOffset As e_AltOffset
+    Public nHomeOffset As Integer
+
     Public nYawOffset As Single
     Public sLanguageFile As String
+    Public sLoadedLanguageFile As String
     Public oCulture As CultureInfo
 
     Public sSpeechVoice As String
@@ -72,6 +86,9 @@ Module modGlobal
     Public sSpeechWaypoint As String
     Public bAnnounceModeChange As Boolean
     Public sSpeechModeChange As String
+    Public bAnnounceRegularInterval As Boolean
+    Public sSpeechRegularInterval As String
+    Public nSpeechInterval As Long
 
     Public nWaypoint As Integer
     Public nWaypointAlt As Single
@@ -204,7 +221,7 @@ Module modGlobal
 
         Try
             If resString <> "" Then
-                GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), oCulture)
+                GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), oCulture).ToString
                 If GetResString Is Nothing Then
                     GetResString = Replace(resString, " ", "_")
                     Debug.Print(resString)
@@ -230,6 +247,14 @@ Module modGlobal
             If secondReplace <> "" Then
                 GetResString = Replace(GetResString, "&2", secondReplace)
             End If
+            If GetResString Is Nothing Then
+                If defaultValue <> "" Then
+                    GetResString = defaultValue
+                Else
+                    GetResString = Replace(resString, " ", "_")
+                End If
+                Debug.Print(resString)
+            End If
             If includeColon = True Then
                 GetResString = GetResString & ":"
             End If
@@ -237,9 +262,10 @@ Module modGlobal
                 inputControl.text = GetResString
             End If
             'GetResString = ""
-        Catch
-            If resString = "" Then
-                resString = defaultValue
+        Catch err2 As Exception
+            Debug.Print(err2.Message)
+            If GetResString = "" Then
+                GetResString = defaultValue
             End If
         End Try
     End Function
@@ -371,9 +397,9 @@ Module modGlobal
         End If
 
     End Function
-    Public Function ConvertHexToDecFY21AP(ByVal inputValue As String) As String
-        ConvertHexToDecFY21AP = ConvertHexToDec(inputValue, False)
-        If ConvertHexToDecFY21AP And &H8000 Then
+    Public Function ConvertHexToDecFY21AP(ByVal inputValue As String, Optional ByVal twosCompilment As Boolean = True) As String
+        ConvertHexToDecFY21AP = ConvertHexToDec(inputValue, False, twosCompilment)
+        If ConvertHexToDecFY21AP And &H8000 And twosCompilment Then
             ConvertHexToDecFY21AP = 0 - (ConvertHexToDecFY21AP And &H7FFF)
         End If
     End Function
@@ -1192,5 +1218,13 @@ Module modGlobal
         ConvertSpeech = Replace(ConvertSpeech, "{mode}", sMode)
         ConvertSpeech = Replace(ConvertSpeech, "{alt}", Convert.ToInt32(nAltitude))
         ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToInt32(nWaypointAlt))
+    End Function
+    Public Function LoadLanguageFile()
+        If sLanguageFile = "Default" Then
+            oCulture = System.Globalization.CultureInfo.CurrentCulture
+        Else
+            oCulture = CultureInfo.CreateSpecificCulture(sLanguageFile)
+        End If
+        resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
     End Function
 End Module

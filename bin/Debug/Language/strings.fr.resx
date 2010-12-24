@@ -217,7 +217,7 @@
     <value>Entrée</value>
   </data>
   <data name="Center_On_Plane" xml:space="preserve">
-    <value>Appareil Centré Carte Mobile</value>
+    <value>Appareil Centré</value>
   </data>
   <data name="Change_Model_Scale" xml:space="preserve">
     <value>Ajustement Échelle du Modèle</value>
@@ -227,19 +227,19 @@
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Chase_Cam" xml:space="preserve">
-    <value>Caméra Arrière</value>
+    <value>Poursuite</value>
   </data>
   <data name="Checking_baud" xml:space="preserve">
     <value>Recherche &amp;1 Débit</value>
   </data>
   <data name="Clear_Map" xml:space="preserve">
-    <value>Réinitializer Carte</value>
+    <value>Réinitializer</value>
   </data>
   <data name="COM_Port" xml:space="preserve">
     <value>Port COM</value>
   </data>
   <data name="Command_Line" xml:space="preserve">
-    <value>Command Line</value>
+    <value>Ligne de Commande</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Connection</value>
@@ -252,7 +252,7 @@
     <comment>About Form</comment>
   </data>
   <data name="Current_Waypoint" xml:space="preserve">
-    <value>Prochain Point de Route</value>
+    <value>Prochain Waypoint</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Custom_Binary" xml:space="preserve">
@@ -281,7 +281,7 @@
     <comment>Settings Form</comment>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Bas</value>
+    <value>Descente</value>
     <comment>For Vertical Speed</comment>
   </data>
   <data name="Draw_Full_Mission" xml:space="preserve">
@@ -297,7 +297,7 @@
     <value>Agrandir</value>
   </data>
   <data name="Extrude" xml:space="preserve">
-    <value>Extraire</value>
+    <value>Relief</value>
   </data>
   <data name="Feet" xml:space="preserve">
     <value>Pieds</value>
@@ -309,7 +309,7 @@
     <value>Immersion</value>
   </data>
   <data name="Flight_Path_Color" xml:space="preserve">
-    <value>Couleur Tracé de Trajectoire</value>
+    <value>Couleur du Tracé</value>
   </data>
   <data name="Full" xml:space="preserve">
     <value>Plein</value>
@@ -481,7 +481,7 @@
     <value>Voltage Max</value>
   </data>
   <data name="Max_Waypoint" xml:space="preserve">
-    <value>Point de Route Max</value>
+    <value>Waypoint Max</value>
   </data>
   <data name="Meters" xml:space="preserve">
     <value>Mètres</value>
@@ -545,7 +545,7 @@
     <value>Orange</value>
   </data>
   <data name="Original_Instruments" xml:space="preserve">
-    <value>Programation des instruments par Guillaume CHOUTEAU</value>
+    <value>Programmation des instruments par Guillaume CHOUTEAU</value>
     <comment>About Form</comment>
   </data>
   <data name="Out_Label" xml:space="preserve">
@@ -632,7 +632,7 @@
     <value>Roulis</value>
   </data>
   <data name="Run_Time" xml:space="preserve">
-    <value>Temp Écoulé</value>
+    <value>Chrono</value>
   </data>
   <data name="Satellites" xml:space="preserve">
     <value>Satellites</value>
@@ -744,7 +744,7 @@
     <value>Binaire uBlox</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Haut</value>
+    <value>Montée</value>
     <comment>For Vertical Speed</comment>
   </data>
   <data name="Version" xml:space="preserve">
@@ -764,14 +764,14 @@
     <value>Volts</value>
   </data>
   <data name="Waypoint" xml:space="preserve">
-    <value>Point de Route</value>
+    <value>Waypoint</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Waypoint_Data" xml:space="preserve">
-    <value>Données Point de Route</value>
+    <value>Données Waypoint</value>
   </data>
   <data name="Waypoint_Mode" xml:space="preserve">
-    <value>Mode Point de Route</value>
+    <value>Mode Waypoint</value>
     <comment>FY21AP Modes</comment>
   </data>
   <data name="Yaw" xml:space="preserve">
