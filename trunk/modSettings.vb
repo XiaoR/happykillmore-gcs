@@ -46,6 +46,7 @@ Module modSettings
     Public Sub LoadSettings()
         Dim nCount As Integer
 
+        bIsAdmin = GetRegSetting(sRootRegistry & "\Settings", "Admin Mode", False)
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
 
         sModelName = GetRegSetting(sRootRegistry & "\Settings", "3D Model", "EasyStar")
@@ -55,6 +56,8 @@ Module modSettings
         bYawReverse = GetRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", False)
         bHeadingReverse = GetRegSetting(sRootRegistry & "\Settings", "Heading Reverse", False)
         nThrottleChannel = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Throttle Channel", "1"))
+        eAltOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Altitude Offset", "0"))
+        nHomeOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Home Offset", "0"))
 
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
@@ -127,6 +130,9 @@ Module modSettings
         sSpeechWaypoint = GetRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", GetResString(, "Announce_Waypoints_Default"))
         bAnnounceModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", False)
         sSpeechModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", GetResString(, "Announce_ModeChange_Default"))
+        bAnnounceRegularInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval Enabled", False)
+        sSpeechRegularInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", GetResString(, "Announce_Regular_Interval_Default"))
+        nSpeechInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Interval", 30)
 
     End Sub
 
@@ -142,6 +148,8 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", bYawReverse)
         SaveRegSetting(sRootRegistry & "\Settings", "Heading Reverse", bHeadingReverse)
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Channel", nThrottleChannel)
+        SaveRegSetting(sRootRegistry & "\Settings", "Altitude Offset", eAltOffset)
+        SaveRegSetting(sRootRegistry & "\Settings", "Home Offset", nHomeOffset)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Extrude", bFlightExtrude)
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Color", sFlightColor)
@@ -183,6 +191,9 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", sSpeechWaypoint)
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", bAnnounceModeChange)
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", sSpeechModeChange)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval Enabled", bAnnounceRegularInterval)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", sSpeechRegularInterval)
+        SaveRegSetting(sRootRegistry & "\Settings", "Speech Interval", nSpeechInterval)
 
         frmMain.ResetForm()
         LoadSettings()

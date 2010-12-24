@@ -58,6 +58,7 @@ Public Class frmMain
     Dim nGPSInterval As Integer
     Dim nLastAttitude As Long
     Dim nLastWaypoint As Long
+    Dim nLastSpeechInterval As Long
     Dim nLastServos As Long
     Dim nLastTimeDate As Long
     'Dim nLastGPS As Long
@@ -93,6 +94,7 @@ Public Class frmMain
     Dim bExpandInstruments As Boolean = False
     Dim bUltraSmall As Boolean = False
 
+
     'Private GraphBuilder2 As ICaptureGraphBuilder2 = New CaptureGraphBuilder2
     'Private GraphBuilder As IGraphBuilder = New FilterGraph
     'Private m_filtergraph As IFilterGraph2 = New FilterGraph
@@ -107,13 +109,8 @@ Public Class frmMain
     Dim nTimeZoneOffset As Double
 
     Public Sub ResetForm()
-        sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
-        If sLanguageFile = "Default" Then
-            oCulture = System.Globalization.CultureInfo.CurrentCulture
-        Else
-            oCulture = CultureInfo.CreateSpecificCulture(sLanguageFile)
-        End If
-        resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
+
+        LoadLanguageFile()
 
         Me.Text = "HappyKillmore's " & GetResString(, "Ground_Control_Station") & " - " & Version
 
@@ -396,6 +393,8 @@ Public Class frmMain
         Dim nSplitter As Long
         Dim aLanguages() As String
 
+        sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+
         Me.Visible = False
         ResetForm()
 
@@ -568,6 +567,8 @@ Public Class frmMain
         frmAbout.UpdateStatus(GetResString(, "Resizing_Form"), 80)
 
         ResizeForm()
+
+        cmdTest.Visible = bIsAdmin
 
         frmAbout.UpdateStatus("", 100)
         frmAbout.Dispose()
@@ -861,7 +862,7 @@ Public Class frmMain
         If sLastSpeechMode <> lblMode.Text Then
             If sLastSpeechMode <> "" Then
                 If bAnnounceModeChange = True Then
-                    playmessage(sSpeechModeChange, sSpeechVoice)
+                    PlayMessage(sSpeechModeChange, sSpeechVoice)
                 End If
             End If
             sLastSpeechMode = lblMode.Text
@@ -869,10 +870,15 @@ Public Class frmMain
         If nLastSpeechWaypoint <> nWaypoint Then
             If nLastSpeechWaypoint <> -1 Then
                 If bAnnounceWaypoints = True Then
-                    playmessage(sSpeechWaypoint, sSpeechVoice)
+                    nLastSpeechInterval = Now.Ticks
+                    PlayMessage(sSpeechWaypoint, sSpeechVoice)
                 End If
             End If
             nLastSpeechWaypoint = nWaypoint
+        End If
+        If bAnnounceRegularInterval = True And Now.Ticks - nLastSpeechInterval > (1000 * nSpeechInterval) * 10000 Then
+            nLastSpeechInterval = Now.Ticks
+            PlayMessage(sSpeechRegularInterval, sSpeechVoice)
         End If
 
         lblThrottle.Text = throttle.ToString("0.00%")
@@ -1038,7 +1044,7 @@ Public Class frmMain
     Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -1052,7 +1058,7 @@ Public Class frmMain
     End Sub
     Public Sub addWaypoint()
         Try
-            webDocument.InvokeScript("addWaypoint", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), nWaypoint.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
+            webDocument.InvokeScript("addWaypoint", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), nWaypoint.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, eAltOffset})
         Catch e2 As Exception
         End Try
     End Sub
@@ -1076,7 +1082,7 @@ Public Class frmMain
     End Sub
     Public Sub setPlaneLocation()
         Try
-            webDocument.InvokeScript("drawAndCenter", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
+            webDocument.InvokeScript("drawAndCenter", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll), eAltOffset})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
@@ -1458,6 +1464,25 @@ Public Class frmMain
                                 nAmperage = Convert.ToSingle(ConvertPeriodToLocal(sSplit(3)))
                                 nMAH = Convert.ToInt32(ConvertPeriodToLocal(sSplit(4)))
                                 bNewWaypoint = True
+                            Case "A4"
+                                lblGPSMessage.Text = "A4 - Sats/Servo"
+                                dGPSDate = GetNMEADate(ConvertPeriodToLocal(sSplit(2)))
+                                dGPSTime = GetNMEATime(ConvertPeriodToLocal(sSplit(3)))
+                                nSats = Convert.ToInt32(ConvertPeriodToLocal(sSplit(4)))
+                                nFix = Convert.ToInt32(ConvertPeriodToLocal(sSplit(5)))
+                                If nFix = 6 Then
+                                    nFix = 0
+                                End If
+                                nHDOP = Convert.ToSingle(ConvertPeriodToLocal(sSplit(6)))
+                                nServoOutput(0) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(7)))
+                                nServoOutput(1) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(8)))
+                                nServoOutput(2) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(9)))
+                                nServoOutput(3) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(10)))
+                                nServoOutput(4) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(11)))
+                                nServoOutput(5) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(12)))
+                                nServoOutput(6) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(13)))
+                                bNewGPS = True
+                                bNewServo = True
                         End Select
 
                     Case cMessage.e_MessageType.e_MessageType_NMEA
@@ -1592,13 +1617,13 @@ Public Class frmMain
                                 End If
                                 nLatitude = ConvertLatLongFormat(ConvertLatLongFY21AP(Mid(.Packet, 6, 4)), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
                                 nLongitude = ConvertLatLongFormat(ConvertLatLongFY21AP(Mid(.Packet, 10, 4)), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
-                                nHeading = ConvertHexToDecFY21AP(Mid(.Packet, 14, 2)) * 0.01
+                                nHeading = ConvertHexToDecFY21AP(Mid(.Packet, 14, 2), False) * 0.01
                                 If nHeading < 0 Then
                                     nHeading = nHeading + 360
                                 End If
                                 nYaw = nHeading
                                 nGroundSpeed = ConvertSpeed(ConvertHexToDecFY21AP(Mid(.Packet, 16, 2)) * 0.1, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                nAltitude = ConvertDistance(ConvertHexToDecFY21AP(Mid(.Packet, 18, 2)) * 0.1, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                nAltitude = ConvertDistance(ConvertHexToDecFY21AP(Mid(.Packet, 18, 2)) * 0.01, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                 nDistance = ConvertDistance(ConvertHexToDecFY21AP(Mid(.Packet, 24, 2)) * 0.1, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                 bNewGPS = True
 
@@ -2174,13 +2199,13 @@ Public Class frmMain
             End If
         End If
 
-            Try
-                For nCount = nMaxListboxRecords To lstEvents.Items.Count - 1
-                    lstEvents.Items.RemoveAt(nMaxListboxRecords)
-                Next
-            Catch
-            End Try
-            'System.Windows.Forms.Application.DoEvents()
+        Try
+            For nCount = nMaxListboxRecords To lstEvents.Items.Count - 1
+                lstEvents.Items.RemoveAt(nMaxListboxRecords)
+            Next
+        Catch
+        End Try
+        'System.Windows.Forms.Application.DoEvents()
     End Sub
     Private Sub UpdateGPSDateTime(Optional ByVal clearTime As Boolean = False)
         Dim dDateTime As Date
@@ -2692,7 +2717,7 @@ Public Class frmMain
                         Try
                             webDocument.InvokeScript("clearMap", New Object() {})
                             If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+                                webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
                             End If
                         Catch e2 As Exception
                         End Try
@@ -2704,7 +2729,7 @@ Public Class frmMain
                         sSplit2 = Split(sSplit(nCount), ",")
                         Try
                             If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(0), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
+                                webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(0), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, eAltOffset})
                             End If
                         Catch e2 As Exception
                         End Try
@@ -2727,13 +2752,13 @@ Public Class frmMain
                         Try
                             If nWPNumber = 0 Then
                                 If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                    webDocument.InvokeScript("setHomeLatLng", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+                                    webDocument.InvokeScript("setHomeLatLng", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
                                     nHomeLat = sSplit2(3)
                                     nHomeLong = sSplit2(4)
                                 End If
                             Else
                                 If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                    webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth})
+                                    webDocument.InvokeScript("addWaypoint", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), nWPNumber.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, eAltOffset})
                                 End If
                             End If
                         Catch e2 As Exception
@@ -3324,7 +3349,7 @@ Public Class frmMain
 
     Private Sub cmdSetHome_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetHome.Click
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
             nDataPoints = 1
         Catch
         End Try
@@ -3720,18 +3745,21 @@ Public Class frmMain
     Private Sub cmdTest_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdTest.Click
         Dim sMission As String
         Dim sSplit() As String
+        Dim sSplit2() As String
         Dim nCount As Integer
+        Dim nCount2 As Int16
         Dim oMessage As cMessage
         Dim sOutput As String = ""
         Dim sFileContents As String
+        Dim sNewString As String
 
         'Debug.Print(ConvertLatLongFY21AP(Chr(&H80) & Chr(&HE1) & Chr(&H1) & Chr(&HD4)))
         'Debug.Print(ConvertLatLongFY21AP(Chr(&H9) & Chr(&H6D) & Chr(&H4) & Chr(&H51)))
         'Exit Sub
 
-        Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\gluonpilot.txt", FileMode.Open)
-        'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY21AP hypert 2.txt", FileMode.Open)
-        'Dim FS As New FileStream("C:\atto.txt", FileMode.Open)
+        'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\gluonpilot.txt", FileMode.Open)
+        'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY-21_280-90.txt", FileMode.Open)
+        Dim FS As New FileStream("C:\atto.txt", FileMode.Open)
         Dim Buffer() As Byte
         'Get the bytes from file to a byte array        
         ReDim Buffer(FS.Length - 1)
@@ -3739,8 +3767,9 @@ Public Class frmMain
         sFileContents = System.Text.Encoding.Default.GetString(Buffer)
         FS.Close()
 
-        'sSplit = Split(sFileContents, Chr(&HA5) & Chr(&H5A))
         sSplit = Split(sFileContents, vbCrLf)
+        'sSplit = Split(sFileContents, Chr(&HA5) & Chr(&H5A))
+        'sSplit = Split(sFileContents, vbCrLf)
 
         'For nCount = 1 To Len(sFileContents)
         '    sOutput = sOutput & Hex(Asc(Mid(sFileContents, nCount, 1))).PadLeft(2, "0") & " "
@@ -3748,11 +3777,20 @@ Public Class frmMain
         'Debug.Print(sOutput)
 
         For nCount = 1 To UBound(sSplit)
+            'sNewString = ""
+            'sSplit2 = Split(sSplit(nCount), " ")
+            'For nCount2 = 0 To UBound(sSplit2)
+            '    If sSplit2(nCount2) <> "" Then
+            '        sNewString = sNewString & Chr("&h" & sSplit2(nCount2))
+            '    End If
+            'Next
+
+            'oMessage = GetNextSentence(sNewString & vbCrLf)
             'oMessage = GetNextSentence(Chr(&HA5) & Chr(&H5A) & sSplit(nCount))
             oMessage = GetNextSentence(sSplit(nCount) & vbCrLf)
             UpdateVariables(oMessage)
             Application.DoEvents()
-            System.Threading.Thread.Sleep(250)
+            System.Threading.Thread.Sleep(100)
         Next
     End Sub
 
@@ -3817,5 +3855,22 @@ Public Class frmMain
     Private Sub lblGPSTime_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblGPSTime.Click
         bUTCTime = Not bUTCTime
         SaveRegSetting(sRootRegistry & "\Settings", "UTC Time", bUTCTime)
+    End Sub
+    Private Sub frmMain_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.F9 Then
+            If Dir(GetRootPath() & "Language\StringResourceEditor.exe", FileAttribute.Normal) <> "" Then
+                System.Diagnostics.Process.Start(GetRootPath() & "Language\StringResourceEditor.exe", """" & GetRootPath() & "Language\Strings.resx""")
+            End If
+        ElseIf e.KeyCode = Keys.F5 Then
+            sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+            ResetForm()
+            LoadSettings()
+            ResizeForm()
+        ElseIf e.KeyCode = Keys.F4 Then
+            sLanguageFile = "en"
+            ResetForm()
+            LoadSettings()
+            ResizeForm()
+        End If
     End Sub
 End Class

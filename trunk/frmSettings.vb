@@ -2,6 +2,8 @@ Imports System.Speech
 Public Class frmSettings
     Dim aLanguages(0) As String
     Private Sub ResetForm()
+        LoadLanguageFile()
+
         GetResString(Me, "Settings")
 
         GetResString(tabGeneral, "General")
@@ -15,6 +17,7 @@ Public Class frmSettings
         GetResString(lblYawReverse, "Yaw", True)
         GetResString(lblHeadingReverse, "Heading", True)
         GetResString(lblThrottleChannel, "Throttle_Channel", True)
+        GetResString(lblAltitudeOffset, "Altitude_Offset", True)
 
         GetResString(tabGoogleEarth, "Google_Earth")
         GetResString(grpFlightPath, "Google_Earth_Flight_Path")
@@ -72,8 +75,10 @@ Public Class frmSettings
 
         GetResString(tabSpeech, "Speech")
         GetResString(lblVoice, "Voice", True)
-        GetResString(chkAnnouceWaypoints, "Announce_Waypoints")
-        GetResString(chkAnnouceModeChange, "Announce_ModeChange")
+        GetResString(chkAnnounceWaypoints, "Announce_Waypoints")
+        GetResString(chkAnnounceModeChange, "Announce_ModeChange")
+        GetResString(chkAnnounceRegularInterval, "Announce_Regular_Interval")
+        GetResString(lblSpeechInterval, "Interval")
         GetResString(lblHelp, "Help")
 
 
@@ -122,6 +127,21 @@ Public Class frmSettings
             Catch
                 .Text = "EasyStar"
             End Try
+        End With
+
+        With cboSpeechInterval
+            .Items.Add("10 " & GetResString(, "secs"))
+            .Items.Add("15 " & GetResString(, "secs"))
+            .Items.Add("20 " & GetResString(, "secs"))
+            .Items.Add("25 " & GetResString(, "secs"))
+            .Items.Add("30 " & GetResString(, "secs"))
+            .Items.Add("40 " & GetResString(, "secs"))
+            .Items.Add("45 " & GetResString(, "secs"))
+            .Items.Add("60 " & GetResString(, "secs"))
+            .Items.Add("120 " & GetResString(, "secs"))
+            .Items.Add("180 " & GetResString(, "secs"))
+            .Items.Add("240 " & GetResString(, "secs"))
+            .Text = nSpeechInterval & " " & GetResString(, "secs")
         End With
 
         With cboMaxSpeed
@@ -199,6 +219,12 @@ Public Class frmSettings
             .SelectedIndex = eSpeedUnits
         End With
 
+        With cboAltitudeOffset
+            .Items.Add(GetResString(, "From_Sealevel", , , , , , , "From Sea Level"))
+            .Items.Add(GetResString(, "From_HomeAlt", , , , , , , "From Home Alt"))
+            .SelectedIndex = eAltOffset
+        End With
+
         chkInst3DModel.Enabled = Not b3DModelFailed
         chkInstSpeed.Checked = bInstruments(e_Instruments.e_Instruments_Speed)
         chkInstAltimeter.Checked = bInstruments(e_Instruments.e_Instruments_Altimeter)
@@ -209,12 +235,15 @@ Public Class frmSettings
         chkInstTurn.Checked = bInstruments(e_Instruments.e_Instruments_Turn)
         chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
 
-        chkAnnouceWaypoints.Checked = bAnnounceWaypoints
-        txtAnnouceWaypoints.Text = sSpeechWaypoint
-        chkAnnouceWaypoints_CheckedChanged(Nothing, Nothing)
-        chkAnnouceModeChange.Checked = bAnnounceModeChange
-        txtAnnouceModeChange.Text = sSpeechModeChange
-        chkAnnouceModeChange_CheckedChanged(Nothing, Nothing)
+        chkAnnounceWaypoints.Checked = bAnnounceWaypoints
+        txtAnnounceWaypoints.Text = sSpeechWaypoint
+        chkAnnounceWaypoints_CheckedChanged(Nothing, Nothing)
+        chkAnnounceModeChange.Checked = bAnnounceModeChange
+        txtAnnounceModeChange.Text = sSpeechModeChange
+        chkAnnounceModeChange_CheckedChanged(Nothing, Nothing)
+        chkAnnounceRegularInterval.Checked = bAnnounceRegularInterval
+        txtAnnounceRegularInterval.Text = sSpeechRegularInterval
+        chkAnnounceRegularInterval_CheckedChanged(Nothing, Nothing)
 
     End Sub
     Private Sub LoadLanguages(ByVal inputCombo As ComboBox)
@@ -222,13 +251,15 @@ Public Class frmSettings
         Dim sSplit() As String
         Dim sSplit2() As String
         Dim nCount As Integer
+        Dim sRegistryLanguageFile As String
 
+        sRegistryLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
         sFileContents = GetFileContents(GetRootPath() & "Language\Languages.txt")
         sSplit = Split(sFileContents, vbCrLf)
         ReDim aLanguages(0 To UBound(sSplit) + 1)
         With inputCombo
             .Items.Clear()
-            .Items.Add(GetResString(, "Default Language"))
+            .Items.Add(GetResString(, "Default Language", , , , , , , "Default Language"))
             aLanguages(0) = "Default"
             For nCount = 0 To UBound(sSplit)
                 If Trim(sSplit(nCount)) <> "" Then
@@ -236,7 +267,7 @@ Public Class frmSettings
                     .Items.Add(sSplit2(1))
                     aLanguages(.Items.Count - 1) = sSplit2(0)
 
-                    If sLanguageFile = sSplit2(0) Then
+                    If sRegistryLanguageFile = sSplit2(0) Then
                         .SelectedIndex = .Items.Count - 1
                     End If
                 End If
@@ -261,6 +292,7 @@ Public Class frmSettings
         bYawReverse = chkYawReverse.Checked
         bHeadingReverse = chkHeadingReverse.Checked
         nThrottleChannel = cboThrottleChannel.SelectedIndex
+        eAltOffset = cboAltitudeOffset.SelectedIndex
 
         nMapUpdateRate = cboMapUpdateRate.SelectedIndex + 1
 
@@ -303,10 +335,13 @@ Public Class frmSettings
         oThrottleColor = cboThrottleColor.SelectedIndex
 
         sSpeechVoice = cboVoice.Text
-        bAnnounceWaypoints = chkAnnouceWaypoints.Checked
-        sSpeechWaypoint = txtAnnouceWaypoints.Text
-        bAnnounceModeChange = chkAnnouceModeChange.Checked
-        sSpeechModeChange = txtAnnouceModeChange.Text
+        bAnnounceWaypoints = chkAnnounceWaypoints.Checked
+        sSpeechWaypoint = txtAnnounceWaypoints.Text
+        bAnnounceModeChange = chkAnnounceModeChange.Checked
+        sSpeechModeChange = txtAnnounceModeChange.Text
+        bAnnounceRegularInterval = chkAnnounceRegularInterval.Checked
+        sSpeechRegularInterval = txtAnnounceRegularInterval.Text
+        nSpeechInterval = cboSpeechInterval.Text.Substring(0, InStr(cboSpeechInterval.Text, " ") - 1)
 
         bGEBorders = chkGEBorders.Checked
         bGEBuildings = chkGEBuildings.Checked
@@ -340,22 +375,29 @@ Public Class frmSettings
         End If
     End Sub
 
-    Private Sub chkAnnouceWaypoints_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnouceWaypoints.CheckedChanged
-        txtAnnouceWaypoints.Enabled = chkAnnouceWaypoints.Checked
-        cmdWaypointPlay.Enabled = chkAnnouceWaypoints.Checked
+    Private Sub chkAnnounceWaypoints_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceWaypoints.CheckedChanged
+        txtAnnounceWaypoints.Enabled = chkAnnounceWaypoints.Checked
+        cmdWaypointPlay.Enabled = chkAnnounceWaypoints.Checked
+    End Sub
+
+    Private Sub chkAnnounceRegularInterval_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceRegularInterval.CheckedChanged
+        txtAnnounceRegularInterval.Enabled = chkAnnounceRegularInterval.Checked
+        cmdRegularIntervalPlay.Enabled = chkAnnounceRegularInterval.Checked
+        lblSpeechInterval.Enabled = chkAnnounceRegularInterval.Checked
+        cboSpeechInterval.Enabled = chkAnnounceRegularInterval.Checked
     End Sub
 
     Private Sub cmdWaypointPlay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWaypointPlay.Click
-        PlayMessage(txtAnnouceWaypoints.Text, cboVoice.Text)
+        PlayMessage(txtAnnounceWaypoints.Text, cboVoice.Text)
     End Sub
 
     Private Sub cmdModeChangPlaye_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdModeChangePlay.Click
-        PlayMessage(txtAnnouceModeChange.Text, cboVoice.Text)
+        PlayMessage(txtAnnounceModeChange.Text, cboVoice.Text)
     End Sub
 
-    Private Sub chkAnnouceModeChange_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnouceModeChange.CheckedChanged
-        txtAnnouceModeChange.Enabled = chkAnnouceModeChange.Checked
-        cmdModeChangePlay.Enabled = chkAnnouceModeChange.Checked
+    Private Sub chkAnnounceModeChange_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceModeChange.CheckedChanged
+        txtAnnounceModeChange.Enabled = chkAnnounceModeChange.Checked
+        cmdModeChangePlay.Enabled = chkAnnounceModeChange.Checked
     End Sub
 
     Private Sub chkGERoads_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged
@@ -369,4 +411,22 @@ Public Class frmSettings
     Private Sub lblHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblHelp.Click
         System.Diagnostics.Process.Start("http://code.google.com/p/happykillmore-gcs/wiki/SpeechSettings")
     End Sub
+    Private Sub frmSettings_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.F9 Then
+            If Dir(GetRootPath() & "Language\StringResourceEditor.exe", FileAttribute.Normal) <> "" Then
+                System.Diagnostics.Process.Start(GetRootPath() & "Language\StringResourceEditor.exe", """" & GetRootPath() & "Language\Strings.resx""")
+            End If
+        ElseIf e.KeyCode = Keys.F5 Then
+            sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+            ResetForm()
+        ElseIf e.KeyCode = Keys.F4 Then
+            sLanguageFile = "en"
+            ResetForm()
+        End If
+    End Sub
+
+    Private Sub cmdRegularIntervalPlay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegularIntervalPlay.Click
+        PlayMessage(txtAnnounceRegularInterval.Text, cboVoice.Text)
+    End Sub
+
 End Class

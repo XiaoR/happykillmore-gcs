@@ -29,6 +29,8 @@ Partial Class frmSettings
         Me.tabSettings = New System.Windows.Forms.TabControl
         Me.tabGeneral = New System.Windows.Forms.TabPage
         Me.grpGeneral = New System.Windows.Forms.GroupBox
+        Me.lblAltitudeOffset = New System.Windows.Forms.Label
+        Me.cboAltitudeOffset = New System.Windows.Forms.ComboBox
         Me.lblLanguage = New System.Windows.Forms.Label
         Me.cboLanguage = New System.Windows.Forms.ComboBox
         Me.cboThrottleChannel = New System.Windows.Forms.ComboBox
@@ -111,12 +113,16 @@ Partial Class frmSettings
         Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
         Me.chkInstSpeed = New System.Windows.Forms.CheckBox
         Me.tabSpeech = New System.Windows.Forms.TabPage
+        Me.cmdRegularIntervalPlay = New System.Windows.Forms.Button
+        Me.txtAnnounceRegularInterval = New System.Windows.Forms.TextBox
+        Me.chkAnnounceRegularInterval = New System.Windows.Forms.CheckBox
+        Me.lblHelp = New System.Windows.Forms.Label
         Me.cmdModeChangePlay = New System.Windows.Forms.Button
-        Me.txtAnnouceModeChange = New System.Windows.Forms.TextBox
-        Me.chkAnnouceModeChange = New System.Windows.Forms.CheckBox
+        Me.txtAnnounceModeChange = New System.Windows.Forms.TextBox
+        Me.chkAnnounceModeChange = New System.Windows.Forms.CheckBox
         Me.cmdWaypointPlay = New System.Windows.Forms.Button
-        Me.txtAnnouceWaypoints = New System.Windows.Forms.TextBox
-        Me.chkAnnouceWaypoints = New System.Windows.Forms.CheckBox
+        Me.txtAnnounceWaypoints = New System.Windows.Forms.TextBox
+        Me.chkAnnounceWaypoints = New System.Windows.Forms.CheckBox
         Me.cboVoice = New System.Windows.Forms.ComboBox
         Me.lblVoice = New System.Windows.Forms.Label
         Me.Label11 = New System.Windows.Forms.Label
@@ -129,7 +135,8 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.lblHelp = New System.Windows.Forms.Label
+        Me.lblSpeechInterval = New System.Windows.Forms.Label
+        Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -180,6 +187,8 @@ Partial Class frmSettings
         '
         'grpGeneral
         '
+        Me.grpGeneral.Controls.Add(Me.lblAltitudeOffset)
+        Me.grpGeneral.Controls.Add(Me.cboAltitudeOffset)
         Me.grpGeneral.Controls.Add(Me.lblLanguage)
         Me.grpGeneral.Controls.Add(Me.cboLanguage)
         Me.grpGeneral.Controls.Add(Me.cboThrottleChannel)
@@ -203,6 +212,19 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpGeneral, "grpGeneral")
         Me.grpGeneral.Name = "grpGeneral"
         Me.grpGeneral.TabStop = False
+        '
+        'lblAltitudeOffset
+        '
+        resources.ApplyResources(Me.lblAltitudeOffset, "lblAltitudeOffset")
+        Me.lblAltitudeOffset.Name = "lblAltitudeOffset"
+        '
+        'cboAltitudeOffset
+        '
+        Me.cboAltitudeOffset.DropDownHeight = 300
+        Me.cboAltitudeOffset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboAltitudeOffset.FormattingEnabled = True
+        resources.ApplyResources(Me.cboAltitudeOffset, "cboAltitudeOffset")
+        Me.cboAltitudeOffset.Name = "cboAltitudeOffset"
         '
         'lblLanguage
         '
@@ -750,18 +772,47 @@ Partial Class frmSettings
         '
         'tabSpeech
         '
+        Me.tabSpeech.Controls.Add(Me.lblSpeechInterval)
+        Me.tabSpeech.Controls.Add(Me.cboSpeechInterval)
+        Me.tabSpeech.Controls.Add(Me.cmdRegularIntervalPlay)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceRegularInterval)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceRegularInterval)
         Me.tabSpeech.Controls.Add(Me.lblHelp)
         Me.tabSpeech.Controls.Add(Me.cmdModeChangePlay)
-        Me.tabSpeech.Controls.Add(Me.txtAnnouceModeChange)
-        Me.tabSpeech.Controls.Add(Me.chkAnnouceModeChange)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceModeChange)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceModeChange)
         Me.tabSpeech.Controls.Add(Me.cmdWaypointPlay)
-        Me.tabSpeech.Controls.Add(Me.txtAnnouceWaypoints)
-        Me.tabSpeech.Controls.Add(Me.chkAnnouceWaypoints)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceWaypoints)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceWaypoints)
         Me.tabSpeech.Controls.Add(Me.cboVoice)
         Me.tabSpeech.Controls.Add(Me.lblVoice)
         resources.ApplyResources(Me.tabSpeech, "tabSpeech")
         Me.tabSpeech.Name = "tabSpeech"
         Me.tabSpeech.UseVisualStyleBackColor = True
+        '
+        'cmdRegularIntervalPlay
+        '
+        resources.ApplyResources(Me.cmdRegularIntervalPlay, "cmdRegularIntervalPlay")
+        Me.cmdRegularIntervalPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdRegularIntervalPlay.Name = "cmdRegularIntervalPlay"
+        Me.cmdRegularIntervalPlay.UseVisualStyleBackColor = True
+        '
+        'txtAnnounceRegularInterval
+        '
+        resources.ApplyResources(Me.txtAnnounceRegularInterval, "txtAnnounceRegularInterval")
+        Me.txtAnnounceRegularInterval.Name = "txtAnnounceRegularInterval"
+        '
+        'chkAnnounceRegularInterval
+        '
+        resources.ApplyResources(Me.chkAnnounceRegularInterval, "chkAnnounceRegularInterval")
+        Me.chkAnnounceRegularInterval.Name = "chkAnnounceRegularInterval"
+        Me.chkAnnounceRegularInterval.UseVisualStyleBackColor = True
+        '
+        'lblHelp
+        '
+        resources.ApplyResources(Me.lblHelp, "lblHelp")
+        Me.lblHelp.ForeColor = System.Drawing.Color.Black
+        Me.lblHelp.Name = "lblHelp"
         '
         'cmdModeChangePlay
         '
@@ -770,16 +821,16 @@ Partial Class frmSettings
         Me.cmdModeChangePlay.Name = "cmdModeChangePlay"
         Me.cmdModeChangePlay.UseVisualStyleBackColor = True
         '
-        'txtAnnouceModeChange
+        'txtAnnounceModeChange
         '
-        resources.ApplyResources(Me.txtAnnouceModeChange, "txtAnnouceModeChange")
-        Me.txtAnnouceModeChange.Name = "txtAnnouceModeChange"
+        resources.ApplyResources(Me.txtAnnounceModeChange, "txtAnnounceModeChange")
+        Me.txtAnnounceModeChange.Name = "txtAnnounceModeChange"
         '
-        'chkAnnouceModeChange
+        'chkAnnounceModeChange
         '
-        resources.ApplyResources(Me.chkAnnouceModeChange, "chkAnnouceModeChange")
-        Me.chkAnnouceModeChange.Name = "chkAnnouceModeChange"
-        Me.chkAnnouceModeChange.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.chkAnnounceModeChange, "chkAnnounceModeChange")
+        Me.chkAnnounceModeChange.Name = "chkAnnounceModeChange"
+        Me.chkAnnounceModeChange.UseVisualStyleBackColor = True
         '
         'cmdWaypointPlay
         '
@@ -788,16 +839,16 @@ Partial Class frmSettings
         Me.cmdWaypointPlay.Name = "cmdWaypointPlay"
         Me.cmdWaypointPlay.UseVisualStyleBackColor = True
         '
-        'txtAnnouceWaypoints
+        'txtAnnounceWaypoints
         '
-        resources.ApplyResources(Me.txtAnnouceWaypoints, "txtAnnouceWaypoints")
-        Me.txtAnnouceWaypoints.Name = "txtAnnouceWaypoints"
+        resources.ApplyResources(Me.txtAnnounceWaypoints, "txtAnnounceWaypoints")
+        Me.txtAnnounceWaypoints.Name = "txtAnnounceWaypoints"
         '
-        'chkAnnouceWaypoints
+        'chkAnnounceWaypoints
         '
-        resources.ApplyResources(Me.chkAnnouceWaypoints, "chkAnnouceWaypoints")
-        Me.chkAnnouceWaypoints.Name = "chkAnnouceWaypoints"
-        Me.chkAnnouceWaypoints.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.chkAnnounceWaypoints, "chkAnnounceWaypoints")
+        Me.chkAnnounceWaypoints.Name = "chkAnnounceWaypoints"
+        Me.chkAnnounceWaypoints.UseVisualStyleBackColor = True
         '
         'cboVoice
         '
@@ -878,11 +929,18 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'lblHelp
+        'lblSpeechInterval
         '
-        resources.ApplyResources(Me.lblHelp, "lblHelp")
-        Me.lblHelp.ForeColor = System.Drawing.Color.Black
-        Me.lblHelp.Name = "lblHelp"
+        resources.ApplyResources(Me.lblSpeechInterval, "lblSpeechInterval")
+        Me.lblSpeechInterval.Name = "lblSpeechInterval"
+        '
+        'cboSpeechInterval
+        '
+        Me.cboSpeechInterval.DropDownHeight = 300
+        Me.cboSpeechInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        resources.ApplyResources(Me.cboSpeechInterval, "cboSpeechInterval")
+        Me.cboSpeechInterval.FormattingEnabled = True
+        Me.cboSpeechInterval.Name = "cboSpeechInterval"
         '
         'frmSettings
         '
@@ -892,6 +950,7 @@ Partial Class frmSettings
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmdSave)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmSettings"
         Me.tabSettings.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
@@ -1015,12 +1074,19 @@ Partial Class frmSettings
     Friend WithEvents lblGEBuildings As System.Windows.Forms.Label
     Friend WithEvents chkGEBuildings As System.Windows.Forms.CheckBox
     Friend WithEvents cmdModeChangePlay As System.Windows.Forms.Button
-    Friend WithEvents txtAnnouceModeChange As System.Windows.Forms.TextBox
-    Friend WithEvents chkAnnouceModeChange As System.Windows.Forms.CheckBox
+    Friend WithEvents txtAnnounceModeChange As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceModeChange As System.Windows.Forms.CheckBox
     Friend WithEvents cmdWaypointPlay As System.Windows.Forms.Button
-    Friend WithEvents txtAnnouceWaypoints As System.Windows.Forms.TextBox
-    Friend WithEvents chkAnnouceWaypoints As System.Windows.Forms.CheckBox
+    Friend WithEvents txtAnnounceWaypoints As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceWaypoints As System.Windows.Forms.CheckBox
     Friend WithEvents cboVoice As System.Windows.Forms.ComboBox
     Friend WithEvents lblVoice As System.Windows.Forms.Label
     Friend WithEvents lblHelp As System.Windows.Forms.Label
+    Friend WithEvents lblAltitudeOffset As System.Windows.Forms.Label
+    Friend WithEvents cboAltitudeOffset As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdRegularIntervalPlay As System.Windows.Forms.Button
+    Friend WithEvents txtAnnounceRegularInterval As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceRegularInterval As System.Windows.Forms.CheckBox
+    Friend WithEvents lblSpeechInterval As System.Windows.Forms.Label
+    Friend WithEvents cboSpeechInterval As System.Windows.Forms.ComboBox
 End Class

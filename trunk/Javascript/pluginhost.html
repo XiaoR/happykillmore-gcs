@@ -34,6 +34,8 @@
     var currentHeading = 0;
     var cameraRange = 0;
 
+    var eAltOffset = 0;
+    
     var lastChangeTime = 0;
 
     var planeIcon = null;
@@ -197,8 +199,8 @@
 //      ge.getView().setAbstractView(lookAt);
 
 	    camera.setLatitude(lastLat); 
-	    camera.setLongitude(lastLong);  
-	    camera.setAltitude(lastAlt);  
+	    camera.setLongitude(lastLong); 
+	    camera.setAltitude(lastAlt + 50);  
         ge.getView().setAbstractView(camera);
     }
     
@@ -212,6 +214,13 @@
         planeModel.getScale().setZ(nScale);
 
         //planePlacemark.setGeometry(planeModel);
+    }
+
+    function changeAltOffset(newOffset) {
+        if (isLoaded == false || homeSet == false){
+            return;
+        }
+        eAltOffset = newOffset;
     }
     
     function loadModel(newModelName) {
@@ -250,11 +259,12 @@
         modelLoaded = true;
     }
     
-    function setHomeLatLng(lat,long, altitude, newModelName, scale, pitch, roll, newView) {
+    function setHomeLatLng(lat,long, altitude, newModelName, scale, pitch, roll, newView, altOffset) {
         if (isLoaded == false){
             return;
         }
         
+        eAltOffset = altOffset;
         nScale = scale;
 	    var features = ge.getFeatures(); 
 	    while (features.getFirstChild()) { 
@@ -266,9 +276,18 @@
         modelName = newModelName;
         buildPlaneModel();
 
+	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+	    if (homeGroundAltitude == 0){
+		    homeGroundAltitude = altitude;
+	    }
+
         planeLoc.setLatitude(lat);
         planeLoc.setLongitude(long);
-        planeLoc.setAltitude(altitude);
+        if (eAltOffset == 0) {
+            planeLoc.setAltitude(altitude);
+        } else {
+            planeLoc.setAltitude(altitude + homeGroundAltitude);
+        }
 
 	    // Create the placemark. 
 	    var placemark = ge.createPlacemark(''); 
@@ -287,16 +306,12 @@
 	    homePoint.setLatitude(lat); 
 	    homePoint.setLongitude(long); 
 	    //point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
-	    homePoint.setAltitude(altitude); 
+	    homePoint.setAltitude(homeGroundAltitude); 
 	    placemark.setGeometry(homePoint);  
 
 	    // Add the placemark to Earth. 
 	    ge.getFeatures().appendChild(placemark); 
 
-	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
-	    if (homeGroundAltitude == 0){
-		    homeGroundAltitude = altitude;
-	    }
 		//document.getElementById('homeGroundAltitude') = homeGroundAltitude;
 	    lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
 
@@ -338,11 +353,13 @@
 	    ge.getFeatures().appendChild(lineStringPlacemark);
         }
     	
-    function addWaypoint(lat, long, altitude, index, missionExtrude, missionColor, missionWidth) {
+    function addWaypoint(lat, long, altitude, index, missionExtrude, missionColor, missionWidth, altOffset) {
         // Create the placemark. 
         if (isLoaded == false){
             return;
         }
+        
+        eAltOffset = altOffset;
         if (index != "-1"){
 	        var placemark = ge.createPlacemark(''); 
 	        //placemark.setName("WP#" + index);  
@@ -367,14 +384,24 @@
 		    point.setLatitude(lat); 
 		    point.setLongitude(long); 
 		    point.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-		    point.setAltitude(altitude + homeGroundAltitude); 
+            if (eAltOffset == 0) {
+		        point.setAltitude(altitude); 
+		    } else {
+		        point.setAltitude(altitude + homeGroundAltitude); 
+		    }
+		    point.setAltitude(altitude); 
+		    //point.setAltitude(altitude + homeGroundAltitude); 
 		    placemark.setGeometry(point);  
 
 		    // Add the placemark to Earth. 
 		    ge.getFeatures().appendChild(placemark); 
     	}
 
-	    lineString.getCoordinates().pushLatLngAlt(lat,long,altitude + homeGroundAltitude); 
+        if (eAltOffset == 0) {
+	        lineString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
+	    } else {
+	        lineString.getCoordinates().pushLatLngAlt(lat,long,altitude + homeGroundAltitude); 
+	    }
 
         lineStyle.getColor().set(missionColor);
         lineStyle.setWidth(missionWidth);
@@ -399,14 +426,17 @@
 //		}
     }
 
-    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,pitch,roll) {
+    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,pitch,roll,altOffset) {
 	    var nAngle = 0;
 	    var nNewHeading = 0;
 	    var nRange = 0;
+	    var nNewAltitude = 0;
+	    var currentGroundAlt = 0;
         if (isLoaded == false || homeSet == false){
             return;
         }
 
+        eAltOffset = altOffset;
         nLocked = 1;
         if (lastRange != 0) {
             nRange = currentRange - lastRange;
@@ -424,12 +454,7 @@
         //} else {
         //    ge.getOptions().setUnitsFeetMiles(true);
         //}
-        
-        lastLat = lat;
-        lastLong = long;
-        lastAlt = altitude;
-        
-        
+                
         planeOrient.setHeading(heading);
         planeOrient.setTilt(pitch); 
         planeOrient.setRoll(roll); 
@@ -439,8 +464,23 @@
 	    flightStyle.setWidth(flightWidth);
 	    flightPolyStyle.getColor().set(flightColor);
 	    
+	    currentGroundAlt = ge.getGlobe().getGroundAltitude(lat,long);
+
 	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-	    flightString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
+        if (eAltOffset == 0) {
+            nNewAltitude = altitude
+	    } else {
+            nNewAltitude = altitude + homeGroundAltitude
+	    }
+//	    if (nNewAltitude <= currentGroundAlt) {
+//	        nNewAltitude = currentGroundAlt;
+//	    }
+
+        lastLat = lat;
+        lastLong = long;
+        lastAlt = nNewAltitude;
+	    
+	    flightString.getCoordinates().pushLatLngAlt(lat,long,nNewAltitude); 
 
 	    ge.getFeatures().appendChild(flightStringPlacemark);
 	    
@@ -448,7 +488,11 @@
 	    
             planeLoc.setLatitude(lat);
             planeLoc.setLongitude(long);
-            planeLoc.setAltitude(altitude);
+            if (eAltOffset == 0) {
+                planeLoc.setAltitude(altitude);
+            } else {
+                planeLoc.setAltitude(altitude + homeGroundAltitude);
+            }
     	    
 	        viewType = cameraTracking;
 	        if (cameraTracking == 1) {
@@ -466,7 +510,11 @@
                 //lookAt.setRange(currentRange); 
 		        lookAt.setLatitude(lat); 
 		        lookAt.setLongitude(long);  
-		        lookAt.setAltitude(altitude); 
+                if (eAltOffset == 0) {
+ 		            lookAt.setAltitude(altitude); 
+                } else {
+		            lookAt.setAltitude(altitude + homeGroundAltitude); 
+                }
 		        lookAt.setHeading(heading); 
 		        camera.setHeading(heading); 
 		        //lookAt.setRange(currentRange-altitude);
@@ -476,7 +524,11 @@
 		    } else if(cameraTracking == 3) {
 		        camera.setLatitude(lat); 
 		        camera.setLongitude(long);  
-		        camera.setAltitude(altitude); 
+                if (eAltOffset == 0) {
+ 		            camera.setAltitude(altitude); 
+                } else {
+		            camera.setAltitude(altitude + homeGroundAltitude); 
+                }
 		        camera.setHeading(heading); 
 		        camera.setRoll(roll); 
 		        camera.setTilt(90 - pitch); 
@@ -526,7 +578,11 @@
             loadModel(newModelName);
         } else if (newView == 1) {
             loadModel(newModelName);
-		    lookAt.setAltitude(altitude); 
+            if (eAltOffset == 0) {
+		        lookAt.setAltitude(altitude); 
+            } else {
+		        lookAt.setAltitude(altitude + homeGroundAltitude); 
+            }
             lookAt.setRange(30); 
 		    lookAt.setTilt(0);  
 		    ge.getView().setAbstractView(lookAt);
@@ -552,7 +608,7 @@
 
     function eventListener(event) {
         if (nLocked == 0){
-  	        var lookAtCurrent = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
+  	           var lookAtCurrent = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
 //  	        lookAtCurrent.setLatitude(planeLoc.getLatitude());
 //  	        lookAtCurrent.setLongitude(planeLoc.getLongitude());
 //  	        lookAtCurrent.setAltitude(planeLoc.getAltitude());

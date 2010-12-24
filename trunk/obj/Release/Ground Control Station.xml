@@ -72,6 +72,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Altitude Hold Mode.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Altitude_Offset">
+	<summary>
+  Looks up a localized string similar to Altitude Offset.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Amperage_Color">
 	<summary>
   Looks up a localized string similar to Amperage Color.
@@ -88,13 +92,21 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Changed mode to {mode}.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Regular_Interval">
+	<summary>
+  Looks up a localized string similar to Announce Regular Interval.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Regular_Interval_Default">
+	<summary>
+  Looks up a localized string similar to en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Announce_Waypoints">
 	<summary>
   Looks up a localized string similar to Announce Waypoints.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Announce_Waypoints_Default">
 	<summary>
-  Looks up a localized string similar to Arrived at waypoint {wpn}.
+  Looks up a localized string similar to Arrived, Now heading to waypoint {wpn}.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.AP_Mega_Binary">
 	<summary>
@@ -292,6 +304,14 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Flight Path Color.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.From_HomeAlt">
+	<summary>
+  Looks up a localized string similar to From Home Alt.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.From_Sealevel">
+	<summary>
+  Looks up a localized string similar to From Sea Level.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Full">
 	<summary>
   Looks up a localized string similar to Full.
@@ -415,6 +435,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Instruments">
 	<summary>
   Looks up a localized string similar to Instruments.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Interval">
+	<summary>
+  Looks up a localized string similar to Interval.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Invalid_File">
 	<summary>

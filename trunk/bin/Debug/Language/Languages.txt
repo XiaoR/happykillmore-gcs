@@ -4,7 +4,8 @@ zh-TW;Chinese-Traditional
 da;Danish
 es;Español
 fi;Finnish
-fr;Française
+fr;Français
+fr-CA;Français (Canada) 
 it;Italiano
 pl;Polski
 pt-BR;Português Brasileiro

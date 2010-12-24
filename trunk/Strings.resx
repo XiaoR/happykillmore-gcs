@@ -161,6 +161,9 @@
     <value>Altitude Hold Mode</value>
     <comment>FY21AP Modes</comment>
   </data>
+  <data name="Altitude_Offset" xml:space="preserve">
+    <value>Altitude Offset</value>
+  </data>
   <data name="Amperage_Color" xml:space="preserve">
     <value>Amperage Color</value>
     <comment>Color selection for Battery meter - Amps meter</comment>
@@ -175,11 +178,17 @@
   <data name="Announce_ModeChange_Default" xml:space="preserve">
     <value>Changed mode to {mode}</value>
   </data>
+  <data name="Announce_Regular_Interval" xml:space="preserve">
+    <value>Announce Regular Interval</value>
+  </data>
+  <data name="Announce_Regular_Interval_Default" xml:space="preserve">
+    <value>en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour</value>
+  </data>
   <data name="Announce_Waypoints" xml:space="preserve">
     <value>Announce Waypoints</value>
   </data>
   <data name="Announce_Waypoints_Default" xml:space="preserve">
-    <value>Arrived at waypoint {wpn}</value>
+    <value>Arrived, Now heading to waypoint {wpn}</value>
   </data>
   <data name="AP_Mega_Binary" xml:space="preserve">
     <value>AP Mega Binary</value>
@@ -367,6 +376,12 @@
     <value>Flight Path Color</value>
     <comment>Color of line drawn behind plane in Google Earth</comment>
   </data>
+  <data name="From_HomeAlt" xml:space="preserve">
+    <value>From Home Alt</value>
+  </data>
+  <data name="From_Sealevel" xml:space="preserve">
+    <value>From Sea Level</value>
+  </data>
   <data name="Full" xml:space="preserve">
     <value>Full</value>
     <comment>Very SHORT (5 characters max) - Button name for Draw Full Mission</comment>
@@ -487,6 +502,9 @@
   </data>
   <data name="Instruments" xml:space="preserve">
     <value>Instruments</value>
+  </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
   </data>
   <data name="Invalid_File" xml:space="preserve">
     <value>Invalid File</value>
