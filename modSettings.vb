@@ -1,6 +1,13 @@
 Module modSettings
+    Public Const g_Default_DAE_URL = "http://www.happykillmore.com/Software/HK_GCS/3D Models/"
+
     Public nMapUpdateRate As Integer = 2
     Public sModelName As String = "EasyStar"
+    Public sModelURL As String = ""
+    Public nDaeHeadingOffset As Integer = 0
+    Public nDaePitchRollOffset As Integer = 1
+    Public n3DHeadingOffset As Integer = 0
+    Public n3DPitchRollOffset As Integer = 1
     Public nMaxSpeed As Integer = 120
     Public bPitchReverse As Boolean = False
     Public bRollReverse As Boolean = False
@@ -107,9 +114,8 @@ Module modSettings
         'End If
         frmMain.BatteryIndicatorInstrumentControl1.SetBatteryIndicatorParameters(Replace(GetResString(, "Battery_Throttle"), "&&", "&"), nBattery, nBatteryMin, nBatteryMax, oBatteryColor, nAmperage, 0, nAmperageMax, oAmperageColor, nMAH, nMAHMin, nMAHMax, oMAHColor, nThrottle, oThrottleColor)
 
-
         For nCount = 0 To UBound(bInstruments)
-            bInstruments(nCount) = GetRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, IIf(nCount <= 5, True, False))
+            bInstruments(nCount) = GetRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, IIf(nCount <= 4 Or nCount = 7, True, False))
         Next
 
         nBatteryMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Max", "12.5"))

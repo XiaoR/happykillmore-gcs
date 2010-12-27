@@ -37,15 +37,22 @@ Module modMAVlink
             End If
         End If
     End Function
-    Public Sub GetMAVlinkDateTime(ByVal inputValue As Long)
+    Public Function GetMAVlinkDate(ByVal inputValue As Long) As Date
         Dim dTempDate As Date
 
         Dim cf As System.Globalization.CultureInfo
         cf = New System.Globalization.CultureInfo("en-US")
         dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
-        dGPSDate = dTempDate.Date
-        dGPSTime = dTempDate.ToLongTimeString
-    End Sub
+        GetMAVlinkDate = dTempDate.Date
+    End Function
+    Public Function GetMAVlinkTime(ByVal inputValue As Long) As Date
+        Dim dTempDate As Date
+
+        Dim cf As System.Globalization.CultureInfo
+        cf = New System.Globalization.CultureInfo("en-US")
+        dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
+        GetMAVlinkTime = dTempDate.ToLongTimeString
+    End Function
     Public Function MavlinkScaledToStandard(ByVal inputValue As Integer) As Integer
         MavlinkScaledToStandard = (((inputValue + 10000) / 20000) * 1000) + 1000
     End Function

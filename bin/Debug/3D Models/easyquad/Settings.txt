@@ -1,0 +1,5 @@
+Filename=easyquad.x
+Scale=70
+BackColor=D3D3D3
+Dae URL=http://localhost/3D Models/EasyStar.dae
+Dae Heading=R

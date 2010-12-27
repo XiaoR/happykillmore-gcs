@@ -19,7 +19,7 @@
     var lookAt = null;
     var camera = null;
     
-    var modelName = null;
+    var modelURL = null;
     var viewType = 0;
 
     var flightString = null;
@@ -50,6 +50,7 @@
     var lastAlt = 0;
     
     var nLocked = 0;
+    var nDaeHeadingOffset = 0;
     
     var planeModel = null;
     var planeOrient = null;
@@ -60,7 +61,7 @@
     
     var modelLoaded = false;
     
-    var websiteModelPath = 'http://www.happykillmore.com/Software/HK_GCS/3D Models/'
+    //var websiteModelPath = 'http://www.happykillmore.com/Software/HK_GCS/3D Models/'
     
     var nScale = 5;
 
@@ -223,12 +224,13 @@
         eAltOffset = newOffset;
     }
     
-    function loadModel(newModelName) {
+    function loadModel(newModelURL,headingOffset) {
         if (isLoaded == false || homeSet == false){
             return;
         }
-        modelName = newModelName;
-        planeLink.setHref(websiteModelPath + newModelName + '.dae');
+        modelURL = newModelURL;
+        nDaeHeadingOffset = headingOffset;
+        planeLink.setHref(newModelURL);
         planeModel.setLink(planeLink);
         planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
         modelLoaded = true;
@@ -246,7 +248,7 @@
         planeModel.setOrientation(planeOrient); 
 
         if (viewType != 3){
-            planeLink.setHref(websiteModelPath + modelName + '.dae');
+            planeLink.setHref(modelURL);
             planeModel.setLink(planeLink);
         }
         planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
@@ -259,7 +261,7 @@
         modelLoaded = true;
     }
     
-    function setHomeLatLng(lat,long, altitude, newModelName, scale, pitch, roll, newView, altOffset) {
+    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset) {
         if (isLoaded == false){
             return;
         }
@@ -273,7 +275,7 @@
 
         ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
 
-        modelName = newModelName;
+        modelURL = newModelURL;
         buildPlaneModel();
 
 	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
@@ -334,7 +336,7 @@
 
 	    homeSet = true;
 	    
-	    changeView (newView, altitude, pitch, roll, newModelName);
+	    changeView (newView, altitude, pitch, roll, newModelURL);
 	    if (newView == 0){
 	    	lookAt.setLatitude(lat); 
 	        lookAt.setLongitude(long);  
@@ -412,11 +414,12 @@
 
     }
     
-    function updateAttitude(heading,pitch,roll) {
+    function updateAttitude(heading,headingOffset,pitch,roll) {
         if (isLoaded == false || homeSet == false){
             return;
         }
 //        planeOrient.setHeading(heading);
+        nDaeHeadingOffset = headingOffset;
         planeOrient.setTilt(pitch); 
         planeOrient.setRoll(roll); 
         
@@ -426,17 +429,19 @@
 //		}
     }
 
-    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,pitch,roll,altOffset) {
+    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,headingOffset,pitch,roll,altOffset) {
 	    var nAngle = 0;
 	    var nNewHeading = 0;
 	    var nRange = 0;
 	    var nNewAltitude = 0;
 	    var currentGroundAlt = 0;
+	    var nCameraHeading = 0;
         if (isLoaded == false || homeSet == false){
             return;
         }
 
         eAltOffset = altOffset;
+        nDaeHeadingOffset = headingOffset;
         nLocked = 1;
         if (lastRange != 0) {
             nRange = currentRange - lastRange;
@@ -448,7 +453,11 @@
             ge.getOptions().setFlyToSpeed(4.5); 
         }
             
-        
+        nCameraHeading = heading - headingOffset
+        if (nCameraHeading < 0) {
+            nCameraHeading += 360 ;
+        }
+            
         //if (isMeters == "True"){
             ge.getOptions().setUnitsFeetMiles(isMeters);
         //} else {
@@ -501,8 +510,8 @@
                 //lookAt.setRange(ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND).getRange().toFixed(2)); 
 		        //lookAt.setRange(nRange);
 		        camera.setTilt(0);  
-		        camera.setHeading(heading); 
-		        lookAt.setHeading(heading); 
+		        camera.setHeading(nCameraHeading); 
+		        lookAt.setHeading(nCameraHeading); 
 		        camera.setAltitude(currentRange);
 		        ge.getView().setAbstractView(camera);
 		        lastRange = altitude;
@@ -515,8 +524,8 @@
                 } else {
 		            lookAt.setAltitude(altitude + homeGroundAltitude); 
                 }
-		        lookAt.setHeading(heading); 
-		        camera.setHeading(heading); 
+		        lookAt.setHeading(nCameraHeading); 
+		        camera.setHeading(nCameraHeading); 
 		        //lookAt.setRange(currentRange-altitude);
 		        //camera.setAltitude(currentRange);
 		        lookAt.setTilt(60);  
@@ -529,7 +538,7 @@
                 } else {
 		            camera.setAltitude(altitude + homeGroundAltitude); 
                 }
-		        camera.setHeading(heading); 
+		        camera.setHeading(nCameraHeading); 
 		        camera.setRoll(roll); 
 		        camera.setTilt(90 - pitch); 
 		        ge.getView().setAbstractView(camera);
@@ -538,7 +547,7 @@
 		
 		nLocked = 0;
 
-        if (modelLoaded = false && modelName != '') {
+        if (modelLoaded = false && modelURL != '') {
             buildPlaneMode();
         }
 	    
@@ -567,7 +576,7 @@
 
     }
     
-    function changeView(newView,altitude,pitch,roll,newModelName) {
+    function changeView(newView,altitude,pitch,roll,newModelURL) {
         if (isLoaded == false || homeSet == false){
             return;
         }
@@ -575,9 +584,9 @@
         viewType = newView;
         ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT);
         if (newView == 0) {
-            loadModel(newModelName);
+            loadModel(newModelURL);
         } else if (newView == 1) {
-            loadModel(newModelName);
+            loadModel(newModelURL);
             if (eAltOffset == 0) {
 		        lookAt.setAltitude(altitude); 
             } else {
@@ -587,7 +596,7 @@
 		    lookAt.setTilt(0);  
 		    ge.getView().setAbstractView(lookAt);
 		} else if(newView == 2) {
-            loadModel(newModelName);
+            loadModel(newModelURL);
 		    lookAt.setRange(400); 
 		    lookAt.setTilt(60);  
 		    //lookAt.setAltitude(altitude); 

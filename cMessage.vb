@@ -1,6 +1,7 @@
 Public Class cMessage
     Public Enum e_MessageType
-        e_MessageType_Test = -1
+        e_MessageType_Test = -2
+        e_MessageType_HKO = -1
         e_MessageType_None = 0
         e_MessageType_NMEA = 1
         e_MessageType_SiRF
@@ -21,6 +22,7 @@ Public Class cMessage
         e_MessageType_FY21AP
         e_MessageType_AttoPilot
         e_MessageType_Gluonpilot
+        e_MessageType_Paparazzi
     End Enum
 
     Public ValidMessage As Boolean
@@ -32,4 +34,6 @@ Public Class cMessage
     Public PacketLength As Integer
     Public ID As Integer
     Public VisibleSentence As String
+    Public GPSDateTime As Date
+    Public ValidDateTime As Boolean
 End Class

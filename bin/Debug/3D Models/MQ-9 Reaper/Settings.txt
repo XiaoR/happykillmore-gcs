@@ -1,0 +1,4 @@
+Filename=MQ-9 Reaper.x
+Scale=70
+BackColor=D3D3D3
+Dae Heading=N
