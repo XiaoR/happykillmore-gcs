@@ -345,7 +345,7 @@ Public Class frmMain
 
     Private Sub frmMain_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
         If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
-            _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), False, sModelName, GetRootPath() & "3D Models\")
+            _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
             'System.Diagnostics.Debug.Print("Actvated " & Now)
         End If
     End Sub
@@ -404,11 +404,19 @@ Public Class frmMain
 
         nTimeZoneOffset = DateDiff(DateInterval.Hour, Now, Now.ToUniversalTime)
 
-        nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 1100)
-        nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 675)
-        nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", Screen.PrimaryScreen.WorkingArea.Height / 2 - nHeight / 2)
-        nLeft = GetRegSetting(sRootRegistry & "\Settings", "Form Left", Screen.PrimaryScreen.WorkingArea.Width / 2 - nWidth / 2)
-        nSplitter = GetRegSetting(sRootRegistry & "\Settings", "Splitter Location", 590)
+        If Screen.PrimaryScreen.Bounds.Height = 600 And Screen.PrimaryScreen.Bounds.Width = 1024 Then
+            nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 900)
+            nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 550)
+            nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", 0)
+            nLeft = GetRegSetting(sRootRegistry & "\Settings", "Form Left", 0)
+            nSplitter = GetRegSetting(sRootRegistry & "\Settings", "Splitter Location", 497)
+        Else
+            nWidth = GetRegSetting(sRootRegistry & "\Settings", "Form Width", 1100)
+            nHeight = GetRegSetting(sRootRegistry & "\Settings", "Form Height", 675)
+            nTop = GetRegSetting(sRootRegistry & "\Settings", "Form Top", Screen.PrimaryScreen.WorkingArea.Height / 2 - nHeight / 2)
+            nLeft = GetRegSetting(sRootRegistry & "\Settings", "Form Left", Screen.PrimaryScreen.WorkingArea.Width / 2 - nWidth / 2)
+            nSplitter = GetRegSetting(sRootRegistry & "\Settings", "Splitter Location", 590)
+        End If
 
         bUTCTime = GetRegSetting(sRootRegistry & "\Settings", "UTC Time", False)
 
@@ -422,7 +430,11 @@ Public Class frmMain
         SplitContainer1.Panel1MinSize = 320
         SplitContainer1.Panel2MinSize = 340
 
-        eSelectedInstrument = GetRegSetting(sRootRegistry & "\Settings", "Selected Instrument", e_Instruments.e_Instruments_None)
+        If Screen.PrimaryScreen.Bounds.Height = 600 And Screen.PrimaryScreen.Bounds.Width = 1024 Then
+            eSelectedInstrument = GetRegSetting(sRootRegistry & "\Settings", "Selected Instrument", e_Instruments.e_Instruments_3DModel)
+        Else
+            eSelectedInstrument = GetRegSetting(sRootRegistry & "\Settings", "Selected Instrument", e_Instruments.e_Instruments_None)
+        End If
         sSelectedCamera1 = GetRegSetting(sRootRegistry & "\Settings", "Selected Camera 1", "")
         sSelectedCamera2 = GetRegSetting(sRootRegistry & "\Settings", "Selected Camera 2", "")
 
@@ -555,7 +567,12 @@ Public Class frmMain
         sModeNumber = ""
 
         SplitContainer1.SplitterDistance = nSplitter
-        Me.WindowState = GetRegSetting(sRootRegistry & "\Settings", "Form WindowState", FormWindowState.Normal)
+        If Screen.PrimaryScreen.Bounds.Height = 600 And Screen.PrimaryScreen.Bounds.Width = 1024 Then
+            Me.WindowState = GetRegSetting(sRootRegistry & "\Settings", "Form WindowState", FormWindowState.Maximized)
+        Else
+            Me.WindowState = GetRegSetting(sRootRegistry & "\Settings", "Form WindowState", FormWindowState.Normal)
+        End If
+
         If Me.WindowState = FormWindowState.Normal Then
             Me.Width = nWidth
             Me.Height = nHeight
@@ -833,7 +850,7 @@ Public Class frmMain
                 AttitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(GetPitch(-pitch), GetRoll(roll))
             End If
             If bInstruments(e_Instruments.e_Instruments_3DModel) Then
-                _3DMesh1.DrawMesh(GetPitch(pitch), GetRoll(roll), GetYaw(yaw))
+                _3DMesh1.DrawMesh(GetPitch(pitch * n3DPitchRollOffset), GetRoll(roll * n3DPitchRollOffset), GetYaw(yaw + n3DHeadingOffset))
             End If
             If bInstruments(e_Instruments.e_Instruments_Turn) Then
                 TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(GetRoll(-nRoll), 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
@@ -926,7 +943,7 @@ Public Class frmMain
                     VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(verticalChange, LCase(GetResString(, "Vertical_Speed")), GetResString(, "Up"), GetResString(, "Down"), "100ft/min")
                 End If
                 If bInstruments(e_Instruments.e_Instruments_3DModel) Then
-                    _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw))
+                    _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset))
                 End If
                 If bInstruments(e_Instruments.e_Instruments_Turn) Then
                     TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(GetRoll(-nRoll), 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
@@ -1044,14 +1061,14 @@ Public Class frmMain
     Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
     End Sub
     Public Sub loadModel()
         Try
-            webDocument.InvokeScript("loadModel", New Object() {sModelName})
+            webDocument.InvokeScript("loadModel", New Object() {sModelURL, nDaeHeadingOffset})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -1076,13 +1093,13 @@ Public Class frmMain
     End Sub
     Public Sub updateAttitude()
         Try
-            webDocument.InvokeScript("updateAttitude", New Object() {GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll)})
+            webDocument.InvokeScript("updateAttitude", New Object() {GetHeading(nHeading + nDaeHeadingOffset), nDaeHeadingOffset, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset)})
         Catch e2 As Exception
         End Try
     End Sub
     Public Sub setPlaneLocation()
         Try
-            webDocument.InvokeScript("drawAndCenter", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading), GetPitch(nPitch), GetRoll(nRoll), eAltOffset})
+            webDocument.InvokeScript("drawAndCenter", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), bFlightExtrude, sFlightColor, nFlightWidth, nCameraTracking, IIf(eDistanceUnits = e_DistanceFormat.e_DistanceFormat_Feet, True, False), GetHeading(nHeading + nDaeHeadingOffset), nDaeHeadingOffset, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), eAltOffset})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch
         End Try
@@ -1369,6 +1386,32 @@ Public Class frmMain
         With oMessage
             If .ValidMessage = True Then
                 Select Case .MessageType
+                    Case cMessage.e_MessageType.e_MessageType_Paparazzi
+                        lblGPSType.Text = "Paparazzi"
+                        sSplit = Split(.Packet, " ")
+                        dGPSTime = GetUnixTime(sSplit(0))
+                        dGPSDate = GetUnixDate(sSplit(0))
+                        bNewDateTime = True
+                        Select Case UCase(sSplit(1))
+                            Case "GPS"
+                                nLongitude = ConvertLatLongFormat(Convert.ToInt32(sSplit(4)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nLatitude = ConvertLatLongFormat(Convert.ToInt32(sSplit(5)) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nGroundSpeed = ConvertSpeed(Convert.ToDouble(sSplit(8)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                nAltitude = ConvertDistance(Convert.ToSingle(sSplit(7)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                nHeading = Convert.ToSingle(sSplit(6)) * 180 / Math.PI
+                                bNewGPS = True
+                            Case "ATTITUDE"
+                                nRoll = -Convert.ToSingle(sSplit(3)) * 180 / Math.PI
+                                nYaw = Convert.ToSingle(sSplit(4)) * 180 / Math.PI
+                                nPitch = Convert.ToSingle(sSplit(5)) * 180 / Math.PI
+                                bNewAttitude = True
+                            Case "BAT"
+                                nBattery = Convert.ToInt32(sSplit(3)) / 10
+                                nMAH = Convert.ToInt32(sSplit(3))
+                                bNewWaypoint = True
+                                'Debug.Print(oMessage.RawMessage)
+                        End Select
+
                     Case cMessage.e_MessageType.e_MessageType_Gluonpilot
                         lblGPSType.Text = "Gluonpilot"
                         sSplit = Split(.Packet, ";")
@@ -1483,6 +1526,16 @@ Public Class frmMain
                                 nServoOutput(6) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(13)))
                                 bNewGPS = True
                                 bNewServo = True
+                                bNewDateTime = True
+
+                                If nThrottleChannel > 0 Then
+                                    If nServoOutput(nThrottleChannel - 1) <> 0 Then
+                                        nThrottle = (nServoOutput(nThrottleChannel - 1) - tbarServo1.Minimum) / (tbarServo1.Maximum - tbarServo1.Minimum)
+                                    Else
+                                        nThrottle = 0
+                                    End If
+                                    bNewWaypoint = True
+                                End If
                         End Select
 
                     Case cMessage.e_MessageType.e_MessageType_NMEA
@@ -1599,7 +1652,7 @@ Public Class frmMain
 
                     Case cMessage.e_MessageType.e_MessageType_FY21AP
                         lblGPSType.Text = "FY21AP II"
-                        Select Case Asc(Mid(.Packet, 2, 1))
+                        Select Case .ID
                             Case 241 'Telemetry data set1
                                 lblGPSMessage.Text = GetResString(, "Telemetry GPS")
                                 nFix = Asc(Mid(.Packet, 3, 1)) And &HC0
@@ -2000,7 +2053,8 @@ Public Class frmMain
                         'Debug.Print("Message ID=" & Asc(Mid(.Packet, 6, 1)) & ",Length=" & Asc(Mid(.Packet, 2, 1))) '& ",Packet=" & .VisibleSentence)
                         Select Case Asc(Mid(.Packet, 6, 1))
                             Case 2
-                                GetMAVlinkDateTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSDate = GetMAVlinkDate(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSTime = GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
                                 bNewDateTime = True
                             Case 27
                                 lblGPSMessage.Text = GetResString(, "GPS Status")
@@ -2009,7 +2063,8 @@ Public Class frmMain
                             Case 28
                                 lblGPSMessage.Text = GetResString(, "Raw IMU")
                                 Try
-                                    GetMAVlinkDateTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                    dGPSDate = GetMAVlinkDate(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                    dGPSTime = GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
                                     nSensor(0) = ConvertMavlinkToInteger(Mid(.Packet, 15, 2), True)
                                     nSensor(1) = ConvertMavlinkToInteger(Mid(.Packet, 17, 2), True)
                                     nSensor(2) = ConvertMavlinkToInteger(Mid(.Packet, 19, 2), True)
@@ -2025,7 +2080,8 @@ Public Class frmMain
                                 bNewDateTime = True
                             Case 30
                                 lblGPSMessage.Text = GetResString(, "Attitude")
-                                GetMAVlinkDateTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSDate = GetMAVlinkDate(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSTime = GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
                                 nRoll = ConvertMavlinkToSingle(Mid(.Packet, 15, 4)) * 180 / Math.PI
                                 nPitch = ConvertMavlinkToSingle(Mid(.Packet, 19, 4)) * 180 / Math.PI
                                 nYaw = ConvertMavlinkToSingle(Mid(.Packet, 23, 4)) * 180 / Math.PI
@@ -2033,7 +2089,8 @@ Public Class frmMain
                                 bNewDateTime = True
                             Case 32
                                 lblGPSMessage.Text = GetResString(, "GPS Raw")
-                                GetMAVlinkDateTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSDate = GetMAVlinkDate(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSTime = GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
                                 nFix = Asc(Mid(.Packet, 15, 1)) - 1
                                 nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 16, 4))
                                 nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 20, 4))
@@ -2045,7 +2102,8 @@ Public Class frmMain
                                 bNewDateTime = True
                             Case 33
                                 lblGPSMessage.Text = GetResString(, "Global Position")
-                                GetMAVlinkDateTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSDate = GetMAVlinkDate(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
+                                dGPSTime = GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8)))
                                 nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 15, 4))
                                 nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 19, 4))
                                 nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 23, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
@@ -2663,7 +2721,7 @@ Public Class frmMain
 
     Private Sub frmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
-            _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), False, sModelName, GetRootPath() & "3D Models\")
+            _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
             'System.Diagnostics.Debug.Print("Paint " & Now)
         End If
     End Sub
@@ -2717,7 +2775,7 @@ Public Class frmMain
                         Try
                             webDocument.InvokeScript("clearMap", New Object() {})
                             If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
+                                webDocument.InvokeScript("setHomeLatLng", New Object() {Mid(sSplit2(0), 6), sSplit2(1), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
                             End If
                         Catch e2 As Exception
                         End Try
@@ -2752,7 +2810,7 @@ Public Class frmMain
                         Try
                             If nWPNumber = 0 Then
                                 If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                                    webDocument.InvokeScript("setHomeLatLng", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
+                                    webDocument.InvokeScript("setHomeLatLng", New Object() {sSplit2(3), sSplit2(4), ConvertDistance(sSplit2(2), e_DistanceFormat.e_DistanceFormat_Meters, e_DistanceFormat.e_DistanceFormat_Feet), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
                                     nHomeLat = sSplit2(3)
                                     nHomeLong = sSplit2(4)
                                 End If
@@ -2901,7 +2959,7 @@ Public Class frmMain
     End Sub
     Private Sub SetViewButtons(ByVal newValue As Integer)
         If Not webDocument Is Nothing Then
-            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, GetPitch(nPitch), GetRoll(nRoll), sModelName})
+            webDocument.InvokeScript("changeView", New Object() {newValue, nAltitude, GetPitch(nPitch), GetRoll(nRoll), sModelURL})
         End If
         nCameraTracking = newValue
         chkViewNoTracking.Checked = IIf(nCameraTracking = 0, True, False)
@@ -3106,7 +3164,7 @@ Public Class frmMain
                     '_3DMesh1.Locked = False
                     '_3DMesh1.Refresh()
                     'frmMain_Paint(Nothing, Nothing)
-                    _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), False, sModelName, GetRootPath() & "3D Models\")
+                    _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
                 End If
 
                 nTotalInstruments = 0
@@ -3262,7 +3320,7 @@ Public Class frmMain
 
         If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
             '_3DMesh1.Locked = False
-            _3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), False, sModelName, GetRootPath() & "3D Models\")
+            _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
         End If
 
         If Me.WindowState = FormWindowState.Normal Then
@@ -3349,7 +3407,7 @@ Public Class frmMain
 
     Private Sub cmdSetHome_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetHome.Click
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelName, tbarModelScale.Value, GetPitch(nPitch), GetRoll(nRoll), nCameraTracking, eAltOffset})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
             nDataPoints = 1
         Catch
         End Try
@@ -3752,45 +3810,58 @@ Public Class frmMain
         Dim sOutput As String = ""
         Dim sFileContents As String
         Dim sNewString As String
+        Dim sFilename As String
 
         'Debug.Print(ConvertLatLongFY21AP(Chr(&H80) & Chr(&HE1) & Chr(&H1) & Chr(&HD4)))
         'Debug.Print(ConvertLatLongFY21AP(Chr(&H9) & Chr(&H6D) & Chr(&H4) & Chr(&H51)))
         'Exit Sub
 
+        'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\test.hko" 'This GCS output
+        'sFilename = "C:\Documents and Settings\Paul\Desktop\UDB\log_05_08_18__16_37_16\log_05_08_18__16_37_16_2.txt" ' Paparazzi
+        'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\gluonpilot.txt" ' Gluonpilot
+        'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\atto.txt" ' Attopilot
+        sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY-21_280-90.txt" 'FY21AP II
+
+        'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\test.hko", FileMode.Open)
+        'Dim FS As New FileStream("C:\Documents and Settings\Paul\Desktop\UDB\log_05_08_18__16_37_16\log_05_08_18__16_37_16_2.txt", FileMode.Open)
         'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\gluonpilot.txt", FileMode.Open)
         'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY-21_280-90.txt", FileMode.Open)
-        Dim FS As New FileStream("C:\atto.txt", FileMode.Open)
-        Dim Buffer() As Byte
-        'Get the bytes from file to a byte array        
-        ReDim Buffer(FS.Length - 1)
-        FS.Read(Buffer, 0, Buffer.Length)
-        sFileContents = System.Text.Encoding.Default.GetString(Buffer)
-        FS.Close()
+        'Dim FS As New FileStream("C:\atto.txt", FileMode.Open)
+        'Dim Buffer() As Byte
+        ''Get the bytes from file to a byte array        
+        'ReDim Buffer(FS.Length - 1)
+        'FS.Read(Buffer, 0, Buffer.Length)
+        'sFileContents = System.Text.Encoding.Default.GetString(Buffer)
+        'FS.Close()
 
-        sSplit = Split(sFileContents, vbCrLf)
+        sFileContents = GetFileContents(sFilename)
+
+
+        'sSplit = Split(sFileContents, vbLf)
         'sSplit = Split(sFileContents, Chr(&HA5) & Chr(&H5A))
-        'sSplit = Split(sFileContents, vbCrLf)
+        sSplit = Split(sFileContents, vbCrLf)
 
-        'For nCount = 1 To Len(sFileContents)
-        '    sOutput = sOutput & Hex(Asc(Mid(sFileContents, nCount, 1))).PadLeft(2, "0") & " "
+        'For nCount2 = 1 To Len(sFileContents)
+        '    sOutput = sOutput & Hex(Asc(Mid(sFileContents, nCount2, 1))).PadLeft(2, "0") & " "
         'Next
         'Debug.Print(sOutput)
 
         For nCount = 1 To UBound(sSplit)
-            'sNewString = ""
-            'sSplit2 = Split(sSplit(nCount), " ")
-            'For nCount2 = 0 To UBound(sSplit2)
-            '    If sSplit2(nCount2) <> "" Then
-            '        sNewString = sNewString & Chr("&h" & sSplit2(nCount2))
-            '    End If
-            'Next
+            sNewString = ""
+            sSplit2 = Split(sSplit(nCount), " ")
+            For nCount2 = 0 To UBound(sSplit2)
+                If sSplit2(nCount2) <> "" Then
+                    sNewString = sNewString & Chr("&h" & sSplit2(nCount2))
+                End If
+            Next
 
-            'oMessage = GetNextSentence(sNewString & vbCrLf)
+            oMessage = GetNextSentence(sNewString & vbCrLf)
             'oMessage = GetNextSentence(Chr(&HA5) & Chr(&H5A) & sSplit(nCount))
-            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf)
+            'oMessage = GetNextSentence(sSplit(nCount) & vbLf)
             UpdateVariables(oMessage)
             Application.DoEvents()
-            System.Threading.Thread.Sleep(100)
+
+            System.Threading.Thread.Sleep(20)
         Next
     End Sub
 
@@ -3871,6 +3942,20 @@ Public Class frmMain
             ResetForm()
             LoadSettings()
             ResizeForm()
+        End If
+    End Sub
+
+    Private Sub frmMain_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.GotFocus
+        If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
+            _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
+            'System.Diagnostics.Debug.Print("Actvated " & Now)
+        End If
+    End Sub
+
+    Private Sub frmMain_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MouseEnter
+        If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
+            _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
+            'System.Diagnostics.Debug.Print("Actvated " & Now)
         End If
     End Sub
 End Class

@@ -1,3 +1,5 @@
 Filename=EasyStar.x
 Scale=75
 BackColor=D3D3D3
+DAE URL=http://localhost/3D Models/EasyStar.dae
+DAE HEADING=N

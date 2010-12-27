@@ -1,0 +1,5 @@
+Filename=Firecracker.x
+Scale=70
+BackColor=D3D3D3
+Dae URL=
+Dae Heading=N

@@ -16,6 +16,19 @@ Public Class _3DMesh
             sOutputFile.WriteLine("Filename=" & filename)
             sOutputFile.WriteLine("Scale=" & scale)
             sOutputFile.WriteLine("BackColor=" & backcolor)
+            If UCase(sModelURL) <> UCase(g_Default_DAE_URL & sModelName & ".DAE") Then
+                sOutputFile.WriteLine("Dae URL=" & sModelURL)
+            End If
+            If nDaeHeadingOffset = 180 Then
+                sOutputFile.WriteLine("Dae Heading=R")
+            Else
+                sOutputFile.WriteLine("Dae Heading=N")
+            End If
+            If n3DHeadingOffset = 180 Then
+                sOutputFile.WriteLine("3D Heading=R")
+            Else
+                sOutputFile.WriteLine("3D Heading=N")
+            End If
             sOutputFile.Close()
             sOutputFile = Nothing
         End If
@@ -35,7 +48,14 @@ Public Class _3DMesh
             nScaleFactor = 70
             oBackColor = Color.LightGray
 
+            sModelURL = g_Default_DAE_URL & sModelName & ".dae"
+            nDaeHeadingOffset = 0
+            nDaePitchRollOffset = 1
+            n3DHeadingOffset = 0
+            n3DPitchRollOffset = 1
+
             If Dir(rootPath & modelName & "\Settings.txt", FileAttribute.Normal) = "" Then
+
                 Select Case modelName
                     Case "AeroQuad"
                         CreateSettingsFile(rootPath, modelName, "aeroquad.x", 65, GetColor(Color.LightGray, , False))
@@ -63,6 +83,20 @@ Public Class _3DMesh
                             Case "BACKCOLOR"
                                 sColor = sSplit2(1)
                                 oBackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sColor, 5, 2), 16), Convert.ToInt32(Mid(sColor, 3, 2), 16), Convert.ToInt32(Mid(sColor, 1, 2), 16))
+                            Case "DAE URL"
+                                If Trim(sSplit2(1)) <> "" Then
+                                    sModelURL = sSplit2(1)
+                                End If
+                            Case "DAE HEADING"
+                                If sSplit2(1) = "R" Then
+                                    nDaeHeadingOffset = 180
+                                    nDaePitchRollOffset = -1
+                                End If
+                            Case "3D HEADING"
+                                If sSplit2(1) = "R" Then
+                                    n3DHeadingOffset = 180
+                                    n3DPitchRollOffset = -1
+                                End If
                         End Select
                     Next
                 Catch
