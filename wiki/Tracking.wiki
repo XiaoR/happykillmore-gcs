@@ -37,4 +37,5 @@ On the tracking tab is a value labelled "Offset" this is used to tell the system
 
 http://www.happykillmore.com/software/hk_gcs/TrackingTab.gif
 
-==Use side & back lobe==
+==Use side & back lobes when flying behind antenna==
+This checkbox may help overcome limitations in your pan servo travel. If you plan on flying 360 degrees
