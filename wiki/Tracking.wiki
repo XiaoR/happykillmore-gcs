@@ -34,3 +34,7 @@ Repeat these instructions for Left, right, up and down. The angle values are imp
 
 ==Tracking - Offset==
 On the tracking tab is a value labelled "Offset" this is used to tell the system what direction your antenna tracker is pointed when at the "0" heading. For example, if your antenna tracker is pointed due East the you would select "90" in the offset value. Use a compass to determine your heading. It is VERY important to set this value before trying to fly. Without specifying an offset, the GCS will assume your antenna tracker is pointed due North and this can cause for some serious problems.
+
+http://www.happykillmore.com/software/hk_gcs/TrackingTab.gif
+
+==Use side & back lobe==
