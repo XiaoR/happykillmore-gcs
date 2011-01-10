@@ -7,7 +7,7 @@ Compatible with HK GCS 1.1.32 and newer.
 ==Output Types==
 *PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.
     
-Current Output Format: !!!PAN:XXXX,TLT:YYYY+++ Where XXXX is pan servo micro seconds from 0000 to 3000 and YYYY is tilt server micro seconds from 0000 to 3000. These fields are fixed length at 4 characters. 
+Current Output Format: !!!PAN:XXXX,TLT:YYYY+++ Where XXXX is pan servo micro seconds from 0000 to 3000 and YYYY is tilt server milliseconds from 0000 to 3000. These fields are fixed length at 4 characters. 
 
 Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker</a> source for the original ArduPilot.
 
