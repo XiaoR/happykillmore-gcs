@@ -34,11 +34,13 @@ http://www.dynapod.com/protractor2.jpg
 
 Repeat these instructions for Left, right, up and down. The angle values are important as the combination of end-points and angles are what the GCS uses to point the antenna at your plane. It is also recommended that you specify a down angle less than 0 if your equipment can physically handle it. In some cases, if you're using "Side and Back Lobe" (see below), your antenna may need to point at the ground at a heading 180 degrees off to get the best signal.
 
+----
 ==Tracking - Offset==
 On the tracking tab is a value labelled "Offset" this is used to tell the system what direction your antenna tracker is pointed when at the "0" heading. For example, if your antenna tracker is pointed due East the you would select "90" in the offset value. Use a compass to determine your heading. It is VERY important to set this value before trying to fly. Without specifying an offset, the GCS will assume your antenna tracker is pointed due North and this can cause for some serious problems.
 
 http://www.happykillmore.com/software/hk_gcs/TrackingTab.gif
 
+----
 ==Use side & back lobes when flying behind antenna==
 This checkbox may help overcome limitations in your pan servo travel. If you plan on flying 360 degrees around your tracker then I strongly suggest designing a geared solution or purchasing special servos that can allow for full 360 degree rotation. If you do not plan on flying behind your antenna tracker, then I would suggest selecting "Use side & back lobes when flying behind antenna" just in case. Here's how it works.
 
