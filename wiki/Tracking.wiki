@@ -38,4 +38,8 @@ On the tracking tab is a value labelled "Offset" this is used to tell the system
 http://www.happykillmore.com/software/hk_gcs/TrackingTab.gif
 
 ==Use side & back lobes when flying behind antenna==
-This checkbox may help overcome limitations in your pan servo travel. If you plan on flying 360 degrees
+This checkbox may help overcome limitations in your pan servo travel. If you plan on flying 360 degrees around your tracker then I strongly suggest designing a geared solution or purchasing special servos that can allow for full 360 degree rotation. If you do not plan on flying behind your antenna tracker, then I would suggest selecting "Use side & back lobes when flying behind antenna" just in case. Here's how it works.
+
+Every patch antenna has a main lobe, 2 side lobes and a back lobe. The intent of the antenna tracker is to keep the main lobe pointed towards the plane at all times. This will give the clearest signal and the best range. It your antenna tracker only gets 90 degrees of rotation to the left and the right, then you only have 180 degrees covered. In this case, without "Use side & back lobes when flying behind antenna" selected, the tracker will simply turn all the way left and stay there until the plane gets closer to the right side and then the tracker will rotate all the way right. This will probably result in lost signal for a portion of the time the plane is behind the antenna.
+
+http://www.happykillmore.com/software/hk_gcs/Lobes.bmp
