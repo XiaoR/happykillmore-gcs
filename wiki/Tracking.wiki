@@ -4,7 +4,7 @@ Compatible with HK GCS 1.1.32 and newer.
 *NOTE:* Use this at your own risk. I take no responsibility for any damage to your plane or equipment by using this feature. 
 ----
 ==General Comments==
-The antenna tracker data will not start to flow until a home location has been set and the connect button is clicked on the tracking tab. In situations where something has been set incorrectly and you need to get your antenna pointed in the right direction quickly, change the "Hertz" setting for the tracker to "None" and use the sliders on the right to manually move the tracker.
+The antenna tracker data will not start to flow (for PanTilt and Heading output types) until a home location has been set and the connect button is clicked on the tracking tab. In situations where something has been set incorrectly and you need to get your antenna pointed in the right direction quickly, change the "Hertz" setting for the tracker to "None" and use the sliders on the right to manually move the tracker.
 ----
 ==Output Types==
 *PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.
