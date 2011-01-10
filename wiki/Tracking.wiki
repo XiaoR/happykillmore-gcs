@@ -1,5 +1,6 @@
 = Antenna Tracking =
-Compatible with HK GCS 1.1.32 and newer
+Compatible with HK GCS 1.1.32 and newer.
+
 *Note:* Use this at your own risk. I take no responsibility for any damage to your plane or equipment by using this feature.
 ----
 
