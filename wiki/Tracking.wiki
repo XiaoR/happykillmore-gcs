@@ -5,7 +5,7 @@
 
 Current Output Format: !!!PAN:XXXX,TILT:YYYY+++ Where XXXX is pan servo micro seconds from 0000 to 3000 and YYYY is tilt server micro seconds from 0000 to 3000. These fields are fixed length at 4 characters.
 
-Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker source</a> for the original ArduPilot.
+Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker</a> source for the original ArduPilot.
    * {asp} - Air speed
    * {alt} - Current altitude
    * {wpa} - Desired waypoint altitude
