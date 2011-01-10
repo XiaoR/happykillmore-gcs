@@ -20,8 +20,16 @@ Current Output Format: !!!LAT:XXXX.XXXXXX,LON:YYYYY.YYYYYY,ALT:Z.Z+++ Where X is
 ==Calibration==
 After selecting PanTilt for Output Type on the Tracking tab and clicking Connect, a button labelled "Calibrate" will appear at the bottom right.
 
-http://www.happykillmore.com/software/hk_gcs/TrackingCalibrate.gif
+http://www.happykillmore.com/software/hk_gcs/TrackingCalibration.gif
 
 The purpose of this screen is to tweak the end-points of the servo's movement and to specify what angle those endpoints represent. 
 
 *WARNING:* You can DAMAGE your servo using this tool! Please be VERY careful to make small adjustments towards the far left and far right of the slider!
+
+Start with the top slider labelled "Left" under Pan end-point calibration. Move the slider to the left and make sure that the servo pans left. If it's backwards, then slide the slider to the right to make the servo go left. Listen to your servos. As you get close to the end of your servo's travel abilities, the servo will start to make a straining sound and will stop moving. Once you have found this point, back off slightly. Now, you'll need to set the angle for this deflection. Many servos will only travel 90 degrees left and 90 degrees right. If you have a servo that can travel a greater distance, then you can specify a larger angle value. You may want to use a protractor to determine the actual angle.
+
+http://www.dynapod.com/protractor2.jpg
+
+Repeat these instructions for Left, right, up and down. The angle values are important as the combination of end-points and angles are what the GCS uses to point the antenna at your plane. It is also recommended that you specify a down angle less than 0 if your equipment can physically handle it. In some cases, if you're using "Side and Back Lobe" (see below), your antenna may need to point at the ground at a heading 180 degrees off to get the best signal.
+
+==Tracking - Offset==
