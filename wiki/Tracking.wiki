@@ -17,7 +17,7 @@ Current Output Format: !!!HED:X.X,ANG:Y.X+++ Where XXX.X is heading with one dec
 
 *LatLong* - Sends ArduPilot Legacy commands including LAT, LON, ALT and requires all math functions to be completed on tracker. GCS does not perform any math relating to home and current plane location. All end-point adjustment, calibration and set home routines must be handled by the tracker.
  
-Current Output Format: !!!LAT:XXXX.XXXXXX,LON:YYYYY.YYYYYY,ALT:Z.Z+++ Where X is Latitude, Y is Longitude and Z is Altitude. These fields are not fixed length. ALT will vary based on the selection of Altitude offset in the settings form. Either from sea level or from home location.
+Current Output Format: !!!LAT:XXXX.XXXXXX,LON:YYYYY.YYYYYY,ALT:Z.Z+++ Where X is Latitude, Y is Longitude and Z is Altitude. These fields are not fixed length. ALT will vary based on the selection of Altitude offset in the settings form. Either from sea level or from home location. All arguments for ArduStation will be added in a future release making the ArduStation functional regardless of GPS/Auto-pilot input protocol.
 ----
 ==Calibration==
 After selecting PanTilt for Output Type on the Tracking tab and clicking Connect, a button labelled "Calibrate" will appear at the bottom right.
