@@ -42,4 +42,8 @@ This checkbox may help overcome limitations in your pan servo travel. If you pla
 
 Every patch antenna has a main lobe, 2 side lobes and a back lobe. The intent of the antenna tracker is to keep the main lobe pointed towards the plane at all times. This will give the clearest signal and the best range. It your antenna tracker only gets 90 degrees of rotation to the left and the right, then you only have 180 degrees covered. In this case, without "Use side & back lobes when flying behind antenna" selected, the tracker will simply turn all the way left and stay there until the plane gets closer to the right side and then the tracker will rotate all the way right. This will probably result in lost signal for a portion of the time the plane is behind the antenna.
 
-http://www.happykillmore.com/software/hk_gcs/Lobes.bmp
+http://www.happykillmore.com/software/hk_gcs/Lobes.gif
+
+However, in looking at the diagram above, you can see that there are two fairly good sized side lobes that can be used while the plane is behind the antenna. By selecting "Use side & back lobes when flying behind antenna" as soon as the plane passes 90 degrees left, the antenna will rotate 90 degrees right in an attempt to place the plane in the left side lobe. It will try to follow the plane and keep it in the left lobe until it reaches the left end-point, at which time it will rotate to the right side lobe and continue rotating until the plane can be reached by the main lobe again. 
+
+In some cases, the servos will not allow for 180 degrees of travel and in this worst-case-scenario, the GCS will try to use the tiny back lobes when the plane is near 180 degrees off the tracker's 0 degree mark. In this situation, the antenna will point directly away from the plane and attempt to tilt down towards the ground in an attempt to best line up the back lobe with the plane. The range is very small on the back lobes so this is not a good way to fly.
