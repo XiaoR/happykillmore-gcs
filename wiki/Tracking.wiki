@@ -5,13 +5,13 @@ Compatible with HK GCS 1.1.32 and newer.
 ----
 
 ==Output Types==
-*PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. This means that the GCS must be told how many degrees off north the tracker is pointing (at zero or 1500us or the middle position of the pan servo). For example, if the tracker is heading due East, then the GCS should be told "90." This offset will allow the tracker to be pointed in directions other than due north. 
+*PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.
     
 Current Output Format: !!!PAN:XXXX,TLT:YYYY+++ Where XXXX is pan servo micro seconds from 0000 to 3000 and YYYY is tilt server micro seconds from 0000 to 3000. These fields are fixed length at 4 characters. 
 
 Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker</a> source for the original ArduPilot.
 
-*Heading* - Sends angle settings from pan and tilt servos ranging from 0.0 to 359.0 for pan and -180.0 to 180.0 for tilt. All calibration and end-point adjustments have to be handled on the tracker's microcontroller. The assumption is that 1 degree of output equals 1 degree of movement on the tracker. The angle offset can still be used on the GCS or can be set to 0 and handled in the tracker's logic.
+*Heading* - Sends angle settings from pan and tilt servos ranging from 0.0 to 359.0 for pan and -180.0 to 180.0 for tilt. All calibration and end-point adjustments have to be handled on the tracker's microcontroller. The assumption is that 1 degree of output equals 1 degree of movement on the tracker. The Tracker Offset can still be used on the GCS or can be set to 0 and handled in the tracker's logic.
  
 Current Output Format: !!!HED:X.X,ANG:Y.X+++ Where XXX.X is heading with one decimal place and YY.Y is tilt angle. These fields are not fixed length and may contain a negative for tilt.
 
