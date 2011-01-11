@@ -8,7 +8,7 @@ The antenna tracker data will not start to flow (for PanTilt and Heading output 
 
 The purpose of this project was to create a cheap, simple, off-the-shelf solution for antenna tracking. Feel free to make your own hardware if you'd like. The serial protocols are very simple and there isn't much data parsing required. It is possible to make an antenna tracking controller for just a few dollars (antenna not included, of course).
 
-If you want to buy all the components, you'll need a soldering iron, an ArduPilot original (http://www.sparkfun.com/search/results?term=ardupilot&what=products), some straight headers (http://www.sparkfun.com/search/results?term=header&what=products), and 2 servos.
+If you want to buy all the components, you'll need a soldering iron, an ArduPilot original (http://www.sparkfun.com/products/8785), some straight headers (http://www.sparkfun.com/products/116), and 2 servos.
 ----
 ==Output Types==
 *PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.<BR><BR>
