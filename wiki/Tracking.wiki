@@ -5,6 +5,10 @@ Compatible with HK GCS 1.1.32 and newer.
 ----
 ==General Comments==
 The antenna tracker data will not start to flow (for PanTilt and Heading output types) until a home location has been set and the connect button is clicked on the tracking tab. In situations where something has been set incorrectly and you need to get your antenna pointed in the right direction quickly, change the "Hertz" setting for the tracker to "None" and use the sliders on the right to manually move the tracker.
+
+The purpose of this project was to create a cheap, simple, off-the-shelf solution for antenna tracking. Feel free to make your own hardware if you'd like. The serial protocols are very simple and there isn't much data parsing required. It is possible to make an antenna tracking controller for just a few dollars (antenna not included, of course).
+
+If you want to buy all the components, you'll need a soldering iron, an ArduPilot original (http://www.sparkfun.com/search/results?term=ardupilot&what=products), some straight headers (http://www.sparkfun.com/search/results?term=header&what=products), and 2 servos.
 ----
 ==Output Types==
 *PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.<BR><BR>
