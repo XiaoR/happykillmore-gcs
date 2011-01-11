@@ -4,7 +4,7 @@ Compatible with HK GCS 1.1.32 and newer.
 *NOTE:* Use this at your own risk. I take no responsibility for any damage to your plane or equipment by using this feature. 
 ----
 ==General Comments==
-GPS has a 1.5 - 2.0 second lag! This tracker will actually be pointing to where your plane was 2 seconds ago...so take care a close range and high speeds.
+Your GPS has a 1.5 - 2.0 second lag! This tracker will actually be pointing to where your plane was 2 seconds ago...so take care a close range and high speeds.
 
 The antenna tracker data will not start to flow (for PanTilt and Heading output types) until a home location has been set and the connect button is clicked on the tracking tab. In situations where something has been set incorrectly and you need to get your antenna pointed in the right direction quickly, change the "Hertz" setting for the tracker to "None" and use the sliders on the right to manually move the tracker.
 
