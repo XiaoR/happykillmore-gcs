@@ -1,0 +1,5 @@
+Filename=Extra.x
+Scale=70
+BackColor=D3D3D3
+Dae Heading=N
+3D Heading=N

@@ -113,6 +113,8 @@ Partial Class frmSettings
         Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
         Me.chkInstSpeed = New System.Windows.Forms.CheckBox
         Me.tabSpeech = New System.Windows.Forms.TabPage
+        Me.lblSpeechInterval = New System.Windows.Forms.Label
+        Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
         Me.cmdRegularIntervalPlay = New System.Windows.Forms.Button
         Me.txtAnnounceRegularInterval = New System.Windows.Forms.TextBox
         Me.chkAnnounceRegularInterval = New System.Windows.Forms.CheckBox
@@ -135,8 +137,6 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.lblSpeechInterval = New System.Windows.Forms.Label
-        Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -790,6 +790,19 @@ Partial Class frmSettings
         Me.tabSpeech.Name = "tabSpeech"
         Me.tabSpeech.UseVisualStyleBackColor = True
         '
+        'lblSpeechInterval
+        '
+        resources.ApplyResources(Me.lblSpeechInterval, "lblSpeechInterval")
+        Me.lblSpeechInterval.Name = "lblSpeechInterval"
+        '
+        'cboSpeechInterval
+        '
+        Me.cboSpeechInterval.DropDownHeight = 300
+        Me.cboSpeechInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        resources.ApplyResources(Me.cboSpeechInterval, "cboSpeechInterval")
+        Me.cboSpeechInterval.FormattingEnabled = True
+        Me.cboSpeechInterval.Name = "cboSpeechInterval"
+        '
         'cmdRegularIntervalPlay
         '
         resources.ApplyResources(Me.cmdRegularIntervalPlay, "cmdRegularIntervalPlay")
@@ -929,19 +942,6 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'lblSpeechInterval
-        '
-        resources.ApplyResources(Me.lblSpeechInterval, "lblSpeechInterval")
-        Me.lblSpeechInterval.Name = "lblSpeechInterval"
-        '
-        'cboSpeechInterval
-        '
-        Me.cboSpeechInterval.DropDownHeight = 300
-        Me.cboSpeechInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        resources.ApplyResources(Me.cboSpeechInterval, "cboSpeechInterval")
-        Me.cboSpeechInterval.FormattingEnabled = True
-        Me.cboSpeechInterval.Name = "cboSpeechInterval"
-        '
         'frmSettings
         '
         resources.ApplyResources(Me, "$this")
@@ -952,6 +952,7 @@ Partial Class frmSettings
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.KeyPreview = True
         Me.Name = "frmSettings"
+        Me.ShowInTaskbar = False
         Me.tabSettings.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.grpGeneral.ResumeLayout(False)

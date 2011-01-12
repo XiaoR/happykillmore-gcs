@@ -1883,6 +1883,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Socket Num.
+        '''</summary>
+        Friend Shared ReadOnly Property Socket_Num() As String
+            Get
+                Return ResourceManager.GetString("Socket_Num", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Speech.
         '''</summary>
         Friend Shared ReadOnly Property Speech() As String

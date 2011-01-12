@@ -148,6 +148,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property Button() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Button", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property GroundSpeedNeedle() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GroundSpeedNeedle", resourceCulture)

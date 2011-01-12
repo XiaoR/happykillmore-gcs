@@ -1,5 +1,9 @@
 Filename=EasyStar.x
 Scale=75
 BackColor=D3D3D3
-DAE URL=http://localhost/3D Models/EasyStar.dae
-DAE HEADING=N
+Dae Heading=N
+3D Heading=N
+Dae URL=http://www.happykillmore.com/Software/HK_GCS/3D Models/EasyStar.dae
+
+
+

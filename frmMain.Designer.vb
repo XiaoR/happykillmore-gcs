@@ -24,6 +24,12 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.tmrSearch = New System.Windows.Forms.Timer(Me.components)
         Me.tmrPlayback = New System.Windows.Forms.Timer(Me.components)
         Me.serialPortIn = New System.IO.Ports.SerialPort(Me.components)
@@ -41,9 +47,13 @@ Partial Class frmMain
         Me.chkPlay = New System.Windows.Forms.CheckBox
         Me.cmdOutputFolder = New System.Windows.Forms.Button
         Me.chkRecord = New System.Windows.Forms.CheckBox
+        Me.tbarModelScale = New System.Windows.Forms.TrackBar
         Me.cmdReloadMissionDirectory = New System.Windows.Forms.Button
         Me.cmdReloadMissions = New System.Windows.Forms.Button
-        Me.tbarModelScale = New System.Windows.Forms.TrackBar
+        Me.cmdReloadTrackingPorts = New System.Windows.Forms.Button
+        Me.tbarTilt = New System.Windows.Forms.TrackBar
+        Me.tbarPan = New System.Windows.Forms.TrackBar
+        Me.cboTrackingSet = New System.Windows.Forms.ComboBox
         Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
@@ -60,7 +70,7 @@ Partial Class frmMain
         Me.tabInstruments = New System.Windows.Forms.TabPage
         Me.BatteryIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
         Me.TurnCoordinatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl
-        Me.cmdSetNorth = New System.Windows.Forms.Button
+        Me.cmdZeroYaw = New System.Windows.Forms.Button
         Me._3DMesh1 = New HK_GCS._3DMesh
         Me.VerticalSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl
         Me.HeadingIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl
@@ -89,6 +99,15 @@ Partial Class frmMain
         Me.cmdLiveCameraProperties2 = New System.Windows.Forms.Button
         Me.cboLiveCameraSelect2 = New System.Windows.Forms.ComboBox
         Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
+        Me.tabMissionControl = New System.Windows.Forms.TabPage
+        Me.lblMissionLabel = New System.Windows.Forms.Label
+        Me.cboMission = New System.Windows.Forms.ComboBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox
+        Me.Button1 = New System.Windows.Forms.Button
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView
+        Me.tabAtto = New System.Windows.Forms.TabPage
+        Me.dgStringResources = New System.Windows.Forms.DataGridView
         Me.grpGPSTime = New System.Windows.Forms.GroupBox
         Me.lblGPSTime = New System.Windows.Forms.Label
         Me.grpMisc = New System.Windows.Forms.GroupBox
@@ -122,6 +141,7 @@ Partial Class frmMain
         Me.lblGPSLockLabel = New System.Windows.Forms.Label
         Me.tabPortControl = New System.Windows.Forms.TabControl
         Me.tabPortComPort = New System.Windows.Forms.TabPage
+        Me.txtSocket = New System.Windows.Forms.TextBox
         Me.cmdTest = New System.Windows.Forms.Button
         Me.lblBandwidth = New System.Windows.Forms.Label
         Me.lblComPortStatus = New System.Windows.Forms.Label
@@ -132,19 +152,30 @@ Partial Class frmMain
         Me.lblGPSType = New System.Windows.Forms.Label
         Me.lblGPSTypeLabel = New System.Windows.Forms.Label
         Me.lblBaudRate = New System.Windows.Forms.Label
-        Me.cmdSearchCOM = New System.Windows.Forms.Button
         Me.cmdConnect = New System.Windows.Forms.Button
         Me.cmdSearch = New System.Windows.Forms.Button
         Me.lblComPort = New System.Windows.Forms.Label
         Me.cboComPort = New System.Windows.Forms.ComboBox
+        Me.cmdSearchCOM = New System.Windows.Forms.Button
         Me.tabPortDataFile = New System.Windows.Forms.TabPage
         Me.cboOutputFiles = New System.Windows.Forms.ComboBox
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
         Me.cmdViewFile = New System.Windows.Forms.Button
         Me.txtOutputFolder = New System.Windows.Forms.TextBox
-        Me.tabPortMissions = New System.Windows.Forms.TabPage
-        Me.lblMissionLabel = New System.Windows.Forms.Label
-        Me.cboMission = New System.Windows.Forms.ComboBox
+        Me.tabPortTracking = New System.Windows.Forms.TabPage
+        Me.lblTrackerAngle = New System.Windows.Forms.Label
+        Me.cmdTrackingCalibrate = New System.Windows.Forms.Button
+        Me.lblHertzTracking = New System.Windows.Forms.Label
+        Me.cboHertzTracking = New System.Windows.Forms.ComboBox
+        Me.cboOutputTypeTracking = New System.Windows.Forms.ComboBox
+        Me.lblOutputTypeTracking = New System.Windows.Forms.Label
+        Me.lblStatusTracking = New System.Windows.Forms.Label
+        Me.lblStatusTrackingStatus = New System.Windows.Forms.Label
+        Me.cboBaudRateTracking = New System.Windows.Forms.ComboBox
+        Me.lblBaudRateTracking = New System.Windows.Forms.Label
+        Me.cmdConnectTracking = New System.Windows.Forms.Button
+        Me.lblComPortTracking = New System.Windows.Forms.Label
+        Me.cboComPortTracking = New System.Windows.Forms.ComboBox
         Me.tabPortServos = New System.Windows.Forms.TabPage
         Me.cboServo8 = New System.Windows.Forms.ComboBox
         Me.cboServo7 = New System.Windows.Forms.ComboBox
@@ -195,6 +226,7 @@ Partial Class frmMain
         Me.tbarSensor3 = New System.Windows.Forms.TrackBar
         Me.tbarSensor2 = New System.Windows.Forms.TrackBar
         Me.tbarSensor1 = New System.Windows.Forms.TrackBar
+        Me.JoystickInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
         Me.cmdExit = New System.Windows.Forms.Button
         Me.cmdSetHome = New System.Windows.Forms.Button
         Me.cmdClearMap = New System.Windows.Forms.Button
@@ -210,7 +242,11 @@ Partial Class frmMain
         Me.cmdLiveCameraProperties1 = New System.Windows.Forms.Button
         Me.cboLiveCameraSelect1 = New System.Windows.Forms.ComboBox
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
+        Me.tmrTracking = New System.Windows.Forms.Timer(Me.components)
+        Me.serialPortTracking = New System.IO.Ports.SerialPort(Me.components)
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarTilt, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarPan, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
@@ -221,13 +257,17 @@ Partial Class frmMain
         Me.grpSerialSettings.SuspendLayout()
         Me.tabCommandLine.SuspendLayout()
         Me.tabInstrumentLiveCamera.SuspendLayout()
+        Me.tabMissionControl.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabAtto.SuspendLayout()
+        CType(Me.dgStringResources, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpGPSTime.SuspendLayout()
         Me.grpMisc.SuspendLayout()
         Me.tabPortControl.SuspendLayout()
         Me.tabPortComPort.SuspendLayout()
         Me.tabPortDataFile.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabPortMissions.SuspendLayout()
+        Me.tabPortTracking.SuspendLayout()
         Me.tabPortServos.SuspendLayout()
         CType(Me.tbarServo8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarServo7, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -347,6 +387,17 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.chkRecord, resources.GetString("chkRecord.ToolTip"))
         Me.chkRecord.UseVisualStyleBackColor = True
         '
+        'tbarModelScale
+        '
+        resources.ApplyResources(Me.tbarModelScale, "tbarModelScale")
+        Me.tbarModelScale.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.tbarModelScale.Maximum = 50
+        Me.tbarModelScale.Minimum = 1
+        Me.tbarModelScale.Name = "tbarModelScale"
+        Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.ToolTip1.SetToolTip(Me.tbarModelScale, resources.GetString("tbarModelScale.ToolTip"))
+        Me.tbarModelScale.Value = 10
+        '
         'cmdReloadMissionDirectory
         '
         resources.ApplyResources(Me.cmdReloadMissionDirectory, "cmdReloadMissionDirectory")
@@ -361,16 +412,46 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.cmdReloadMissions, resources.GetString("cmdReloadMissions.ToolTip"))
         Me.cmdReloadMissions.UseVisualStyleBackColor = True
         '
-        'tbarModelScale
+        'cmdReloadTrackingPorts
         '
-        resources.ApplyResources(Me.tbarModelScale, "tbarModelScale")
-        Me.tbarModelScale.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.tbarModelScale.Maximum = 50
-        Me.tbarModelScale.Minimum = 1
-        Me.tbarModelScale.Name = "tbarModelScale"
-        Me.tbarModelScale.TickStyle = System.Windows.Forms.TickStyle.None
-        Me.ToolTip1.SetToolTip(Me.tbarModelScale, resources.GetString("tbarModelScale.ToolTip"))
-        Me.tbarModelScale.Value = 10
+        resources.ApplyResources(Me.cmdReloadTrackingPorts, "cmdReloadTrackingPorts")
+        Me.cmdReloadTrackingPorts.Name = "cmdReloadTrackingPorts"
+        Me.ToolTip1.SetToolTip(Me.cmdReloadTrackingPorts, resources.GetString("cmdReloadTrackingPorts.ToolTip"))
+        Me.cmdReloadTrackingPorts.UseVisualStyleBackColor = True
+        '
+        'tbarTilt
+        '
+        resources.ApplyResources(Me.tbarTilt, "tbarTilt")
+        Me.tbarTilt.BackColor = System.Drawing.Color.White
+        Me.tbarTilt.LargeChange = 1
+        Me.tbarTilt.Maximum = 2000
+        Me.tbarTilt.Minimum = 1000
+        Me.tbarTilt.Name = "tbarTilt"
+        Me.tbarTilt.TabStop = False
+        Me.tbarTilt.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.ToolTip1.SetToolTip(Me.tbarTilt, resources.GetString("tbarTilt.ToolTip"))
+        Me.tbarTilt.Value = 1500
+        '
+        'tbarPan
+        '
+        resources.ApplyResources(Me.tbarPan, "tbarPan")
+        Me.tbarPan.BackColor = System.Drawing.Color.White
+        Me.tbarPan.LargeChange = 1
+        Me.tbarPan.Maximum = 2000
+        Me.tbarPan.Minimum = 1000
+        Me.tbarPan.Name = "tbarPan"
+        Me.tbarPan.TabStop = False
+        Me.tbarPan.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.ToolTip1.SetToolTip(Me.tbarPan, resources.GetString("tbarPan.ToolTip"))
+        Me.tbarPan.Value = 1500
+        '
+        'cboTrackingSet
+        '
+        Me.cboTrackingSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboTrackingSet.FormattingEnabled = True
+        resources.ApplyResources(Me.cboTrackingSet, "cboTrackingSet")
+        Me.cboTrackingSet.Name = "cboTrackingSet"
+        Me.ToolTip1.SetToolTip(Me.cboTrackingSet, resources.GetString("cboTrackingSet.ToolTip"))
         '
         'tmrComPort
         '
@@ -393,6 +474,7 @@ Partial Class frmMain
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.JoystickInstrumentControl1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdExit)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdSetHome)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdClearMap)
@@ -461,6 +543,8 @@ Partial Class frmMain
         Me.tabInstrumentView.Controls.Add(Me.tabSerialData)
         Me.tabInstrumentView.Controls.Add(Me.tabCommandLine)
         Me.tabInstrumentView.Controls.Add(Me.tabInstrumentLiveCamera)
+        Me.tabInstrumentView.Controls.Add(Me.tabMissionControl)
+        Me.tabInstrumentView.Controls.Add(Me.tabAtto)
         resources.ApplyResources(Me.tabInstrumentView, "tabInstrumentView")
         Me.tabInstrumentView.Name = "tabInstrumentView"
         Me.tabInstrumentView.SelectedIndex = 0
@@ -470,7 +554,7 @@ Partial Class frmMain
         Me.tabInstruments.BackColor = System.Drawing.Color.Transparent
         Me.tabInstruments.Controls.Add(Me.BatteryIndicatorInstrumentControl1)
         Me.tabInstruments.Controls.Add(Me.TurnCoordinatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.cmdSetNorth)
+        Me.tabInstruments.Controls.Add(Me.cmdZeroYaw)
         Me.tabInstruments.Controls.Add(Me._3DMesh1)
         Me.tabInstruments.Controls.Add(Me.VerticalSpeedIndicatorInstrumentControl1)
         Me.tabInstruments.Controls.Add(Me.HeadingIndicatorInstrumentControl1)
@@ -493,11 +577,11 @@ Partial Class frmMain
         resources.ApplyResources(Me.TurnCoordinatorInstrumentControl1, "TurnCoordinatorInstrumentControl1")
         Me.TurnCoordinatorInstrumentControl1.Name = "TurnCoordinatorInstrumentControl1"
         '
-        'cmdSetNorth
+        'cmdZeroYaw
         '
-        resources.ApplyResources(Me.cmdSetNorth, "cmdSetNorth")
-        Me.cmdSetNorth.Name = "cmdSetNorth"
-        Me.cmdSetNorth.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cmdZeroYaw, "cmdZeroYaw")
+        Me.cmdZeroYaw.Name = "cmdZeroYaw"
+        Me.cmdZeroYaw.UseVisualStyleBackColor = True
         '
         '_3DMesh1
         '
@@ -684,6 +768,131 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.DirectShowControl2, "DirectShowControl2")
         Me.DirectShowControl2.Name = "DirectShowControl2"
+        '
+        'tabMissionControl
+        '
+        Me.tabMissionControl.Controls.Add(Me.cmdReloadMissionDirectory)
+        Me.tabMissionControl.Controls.Add(Me.cmdReloadMissions)
+        Me.tabMissionControl.Controls.Add(Me.lblMissionLabel)
+        Me.tabMissionControl.Controls.Add(Me.cboMission)
+        Me.tabMissionControl.Controls.Add(Me.Label1)
+        Me.tabMissionControl.Controls.Add(Me.ComboBox1)
+        Me.tabMissionControl.Controls.Add(Me.Button1)
+        Me.tabMissionControl.Controls.Add(Me.DataGridView1)
+        resources.ApplyResources(Me.tabMissionControl, "tabMissionControl")
+        Me.tabMissionControl.Name = "tabMissionControl"
+        Me.tabMissionControl.UseVisualStyleBackColor = True
+        '
+        'lblMissionLabel
+        '
+        resources.ApplyResources(Me.lblMissionLabel, "lblMissionLabel")
+        Me.lblMissionLabel.Name = "lblMissionLabel"
+        '
+        'cboMission
+        '
+        Me.cboMission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMission.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMission, "cboMission")
+        Me.cboMission.Name = "cboMission"
+        Me.cboMission.Sorted = True
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Sorted = True
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.AllowUserToResizeRows = False
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
+        Me.DataGridView1.MultiSelect = False
+        Me.DataGridView1.Name = "DataGridView1"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'tabAtto
+        '
+        Me.tabAtto.Controls.Add(Me.dgStringResources)
+        resources.ApplyResources(Me.tabAtto, "tabAtto")
+        Me.tabAtto.Name = "tabAtto"
+        Me.tabAtto.UseVisualStyleBackColor = True
+        '
+        'dgStringResources
+        '
+        Me.dgStringResources.AllowUserToAddRows = False
+        Me.dgStringResources.AllowUserToDeleteRows = False
+        Me.dgStringResources.AllowUserToResizeRows = False
+        Me.dgStringResources.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgStringResources.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgStringResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgStringResources.DefaultCellStyle = DataGridViewCellStyle5
+        resources.ApplyResources(Me.dgStringResources, "dgStringResources")
+        Me.dgStringResources.MultiSelect = False
+        Me.dgStringResources.Name = "dgStringResources"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgStringResources.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.dgStringResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'grpGPSTime
         '
@@ -877,7 +1086,7 @@ Partial Class frmMain
         '
         Me.tabPortControl.Controls.Add(Me.tabPortComPort)
         Me.tabPortControl.Controls.Add(Me.tabPortDataFile)
-        Me.tabPortControl.Controls.Add(Me.tabPortMissions)
+        Me.tabPortControl.Controls.Add(Me.tabPortTracking)
         Me.tabPortControl.Controls.Add(Me.tabPortServos)
         Me.tabPortControl.Controls.Add(Me.tabPortSensors)
         resources.ApplyResources(Me.tabPortControl, "tabPortControl")
@@ -886,6 +1095,7 @@ Partial Class frmMain
         '
         'tabPortComPort
         '
+        Me.tabPortComPort.Controls.Add(Me.txtSocket)
         Me.tabPortComPort.Controls.Add(Me.cmdTest)
         Me.tabPortComPort.Controls.Add(Me.lblBandwidth)
         Me.tabPortComPort.Controls.Add(Me.lblComPortStatus)
@@ -897,14 +1107,19 @@ Partial Class frmMain
         Me.tabPortComPort.Controls.Add(Me.lblGPSType)
         Me.tabPortComPort.Controls.Add(Me.lblGPSTypeLabel)
         Me.tabPortComPort.Controls.Add(Me.lblBaudRate)
-        Me.tabPortComPort.Controls.Add(Me.cmdSearchCOM)
         Me.tabPortComPort.Controls.Add(Me.cmdConnect)
         Me.tabPortComPort.Controls.Add(Me.cmdSearch)
         Me.tabPortComPort.Controls.Add(Me.lblComPort)
         Me.tabPortComPort.Controls.Add(Me.cboComPort)
+        Me.tabPortComPort.Controls.Add(Me.cmdSearchCOM)
         resources.ApplyResources(Me.tabPortComPort, "tabPortComPort")
         Me.tabPortComPort.Name = "tabPortComPort"
         Me.tabPortComPort.UseVisualStyleBackColor = True
+        '
+        'txtSocket
+        '
+        resources.ApplyResources(Me.txtSocket, "txtSocket")
+        Me.txtSocket.Name = "txtSocket"
         '
         'cmdTest
         '
@@ -959,12 +1174,6 @@ Partial Class frmMain
         resources.ApplyResources(Me.lblBaudRate, "lblBaudRate")
         Me.lblBaudRate.Name = "lblBaudRate"
         '
-        'cmdSearchCOM
-        '
-        resources.ApplyResources(Me.cmdSearchCOM, "cmdSearchCOM")
-        Me.cmdSearchCOM.Name = "cmdSearchCOM"
-        Me.cmdSearchCOM.UseVisualStyleBackColor = True
-        '
         'cmdConnect
         '
         resources.ApplyResources(Me.cmdConnect, "cmdConnect")
@@ -989,6 +1198,12 @@ Partial Class frmMain
         resources.ApplyResources(Me.cboComPort, "cboComPort")
         Me.cboComPort.Name = "cboComPort"
         Me.cboComPort.Sorted = True
+        '
+        'cmdSearchCOM
+        '
+        resources.ApplyResources(Me.cmdSearchCOM, "cmdSearchCOM")
+        Me.cmdSearchCOM.Name = "cmdSearchCOM"
+        Me.cmdSearchCOM.UseVisualStyleBackColor = True
         '
         'tabPortDataFile
         '
@@ -1034,28 +1249,104 @@ Partial Class frmMain
         resources.ApplyResources(Me.txtOutputFolder, "txtOutputFolder")
         Me.txtOutputFolder.Name = "txtOutputFolder"
         '
-        'tabPortMissions
+        'tabPortTracking
         '
-        Me.tabPortMissions.Controls.Add(Me.cmdReloadMissionDirectory)
-        Me.tabPortMissions.Controls.Add(Me.cmdReloadMissions)
-        Me.tabPortMissions.Controls.Add(Me.lblMissionLabel)
-        Me.tabPortMissions.Controls.Add(Me.cboMission)
-        resources.ApplyResources(Me.tabPortMissions, "tabPortMissions")
-        Me.tabPortMissions.Name = "tabPortMissions"
-        Me.tabPortMissions.UseVisualStyleBackColor = True
+        Me.tabPortTracking.Controls.Add(Me.lblTrackerAngle)
+        Me.tabPortTracking.Controls.Add(Me.cmdTrackingCalibrate)
+        Me.tabPortTracking.Controls.Add(Me.cboTrackingSet)
+        Me.tabPortTracking.Controls.Add(Me.tbarTilt)
+        Me.tabPortTracking.Controls.Add(Me.tbarPan)
+        Me.tabPortTracking.Controls.Add(Me.lblHertzTracking)
+        Me.tabPortTracking.Controls.Add(Me.cboHertzTracking)
+        Me.tabPortTracking.Controls.Add(Me.cboOutputTypeTracking)
+        Me.tabPortTracking.Controls.Add(Me.lblOutputTypeTracking)
+        Me.tabPortTracking.Controls.Add(Me.lblStatusTracking)
+        Me.tabPortTracking.Controls.Add(Me.lblStatusTrackingStatus)
+        Me.tabPortTracking.Controls.Add(Me.cmdReloadTrackingPorts)
+        Me.tabPortTracking.Controls.Add(Me.cboBaudRateTracking)
+        Me.tabPortTracking.Controls.Add(Me.lblBaudRateTracking)
+        Me.tabPortTracking.Controls.Add(Me.cmdConnectTracking)
+        Me.tabPortTracking.Controls.Add(Me.lblComPortTracking)
+        Me.tabPortTracking.Controls.Add(Me.cboComPortTracking)
+        resources.ApplyResources(Me.tabPortTracking, "tabPortTracking")
+        Me.tabPortTracking.Name = "tabPortTracking"
+        Me.tabPortTracking.UseVisualStyleBackColor = True
         '
-        'lblMissionLabel
+        'lblTrackerAngle
         '
-        resources.ApplyResources(Me.lblMissionLabel, "lblMissionLabel")
-        Me.lblMissionLabel.Name = "lblMissionLabel"
+        resources.ApplyResources(Me.lblTrackerAngle, "lblTrackerAngle")
+        Me.lblTrackerAngle.Name = "lblTrackerAngle"
         '
-        'cboMission
+        'cmdTrackingCalibrate
         '
-        Me.cboMission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboMission.FormattingEnabled = True
-        resources.ApplyResources(Me.cboMission, "cboMission")
-        Me.cboMission.Name = "cboMission"
-        Me.cboMission.Sorted = True
+        resources.ApplyResources(Me.cmdTrackingCalibrate, "cmdTrackingCalibrate")
+        Me.cmdTrackingCalibrate.Name = "cmdTrackingCalibrate"
+        Me.cmdTrackingCalibrate.UseVisualStyleBackColor = True
+        '
+        'lblHertzTracking
+        '
+        resources.ApplyResources(Me.lblHertzTracking, "lblHertzTracking")
+        Me.lblHertzTracking.Name = "lblHertzTracking"
+        '
+        'cboHertzTracking
+        '
+        Me.cboHertzTracking.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboHertzTracking.FormattingEnabled = True
+        resources.ApplyResources(Me.cboHertzTracking, "cboHertzTracking")
+        Me.cboHertzTracking.Name = "cboHertzTracking"
+        '
+        'cboOutputTypeTracking
+        '
+        Me.cboOutputTypeTracking.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboOutputTypeTracking.FormattingEnabled = True
+        resources.ApplyResources(Me.cboOutputTypeTracking, "cboOutputTypeTracking")
+        Me.cboOutputTypeTracking.Name = "cboOutputTypeTracking"
+        '
+        'lblOutputTypeTracking
+        '
+        resources.ApplyResources(Me.lblOutputTypeTracking, "lblOutputTypeTracking")
+        Me.lblOutputTypeTracking.Name = "lblOutputTypeTracking"
+        '
+        'lblStatusTracking
+        '
+        resources.ApplyResources(Me.lblStatusTracking, "lblStatusTracking")
+        Me.lblStatusTracking.Name = "lblStatusTracking"
+        '
+        'lblStatusTrackingStatus
+        '
+        resources.ApplyResources(Me.lblStatusTrackingStatus, "lblStatusTrackingStatus")
+        Me.lblStatusTrackingStatus.Name = "lblStatusTrackingStatus"
+        '
+        'cboBaudRateTracking
+        '
+        Me.cboBaudRateTracking.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboBaudRateTracking.FormattingEnabled = True
+        resources.ApplyResources(Me.cboBaudRateTracking, "cboBaudRateTracking")
+        Me.cboBaudRateTracking.Name = "cboBaudRateTracking"
+        '
+        'lblBaudRateTracking
+        '
+        resources.ApplyResources(Me.lblBaudRateTracking, "lblBaudRateTracking")
+        Me.lblBaudRateTracking.Name = "lblBaudRateTracking"
+        '
+        'cmdConnectTracking
+        '
+        resources.ApplyResources(Me.cmdConnectTracking, "cmdConnectTracking")
+        Me.cmdConnectTracking.Name = "cmdConnectTracking"
+        Me.cmdConnectTracking.UseVisualStyleBackColor = True
+        '
+        'lblComPortTracking
+        '
+        resources.ApplyResources(Me.lblComPortTracking, "lblComPortTracking")
+        Me.lblComPortTracking.Name = "lblComPortTracking"
+        '
+        'cboComPortTracking
+        '
+        Me.cboComPortTracking.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboComPortTracking.FormattingEnabled = True
+        resources.ApplyResources(Me.cboComPortTracking, "cboComPortTracking")
+        Me.cboComPortTracking.Name = "cboComPortTracking"
+        Me.cboComPortTracking.Sorted = True
         '
         'tabPortServos
         '
@@ -1493,6 +1784,12 @@ Partial Class frmMain
         Me.tbarSensor1.TabStop = False
         Me.tbarSensor1.TickStyle = System.Windows.Forms.TickStyle.None
         '
+        'JoystickInstrumentControl1
+        '
+        Me.JoystickInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
+        resources.ApplyResources(Me.JoystickInstrumentControl1, "JoystickInstrumentControl1")
+        Me.JoystickInstrumentControl1.Name = "JoystickInstrumentControl1"
+        '
         'cmdExit
         '
         resources.ApplyResources(Me.cmdExit, "cmdExit")
@@ -1597,6 +1894,16 @@ Partial Class frmMain
         resources.ApplyResources(Me.DirectShowControl1, "DirectShowControl1")
         Me.DirectShowControl1.Name = "DirectShowControl1"
         '
+        'tmrTracking
+        '
+        '
+        'serialPortTracking
+        '
+        Me.serialPortTracking.DtrEnable = True
+        Me.serialPortTracking.ReceivedBytesThreshold = 4096
+        Me.serialPortTracking.RtsEnable = True
+        Me.serialPortTracking.WriteTimeout = 25
+        '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
@@ -1605,6 +1912,8 @@ Partial Class frmMain
         Me.KeyPreview = True
         Me.Name = "frmMain"
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarTilt, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarPan, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         Me.SplitContainer1.ResumeLayout(False)
@@ -1619,15 +1928,20 @@ Partial Class frmMain
         Me.tabCommandLine.ResumeLayout(False)
         Me.tabCommandLine.PerformLayout()
         Me.tabInstrumentLiveCamera.ResumeLayout(False)
+        Me.tabMissionControl.ResumeLayout(False)
+        Me.tabMissionControl.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabAtto.ResumeLayout(False)
+        CType(Me.dgStringResources, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpGPSTime.ResumeLayout(False)
         Me.grpMisc.ResumeLayout(False)
         Me.tabPortControl.ResumeLayout(False)
         Me.tabPortComPort.ResumeLayout(False)
+        Me.tabPortComPort.PerformLayout()
         Me.tabPortDataFile.ResumeLayout(False)
         Me.tabPortDataFile.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabPortMissions.ResumeLayout(False)
-        Me.tabPortMissions.PerformLayout()
+        Me.tabPortTracking.ResumeLayout(False)
         Me.tabPortServos.ResumeLayout(False)
         CType(Me.tbarServo8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarServo7, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1739,11 +2053,7 @@ Partial Class frmMain
     Friend WithEvents cmdOutputFolder As System.Windows.Forms.Button
     Friend WithEvents chkRecord As System.Windows.Forms.CheckBox
     Friend WithEvents txtOutputFolder As System.Windows.Forms.TextBox
-    Friend WithEvents tabPortMissions As System.Windows.Forms.TabPage
-    Friend WithEvents cmdReloadMissionDirectory As System.Windows.Forms.Button
-    Friend WithEvents cmdReloadMissions As System.Windows.Forms.Button
-    Friend WithEvents lblMissionLabel As System.Windows.Forms.Label
-    Friend WithEvents cboMission As System.Windows.Forms.ComboBox
+    Friend WithEvents tabPortTracking As System.Windows.Forms.TabPage
     Friend WithEvents cmdSetHome As System.Windows.Forms.Button
     Friend WithEvents cmdExit As System.Windows.Forms.Button
     Friend WithEvents cmdClearMap As System.Windows.Forms.Button
@@ -1785,7 +2095,6 @@ Partial Class frmMain
     Friend WithEvents lblServo3 As System.Windows.Forms.Label
     Friend WithEvents lblServo2 As System.Windows.Forms.Label
     Friend WithEvents lblServo1 As System.Windows.Forms.Label
-    Friend WithEvents cmdSetNorth As System.Windows.Forms.Button
     Friend WithEvents tmrComPort As System.Windows.Forms.Timer
     Friend WithEvents cmdLiveCameraProperties1 As System.Windows.Forms.Button
     Friend WithEvents cboLiveCameraSelect1 As System.Windows.Forms.ComboBox
@@ -1838,4 +2147,37 @@ Partial Class frmMain
     Friend WithEvents BatteryIndicatorInstrumentControl1 As HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
     Friend WithEvents grpGPSTime As System.Windows.Forms.GroupBox
     Friend WithEvents lblGPSTime As System.Windows.Forms.Label
+    Friend WithEvents txtSocket As System.Windows.Forms.TextBox
+    Friend WithEvents JoystickInstrumentControl1 As HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
+    Friend WithEvents tabAtto As System.Windows.Forms.TabPage
+    Friend WithEvents dgStringResources As System.Windows.Forms.DataGridView
+    Friend WithEvents tabMissionControl As System.Windows.Forms.TabPage
+    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents cmdReloadMissionDirectory As System.Windows.Forms.Button
+    Friend WithEvents cmdReloadMissions As System.Windows.Forms.Button
+    Friend WithEvents lblMissionLabel As System.Windows.Forms.Label
+    Friend WithEvents cboMission As System.Windows.Forms.ComboBox
+    Friend WithEvents cboOutputTypeTracking As System.Windows.Forms.ComboBox
+    Friend WithEvents lblOutputTypeTracking As System.Windows.Forms.Label
+    Friend WithEvents lblStatusTracking As System.Windows.Forms.Label
+    Friend WithEvents lblStatusTrackingStatus As System.Windows.Forms.Label
+    Friend WithEvents cmdReloadTrackingPorts As System.Windows.Forms.Button
+    Friend WithEvents cboBaudRateTracking As System.Windows.Forms.ComboBox
+    Friend WithEvents lblBaudRateTracking As System.Windows.Forms.Label
+    Friend WithEvents cmdConnectTracking As System.Windows.Forms.Button
+    Friend WithEvents lblComPortTracking As System.Windows.Forms.Label
+    Friend WithEvents cboComPortTracking As System.Windows.Forms.ComboBox
+    Friend WithEvents tmrTracking As System.Windows.Forms.Timer
+    Friend WithEvents lblHertzTracking As System.Windows.Forms.Label
+    Friend WithEvents cboHertzTracking As System.Windows.Forms.ComboBox
+    Friend WithEvents serialPortTracking As System.IO.Ports.SerialPort
+    Friend WithEvents tbarTilt As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarPan As System.Windows.Forms.TrackBar
+    Friend WithEvents cmdZeroYaw As System.Windows.Forms.Button
+    Friend WithEvents cboTrackingSet As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdTrackingCalibrate As System.Windows.Forms.Button
+    Friend WithEvents lblTrackerAngle As System.Windows.Forms.Label
 End Class

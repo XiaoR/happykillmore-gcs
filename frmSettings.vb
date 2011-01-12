@@ -115,9 +115,9 @@ Public Class frmSettings
 
         With cbo3DModel
             .Items.Clear()
-            sFolderName = Dir(GetRootPath() & "3D Models\", FileAttribute.Directory)
+            sFolderName = Dir(GetRootPath() & "3D Models\*", FileAttribute.Directory)
             Do While sFolderName <> ""
-                If Microsoft.VisualBasic.Left(sFolderName, 1) <> "." Then
+                If InStr(sFolderName, ".") = 0 Then
                     .Items.Add(sFolderName)
                 End If
                 sFolderName = Dir()
@@ -307,7 +307,7 @@ Public Class frmSettings
         If cbo3DModel.Text <> sModelName Then
             sModelName = cbo3DModel.Text
             frmMain._3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), True, sModelName, GetRootPath() & "3D Models\")
-            frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.loadModel))
+            frmMain.WebBrowser1.Invoke(New MyDelegate(AddressOf frmMain.loadModel))
         End If
 
         sLanguageFile = aLanguages(cboLanguage.SelectedIndex)
@@ -348,7 +348,7 @@ Public Class frmSettings
         bGERoads = chkGERoads.Checked
         bGETerrain = chkGETerrain.Checked
         bGETrees = chkGETrees.Checked
-        frmMain.WebBrowser1.Invoke(New frmMain.MyDelegate(AddressOf frmMain.LoadGEFeatures))
+        frmMain.WebBrowser1.Invoke(New MyDelegate(AddressOf frmMain.LoadGEFeatures))
         On Error GoTo 0
 
         SaveSettings()
@@ -361,11 +361,11 @@ Public Class frmSettings
         End If
     End Sub
 
-    Private Sub chkRollReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRollReverse.CheckedChanged, chkPitchReverse.CheckedChanged, chkYawReverse.CheckedChanged, chkHeadingReverse.CheckedChanged
-        If chkRollReverse.Checked = True Then
-            GetResString(chkRollReverse, "Reversed")
+    Private Sub chkReverse_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRollReverse.CheckedChanged, chkPitchReverse.CheckedChanged, chkYawReverse.CheckedChanged, chkHeadingReverse.CheckedChanged
+        If sender.Checked = True Then
+            GetResString(sender, "Reversed")
         Else
-            GetResString(chkRollReverse, "Normal")
+            GetResString(sender, "Normal")
         End If
     End Sub
 
@@ -400,7 +400,7 @@ Public Class frmSettings
         cmdModeChangePlay.Enabled = chkAnnounceModeChange.Checked
     End Sub
 
-    Private Sub chkGERoads_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged
+    Private Sub chkGE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged
         If sender.Checked = True Then
             sender.Text = GetResString(, "Yes")
         Else

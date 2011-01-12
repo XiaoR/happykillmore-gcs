@@ -151,41 +151,46 @@
     }
     
     function clearMap() {
-    	var features = ge.getFeatures(); 
-	    while (features.getFirstChild()) { 
-   		    features.removeChild(features.getFirstChild()); 
-	    } 
-	    modelLoaded = false;
-	    
-	    //flightString = ge.createLineString(''); 
-	    // Create the placemark 
-	    flightStringPlacemark = ge.createPlacemark(''); 
-     
-	    // Create the LineString 
-	    flightString = ge.createLineString(''); 
-	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-	    flightStringPlacemark.setGeometry(flightString);  
+        try {
+        	var features = ge.getFeatures(); 
+	        while (features.getFirstChild()) { 
+   		        features.removeChild(features.getFirstChild()); 
+	        } 
+	        modelLoaded = false;
+    	    
+	        //flightString = ge.createLineString(''); 
+	        // Create the placemark 
+	        flightStringPlacemark = ge.createPlacemark(''); 
+         
+	        // Create the LineString 
+	        flightString = ge.createLineString(''); 
+	        flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	        flightStringPlacemark.setGeometry(flightString);  
 
-	    flightStringPlacemark.setStyleSelector(ge.createStyle(''));
-	    flightStyle = flightStringPlacemark.getStyleSelector().getLineStyle();
-        flightPolyStyle = flightStringPlacemark.getStyleSelector().getPolyStyle();
+	        flightStringPlacemark.setStyleSelector(ge.createStyle(''));
+	        flightStyle = flightStringPlacemark.getStyleSelector().getLineStyle();
+            flightPolyStyle = flightStringPlacemark.getStyleSelector().getPolyStyle();
 
-	    // Create the placemark 
-	    lineStringPlacemark = ge.createPlacemark(''); 
-     
-	    // Create the LineString 
-	    lineString = ge.createLineString(''); 
-	    lineString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-	    lineStringPlacemark.setGeometry(lineString);  
+	        // Create the placemark 
+	        lineStringPlacemark = ge.createPlacemark(''); 
+         
+	        // Create the LineString 
+	        lineString = ge.createLineString(''); 
+	        lineString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	        lineStringPlacemark.setGeometry(lineString);  
 
-	    lineStringPlacemark.setStyleSelector(ge.createStyle(''));
-	    lineStyle = lineStringPlacemark.getStyleSelector().getLineStyle();
-	    lineStyle.setWidth(2);
-	    lineStyle.getColor().set('7f0000ff');  // aabbggrr format
-	    lineString.setExtrude(true); 
-        linePolyStyle = lineStringPlacemark.getStyleSelector().getPolyStyle();
-	    
-        buildPlaneModel();
+	        lineStringPlacemark.setStyleSelector(ge.createStyle(''));
+	        lineStyle = lineStringPlacemark.getStyleSelector().getLineStyle();
+	        lineStyle.setWidth(2);
+	        lineStyle.getColor().set('7f0000ff');  // aabbggrr format
+	        lineString.setExtrude(true); 
+            linePolyStyle = lineStringPlacemark.getStyleSelector().getPolyStyle();
+    	    
+            buildPlaneModel();
+        }
+        catch(err)
+        {
+        }
     }
 
     function centerOnPlane() {
@@ -247,7 +252,7 @@
         planeOrient = ge.createOrientation(''); 
         planeModel.setOrientation(planeOrient); 
 
-        if (viewType != 3){
+        if (viewType != 3 && modelURL != ''){
             planeLink.setHref(modelURL);
             planeModel.setLink(planeLink);
         }
@@ -265,6 +270,11 @@
         if (isLoaded == false){
             return;
         }
+
+        camera.setLatitude(lat); 
+        camera.setLongitude(long);  
+        lookAt.setLatitude(lat); 
+        lookAt.setLongitude(long);  
         
         eAltOffset = altOffset;
         nScale = scale;

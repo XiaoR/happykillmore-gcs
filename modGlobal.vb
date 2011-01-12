@@ -2,6 +2,8 @@ Imports System.IO
 Imports DirectShowLib
 Imports System.Globalization
 Imports System.Resources
+Imports System.Net
+Imports System.Net.Sockets
 
 Module modGlobal
     Public theDevice1 As IBaseFilter
@@ -65,9 +67,15 @@ Module modGlobal
 
     Public resourceMgr As ResourceManager
 
-    'Public jst As 
+    Public Delegate Sub MyDelegate()
+    'Public Delegate Sub NewDataArrived()
+    'Public dataDelegate 'As New NewDataArrived(AddressOf frmMain.NewDataReceived)
 
     Public bIsAdmin As Boolean
+    Public bShutdown As Boolean = False
+    Public sBuffer As String
+    Public bConnected As Boolean = False
+    Public bConnectedTracking As Boolean = False
 
     Public nPitch As Single
     Public nRoll As Single
@@ -75,6 +83,9 @@ Module modGlobal
 
     Public eAltOffset As e_AltOffset
     Public nHomeOffset As Integer
+    Public nSocketPortNumber As Long
+    Public sSocketIPaddress As String
+    Public nSocketType As Integer
 
     Public nYawOffset As Single
     Public sLanguageFile As String
@@ -147,11 +158,65 @@ Module modGlobal
     Public nServoOutput(0 To 7) As Integer
     Public nSensor(0 To 13) As Long
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
+    Public Function GetServoValue(ByVal inputString As String) As Double
+        If IsNumeric(inputString) = True Then
+            GetServoValue = Convert.ToDouble(inputString)
+        Else
+            GetServoValue = 0
+        End If
+    End Function
+    Public Function ParseServerAndPort(ByVal inputString As String, ByRef ipaddress As String, ByRef portNumber As Long) As Boolean
+        Dim bValidPort As Boolean = False
+        Dim bValidIP As Boolean = True
+        Dim sTempPortNumber As String
+        Dim sTempIpAddress As String
+        Dim sSplit() As String
+        Dim nCount As Integer
+
+        ParseServerAndPort = False
+        If InStr(inputString, ":") <> 0 Then
+            sTempPortNumber = inputString.Substring(InStr(inputString, ":"))
+            If IsNumeric(sTempPortNumber) = True And Trim(sTempPortNumber) <> "" Then
+                portNumber = CLng(sTempPortNumber)
+                bValidPort = True
+            End If
+
+            sSplit = Split(inputString.Substring(0, InStr(inputString, ":") - 1), ".")
+            If UBound(sSplit) = 3 Then
+                For nCount = 0 To UBound(sSplit)
+                    If IsNumeric(sSplit(nCount)) = False Or Trim(sSplit(nCount)) = "" Then
+                        bValidIP = False
+                        Exit For
+                    End If
+                Next
+                If bValidIP = True Then
+                    ipaddress = inputString.Substring(0, InStr(inputString, ":") - 1)
+                End If
+            Else
+                Try
+                    Dim ipHostInfo As IPHostEntry = Dns.GetHostEntry(inputString.Substring(0, InStr(inputString, ":") - 1))
+                    ipaddress = ipHostInfo.AddressList(0).ToString
+                Catch
+                    bValidIP = False
+                End Try
+            End If
+            If bValidIP = True And bValidPort = True Then
+                ParseServerAndPort = True
+            End If
+        Else
+            If IsNumeric(inputString) = True And Trim(inputString) <> "" Then
+                ipaddress = "127.0.0.1"
+                portNumber = CLng(inputString)
+                ParseServerAndPort = True
+            End If
+        End If
+    End Function
 
     Public Function GetNMEADate(ByVal inputString As String) As Date
         Try
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
+            inputString = inputString.PadLeft(6, "0")
             GetNMEADate = GetNMEADate.Parse(inputString.Substring(2, 2) & "/" & inputString.Substring(0, 2) & "/" & inputString.Substring(4, 2), cf).Date
         Catch
         End Try
@@ -160,6 +225,8 @@ Module modGlobal
         Try
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
+            inputString = inputString.Substring(0, InStr(inputString, ".") - 1)
+            inputString = inputString.PadLeft(6, "0")
             GetNMEATime = GetNMEATime.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
         Catch
         End Try
@@ -247,48 +314,39 @@ Module modGlobal
                     GetResString = Replace(resString, " ", "_")
                     Debug.Print(resString)
                 End If
-                'GetResString = My.Resources.English.ResourceManager.GetString(Replace(resString, " ", "_"))
-                'Else
-                '    oControl = inputControl.parent
-                '    Do While Not TypeOf oControl Is Form
-                '        oControl = oControl.parent
-                '    Loop
-                '    GetResString = resourceMgr.GetString(Replace(resString, " ", "_"), System.Globalization.CultureInfo.CurrentCulture)
-                '    'GetResString = My.Resources.English.ResourceManager.GetString(oControl.name & "_" & inputControl.name)
             End If
-            If stripUnderscore = True Then
-                GetResString = Replace(GetResString, "&&", Chr(1))
-                GetResString = Replace(GetResString, "&", "")
-                GetResString = Replace(GetResString, Chr(1), "&&")
-            End If
-            GetResString = Replace(GetResString, "^", vbCrLf)
-            If firstReplace <> "" Then
-                GetResString = Replace(GetResString, "&1", firstReplace)
-            End If
-            If secondReplace <> "" Then
-                GetResString = Replace(GetResString, "&2", secondReplace)
-            End If
-            If GetResString Is Nothing Then
-                If defaultValue <> "" Then
-                    GetResString = defaultValue
-                Else
-                    GetResString = Replace(resString, " ", "_")
-                End If
-                Debug.Print(resString)
-            End If
-            If includeColon = True Then
-                GetResString = GetResString & ":"
-            End If
-            If Not inputControl Is Nothing Then
-                inputControl.text = GetResString
-            End If
-            'GetResString = ""
         Catch err2 As Exception
             Debug.Print(err2.Message)
             If GetResString = "" Then
                 GetResString = defaultValue
             End If
         End Try
+        If stripUnderscore = True Then
+            GetResString = Replace(GetResString, "&&", Chr(1))
+            GetResString = Replace(GetResString, "&", "")
+            GetResString = Replace(GetResString, Chr(1), "&&")
+        End If
+        GetResString = Replace(GetResString, "^", vbCrLf)
+        If firstReplace <> "" Then
+            GetResString = Replace(GetResString, "&1", firstReplace)
+        End If
+        If secondReplace <> "" Then
+            GetResString = Replace(GetResString, "&2", secondReplace)
+        End If
+        If GetResString Is Nothing Then
+            If defaultValue <> "" Then
+                GetResString = defaultValue
+            Else
+                GetResString = Replace(resString, " ", "_")
+            End If
+            Debug.Print(resString)
+        End If
+        If includeColon = True Then
+            GetResString = GetResString & ":"
+        End If
+        If Not inputControl Is Nothing Then
+            inputControl.text = GetResString
+        End If
     End Function
     Public Function ConvertSpeed(ByVal inputValue As String, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
         Dim nTemp As Double
@@ -356,6 +414,9 @@ Module modGlobal
         Catch
             ConvertPeriodToLocal = 0
         End Try
+    End Function
+    Public Function ConvertLocalToPeriod(ByVal inputString As String) As String
+        ConvertLocalToPeriod = Replace(inputString, System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".")
     End Function
     Public Function ConvertLatLongFormat(ByVal inputValue As String, ByVal inputFormat As e_LatLongFormat, ByVal outputFormat As e_LatLongFormat, ByVal isLat As Boolean) As String
         Dim sFormat As String
@@ -476,16 +537,16 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
             End If
 
-            sHeaderCharacters = "T"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
-            End If
-
             sHeaderCharacters = "F13:"
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_UDB_SetHome
+            End If
+
+            sHeaderCharacters = "F2:"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_UDB
             End If
 
             sHeaderCharacters = "$GP"
@@ -495,9 +556,21 @@ Module modGlobal
             End If
 
             sHeaderCharacters = "$A"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
+            End If
+
+            sHeaderCharacters = "$ATTO"
+            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
+            End If
+
+            sHeaderCharacters = "$GPS"
+            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
             End If
 
             sHeaderCharacters = "home:"
@@ -608,7 +681,7 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     .RawMessage = sTemp
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_Test
+                                    .MessageType = nMessageType
                                     .Header = "Test Msg"
                                     .Packet = Mid(sTemp, 6, Len(sTemp) - 5)
                                     .PacketLength = Len(.Packet) - 2
@@ -627,7 +700,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_HKO
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "HKO Output File"
                                 .Packet = sTemp
@@ -650,7 +723,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_Paparazzi
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "Paparazzi"
                                 .Packet = sTemp
@@ -673,7 +746,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_UDB
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "Serial UDB Extra"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -697,7 +770,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_UDB_SetHome
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "Serial UDB Extra"
                                 .Packet = Mid(sTemp, 5, Len(sTemp) - 7)
@@ -722,7 +795,7 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     .RawMessage = sTemp
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
+                                    .MessageType = nMessageType
                                     .Header = "ArduIMU"
                                     .ID = Asc(Mid(sTemp, 6, 1))
                                     .Packet = Mid(sTemp, 5, Len(sTemp) - 6)
@@ -747,7 +820,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "AP Attitude"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -765,7 +838,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "AP Mode Change"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -783,7 +856,7 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
+                                .MessageType = nMessageType
                                 .ValidMessage = True
                                 .Header = "AP GPS"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -816,7 +889,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_NMEA
+                                .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 6)
                                 .Packet = Mid(sTemp, 2, Len(Mid(sTemp, 1, InStr(sTemp, "*") - 2)))
                                 .PacketLength = Len(.Packet)
@@ -854,7 +927,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
+                                .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 2)
                                 .Packet = Mid(sTemp, 4)
                                 .PacketLength = Len(.Packet)
@@ -865,9 +938,9 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_AttoPilot
-                        sHeaderCharacters = "$A"
-                        sFooterCharacters = vbCr
+                    Case cMessage.e_MessageType.e_MessageType_AttoPilot, cMessage.e_MessageType.e_MessageType_AttoPilot18
+                        sHeaderCharacters = "$"
+                        sFooterCharacters = vbCrLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
                             nLastStart = InStr(sBuffer, sHeaderCharacters)
                             sTemp = Mid(sBuffer, nLastStart)
@@ -877,7 +950,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
+                                .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 3)
                                 .Packet = Mid(sTemp, 2, Len(Mid(sTemp, 1, InStr(sTemp, "*") - 2)))
                                 .PacketLength = Len(.Packet)
@@ -887,9 +960,16 @@ Module modGlobal
                                     .ValidMessage = True
                                     Try
                                         sSplit = Split(.Packet, ",")
-                                        If sSplit(0) = "A4" Then
-                                            .GPSDateTime = CDate(GetNMEADate(ConvertPeriodToLocal(sSplit(2))) & " " & GetNMEATime(ConvertPeriodToLocal(sSplit(3))))
-                                            .ValidDateTime = True
+                                        If nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot Then
+                                            If sSplit(0) = "A4" Then
+                                                .GPSDateTime = CDate(GetNMEADate(sSplit(2)) & " " & GetNMEATime(sSplit(3)))
+                                                .ValidDateTime = True
+                                            End If
+                                        ElseIf nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18 Then
+                                            If sSplit(0) = "GPS" Then
+                                                .GPSDateTime = CDate(GetNMEADate(sSplit(1)) & " " & GetNMEATime(sSplit(2)))
+                                                .ValidDateTime = True
+                                            End If
                                         End If
                                     Catch
                                     End Try
@@ -911,7 +991,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
+                                .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 5)
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -932,7 +1012,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
+                                .MessageType = nMessageType
                                 .Header = Trim(Mid(sTemp, 1, 7))
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -953,7 +1033,7 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 .RawMessage = sTemp
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
+                                .MessageType = nMessageType
                                 .Header = ""
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -981,7 +1061,7 @@ Module modGlobal
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
                                     .RawMessage = sTemp
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_SiRF
+                                    .MessageType = nMessageType
                                     .Header = "SiRF"
                                     .ID = Asc(Mid(sTemp, 4, 1))
                                     .Packet = Mid(sTemp, 5, nPacketSize)
@@ -1023,7 +1103,7 @@ Module modGlobal
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
                                     .RawMessage = sTemp
-                                    .MessageType = cMessage.e_MessageType.e_MessageType_FY21AP
+                                    .MessageType = nMessageType
                                     .Header = "FY21AP"
                                     .Packet = Mid(sTemp, 3, nPacketSize - 2)
                                     .PacketLength = Len(.Packet)
@@ -1051,7 +1131,7 @@ Module modGlobal
                         If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 37 Then
                             With GetNextSentence
                                 nPacketSize = 32
-                                .MessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
+                                .MessageType = nMessageType
                                 .Header = "MTK v1.6"
                                 nSizeOffset = 5
 
@@ -1147,7 +1227,7 @@ Module modGlobal
                         If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
                             With GetNextSentence
                                 nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
-                                .MessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                                .MessageType = nMessageType
                                 .Header = "AP Mega"
                                 nSizeOffset = 5
                                 If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
@@ -1186,7 +1266,7 @@ Module modGlobal
                         If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 1 Then
                             With GetNextSentence
                                 nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
-                                .MessageType = cMessage.e_MessageType.e_MessageType_MAV
+                                .MessageType = nMessageType
                                 .Header = "MAVlink"
                                 nSizeOffset = 6
                                 If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
@@ -1411,5 +1491,69 @@ Module modGlobal
             oCulture = CultureInfo.CreateSpecificCulture(sLanguageFile)
         End If
         resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
+    End Function
+    Public Function GetTrackingHeadingAngle(ByVal homeLat As String, ByVal homeLong As String, ByVal homealt As String, ByVal locationLat As Double, ByVal locationLong As Double, ByVal locationAlt As Single, ByVal headingOffset As Integer, ByVal speed As Single, ByVal heading As Single, ByVal predict As Boolean, ByRef newHeading As Single, ByRef newAngle As Single) As Boolean
+        Dim R As Long = 6371
+        Dim dLat As Double
+        Dim dLon As Double
+        Dim a As Double
+        Dim c As Double
+        Dim d As Double
+        Dim x As Double
+        Dim y As Double
+        Dim nLocalHomeLat As Double
+        Dim nLocalHomeLong As Double
+        Dim nLocalHomeAlt As Single
+
+        GetTrackingHeadingAngle = True
+
+        If homeLat = "" Or homeLong = "" Or homealt = "" Then
+            GetTrackingHeadingAngle = False
+            Exit Function
+        ElseIf homeLat = "0" Or homeLong = "0" Then
+            GetTrackingHeadingAngle = False
+            Exit Function
+        End If
+
+
+        Try
+            nLocalHomeLat = Convert.ToDouble(homeLat)
+            nLocalHomeLong = Convert.ToDouble(homeLong)
+            nLocalHomeAlt = Convert.ToSingle(homealt)
+
+            dLat = (locationLat - nLocalHomeLat) * pi / 180
+            dLon = (locationLong - nLocalHomeLong) * pi / 180
+
+            a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(nLocalHomeLat * pi / 180) * Math.Cos(locationLat * pi / 180) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2)
+            c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a))
+            d = R * c
+
+            y = Math.Sin(dLon) * Math.Cos(locationLat * pi / 180)
+            x = Math.Cos(nLocalHomeLat * pi / 180) * Math.Sin(locationLat * pi / 180) - Math.Sin(nLocalHomeLat * pi / 180) * Math.Cos(locationLat * pi / 180) * Math.Cos(dLon)
+            newHeading = Math.Atan2(y, x) * 180 / pi
+            newHeading = newHeading - headingOffset
+            If newHeading >= 360 Then
+                newHeading = newHeading - 360
+            ElseIf newHeading < 0 Then
+                newHeading = newHeading + 360
+            End If
+
+            'Debug.WriteLine("Heading=" & heading)
+            newAngle = Math.Atan((locationAlt - nLocalHomeAlt) / (d * 1000)) * 180 / pi
+            If newAngle.IsNaN(newAngle) = True Then
+                newAngle = 0
+            End If
+        Catch
+            GetTrackingHeadingAngle = False
+        End Try
+    End Function
+    Public Function NormalizeHeading(ByVal inputValue As Single) As Single
+        If inputValue >= 180 Then
+            NormalizeHeading = inputValue - 360
+        ElseIf inputValue < -180 Then
+            NormalizeHeading = 360 - inputValue
+        Else
+            NormalizeHeading = inputValue
+        End If
     End Function
 End Module
