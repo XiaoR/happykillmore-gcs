@@ -856,6 +856,9 @@
   <data name="Shrink" xml:space="preserve">
     <value>Shrink</value>
   </data>
+  <data name="Socket_Num" xml:space="preserve">
+    <value>Socket Num</value>
+  </data>
   <data name="Speech" xml:space="preserve">
     <value>Speech</value>
   </data>

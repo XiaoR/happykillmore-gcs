@@ -836,6 +836,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Shrink.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Socket_Num">
+	<summary>
+  Looks up a localized string similar to Socket Num.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Speech">
 	<summary>
   Looks up a localized string similar to Speech.
@@ -1149,6 +1153,87 @@ GroundControlStation
  The angle related to the maximum value, in deg
  The angle in radian witch correspond to the physical value
 
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl.SetJoystickParameters(System.Single,System.Single,System.Single,System.Single)">
+ Define the physical value to be displayed on the indicator
+ The aircraft turn rate in °deg per minutes
+ The aircraft turn quality
+
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisCount">
+	<summary>
+ Number of axes on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisA">
+	<summary>
+ The first axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisB">
+	<summary>
+ The second axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisC">
+	<summary>
+ The third axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisD">
+	<summary>
+ The fourth axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisE">
+	<summary>
+ The fifth axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisF">
+	<summary>
+ The sixth axis on the joystick.
+ </summary>
+</member><member name="P:HK_GCS.JoystickInterface.Joystick.Buttons">
+	<summary>
+ Array of buttons availiable on the joystick. This also includes PoV hats.
+ </summary>
+</member><member name="M:HK_GCS.JoystickInterface.Joystick.#ctor(System.IntPtr)">
+	<summary>
+ Constructor for the class.
+ </summary>
+	<param name="window_handle">Handle of the window which the joystick will be "attached" to.</param>
+</member><member name="M:HK_GCS.JoystickInterface.Joystick.FindJoysticks">
+	<summary>
+ Retrieves a list of joysticks attached to the computer.
+ </summary>
+	<example>
+ [C#]
+ <code>
+ JoystickInterface.Joystick jst = new JoystickInterface.Joystick(this.Handle);
+ string[] sticks = jst.FindJoysticks();
+ </code>
+	</example>
+	<returns>A list of joysticks as an array of strings.</returns>
+</member><member name="M:HK_GCS.JoystickInterface.Joystick.AcquireJoystick(System.String)">
+	<summary>
+ Acquire the named joystick. You can find this joystick through the <see cref="FindJoysticks"/> method.
+ </summary>
+	<param name="name">Name of the joystick.</param>
+	<returns>The success of the connection.</returns>
+</member><member name="M:HK_GCS.JoystickInterface.Joystick.ReleaseJoystick">
+	<summary>
+ Unaquire a joystick releasing it back to the system.
+ </summary>
+</member><member name="M:HK_GCS.JoystickInterface.Joystick.UpdateStatus">
+	<summary>
+ Update the properties of button and axis positions.
+ </summary>
+</member><member name="T:HK_GCS.JoystickInterface.Joystick">
+	<summary>
+ Class to interface with a joystick device.
+ </summary>
 </member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.components">
 	<summary>
  Required designer variable.

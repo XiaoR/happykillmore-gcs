@@ -65,6 +65,7 @@
     <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Speech, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -100,7 +101,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AvionicsInstrumentsControlsRessources.resx</DependentUpon>
     </Compile>
+    <Compile Include="AvionicsInstrumentsControls\cJoystick.vb" />
     <Compile Include="AvionicsInstrumentsControls\HeadingIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\JoystickIndicator.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AvionicsInstrumentsControls\TurnCoordinatorInstrumentControl.vb">
@@ -111,6 +116,13 @@
     </Compile>
     <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cAsyncSocket.vb" />
+    <Compile Include="frmTrackingCalibrate.Designer.vb">
+      <DependentUpon>frmTrackingCalibrate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrackingCalibrate.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="modcrc16.vb" />
     <Compile Include="ctlDirectShowControl.designer.vb">
@@ -199,6 +211,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmTrackingCalibrate.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTrackingCalibrate.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Javascript\GoogleResources.resx">
       <SubType>Designer</SubType>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -242,6 +258,8 @@
     <None Include="Resources\BatteryOrange.bmp" />
     <None Include="Resources\BatteryCyan.bmp" />
     <None Include="Resources\Images\Play.gif" />
+    <Content Include="Resources\Button.gif" />
+    <Content Include="Resources\Images\Button.gif" />
     <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
     <Content Include="Resources\AirSpeedIndicator_Background.bmp" />

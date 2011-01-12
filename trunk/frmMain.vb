@@ -16,10 +16,9 @@ Public Class frmMain
     Private theCompressor As IBaseFilter = Nothing
     Public caGUID As DsCAUUID = New DsCAUUID()
 
-    Dim bShutdown As Boolean = False
-
     Dim nHomeLat As String = ""
     Dim nHomeLong As String
+    Dim nHomeAlt As String
     Dim webDocument As Object
     Dim nLastGPS As Long
     Dim nLastMapUpdate As Long
@@ -36,7 +35,6 @@ Public Class frmMain
     Dim baudRates() As Long = {4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600}
     'Dim baudRates() As Long = {38400, 57600, 19200, 9600, 115200, 4800}
     Dim nBaudRateIndex As Integer = 3
-    Dim sBuffer As String
     Dim sCommandLineBuffer As String
 
     Dim nMaxListboxRecords As Integer = 200
@@ -107,6 +105,9 @@ Public Class frmMain
     'Private windowlessCtrl As IVMRWindowlessControl9 = Nothing
     'Private capGraph As ICaptureGraphBuilder2 = Nothing
     Dim nTimeZoneOffset As Double
+    'Dim SocketServer As TCPSrv
+    Dim SocketServer As AsynchronousSocketListener
+
 
     Public Sub ResetForm()
 
@@ -130,7 +131,7 @@ Public Class frmMain
         GetResString(tabViewMapView, "Map View")
         GetResString(tabViewLiveCamera, "Live Camera")
 
-        GetResString(cmdSetNorth, "Zero Yaw")
+        GetResString(cmdZeroYaw, "Zero Yaw")
         GetResString(lblRawData, "Raw Data")
 
         GetResString(lblTranslatedData, "Translated Data")
@@ -157,19 +158,41 @@ Public Class frmMain
 
         GetResString(tabPortComPort, "COM Port")
         GetResString(tabPortDataFile, "Data File")
-        GetResString(tabPortMissions, "Mission")
+        GetResString(tabPortTracking, "Tracking")
         GetResString(tabPortServos, "Servos")
         GetResString(tabPortSensors, "Sensors")
 
+        'COM Port
         GetResString(lblComPort, "COM Port", True)
-        GetResString(lblBaudRate, "Baud Rate", True)
+        If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
+            GetResString(lblBaudRate, "Socket_Num", True)
+        Else
+            GetResString(lblBaudRate, "Baud Rate", True)
+        End If
         GetResString(lblGPSTypeLabel, "GPS Type", True)
         GetResString(lblGPSMessageLabel, "GPS Message", True)
         GetResString(lblStatusLabel, "Status", True)
 
         GetResString(cmdSearch, "Search Baud")
         GetResString(cmdSearchCOM, "Search COM")
-        GetResString(cmdConnect, "Connect")
+        If serialPortIn.IsOpen = True Then
+            GetResString(cmdConnect, "Disconnect")
+        Else
+            GetResString(cmdConnect, "Connect")
+        End If
+
+        'Tracking
+        GetResString(lblComPortTracking, "COM Port", True)
+        GetResString(lblBaudRateTracking, "Baud Rate", True)
+        GetResString(lblOutputTypeTracking, "Output Type", True)
+        GetResString(lblHertzTracking, "Hertz", True)
+        GetResString(lblStatusLabel, "Status", True)
+
+        If serialPortTracking.IsOpen = True Then
+            GetResString(cmdConnectTracking, "Disconnect")
+        Else
+            GetResString(cmdConnectTracking, "Connect")
+        End If
 
         ToolTip1.SetToolTip(cmdReloadComPorts, GetResString(, "Reload_Com_Port_List"))
         ToolTip1.SetToolTip(cmdReloadOutputFileList, GetResString(, "Reload_Output_File_List"))
@@ -358,6 +381,8 @@ Public Class frmMain
                 sOutputFile = Nothing
             End If
 
+            SocketServer.CloseAll()
+
             tmrSearch.Enabled = False
             If serialPortIn.IsOpen = True Then
                 serialPortIn.Close()
@@ -483,19 +508,30 @@ Public Class frmMain
 
         frmAbout.UpdateStatus(GetResString(, "Setting_Up_Comboboxes"), 20)
 
+        LoadSettings()
+
         cboAttitude.Items.Add(GetResString(, "None"))
         cboGPS.Items.Add(GetResString(, "None"))
         cboWaypoint.Items.Add(GetResString(, "None"))
+        cboHertzTracking.Items.Add(GetResString(, "None"))
         For i = 1 To 20
             cboAttitude.Items.Add(i & " Hz")
             If i <= 10 Then
                 cboGPS.Items.Add(i & " Hz")
                 cboWaypoint.Items.Add(i & " Hz")
             End If
+            If i <= 5 Then
+                cboHertzTracking.Items.Add(i & " Hz")
+            End If
         Next
         cboAttitude.SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Attitude Hz", "5"))
         cboGPS.SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "GPS Hz", "2"))
         cboWaypoint.SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Waypoint Hz", "2"))
+        If Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Tracking Hz", "5")) > 5 Then
+            cboHertzTracking.SelectedIndex = 5
+        Else
+            cboHertzTracking.SelectedIndex = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Tracking Hz", "5"))
+        End If
 
         With cboCommandLineDelim
             .Items.Add(GetResString(, "No_line_ending"))
@@ -506,9 +542,33 @@ Public Class frmMain
             nCommandLineDelim = .SelectedIndex
         End With
 
+        With cboOutputTypeTracking
+            .Items.Add(GetResString(, "PanTilt"))
+            .Items.Add(GetResString(, "Heading"))
+            .Items.Add(GetResString(, "LatLong"))
+            .Items.Add(GetResString(, "ArduStation"))
+            .Items.Add(GetResString(, "ServoDriver"))
+            .SelectedIndex = nTrackingOutputType
+        End With
+
+        With cboTrackingSet
+            .Items.Clear()
+            For nCount = 0 To 359
+                .Items.Add(nCount)
+            Next
+            '.Items.Add("N")
+            '.Items.Add("NE")
+            '.Items.Add("E")
+            '.Items.Add("SE")
+            '.Items.Add("S")
+            '.Items.Add("SW")
+            '.Items.Add("W")
+            '.Items.Add("NW")
+            .SelectedIndex = 0
+        End With
+
         frmAbout.UpdateStatus(GetResString(, "Loading Settings"), 30)
 
-        LoadSettings()
 
         LoadComboEntries(cboCommandLineCommand)
         LoadMissions()
@@ -536,17 +596,23 @@ Public Class frmMain
         LoadComPorts()
         SetPlayerState(e_PlayerState.e_PlayerState_None)
 
-        With cboBaudRate
-            For nCount = LBound(baudRates) To UBound(baudRates)
-                .Items.Add(baudRates(nCount))
-                If GetRegSetting(sRootRegistry & "\Settings", "Baud Rate", "38400") = baudRates(nCount) Then
-                    .SelectedIndex = nCount
-                End If
-            Next
-            If .SelectedIndex = -1 Then
-                .SelectedIndex = 3
+        For nCount = LBound(baudRates) To UBound(baudRates)
+            cboBaudRate.Items.Add(baudRates(nCount))
+            cboBaudRateTracking.Items.Add(baudRates(nCount))
+            If GetRegSetting(sRootRegistry & "\Settings", "Baud Rate", "38400") = baudRates(nCount) Then
+                cboBaudRate.SelectedIndex = nCount
             End If
-        End With
+            If GetRegSetting(sRootRegistry & "\Settings", "Tracking Baud Rate", "38400") = baudRates(nCount) Then
+                cboBaudRateTracking.SelectedIndex = nCount
+            End If
+        Next
+        If cboBaudRate.SelectedIndex = -1 Then
+            cboBaudRate.SelectedIndex = 3
+        End If
+        If cboBaudRateTracking.SelectedIndex = -1 Then
+            cboBaudRateTracking.SelectedIndex = 3
+        End If
+        txtSocket.Text = GetRegSetting(sRootRegistry & "\Settings", "Socket Port", "localhost:30300")
 
         lblGPSLock.Text = ""
         lblSatellites.Text = ""
@@ -599,23 +665,27 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "")
+    Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "", Optional ByVal defaultTrackingPort As String = "")
         Dim i As Integer
         Dim sSavedComPort As String
+        Dim sSavedTrackingPort As String
 
         cboComPort.Items.Clear()
+        cboComPort.Items.Add("TCP")
+        cboComPort.Items.Add("UDP")
         Try
             For i = 0 To My.Computer.Ports.SerialPortNames.Count - 1
                 If Strings.Left(My.Computer.Ports.SerialPortNames(i), 3) = "COM" Then
                     cboComPort.Items.Add(My.Computer.Ports.SerialPortNames(i))
+                    cboComPortTracking.Items.Add(My.Computer.Ports.SerialPortNames(i))
                 End If
             Next
             sSavedComPort = GetRegSetting(sRootRegistry & "\Settings", "COM Port", "")
+            sSavedTrackingPort = GetRegSetting(sRootRegistry & "\Settings", "Tracking Port", "")
             For i = 0 To cboComPort.Items.Count - 1
                 If defaultComPort = "" Then
                     If cboComPort.Items(i) = sSavedComPort Then
                         cboComPort.Text = sSavedComPort
-                        Exit For
                     End If
                 Else
                     If My.Computer.Ports.SerialPortNames(i) = defaultComPort Then
@@ -623,9 +693,27 @@ Public Class frmMain
                         Exit For
                     End If
                 End If
+
+                If i < cboComPortTracking.Items.Count Then
+                    If defaultTrackingPort = "" Then
+                        If cboComPortTracking.Items(i) = sSavedTrackingPort Then
+                            cboComPortTracking.Text = sSavedTrackingPort
+                        End If
+                    Else
+                        If My.Computer.Ports.SerialPortNames(i) = defaultComPort Then
+                            cboComPortTracking.Text = defaultComPort
+                            Exit For
+                        End If
+                    End If
+                End If
             Next
             If cboComPort.Items.Count > 0 And cboComPort.SelectedIndex = -1 Then
                 cboComPort.SelectedIndex = 0
+                'Else
+                '    cmdSearch_Click(sender, e)
+            End If
+            If cboComPortTracking.Items.Count > 0 And cboComPortTracking.SelectedIndex = -1 Then
+                cboComPortTracking.SelectedIndex = 0
                 'Else
                 '    cmdSearch_Click(sender, e)
             End If
@@ -655,17 +743,17 @@ Public Class frmMain
         Dim nCount As Int16
         Dim sFilename As String
         With cboOutputFiles
-            sFilename = Dir(txtOutputFolder.Text & "*.hko", FileAttribute.Normal)
+            sFilename = Dir(txtOutputFolder.Text & "*.*", FileAttribute.Normal)
             .Items.Clear()
             Do While sFilename <> ""
                 .Items.Add(sFilename)
                 sFilename = Dir()
             Loop
-            sFilename = Dir(txtOutputFolder.Text & "*.txt", FileAttribute.Normal)
-            Do While sFilename <> ""
-                .Items.Add(sFilename)
-                sFilename = Dir()
-            Loop
+            'sFilename = Dir(txtOutputFolder.Text & "*.txt", FileAttribute.Normal)
+            'Do While sFilename <> ""
+            '    .Items.Add(sFilename)
+            '    sFilename = Dir()
+            'Loop
 
             For nCount = 0 To .Items.Count - 1
                 If selectedFile = .Items(nCount).ToString Then
@@ -746,12 +834,12 @@ Public Class frmMain
             'myReader.Close()
             'myFileStream.Close()
 
-            If Microsoft.VisualBasic.Left(sFileContents, 1) = "F" Then
+            If InStr(sFileContents, "F2:") <> 0 Then
                 eMissionFileType = e_MissionFileType.e_MissionFileType_UDB
                 rawData = Split(sFileContents, vbCrLf)
             ElseIf (Mid(sFileContents, 18, 1) = ":" Or Mid(sFileContents, 19, 1) = ":") Then
                 eMissionFileType = e_MissionFileType.e_MissionFileType_GCS
-                rawData = Split(sFileContents, Chr(255) & vbCrLf)
+                rawData = Split(sFileContents, vbCrLf)
                 'ElseIf InStr(sFileContents, Chr(&HA5) & Chr(&H5A)) <> 0 Then
                 '    eMissionFileType = e_MissionFileType.e_MissionFileType_FY21APII
                 '    rawData = Split(sFileContents, Chr(&HAA))
@@ -987,6 +1075,7 @@ Public Class frmMain
                         If nHomeLat = "" Then
                             nHomeLat = latitude
                             nHomeLong = longitude
+                            nHomeAlt = altitude
                             webDocument.GetElementById("homeLat").SetAttribute("value", latitude)
                             webDocument.GetElementById("homeLng").SetAttribute("value", longitude)
                             webDocument.GetElementById("setHomeLatLngButton").InvokeMember("click")
@@ -1003,6 +1092,7 @@ Public Class frmMain
                         If nHomeLat = "" And (latitude <> 0 Or nLongitude <> 0) Then
                             nHomeLat = latitude
                             nHomeLong = longitude
+                            nHomeAlt = altitude
                             WebBrowser1.Invoke(New MyDelegate(AddressOf setHomeLatLng))
                             If cboMission.Text <> "" Then
                                 cboMission_SelectedIndexChanged(Nothing, Nothing)
@@ -1058,7 +1148,6 @@ Public Class frmMain
         ConvertToRunTime = ConvertToRunTime & nSeconds & " " & IIf(nSeconds > 1, GetResString(, "secs"), GetResString(, "sec"))
 
     End Function
-    Public Delegate Sub MyDelegate()
     Public Sub setHomeLatLng()
         Try
             webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
@@ -1118,6 +1207,7 @@ Public Class frmMain
         Dim sMessage As String
         Dim nLastTime As Long
         Dim nThisTime As Long
+        Dim dDateTime As Date
 
         Do While True
             If nDataIndex > UBound(rawData) Then
@@ -1151,6 +1241,7 @@ Public Class frmMain
             If GetMessageTime(nDataIndex + 1) > 0 And tmrPlayback.Enabled = True Then
                 nLastTime = GetMessageTime(nDataIndex)
                 nThisTime = GetMessageTime(nDataIndex + 1)
+                dDateTime = New Date(nThisTime)
                 If nLastTime = 0 Or nThisTime < nLastTime Then
                     nLastTime = nThisTime
                 End If
@@ -1163,7 +1254,15 @@ Public Class frmMain
         'If tmrPlayback.Interval = 0 Or tmrPlayback.Interval > 5000 Then
         '    Debug.Print("Error Interval=" & tmrPlayback.Interval)
         'End If
-        sMessage = rawData(nDataIndex) & vbCrLf
+
+        If eMissionFileType = e_MissionFileType.e_MissionFileType_GCS Then
+            dGPSDate = dDateTime.Date
+            dGPSTime = dDateTime.ToLongTimeString
+            sMessage = Mid(rawData(nDataIndex), 20)
+            sMessage = sMessage.Substring(0, Len(sMessage) - 1) & vbCrLf
+        Else
+            sMessage = rawData(nDataIndex) & vbCrLf
+        End If
         TrackBar1.Value = nDataIndex
 
         oMessage = GetNextSentence(sMessage)
@@ -1192,11 +1291,11 @@ Public Class frmMain
             End If
         ElseIf eMissionFileType = e_MissionFileType.e_MissionFileType_UDB Then
             If index < UBound(rawData) Then
-                If Microsoft.VisualBasic.Left(rawData(index), 3) = "F2:" Then
-                    If Microsoft.VisualBasic.Left(rawData(index), 6) = "F2:T0:" Then
+                If InStr(rawData(index), "F2:") <> 0 Then
+                    If InStr(rawData(index), "F2:T0:") <> 0 Then
                         GetMessageTime = 0
                     Else
-                        sTemp = Mid(rawData(index), 5)
+                        sTemp = Mid(rawData(index), InStr(rawData(index), "F2:") + 4)
                         sTemp = Mid(sTemp, 1, InStr(sTemp, ":") - 1)
                         dWeekStart = DateAdd(DateInterval.Day, -DatePart(DateInterval.Weekday, Now), Convert.ToDateTime(FormatDateTime(Now, DateFormat.ShortDate) & " 12:00:00AM"))
                         nSeconds = Convert.ToInt32(Mid(Convert.ToDouble(sTemp / 1000).ToString, 1, Len(sTemp) - 3))
@@ -1214,17 +1313,12 @@ Public Class frmMain
     Private Sub serialPortIn_DataReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles serialPortIn.DataReceived
         'ReadSerialData()
     End Sub
-    Private Sub ReadSerialData()
-        Dim bWasSearching As Boolean
+    Public Sub ReadSerialData()
         Dim nReadCount As Integer
         Dim nReadResult As Integer
-        Dim nSentenceCount As Integer
-        Dim oMessage As cMessage
-        Dim nCount As Integer
-        Dim nExistingLen As Integer
-        Dim nOldTop As Long
-        Dim nBandwith As Single
+        Dim bWasSearching As Boolean
         Dim sNewString As String
+        Dim ar As IAsyncResult
 
         If bShutdown = True Then
             Exit Sub
@@ -1234,6 +1328,9 @@ Public Class frmMain
         If bWasSearching Then
             tmrSearch.Enabled = False
         End If
+
+        SocketServer.ReceiveCallback(ar)
+
         If serialPortIn.IsOpen = True Then
             If serialPortIn.BytesToRead > 0 Then
                 nReadCount = serialPortIn.BytesToRead 'Number of Bytes to read
@@ -1254,97 +1351,112 @@ Public Class frmMain
                 '    '    sBuffer = sBuffer & ChrW(b)
                 '    'End If
                 '    'sBuffer = sBuffer & Chr(b)        'Ascii String
-                If tabInstrumentView.SelectedIndex = 2 Then
-                    sCommandLineBuffer = sCommandLineBuffer & sNewString
+            End If
+            If tabInstrumentView.SelectedIndex = 2 Then
+                sCommandLineBuffer = sCommandLineBuffer & sNewString
+            Else
+                sCommandLineBuffer = ""
+            End If
+
+        End If
+
+        NewDataReceived()
+
+        If bWasSearching Then
+            tmrSearch.Enabled = True
+        End If
+
+
+    End Sub
+    Public Sub NewDataReceived()
+        Dim nSentenceCount As Integer
+        Dim oMessage As cMessage
+        Dim nOldTop As Long
+        Dim nCount As Integer
+        Dim nExistingLen As Integer
+        Dim nBandwith As Single
+
+        'nInputStringLength = nInputStringLength + Len(sNewString)
+        'Next
+
+        nSentenceCount = 0
+        oMessage = GetNextSentence(sBuffer)
+        Do While oMessage.ValidMessage = True
+            If dStartTime.Ticks = 0 Then
+                dStartTime = Now
+            End If
+            tmrSearch.Enabled = False
+            cboBaudRate.Text = serialPortIn.BaudRate
+
+            'bWasSearching = False
+
+            UpdateVariables(oMessage)
+            oMessage = GetNextSentence(sBuffer)
+        Loop
+
+        nOldTop = lstCommandLineOutput.TopIndex
+
+        Try
+            If tabInstrumentView.SelectedIndex = 2 Then
+                lstCommandLineOutput.BeginUpdate()
+                If nCommandLineDelim = 1 Then
+                    Do While InStr(sCommandLineBuffer, vbLf) <> 0
+                        lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbLf) - 1))
+                        sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbLf) + 1)
+                    Loop
+                ElseIf nCommandLineDelim = 2 Then
+                    Do While InStr(sCommandLineBuffer, vbCr) <> 0
+
+                        lstCommandLineOutput.Items.Add(Replace(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCr) - 1), vbLf, ""))
+                        sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCr) + 1)
+                    Loop
+                ElseIf nCommandLineDelim = 3 Then
+                    Do While InStr(sCommandLineBuffer, vbCrLf) <> 0
+                        lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCrLf) - 1))
+                        sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCrLf) + 2)
+                    Loop
                 Else
+                    If lstCommandLineOutput.Items.Count = 0 Then
+                        lstCommandLineOutput.Items.Add(sCommandLineBuffer)
+                    Else
+                        nExistingLen = Len(lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1))
+                        If nExistingLen > 80 Then
+                            lstCommandLineOutput.Items.Add(sCommandLineBuffer)
+                        Else
+                            lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1) = lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1) & sCommandLineBuffer
+                        End If
+                    End If
                     sCommandLineBuffer = ""
                 End If
-                'nInputStringLength = nInputStringLength + Len(sNewString)
-                'Next
-
-                nSentenceCount = 0
-                oMessage = GetNextSentence(sBuffer)
-                Do While oMessage.ValidMessage = True
-                    If dStartTime.Ticks = 0 Then
-                        dStartTime = Now
-                    End If
-                    tmrSearch.Enabled = False
-                    cboBaudRate.Text = serialPortIn.BaudRate
-
-                    bWasSearching = False
-
-                    UpdateVariables(oMessage)
-                    oMessage = GetNextSentence(sBuffer)
-                Loop
-                If bWasSearching Then
-                    tmrSearch.Enabled = True
-                End If
-
-                nOldTop = lstCommandLineOutput.TopIndex
-
-                Try
-                    If tabInstrumentView.SelectedIndex = 2 Then
-                        lstCommandLineOutput.BeginUpdate()
-                        If nCommandLineDelim = 1 Then
-                            Do While InStr(sCommandLineBuffer, vbLf) <> 0
-                                lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbLf) - 1))
-                                sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbLf) + 1)
-                            Loop
-                        ElseIf nCommandLineDelim = 2 Then
-                            Do While InStr(sCommandLineBuffer, vbCr) <> 0
-
-                                lstCommandLineOutput.Items.Add(Replace(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCr) - 1), vbLf, ""))
-                                sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCr) + 1)
-                            Loop
-                        ElseIf nCommandLineDelim = 3 Then
-                            Do While InStr(sCommandLineBuffer, vbCrLf) <> 0
-                                lstCommandLineOutput.Items.Add(Mid(sCommandLineBuffer, 1, InStr(sCommandLineBuffer, vbCrLf) - 1))
-                                sCommandLineBuffer = Mid(sCommandLineBuffer, InStr(sCommandLineBuffer, vbCrLf) + 2)
-                            Loop
-                        Else
-                            If lstCommandLineOutput.Items.Count = 0 Then
-                                lstCommandLineOutput.Items.Add(sCommandLineBuffer)
-                            Else
-                                nExistingLen = Len(lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1))
-                                If nExistingLen > 80 Then
-                                    lstCommandLineOutput.Items.Add(sCommandLineBuffer)
-                                Else
-                                    lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1) = lstCommandLineOutput.Items(lstCommandLineOutput.Items.Count - 1) & sCommandLineBuffer
-                                End If
-                            End If
-                            sCommandLineBuffer = ""
-                        End If
-                        For nCount = nMaxListboxRecords To lstCommandLineOutput.Items.Count - 1
-                            lstCommandLineOutput.Items.RemoveAt(0)
-                        Next
-                        lstCommandLineOutput.EndUpdate()
-                    End If
-                Catch
-                End Try
-
-                If chkCommandLineAutoScroll.Checked = True Then
-                    lstCommandLineOutput.TopIndex = lstCommandLineOutput.Items.Count - 1
-                Else
-                    lstCommandLineOutput.TopIndex = nOldTop
-                End If
-
-                If nLastBandwidthCheck = 0 Then
-                    nLastBandwidthCheck = Now.Ticks
-                    nInputStringLength = 0
-                ElseIf Now.Ticks - nLastBandwidthCheck > 10000000 Then
-                    nBandwith = nInputStringLength / ((Now.Ticks - nLastBandwidthCheck) / 10000000) / (serialPortIn.BaudRate / 11)
-                    'System.Diagnostics.Debug.Print("InputLength = " & nInputStringLength & ",Elapsed Time = " & ((Now.Ticks - nLastBandwidthCheck) / 10000000) & ",Baud Rate = " & serialPortIn.BaudRate)
-                    If nBandwith > 0.9 Then
-                        lblBandwidth.ForeColor = Color.Red
-                    Else
-                        lblBandwidth.ForeColor = Color.Black
-                    End If
-                    lblBandwidth.Text = (nBandwith).ToString("0.00%")
-                    nLastBandwidthCheck = Now.Ticks
-                    nInputStringLength = 0
-                End If
+                For nCount = nMaxListboxRecords To lstCommandLineOutput.Items.Count - 1
+                    lstCommandLineOutput.Items.RemoveAt(0)
+                Next
+                lstCommandLineOutput.EndUpdate()
             End If
+        Catch
+        End Try
+
+        If chkCommandLineAutoScroll.Checked = True Then
+            lstCommandLineOutput.TopIndex = lstCommandLineOutput.Items.Count - 1
+        Else
+            lstCommandLineOutput.TopIndex = nOldTop
+        End If
+
+        If nLastBandwidthCheck = 0 Then
+            nLastBandwidthCheck = Now.Ticks
+            nInputStringLength = 0
+        ElseIf Now.Ticks - nLastBandwidthCheck > 10000000 Then
+            nBandwith = nInputStringLength / ((Now.Ticks - nLastBandwidthCheck) / 10000000) / (serialPortIn.BaudRate / 11)
+            'System.Diagnostics.Debug.Print("InputLength = " & nInputStringLength & ",Elapsed Time = " & ((Now.Ticks - nLastBandwidthCheck) / 10000000) & ",Baud Rate = " & serialPortIn.BaudRate)
+            If nBandwith > 0.9 Then
+                lblBandwidth.ForeColor = Color.Red
+            Else
+                lblBandwidth.ForeColor = Color.Black
             End If
+            lblBandwidth.Text = (nBandwith).ToString("0.00%")
+            nLastBandwidthCheck = Now.Ticks
+            nInputStringLength = 0
+        End If
 
     End Sub
     Private Sub UpdateVariables(ByVal oMessage As cMessage)
@@ -1420,13 +1532,17 @@ Public Class frmMain
                                 lblGPSMessage.Text = "TA - " & GetResString(, "Attitude")
                                 nRoll = Convert.ToInt32(sSplit(0)) / 1000 * 180 / Math.PI
                                 nPitch = Convert.ToInt32(sSplit(1)) / 1000 * 180 / Math.PI
-                                nYaw = Convert.ToInt32(sSplit(2)) / 1000 * 180 / Math.PI
+                                If IsNumeric(sSplit(2)) = True Then
+                                    nYaw = Convert.ToInt32(sSplit(2)) / 1000 * 180 / Math.PI
+                                Else
+                                    nYaw = 0
+                                End If
                                 bNewAttitude = True
                             Case "TG"
                                 lblGPSMessage.Text = "TG - " & GetResString(, "GPS_Data")
                                 nFix = 2 - Convert.ToInt32(sSplit(0))
-                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(1)) * 180 / Math.PI, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(sSplit(2)) * 180 / Math.PI, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(1))) * 180 / Math.PI, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(2))) * 180 / Math.PI, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                                 nGroundSpeed = ConvertSpeed(Convert.ToDouble(sSplit(3)) / 10, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                 nHeading = Convert.ToDouble(sSplit(4)) / 100 * 180 / Math.PI
                                 nSats = Convert.ToInt32(sSplit(5))
@@ -1451,23 +1567,23 @@ Public Class frmMain
                                 bNewWaypoint = True
                             Case "TP"
                                 lblGPSMessage.Text = "TP - " & GetResString(, "Sensors")
-                                nSensor(0) = Convert.ToDouble(sSplit(0)) / 1000
-                                nSensor(1) = Convert.ToDouble(sSplit(1)) / 1000
-                                nSensor(2) = Convert.ToDouble(sSplit(2)) / 1000
-                                nSensor(3) = Convert.ToDouble(sSplit(3)) / 1000 * 180 / Math.PI
-                                nSensor(4) = Convert.ToDouble(sSplit(4)) / 1000 * 180 / Math.PI
-                                nSensor(5) = Convert.ToDouble(sSplit(5)) / 1000 * 180 / Math.PI
+                                nSensor(0) = GetServoValue(sSplit(0)) / 1000
+                                nSensor(1) = GetServoValue(sSplit(1)) / 1000
+                                nSensor(2) = GetServoValue(sSplit(2)) / 1000
+                                nSensor(3) = GetServoValue(sSplit(3)) / 1000 * 180 / Math.PI
+                                nSensor(4) = GetServoValue(sSplit(4)) / 1000 * 180 / Math.PI
+                                nSensor(5) = GetServoValue(sSplit(5)) / 1000 * 180 / Math.PI
                                 bNewServo = True
                             Case "TT"
                                 lblGPSMessage.Text = "TT - " & GetResString(, "Servos")
-                                nServoInput(0) = Convert.ToDouble(sSplit(0))
-                                nServoInput(1) = Convert.ToDouble(sSplit(1))
-                                nServoInput(2) = Convert.ToDouble(sSplit(2))
-                                nServoInput(3) = Convert.ToDouble(sSplit(3))
-                                nServoInput(4) = Convert.ToDouble(sSplit(4))
-                                nServoInput(5) = Convert.ToDouble(sSplit(5))
-                                nServoInput(6) = Convert.ToDouble(sSplit(6))
-                                nServoInput(7) = Convert.ToDouble(sSplit(7))
+                                nServoInput(0) = GetServoValue(sSplit(0))
+                                nServoInput(1) = GetServoValue(sSplit(1))
+                                nServoInput(2) = GetServoValue(sSplit(2))
+                                nServoInput(3) = GetServoValue(sSplit(3))
+                                nServoInput(4) = GetServoValue(sSplit(4))
+                                nServoInput(5) = GetServoValue(sSplit(5))
+                                nServoInput(6) = GetServoValue(sSplit(6))
+                                nServoInput(7) = GetServoValue(sSplit(7))
                                 bNewServo = True
                         End Select
 
@@ -1482,8 +1598,8 @@ Public Class frmMain
                                 bNewAttitude = True
                             Case "A2"
                                 lblGPSMessage.Text = "A2 - " & GetResString(, "GPS_Data")
-                                nLatitude = ConvertLatLongFormat(sSplit(2), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
-                                nLongitude = ConvertLatLongFormat(sSplit(3), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(2))), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(3))), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                                 nHeading = Convert.ToSingle(ConvertPeriodToLocal(sSplit(4)))
                                 nYaw = nHeading
                                 Select Case sSplit(5)
@@ -1509,21 +1625,21 @@ Public Class frmMain
                                 bNewWaypoint = True
                             Case "A4"
                                 lblGPSMessage.Text = "A4 - Sats/Servo"
-                                dGPSDate = GetNMEADate(ConvertPeriodToLocal(sSplit(2)))
-                                dGPSTime = GetNMEATime(ConvertPeriodToLocal(sSplit(3)))
-                                nSats = Convert.ToInt32(ConvertPeriodToLocal(sSplit(4)))
-                                nFix = Convert.ToInt32(ConvertPeriodToLocal(sSplit(5)))
+                                dGPSDate = GetNMEADate(sSplit(2))
+                                dGPSTime = GetNMEATime(sSplit(3))
+                                nSats = Convert.ToInt32(sSplit(4))
+                                nFix = Convert.ToInt32(sSplit(5))
                                 If nFix = 6 Then
                                     nFix = 0
                                 End If
                                 nHDOP = Convert.ToSingle(ConvertPeriodToLocal(sSplit(6)))
-                                nServoOutput(0) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(7)))
-                                nServoOutput(1) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(8)))
-                                nServoOutput(2) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(9)))
-                                nServoOutput(3) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(10)))
-                                nServoOutput(4) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(11)))
-                                nServoOutput(5) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(12)))
-                                nServoOutput(6) = Convert.ToInt32(ConvertPeriodToLocal(sSplit(13)))
+                                nServoOutput(0) = Convert.ToInt32(sSplit(7))
+                                nServoOutput(1) = Convert.ToInt32(sSplit(8))
+                                nServoOutput(2) = Convert.ToInt32(sSplit(9))
+                                nServoOutput(3) = Convert.ToInt32(sSplit(10))
+                                nServoOutput(4) = Convert.ToInt32(sSplit(11))
+                                nServoOutput(5) = Convert.ToInt32(sSplit(12))
+                                nServoOutput(6) = Convert.ToInt32(sSplit(13))
                                 bNewGPS = True
                                 bNewServo = True
                                 bNewDateTime = True
@@ -1536,6 +1652,59 @@ Public Class frmMain
                                     End If
                                     bNewWaypoint = True
                                 End If
+                        End Select
+
+                    Case cMessage.e_MessageType.e_MessageType_AttoPilot18
+                        lblGPSType.Text = "AttoPilot v1.8"
+                        sSplit = Split(.Packet, ",")
+                        Select Case UCase(sSplit(0))
+                            Case "ATTO"
+                                lblGPSMessage.Text = "ATTO - " & GetResString(, "Attitude Data")
+                                sModeNumber = sSplit(1)
+                                nWaypoint = sSplit(5)
+                                nDistance = ConvertDistance(ConvertPeriodToLocal(sSplit(8)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                nServoOutput(0) = sSplit(9)
+                                nServoOutput(1) = sSplit(10)
+                                nServoOutput(2) = sSplit(11)
+                                nServoOutput(3) = sSplit(12)
+                                nServoOutput(4) = sSplit(13)
+                                nServoOutput(5) = sSplit(14)
+                                nServoInput(0) = sSplit(16)
+                                nBattery = ConvertPeriodToLocal(sSplit(24))
+                                nAmperage = ConvertPeriodToLocal(sSplit(25))
+                                nMAH = ConvertPeriodToLocal(sSplit(27))
+                                nAirSpeed = ConvertSpeed(ConvertPeriodToLocal(sSplit(29)), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                                nWaypointAlt = ConvertDistance(ConvertPeriodToLocal(sSplit(32)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                bNewServo = True
+
+                                If nThrottleChannel > 0 Then
+                                    If nServoOutput(nThrottleChannel - 1) <> 0 Then
+                                        nThrottle = (nServoOutput(nThrottleChannel - 1) - tbarServo1.Minimum) / (tbarServo1.Maximum - tbarServo1.Minimum)
+                                    Else
+                                        nThrottle = 0
+                                    End If
+                                End If
+                                bNewWaypoint = True
+                            Case "GPS"
+                                lblGPSMessage.Text = "GPS - " & GetResString(, "GPS_Data")
+                                dGPSDate = GetNMEADate(sSplit(1))
+                                dGPSTime = GetNMEATime(ConvertPeriodToLocal(sSplit(2)))
+                                nLatitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(3))), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
+                                nLongitude = ConvertLatLongFormat(Convert.ToDouble(ConvertPeriodToLocal(sSplit(4))), e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
+                                nAltitude = ConvertDistance(ConvertPeriodToLocal(sSplit(5)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                nFix = Convert.ToInt32(sSplit(6))
+                                If nFix = 6 Then
+                                    nFix = 0
+                                End If
+                                nSats = Convert.ToInt32(sSplit(7))
+                                nGroundSpeed = ConvertSpeed(ConvertPeriodToLocal(sSplit(8)), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                                nHeading = Convert.ToSingle(ConvertPeriodToLocal(sSplit(9)))
+                                nYaw = nHeading
+                                nRoll = Convert.ToSingle(ConvertPeriodToLocal(sSplit(19)))
+                                nPitch = Convert.ToSingle(ConvertPeriodToLocal(sSplit(20)))
+                                bNewAttitude = True
+                                bNewGPS = True
+                                bNewDateTime = True
                         End Select
 
                     Case cMessage.e_MessageType.e_MessageType_NMEA
@@ -1767,13 +1936,16 @@ Public Class frmMain
                                     sValues(1) = ConvertPeriodToLocal(sValues(1))
                                     Select Case UCase(sValues(0))
                                         Case "RLL"
-                                            nRoll = -Convert.ToSingle(sValues(1))
+                                            nRoll = -Convert.ToSingle(ConvertPeriodToLocal(sValues(1)))
                                             bNewAttitude = True
                                         Case "PCH"
-                                            nPitch = -Convert.ToSingle(sValues(1))
+                                            nPitch = -Convert.ToSingle(ConvertPeriodToLocal(sValues(1)))
+                                            bNewAttitude = True
+                                        Case "YAW"
+                                            nYaw = -GetHeading(Convert.ToSingle(ConvertPeriodToLocal(sValues(1))))
                                             bNewAttitude = True
                                         Case "CRS", "COG"
-                                            nHeading = Convert.ToSingle(sValues(1))
+                                            nHeading = Convert.ToSingle(ConvertPeriodToLocal(sValues(1)))
                                             If nHeading < 0 Then
                                                 nHeading = nHeading + 360
                                             End If
@@ -1787,22 +1959,22 @@ Public Class frmMain
                                             nLongitude = ConvertLatLongFormat(Convert.ToDouble(sValues(1)) / 1000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, False)
                                             bNewGPS = True
                                         Case "SOG", "SPD"
-                                            nGroundSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                            nGroundSpeed = ConvertSpeed(ConvertPeriodToLocal(sValues(1)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                             bNewGPS = True
                                         Case "ASP"
-                                            nAirSpeed = ConvertSpeed(sValues(1), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                            nAirSpeed = ConvertSpeed(ConvertPeriodToLocal(sValues(1)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                             bNewGPS = True
                                         Case "FIX", "LOC"
                                             nFix = System.Math.Abs(Convert.ToInt32(sValues(1)) - 1)
                                             bNewGPS = True
                                         Case "ALT"
-                                            nAltitude = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                            nAltitude = ConvertDistance(ConvertPeriodToLocal(sValues(1)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                             bNewGPS = True
                                         Case "SAT"
                                             nSats = Convert.ToInt32(sValues(1))
                                             bNewGPS = True
                                         Case "BTV"
-                                            nBattery = (Convert.ToSingle(sValues(1)) / 1000).ToString("#.00")
+                                            nBattery = (Convert.ToSingle(ConvertPeriodToLocal(sValues(1)))).ToString("#.00")
                                             bNewWaypoint = True
                                         Case "HDO"
                                             nHDOP = (Convert.ToSingle(sValues(1)) / 100).ToString("#.00")
@@ -1816,10 +1988,10 @@ Public Class frmMain
                                             nWaypoint = Convert.ToInt32(sValues(1))
                                             bNewWaypoint = True
                                         Case "THH"
-                                            nThrottle = Convert.ToSingle(sValues(1)) / 100
+                                            nThrottle = Convert.ToSingle(ConvertPeriodToLocal(sValues(1))) / 100
                                             bNewWaypoint = True
                                         Case "AMP"
-                                            nAmperage = Convert.ToSingle(sValues(1)) / 100
+                                            nAmperage = Convert.ToSingle(ConvertPeriodToLocal(sValues(1))) / 100
                                             bNewWaypoint = True
                                         Case "MAH"
                                             nMAH = Convert.ToInt32(sValues(1))
@@ -1828,7 +2000,7 @@ Public Class frmMain
                                             nDistance = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                             bNewWaypoint = True
                                         Case "ALH"
-                                            nWaypointAlt = ConvertDistance(sValues(1), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                            nWaypointAlt = ConvertDistance(ConvertPeriodToLocal(sValues(1)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                             bNewWaypoint = True
 
                                         Case "TOW"
@@ -1869,18 +2041,28 @@ Public Class frmMain
                         sSplit = Split(.Packet, ":")
                         Try
                             'Debug.Print("Time = " & sSplit(0))
-                            For nCount = 0 To UBound(sSplit) - 1
+                            For nCount = 0 To UBound(sSplit)
                                 Select Case nCount
                                     Case 0
                                         sTemp = Mid(sSplit(nCount), 2)
                                         dGPSTime = GetuBloxTime(Convert.ToDouble(Mid(sSplit(nCount), 2)) / 1000)
                                     Case 1
                                         nFix = Convert.ToInt32(Mid(sSplit(nCount), 3, 1) = "1")
+                                        'If Mid(sSplit(nCount), 4, 1) = "1" Then
+                                        '    sMode = GetResString(, "Manual_Mode")
+                                        'ElseIf Mid(sSplit(nCount), 4, 1) = "2" Then
+                                        '    sMode = GetResString(, "Stabilized")
+                                        'ElseIf Mid(sSplit(nCount), 4, 1) = "3" Then
+                                        '    sMode = GetResString(, "Autonomous")
+                                        'Else
+                                        '    sMode = GetResString(, "Return Home")
+                                        'End If
                                         If Mid(sSplit(nCount), 4, 1) = "1" Then
                                             sMode = GetResString(, "Autonomous")
                                         Else
-                                            sMode = GetResString(, "Manual_Mode")
+                                            sMode = GetResString(, "Manual Mode")
                                         End If
+
                                     Case 2
                                         sTemp = Mid(sSplit(nCount), 2)
                                         nLatitude = ConvertLatLongFormat(Convert.ToDouble(sTemp) / 10000000, e_LatLongFormat.e_LatLongFormat_DD_DDDDDD, eOutputLatLongFormat, True)
@@ -1950,37 +2132,39 @@ Public Class frmMain
                                         End If
                                     Case 28
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoInput(0) = Convert.ToInt16(sTemp) / 2
+                                        nServoInput(0) = GetServoValue(sTemp) / 2
                                     Case 29
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoInput(1) = Convert.ToInt16(sTemp) / 2
+                                        nServoInput(1) = GetServoValue(sTemp) / 2
                                     Case 30
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoInput(2) = Convert.ToInt16(sTemp) / 2
+                                        nServoInput(2) = GetServoValue(sTemp) / 2
                                     Case 31
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoInput(3) = Convert.ToInt16(sTemp) / 2
+                                        nServoInput(3) = GetServoValue(sTemp) / 2
                                     Case 32
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoInput(4) = Convert.ToInt16(sTemp) / 2
+                                        nServoInput(4) = GetServoValue(sTemp) / 2
                                     Case 33
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(0) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(0) = GetServoValue(sTemp) / 2
                                     Case 34
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(1) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(1) = GetServoValue(sTemp) / 2
                                     Case 35
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(2) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(2) = GetServoValue(sTemp) / 2
                                     Case 36
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(3) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(3) = GetServoValue(sTemp) / 2
                                     Case 37
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(4) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(4) = GetServoValue(sTemp) / 2
                                     Case 38
                                         sTemp = Mid(sSplit(nCount), 4)
-                                        nServoOutput(5) = Convert.ToInt16(sTemp) / 2
+                                        nServoOutput(5) = GetServoValue(sTemp) / 2
+                                    Case 42
+                                        Debug.Print(sSplit(nCount))
                                 End Select
                             Next nCount
                             If nThrottleChannel > 0 Then
@@ -2478,33 +2662,80 @@ Public Class frmMain
         If bOpenState Then
             serialPortIn.Close()
         End If
-        serialPortIn.PortName = cboComPort.Text
-        If bOpenState Then
-            serialPortIn.Open()
+
+        If cboComPort.Text = "TCP" Then
+            GetResString(lblBaudRate, "Socket_Num", True, , , , , , "Socket Num:")
+            nSocketType = System.Net.Sockets.ProtocolType.Tcp
+            cboBaudRate.Visible = False
+            txtSocket.Visible = True
+        ElseIf cboComPort.Text = "UDP" Then
+            GetResString(lblBaudRate, "Socket_Num", True, , , , , , "Socket Num:")
+            nSocketType = System.Net.Sockets.ProtocolType.Udp
+            cboBaudRate.Visible = False
+            txtSocket.Visible = True
+        Else
+            GetResString(lblBaudRate, "Baud Rate", True)
+            txtSocket.Visible = False
+            cboBaudRate.Visible = True
+            serialPortIn.PortName = cboComPort.Text
+            If bOpenState Then
+                serialPortIn.Open()
+            End If
         End If
     End Sub
 
     Private Sub cmdConnect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdConnect.Click
+        Dim sTempIP As String
+        Dim sTempPort As Long
 
         tmrSearch.Enabled = False
-        If serialPortIn.IsOpen = True Then
-            cmdConnect.Text = GetResString(, "Connect")
-            tmrComPort.Enabled = False
-            Try
-                serialPortIn.Close()
-            Catch e2 As Exception
-            End Try
-            lblComPortStatus.Text = GetResString(, "Disconnected from", , , , serialPortIn.PortName)
-            EnableComButtons(True)
-            lblGPSType.Text = ""
-            lblGPSMessage.Text = ""
+        If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
+            If Not SocketServer Is Nothing Then
+                bConnected = False
+                cmdConnect.Text = GetResString(, "Connect")
+                tmrComPort.Enabled = False
+                lblComPortStatus.Text = GetResString(, "Disconnect from", , , , serialPortIn.PortName)
+                EnableComButtons(True)
+                lblGPSType.Text = ""
+                lblGPSMessage.Text = ""
+                SocketServer.CloseAll()
+                SocketServer = Nothing
+            Else
+                If ParseServerAndPort(txtSocket.Text, sTempIP, sTempPort) = True Then
+                    bConnected = True
+                    sSocketIPaddress = sTempIP
+                    nSocketPortNumber = sTempPort
+                    SocketServer = New AsynchronousSocketListener(lstInbound)
+                    cmdConnect.Text = GetResString(, "Disconnect")
+                    tmrComPort.Enabled = True
+                    Call SaveRegSetting(sRootRegistry & "\Settings", "COM Port", cboComPort.Text)
+                    Call SaveRegSetting(sRootRegistry & "\Settings", "Socket Port", txtSocket.Text)
+                    EnableComButtons(False)
+                End If
+            End If
         Else
-            nLastComPort = -1
-            nBaudRateIndex = -1
-            lblGPSType.Text = ""
-            lblGPSMessage.Text = ""
-            tmrSearch_Tick(sender, e)
-            tmrComPort.Enabled = True
+            If serialPortIn.IsOpen = True Then
+                bConnected = False
+                cmdConnect.Text = GetResString(, "Connect")
+                tmrComPort.Enabled = False
+                Try
+                    serialPortIn.Close()
+                Catch e2 As Exception
+                End Try
+                lblComPortStatus.Text = GetResString(, "Disconnect from", , , , serialPortIn.PortName)
+                EnableComButtons(True)
+                lblGPSType.Text = ""
+                lblGPSMessage.Text = ""
+            Else
+                bConnected = True
+                nLastComPort = -1
+                nBaudRateIndex = -1
+                lblGPSType.Text = ""
+                lblGPSMessage.Text = ""
+                tmrSearch_Tick(sender, e)
+                tmrComPort.Enabled = True
+            End If
+
         End If
         lblBandwidth.Text = ""
     End Sub
@@ -2515,6 +2746,17 @@ Public Class frmMain
         cmdSearch.Enabled = enable
         cmdSearchCOM.Enabled = enable
         cmdReloadComPorts.Enabled = enable
+        txtSocket.Enabled = enable
+    End Sub
+    Private Sub EnableTrackingButtons(ByVal enable As Boolean)
+        cboComPortTracking.Enabled = enable
+        cboBaudRateTracking.Enabled = enable
+        cmdReloadTrackingPorts.Enabled = enable
+        tbarPan.Enabled = Not enable
+        tbarTilt.Enabled = Not enable
+        cmdSetHome.Enabled = Not enable
+        cboTrackingSet.Enabled = Not enable
+        cmdTrackingCalibrate.Enabled = Not enable
     End Sub
     Private Sub cmdSearchCOM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSearchCOM.Click
         nLastComPort = 0
@@ -2633,6 +2875,7 @@ Public Class frmMain
             End If
             nHomeLat = ""
             nHomeLong = ""
+            nHomeAlt = ""
             'If eMapSelection = e_MapSelection.e_MapSelection_GoogleMaps Then
             cmdClearMap_Click(sender, e)
             'End If
@@ -2743,7 +2986,7 @@ Public Class frmMain
         End Select
     End Sub
 
-    Private Sub cboMission_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMission.SelectedIndexChanged
+    Private Sub cboMission_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If Trim(cboMission.Text) <> "" Then
             ReadMission(cboMission.Text)
             If tabMapView.SelectedIndex = 0 Then
@@ -2839,11 +3082,11 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub cmdReloadMissions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadMissions.Click
+    Private Sub cmdReloadMissions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         LoadMissions()
     End Sub
 
-    Private Sub cmdReloadMissionDirectory_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadMissionDirectory.Click
+    Private Sub cmdReloadMissionDirectory_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         cboMission_SelectedIndexChanged(sender, e)
     End Sub
 
@@ -2915,8 +3158,8 @@ Public Class frmMain
         nCommandLineDelim = cboCommandLineDelim.SelectedIndex
     End Sub
 
-    Private Sub cmdReloadComPorts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadComPorts.Click
-        LoadComPorts(cboComPort.Text)
+    Private Sub cmdReloadComPorts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadComPorts.Click, cmdReloadTrackingPorts.Click
+        LoadComPorts(cboComPort.Text, cboComPortTracking.Text)
     End Sub
 
     Private Sub cmdResetRuntime_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdResetRuntime.Click
@@ -3264,34 +3507,34 @@ Public Class frmMain
                             End If
                         End If
                         If nCount = e_Instruments.e_Instruments_3DModel Then
-                            cmdSetNorth.Visible = bInstruments(e_Instruments.e_Instruments_3DModel)
-                            cmdSetNorth.Left = _3DMesh1.Left + _3DMesh1.Width - cmdSetNorth.Width - 2
-                            cmdSetNorth.Top = _3DMesh1.Top + _3DMesh1.Height - cmdSetNorth.Height - 2
+                            cmdZeroYaw.Visible = bInstruments(e_Instruments.e_Instruments_3DModel)
+                            cmdZeroYaw.Left = _3DMesh1.Left + _3DMesh1.Width - cmdZeroYaw.Width - 2
+                            cmdZeroYaw.Top = _3DMesh1.Top + _3DMesh1.Height - cmdZeroYaw.Height - 2
                         End If
                     Next
                 Catch
                 End Try
 
             Case 1
-                    grpSerialSettings.Top = tabInstrumentView.Height - grpSerialSettings.Height - 35
-                    lstEvents.Height = (grpSerialSettings.Top - 46) / 2
-                    lstInbound.Height = lstEvents.Height
+                grpSerialSettings.Top = tabInstrumentView.Height - grpSerialSettings.Height - 35
+                lstEvents.Height = (grpSerialSettings.Top - 46) / 2
+                lstInbound.Height = lstEvents.Height
 
-                    lblRawData.Top = 8
-                    lstInbound.Top = lblRawData.Top + lblRawData.Height + 4
+                lblRawData.Top = 8
+                lstInbound.Top = lblRawData.Top + lblRawData.Height + 4
 
-                    lblTranslatedData.Top = lstInbound.Top + lstInbound.Height + 4
-                    lstEvents.Top = lblTranslatedData.Top + lblTranslatedData.Height + 4
+                lblTranslatedData.Top = lstInbound.Top + lstInbound.Height + 4
+                lstEvents.Top = lblTranslatedData.Top + lblTranslatedData.Height + 4
             Case 2
-                    chkCommandLineAutoScroll.Top = tabInstrumentView.Height - chkCommandLineAutoScroll.Height - 35
-                    cboCommandLineDelim.Top = chkCommandLineAutoScroll.Top
+                chkCommandLineAutoScroll.Top = tabInstrumentView.Height - chkCommandLineAutoScroll.Height - 35
+                cboCommandLineDelim.Top = chkCommandLineAutoScroll.Top
 
-                    lstCommandLineOutput.Height = chkCommandLineAutoScroll.Top - lstCommandLineOutput.Top - 6
+                lstCommandLineOutput.Height = chkCommandLineAutoScroll.Top - lstCommandLineOutput.Top - 6
             Case 3
-                    FitDirectShow(DirectShowControl2, tabInstrumentView.Width - 30, tabInstrumentView.Height - DirectShowControl2.Top - 48)
-                    cmdLiveCameraProperties2.Left = DirectShowControl2.Left + DirectShowControl2.Width - cmdLiveCameraProperties2.Width
-                    cboLiveCameraSelect2.Left = DirectShowControl2.Left
-                    cboLiveCameraSelect2.Width = cmdLiveCameraProperties2.Left - cboLiveCameraSelect2.Left - 6
+                FitDirectShow(DirectShowControl2, tabInstrumentView.Width - 30, tabInstrumentView.Height - DirectShowControl2.Top - 48)
+                cmdLiveCameraProperties2.Left = DirectShowControl2.Left + DirectShowControl2.Width - cmdLiveCameraProperties2.Width
+                cboLiveCameraSelect2.Left = DirectShowControl2.Left
+                cboLiveCameraSelect2.Width = cmdLiveCameraProperties2.Left - cboLiveCameraSelect2.Left - 6
         End Select
 
         'Lefts
@@ -3303,6 +3546,8 @@ Public Class frmMain
         cmdSetHome.Left = cmdClearMap.Left + cmdClearMap.Width + 2
         cmdExit.Left = tabMapView.Left + tabMapView.Width - cmdExit.Width
 
+        JoystickInstrumentControl1.Left = 15
+
         Select Case tabMapView.SelectedIndex
             Case 0
                 chkViewNoTracking.Top = tabMapView.Height - chkViewNoTracking.Height - 32
@@ -3311,11 +3556,13 @@ Public Class frmMain
                 chkViewFirstPerson.Top = chkViewNoTracking.Top
                 tbarModelScale.Top = chkViewNoTracking.Top
                 WebBrowser1.Height = chkViewNoTracking.Top - 15
+                JoystickInstrumentControl1.Top = WebBrowser1.Top + WebBrowser1.Height - JoystickInstrumentControl1.Height - 5
             Case 1
                 FitDirectShow(DirectShowControl1, tabMapView.Width - 30, tabMapView.Height - 70)
                 cmdLiveCameraProperties1.Left = DirectShowControl1.Left + DirectShowControl1.Width - cmdLiveCameraProperties1.Width
                 cboLiveCameraSelect1.Left = DirectShowControl1.Left
                 cboLiveCameraSelect1.Width = cmdLiveCameraProperties1.Left - cboLiveCameraSelect1.Left - 6
+                JoystickInstrumentControl1.Top = DirectShowControl1.Top + DirectShowControl1.Height - JoystickInstrumentControl1.Height - 5
         End Select
 
         If bInstruments(e_Instruments.e_Instruments_3DModel) = True Then
@@ -3407,6 +3654,9 @@ Public Class frmMain
 
     Private Sub cmdSetHome_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetHome.Click
         Try
+            nHomeLat = nLatitude
+            nHomeLong = nLongitude
+            nHomeAlt = nAltitude
             webDocument.InvokeScript("setHomeLatLng", New Object() {nLatitude, nLongitude, nAltitude, sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset})
             nDataPoints = 1
         Catch
@@ -3758,7 +4008,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub cmdSetNorth_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetNorth.Click
+    Private Sub cmdZeroYaw_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdZeroYaw.Click
         nYawOffset = nYaw
     End Sub
 
@@ -3820,7 +4070,8 @@ Public Class frmMain
         'sFilename = "C:\Documents and Settings\Paul\Desktop\UDB\log_05_08_18__16_37_16\log_05_08_18__16_37_16_2.txt" ' Paparazzi
         'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\gluonpilot.txt" ' Gluonpilot
         'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\atto.txt" ' Attopilot
-        sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY-21_280-90.txt" 'FY21AP II
+        'sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\FY-21_280-90.txt" 'FY21AP II
+        sFilename = "C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\atto18.txt" 'FY21AP II
 
         'Dim FS As New FileStream("C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\Save this\Output\test.hko", FileMode.Open)
         'Dim FS As New FileStream("C:\Documents and Settings\Paul\Desktop\UDB\log_05_08_18__16_37_16\log_05_08_18__16_37_16_2.txt", FileMode.Open)
@@ -3846,18 +4097,18 @@ Public Class frmMain
         'Next
         'Debug.Print(sOutput)
 
-        For nCount = 1 To UBound(sSplit)
-            sNewString = ""
-            sSplit2 = Split(sSplit(nCount), " ")
-            For nCount2 = 0 To UBound(sSplit2)
-                If sSplit2(nCount2) <> "" Then
-                    sNewString = sNewString & Chr("&h" & sSplit2(nCount2))
-                End If
-            Next
+        For nCount = 0 To UBound(sSplit)
+            'sNewString = ""
+            'sSplit2 = Split(sSplit(nCount), " ")
+            'For nCount2 = 0 To UBound(sSplit2)
+            '    If sSplit2(nCount2) <> "" Then
+            '        sNewString = sNewString & Chr("&h" & sSplit2(nCount2))
+            '    End If
+            'Next
 
-            oMessage = GetNextSentence(sNewString & vbCrLf)
+            'oMessage = GetNextSentence(sNewString & vbCrLf)
             'oMessage = GetNextSentence(Chr(&HA5) & Chr(&H5A) & sSplit(nCount))
-            'oMessage = GetNextSentence(sSplit(nCount) & vbLf)
+            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf)
             UpdateVariables(oMessage)
             Application.DoEvents()
 
@@ -3957,5 +4208,218 @@ Public Class frmMain
             _3DMesh1.DrawMesh(GetPitch(nPitch * n3DPitchRollOffset), GetRoll(nRoll * n3DPitchRollOffset), GetYaw(nYaw + n3DHeadingOffset), False, sModelName, GetRootPath() & "3D Models\")
             'System.Diagnostics.Debug.Print("Actvated " & Now)
         End If
+    End Sub
+
+    Private Sub cmdConnectTracking_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdConnectTracking.Click
+        If serialPortTracking.IsOpen = True Then
+            tmrTracking.Enabled = False
+            bConnectedTracking = False
+            cmdConnectTracking.Text = GetResString(, "Connect")
+            tmrTracking.Enabled = False
+            Try
+                serialPortTracking.Close()
+            Catch e2 As Exception
+            End Try
+            lblStatusTracking.Text = GetResString(, "Disconnect from", , , , serialPortTracking.PortName)
+            EnableTrackingButtons(True)
+        Else
+            Try
+
+                If serialPortTracking.IsOpen = True Then
+                    serialPortTracking.Close()
+                End If
+                serialPortTracking.PortName = cboComPortTracking.Text
+                serialPortTracking.BaudRate = cboBaudRateTracking.Text
+                Try
+                    With serialPortTracking
+                        '.BaseStream.Dispose()
+                        '.DataBits = 8
+                        '.StopBits = 1
+                        '.Parity = Ports.Parity.None
+                        '.ReadTimeout = 20
+                        .Open()
+                    End With
+                    bConnectedTracking = True
+                    Call SaveRegSetting(sRootRegistry & "\Settings", "Tracking Port", cboComPortTracking.Text)
+                    Call SaveRegSetting(sRootRegistry & "\Settings", "Tracking Baud Rate", cboBaudRateTracking.Text)
+                    cmdConnectTracking.Text = GetResString(, "Disconnect")
+                    lblStatusTracking.Text = GetResString(, "Connected_to", , , , serialPortTracking.PortName, serialPortTracking.BaudRate)
+                    EnableTrackingButtons(False)
+
+                    tmrTracking_Tick(sender, e)
+                    tmrTracking.Enabled = True
+                Catch e3 As Exception
+                    bConnectedTracking = False
+                    lblStatusTracking.Text = e3.Message
+                    cmdConnectTracking.Text = GetResString(, "Connect")
+                    EnableTrackingButtons(True)
+                End Try
+            Catch e2 As Exception
+            End Try
+        End If
+    End Sub
+
+    Private Sub tmrTracking_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmrTracking.Tick
+        Dim nLocalHeading As Single
+        Dim nLocalAngle As Single
+        Dim nLocalPan As Integer
+        Dim nLocalTilt As Integer
+        Dim nMiddleTilt As Integer
+        Dim nMiddlePan As Integer
+        Dim nLocalCourse As Integer
+
+        If cboHertzTracking.SelectedIndex = 0 Then
+            Exit Sub
+        End If
+
+        tmrTracking.Interval = 1000 / cboHertzTracking.SelectedIndex
+
+        If nTrackingOutputType = 0 Or nTrackingOutputType = 4 Then
+            tbarPan.Visible = True
+            tbarTilt.Visible = True
+            cmdTrackingCalibrate.Visible = True
+        Else
+            tbarPan.Visible = False
+            tbarTilt.Visible = False
+            cmdTrackingCalibrate.Visible = False
+        End If
+
+        If serialPortTracking.IsOpen = False Then
+            If bConnectedTracking = True Then
+                cmdConnectTracking_Click(sender, e)
+            End If
+            tmrTracking.Enabled = False
+        Else
+            Debug.Print(nLatitude)
+            nLocalHeading = 0
+            nLocalAngle = 0
+            If GetTrackingHeadingAngle(nHomeLat, nHomeLong, ConvertDistance(nHomeAlt, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), nLatitude, nLongitude, ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), cboTrackingSet.SelectedIndex, nGroundSpeed, nHeading, bTrackingPrediction, nLocalHeading, nLocalAngle) = True Then
+                nLocalHeading = NormalizeHeading(nLocalHeading)
+
+                If bBackLobeTracker = True Then
+                    If nLocalHeading > nTrackingAngleRight Then
+                        nLocalHeading = nLocalHeading - 90
+                    ElseIf nLocalHeading < nTrackingAngleLeft Then
+                        nLocalHeading = nLocalHeading + 90
+                    End If
+
+                    nLocalHeading = NormalizeHeading(nLocalHeading)
+
+                    If nLocalHeading > nTrackingAngleRight Then
+                        nLocalHeading = nLocalHeading - 90
+                        nLocalAngle = -nLocalAngle
+                    ElseIf nLocalHeading < nTrackingAngleLeft Then
+                        nLocalHeading = nLocalHeading + 90
+                        nLocalAngle = -nLocalAngle
+                    End If
+
+                    nLocalHeading = NormalizeHeading(nLocalHeading)
+
+                    If nLocalAngle < nTrackingAngleDown Then
+                        nLocalAngle = nTrackingAngleDown
+                    ElseIf nLocalAngle > nTrackingAngleUp Then
+                        nLocalAngle = nTrackingAngleUp
+                    End If
+
+                Else
+                    If nLocalHeading > nTrackingAngleRight Or nLocalHeading < nTrackingAngleLeft Then
+                        If Math.Abs(nTrackingAngleRight - nLocalHeading) < Math.Abs(nTrackingAngleLeft - nLocalHeading) Then
+                            nLocalHeading = nTrackingAngleRight
+                        Else
+                            nLocalHeading = nTrackingAngleLeft
+                        End If
+                    End If
+                End If
+
+                Select Case nTrackingOutputType
+                    Case 0, 4 'PanTilt and ServoDriver
+                        nMiddlePan = ((nTrackingServoRight - nTrackingServoLeft) / (nTrackingAngleRight - nTrackingAngleLeft)) * Math.Abs(nTrackingAngleLeft) + nTrackingServoLeft
+                        nMiddleTilt = ((nTrackingServoUp - nTrackingServoDown) / (nTrackingAngleUp - nTrackingAngleDown)) * Math.Abs(nTrackingAngleDown) + nTrackingServoDown
+
+                        nLocalPan = ((nTrackingServoRight - nTrackingServoLeft) / (nTrackingAngleRight - nTrackingAngleLeft)) * nLocalHeading + nMiddlePan
+                        nLocalTilt = ((nTrackingServoUp - nTrackingServoDown) / (nTrackingAngleUp - nTrackingAngleDown)) * nLocalAngle + nMiddleTilt
+
+                        tbarPan.Value = nLocalPan
+                        tbarTilt.Value = nLocalTilt
+                        'SendTrackingServo(nLocalPan, nLocalTilt)
+                    Case 1 'Heading
+                        SendTrackingAngle(nLocalHeading, nLocalAngle)
+                    Case 2 'LatLong
+                        WriteTrackingSerialPort("!!!LAT:" & ConvertLocalToPeriod(nLatitude * 1000000) & ",LON:" & ConvertLocalToPeriod(nLongitude * 1000000) & ",ALT:" & ConvertLocalToPeriod(nAltitude.ToString("0")) & ",CRS:" & ConvertLocalToPeriod(nLocalCourse.ToString("0")) & "***")
+                    Case 3 'ArduStation
+                        'If nHeading > 180 Then
+                        '    nLocalCourse = nHeading - 360
+                        'Else
+                        nLocalCourse = nHeading
+                        'End If
+                        WriteTrackingSerialPort("!!!LAT:" & ConvertLocalToPeriod((nLatitude * 1000000).ToString("0")) & ",LON:" & ConvertLocalToPeriod((nLongitude * 1000000).ToString("0")) & ",ALT:" & ConvertLocalToPeriod(ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters).ToString("0")) & ",ALH:" & ConvertLocalToPeriod((ConvertDistance(nWaypointAlt.ToString, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters).ToString("0"))) & ",CRS:" & ConvertLocalToPeriod(nLocalCourse.ToString("0")) & ",BER:" & ConvertLocalToPeriod(nLocalCourse.ToString("0")) & ",SPD:" & ConvertLocalToPeriod((ConvertSpeed(nGroundSpeed.ToString, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPerSec).ToString("0"))) & ",WPN:" & nWaypoint & ",DST:" & ConvertLocalToPeriod(ConvertDistance(nDistance.ToString, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters).ToString("0")) & ",BTV:" & ConvertLocalToPeriod(nBattery.ToString("0.00")) & ",SAT:" & nSats & ",LOC:" & IIf(nFix = 1, 0, 1) & ",HDO:" & ConvertLocalToPeriod((nHDOP * 100).ToString) & "***")
+                        WriteTrackingSerialPort("+++ASP:" & ConvertLocalToPeriod((ConvertSpeed(nAirSpeed, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)).ToString("0")) & ",RLL:" & ConvertLocalToPeriod(-nRoll.ToString("0")) & ",PCH:" & ConvertLocalToPeriod(-nPitch.ToString("0")) & ",THH:" & ConvertLocalToPeriod((nThrottle * 100).ToString("0")) & ",CRS:" & ConvertLocalToPeriod(nLocalCourse.ToString("0")) & "***")
+                End Select
+            End If
+        End If
+    End Sub
+
+    Private Sub cmdTrackingCalibrate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdTrackingCalibrate.Click
+        tmrTracking.Enabled = False
+        frmTrackingCalibrate.ShowDialog()
+        If serialPortTracking.IsOpen = True Then
+            tmrTracking.Enabled = True
+        End If
+    End Sub
+
+    Public Sub SendTrackingServoPanTilt(Optional ByVal panValue As Integer = 1500, Optional ByVal tiltValue As Integer = 1500)
+        WriteTrackingSerialPort("!!!PAN:" & panValue & ",TLT:" & tiltValue & "***")
+    End Sub
+    Public Sub SendTrackingServoDriver(ByVal servoNumber As Integer, ByVal outputValue As Integer)
+        WriteTrackingSerialPort(servoNumber & outputValue & vbCr)
+    End Sub
+
+    Public Sub WriteTrackingSerialPort(ByVal inputString As String)
+        Try
+            serialPortTracking.Write(inputString & vbCrLf)
+        Catch ex As Exception
+            lblStatusTracking.Text = ex.Message
+            If tmrTracking.Enabled = True Then
+                serialPortTracking.Close()
+                serialPortTracking.Open()
+            End If
+        End Try
+    End Sub
+    Public Sub SendTrackingAngle(Optional ByVal headingValue As Single = 0, Optional ByVal angleValue As Single = 0)
+        WriteTrackingSerialPort("!!!HED:" & ConvertLocalToPeriod(headingValue.ToString("0.0")) & ",ANG:" & ConvertLocalToPeriod(angleValue.ToString("0.0")) & "***")
+    End Sub
+
+    Private Sub cboOutputTypeTracking_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboOutputTypeTracking.SelectedIndexChanged
+        If bStartup = True Then
+            Exit Sub
+        End If
+        nTrackingOutputType = cboOutputTypeTracking.SelectedIndex
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Output Type", nTrackingOutputType)
+        tmrTracking_Tick(Nothing, Nothing)
+    End Sub
+
+    Private Sub cboHertzTracking_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboHertzTracking.SelectedIndexChanged
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Hz", cboHertzTracking.SelectedIndex)
+        If cboHertzTracking.SelectedIndex = 0 Then
+            tmrTracking.Enabled = False
+        Else
+            tmrTracking.Enabled = True
+        End If
+    End Sub
+
+    Private Sub tbarPan_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tbarPan.ValueChanged, tbarTilt.ValueChanged
+        If bStartup = True Then
+            Exit Sub
+        End If
+        Select Case nTrackingOutputType
+            Case 0
+                SendTrackingServoPanTilt(tbarPan.Value, tbarTilt.Value)
+            Case 4
+                If sender.name = "tbarPan" Then
+                    SendTrackingServoDriver(1, tbarPan.Value)
+                Else
+                    SendTrackingServoDriver(2, tbarTilt.Value)
+                End If
+        End Select
     End Sub
 End Class

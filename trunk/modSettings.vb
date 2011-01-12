@@ -31,6 +31,20 @@ Module modSettings
     Public sSpeedUnits As String
     Public sDistanceUnits As String
 
+    Public nTrackingAngleLeft As Integer
+    Public nTrackingAngleRight As Integer
+    Public nTrackingAngleUp As Integer
+    Public nTrackingAngleDown As Integer
+
+    Public nTrackingServoLeft As Integer
+    Public nTrackingServoRight As Integer
+    Public nTrackingServoUp As Integer
+    Public nTrackingServoDown As Integer
+
+    Public bBackLobeTracker As Boolean
+    Public nTrackingOutputType As Integer
+    Public bTrackingPrediction As Boolean
+
     Public Enum e_LatLongFormat
         e_LatLongFormat_DDMM_MMMM = 0
         e_LatLongFormat_DD_DDDDDD = 1
@@ -140,6 +154,37 @@ Module modSettings
         sSpeechRegularInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", GetResString(, "Announce_Regular_Interval_Default"))
         nSpeechInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Interval", 30)
 
+        nTrackingAngleLeft = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Left", -180)
+        nTrackingAngleRight = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Right", 180)
+        nTrackingAngleUp = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Up", 90)
+        nTrackingAngleDown = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Down", 0)
+
+        nTrackingServoLeft = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Left", 1000)
+        nTrackingServoRight = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Right", 2000)
+        nTrackingServoUp = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Up", 2000)
+        nTrackingServoDown = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Down", 1500)
+
+        If nTrackingServoLeft < nTrackingServoRight Then
+            frmMain.tbarPan.Minimum = nTrackingServoLeft
+            frmMain.tbarPan.Maximum = nTrackingServoRight
+        Else
+            frmMain.tbarPan.Minimum = nTrackingServoRight
+            frmMain.tbarPan.Maximum = nTrackingServoLeft
+        End If
+
+        If nTrackingServoUp < nTrackingServoDown Then
+            frmMain.tbarTilt.Minimum = nTrackingServoUp
+            frmMain.tbarTilt.Maximum = nTrackingServoDown
+        Else
+            frmMain.tbarTilt.Minimum = nTrackingServoDown
+            frmMain.tbarTilt.Maximum = nTrackingServoUp
+        End If
+
+        bBackLobeTracker = GetRegSetting(sRootRegistry & "\Settings", "Tracking Back Lobe", True)
+        bTrackingPrediction = GetRegSetting(sRootRegistry & "\Settings", "Tracking Prediction", True)
+
+        nTrackingOutputType = GetRegSetting(sRootRegistry & "\Settings", "Tracking Output Type", 0)
+
     End Sub
 
     Public Sub SaveSettings()
@@ -200,6 +245,23 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval Enabled", bAnnounceRegularInterval)
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", sSpeechRegularInterval)
         SaveRegSetting(sRootRegistry & "\Settings", "Speech Interval", nSpeechInterval)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Left", nTrackingAngleLeft)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Right", nTrackingAngleRight)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Up", nTrackingAngleUp)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Down", nTrackingAngleDown)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Left", nTrackingServoLeft)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Right", nTrackingServoRight)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Up", nTrackingServoUp)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Down", nTrackingServoDown)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Back Lobe", bBackLobeTracker)
+        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Prediction", bTrackingPrediction)
+
+        If nSpeechInterval < 10 Then
+            nSpeechInterval = 10
+        End If
 
         frmMain.ResetForm()
         LoadSettings()

@@ -21,6 +21,7 @@ Public Class cMessage
         e_MessageType_MAV
         e_MessageType_FY21AP
         e_MessageType_AttoPilot
+        e_MessageType_AttoPilot18
         e_MessageType_Gluonpilot
         e_MessageType_Paparazzi
     End Enum

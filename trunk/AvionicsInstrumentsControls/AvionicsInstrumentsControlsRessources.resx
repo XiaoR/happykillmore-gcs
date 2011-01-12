@@ -154,6 +154,9 @@
   <data name="BatteryYellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\batteryyellow.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\button.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GroundSpeedNeedle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\groundspeedneedle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
