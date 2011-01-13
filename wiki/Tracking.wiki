@@ -13,23 +13,36 @@ The purpose of this project was to create a cheap, simple, off-the-shelf solutio
 If you want to buy all the components, you'll need a soldering iron, an ArduPilot original (http://www.sparkfun.com/products/8785), some straight headers (http://www.sparkfun.com/products/116), and 2 servos.
 ----
 ==Output Types==
-*PanTilt* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.<BR><BR>
+*ArduTracker* - Sends servo settings for pan and tilt servos ranging from 0 to 3000 and is completely GCS controlled and does not require any intelligence from the tracker's microcontroller. There is a calibration (end-point setup) in the GCS which allows servo travel and full travel angle to be specified. Once calibrated, the "north" angle must simply be set at the field. See Tracker Offset below.<BR><BR>
     
 Current Output Format: !!!PAN:XXXX,TLT:YYYY Where XXXX is pan servo micro seconds from 0000 to 3000 and YYYY is tilt server milliseconds from 0000 to 3000. These fields are fixed length at 4 characters. 
 
-Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker</a> source for the original ArduPilot.
+Sample Source Code for this output mode can be found in the <a href='http://code.google.com/p/happykillmore-gcs/downloads/detail?name=ArduTracker%20v1.zip&can=2&q='>ArduTracker</a> source for the original ArduPilot.<BR><BR>Hardware: http://www.sparkfun.com/products/8785 (or any Arduino based platform)
 
 *Heading* - Sends angle settings from pan and tilt servos ranging from 0.0 to 359.0 for pan and -180.0 to 180.0 for tilt. All calibration and end-point adjustments have to be handled on the tracker's microcontroller. The assumption is that 1 degree of output equals 1 degree of movement on the tracker. The Tracker Offset can still be used on the GCS or can be set to 0 and handled in the tracker's logic.<BR><BR>
  
-Current Output Format: !!!HED:X.X,ANG:Y.X+++ Where XXX.X is heading with one decimal place and YY.Y is tilt angle. These fields are not fixed length and may contain a negative for tilt.
+Current Output Format: !!!HED:X.X,ANG:Y.X+++ Where XXX.X is heading with one decimal place and YY.Y is tilt angle. These fields are not fixed length and may contain a negative for tilt.<BR><BR>Hardware: None currently - Homebrew
 
 *LatLong* - Sends ArduPilot Legacy commands including LAT, LON, ALT and requires all math functions to be completed on tracker. GCS does not perform any math relating to home and current plane location. All end-point adjustment, calibration and set home routines must be handled by the tracker. <BR><BR>
-Current Output Format: !!!LAT:XXXX.XXXXXX,LON:YYYYY.YYYYYY,ALT:Z.Z Where X is Latitude, Y is Longitude and Z is Altitude. These fields are not fixed length. ALT will vary based on the selection of Altitude offset in the settings form. Either from sea level or from home location. 
+Current Output Format: !!!LAT:XXXX.XXXXXX,LON:YYYYY.YYYYYY,ALT:Z.Z Where X is Latitude, Y is Longitude and Z is Altitude. These fields are not fixed length. ALT will vary based on the selection of Altitude offset in the settings form. Either from sea level or from home location. <BR><BR>Hardware: None currently - Homebrew
 
 *ArduStation* - Sends all required variables to the ArduStation. This makes it possible to use the ArduStation with other GPS or Auto-pilot input sources.
 
 Current Output Format: !!!LAT:A,LON:B,ALT:C,ALH:D,CRS:E,BER:F,SPD:G,WPN:H,DST:I,BTV:J.JJ,SAT:K,LOC:L
-+++ASP:M,RLL:N,PCH:O,THH:P,CRS:E
++++ASP:M,RLL:N,PCH:O,THH:P,CRS:E<BR><BR>Hardware: http://store.diydrones.com/ArduStation_p/de-0001-01.htm
+
+*Melih Servo Driver* - Uses Melih's custom protocol found here: http://www.diydrones.com/profiles/blogs/new-circuit-for-antenna
+
+Current Output Format: CommandSet: [Servo Number]+[position_us]+[chr 13]  <BR><BR>
+Hardware: http://store.flytron.com/rc-electronics/94-6ch-rs232-servo-driver.html
+
+*Pololu Servo Driver Protocol* - Uses Command #4 for raw data output. Servo ID number can be selected in the calibration form for pan and tilt as well as calibration.
+
+Hardware: http://www.pololu.com/catalog/category/12
+
+*MiniSSC II* - Pololu Servo drivers can speak this language too (jumper selection)
+
+Hardware: http://www.rentron.com/PicBasic/Mini_SSC_II.htm
 ----
 ==Calibration==
 After selecting PanTilt for Output Type on the Tracking tab and clicking Connect, a button labelled "Calibrate" will appear at the bottom left.
