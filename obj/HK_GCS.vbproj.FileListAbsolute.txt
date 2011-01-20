@@ -64,3 +64,11 @@ C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\H
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.Strings.resources
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.frmTrackingCalibrate.resources
 C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.frmTrackingCalibrate.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.TextFiles.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.TextFiles.resources
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Debug\Interop.GEPlugin.dll
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\Interop.GEPlugin.dll
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Debug\HK_GCS.vbproj.ResolveComReference.cache
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\bin\Release\Interop.GEPlugin.dll
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\Interop.GEPlugin.dll
+C:\Documents and Settings\Paul\My Documents\Visual Studio 2005\Projects\HK_GCS\HK_GCS\HK_GCS\obj\Release\HK_GCS.vbproj.ResolveComReference.cache

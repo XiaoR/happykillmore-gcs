@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 388</value>
+    <value>12, 416</value>
   </data>
   <data name="cmdSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 23</value>
@@ -144,7 +144,7 @@
     <value>2</value>
   </data>
   <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 388</value>
+    <value>429, 416</value>
   </data>
   <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 23</value>
@@ -171,11 +171,62 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 319</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
+  </data>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Map Source:</value>
+  </data>
+  <data name="Label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>grpGeneral</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboMapSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>126, 315</value>
+  </data>
+  <data name="cboMapSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 21</value>
+  </data>
+  <data name="cboMapSource.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="&gt;&gt;cboMapSource.Name" xml:space="preserve">
+    <value>cboMapSource</value>
+  </data>
+  <data name="&gt;&gt;cboMapSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMapSource.Parent" xml:space="preserve">
+    <value>grpGeneral</value>
+  </data>
+  <data name="&gt;&gt;cboMapSource.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="lblAltitudeOffset.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblAltitudeOffset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 291</value>
+    <value>13, 292</value>
   </data>
   <data name="lblAltitudeOffset.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -199,7 +250,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblAltitudeOffset.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="cboAltitudeOffset.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -223,13 +274,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboAltitudeOffset.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="lblLanguage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 24</value>
+    <value>13, 25</value>
   </data>
   <data name="lblLanguage.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -253,7 +304,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblLanguage.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="cboLanguage.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -277,7 +328,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="cboThrottleChannel.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -301,13 +352,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboThrottleChannel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="lblThrottleChannel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblThrottleChannel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 266</value>
+    <value>13, 267</value>
   </data>
   <data name="lblThrottleChannel.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -331,13 +382,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblThrottleChannel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="lblHeadingReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblHeadingReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 240</value>
+    <value>13, 239</value>
   </data>
   <data name="lblHeadingReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -361,7 +412,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblHeadingReverse.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="chkHeadingReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -397,13 +448,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkHeadingReverse.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="lblYawReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblYawReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 213</value>
+    <value>13, 212</value>
   </data>
   <data name="lblYawReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -427,7 +478,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblYawReverse.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="chkYawReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -463,13 +514,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkYawReverse.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="lblRollReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblRollReverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 186</value>
+    <value>13, 185</value>
   </data>
   <data name="lblRollReverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -493,7 +544,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblRollReverse.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="chkRollReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -529,7 +580,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkRollReverse.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="lblPitchReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -559,7 +610,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblPitchReverse.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="chkPitchReverse.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -595,7 +646,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;chkPitchReverse.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="cbo3DModel.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -619,13 +670,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cbo3DModel.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="lbl3DModel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lbl3DModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 132</value>
+    <value>13, 130</value>
   </data>
   <data name="lbl3DModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -649,7 +700,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lbl3DModel.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="cboMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 100</value>
@@ -670,13 +721,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboMaxSpeed.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="lblMaxSpeed.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 105</value>
+    <value>13, 104</value>
   </data>
   <data name="lblMaxSpeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -700,13 +751,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblMaxSpeed.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="lblSpeedUnits.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblSpeedUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 78</value>
+    <value>13, 77</value>
   </data>
   <data name="lblSpeedUnits.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 15</value>
@@ -730,7 +781,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblSpeedUnits.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <data name="cboSpeedUnits.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 74</value>
@@ -751,13 +802,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboSpeedUnits.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <data name="lblDistanceUnits.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblDistanceUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 51</value>
+    <value>13, 52</value>
   </data>
   <data name="lblDistanceUnits.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -781,7 +832,7 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;lblDistanceUnits.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="cboDistanceUnits.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 48</value>
@@ -802,13 +853,13 @@
     <value>grpGeneral</value>
   </data>
   <data name="&gt;&gt;cboDistanceUnits.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>23</value>
   </data>
   <data name="grpGeneral.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 9</value>
   </data>
   <data name="grpGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 315</value>
+    <value>456, 347</value>
   </data>
   <data name="grpGeneral.TabIndex" type="System.Int32, mscorlib">
     <value>49</value>
@@ -832,7 +883,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 345</value>
+    <value>491, 373</value>
   </data>
   <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1206,6 +1257,72 @@
   <data name="&gt;&gt;grpGoogleEarthFeatures.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="lblClamptoGround.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblClamptoGround.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 139</value>
+  </data>
+  <data name="lblClamptoGround.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 19</value>
+  </data>
+  <data name="lblClamptoGround.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="lblClamptoGround.Text" xml:space="preserve">
+    <value>Clamp to Ground:</value>
+  </data>
+  <data name="lblClamptoGround.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblClamptoGround.Name" xml:space="preserve">
+    <value>lblClamptoGround</value>
+  </data>
+  <data name="&gt;&gt;lblClamptoGround.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblClamptoGround.Parent" xml:space="preserve">
+    <value>grpMissionPath</value>
+  </data>
+  <data name="&gt;&gt;lblClamptoGround.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkClampToGround.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkClampToGround.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkClampToGround.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkClampToGround.Location" type="System.Drawing.Point, System.Drawing">
+    <value>148, 137</value>
+  </data>
+  <data name="chkClampToGround.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="chkClampToGround.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="chkClampToGround.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="chkClampToGround.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkClampToGround.Name" xml:space="preserve">
+    <value>chkClampToGround</value>
+  </data>
+  <data name="&gt;&gt;chkClampToGround.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkClampToGround.Parent" xml:space="preserve">
+    <value>grpMissionPath</value>
+  </data>
+  <data name="&gt;&gt;chkClampToGround.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="lblMissionOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1234,7 +1351,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;lblMissionOpacity.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="tbarMissionOpacity.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -1261,7 +1378,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;tbarMissionOpacity.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="lblMissionExtrude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1291,7 +1408,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;lblMissionExtrude.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="chkMissionExtrude.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -1327,7 +1444,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;chkMissionExtrude.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="lblMissionPathThickness.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1357,7 +1474,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;lblMissionPathThickness.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="lblMissionPathColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1387,7 +1504,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;lblMissionPathColor.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="tbarMissionWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -1414,7 +1531,7 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;tbarMissionWidth.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="cmdMissionColor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1438,13 +1555,13 @@
     <value>grpMissionPath</value>
   </data>
   <data name="&gt;&gt;cmdMissionColor.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="grpMissionPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>20, 190</value>
   </data>
   <data name="grpMissionPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 137</value>
+    <value>245, 170</value>
   </data>
   <data name="grpMissionPath.TabIndex" type="System.Int32, mscorlib">
     <value>53</value>
@@ -1780,7 +1897,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabGoogleEarth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 345</value>
+    <value>491, 373</value>
   </data>
   <data name="tabGoogleEarth.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2551,7 +2668,7 @@
     <value>4, 22</value>
   </data>
   <data name="tabInstruments.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 345</value>
+    <value>491, 373</value>
   </data>
   <data name="tabInstruments.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2962,7 +3079,7 @@
     <value>4, 22</value>
   </data>
   <data name="tabSpeech.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 345</value>
+    <value>491, 373</value>
   </data>
   <data name="tabSpeech.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2986,7 +3103,7 @@
     <value>12, 11</value>
   </data>
   <data name="tabSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 371</value>
+    <value>499, 399</value>
   </data>
   <data name="tabSettings.TabIndex" type="System.Int32, mscorlib">
     <value>55</value>
@@ -3235,7 +3352,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>523, 422</value>
+    <value>523, 451</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

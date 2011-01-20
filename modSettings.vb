@@ -14,6 +14,7 @@ Module modSettings
     Public bYawReverse As Boolean = False
     Public bHeadingReverse As Boolean = False
     Public nThrottleChannel As Integer = 1
+    Public eMapSelection As e_MapSelection = e_MapSelection.e_MapSelection_GoogleEarth
 
     Public bInstruments(0 To e_Instruments_Max) As Boolean
     Public b3DModelFailed As Boolean = False
@@ -23,6 +24,7 @@ Module modSettings
     Public nFlightWidth As Integer = 2
 
     Public bMissionExtrude As Boolean = True
+    Public bMissionClampToGround As Boolean
     Public sMissionColor As String
     Public nMissionWidth As Integer = 1
 
@@ -41,9 +43,19 @@ Module modSettings
     Public nTrackingServoUp As Integer
     Public nTrackingServoDown As Integer
 
+    Public nTrackingServoNumberPan As Integer
+    Public nTrackingServoNumberTilt As Integer
+
     Public bBackLobeTracker As Boolean
     Public nTrackingOutputType As Integer
-    Public bTrackingPrediction As Boolean
+
+    Public nConfigDevice As e_ConfigDevice
+    Public nConfigVehicle As Integer
+    Public sConfigFormatString As String = "0.000000"
+    Public nConfigAltOffset As e_AltOffset
+
+    Public eOldSpeedUnits As Integer
+    Public eOldDistanceUnits As Integer
 
     Public Enum e_LatLongFormat
         e_LatLongFormat_DDMM_MMMM = 0
@@ -60,12 +72,23 @@ Module modSettings
         e_DistanceFormat_Meters
     End Enum
     Public Enum e_MapSelection
-        e_MapSelection_GoogleEarth = 0
+        e_MapSelection_None = 0
+        e_MapSelection_GoogleEarth = 1
         e_MapSelection_GoogleMaps
+    End Enum
+
+    Public Enum e_ConfigDevice
+        e_ConfigDevice_Generic = 0
+        e_ConfigDevice_AttoPilot
+        e_ConfigDevice_ArduPilotMega
+        e_ConfigDevice_Gluonpilot
+        e_ConfigDevice_FY21AP
     End Enum
 
     Public Sub LoadSettings()
         Dim nCount As Integer
+        Dim eNewSpeedUnits As e_SpeedFormat
+        Dim eNewDistanceUnits As e_DistanceFormat
 
         bIsAdmin = GetRegSetting(sRootRegistry & "\Settings", "Admin Mode", False)
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
@@ -79,6 +102,7 @@ Module modSettings
         nThrottleChannel = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Throttle Channel", "1"))
         eAltOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Altitude Offset", "0"))
         nHomeOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Home Offset", "0"))
+        eMapSelection = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Source", "1"))
 
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
@@ -89,6 +113,7 @@ Module modSettings
         bMissionExtrude = GetRegSetting(sRootRegistry & "\Settings", "Mission Extrude", True)
         sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "720000FF")
         nMissionWidth = GetRegSetting(sRootRegistry & "\Settings", "Mission Width", 1)
+        bMissionClampToGround = GetRegSetting(sRootRegistry & "\Settings", "Mission Clamp To Ground", False)
 
         bGEBorders = GetRegSetting(sRootRegistry & "\Settings", "GE Borders", True)
         bGEBuildings = GetRegSetting(sRootRegistry & "\Settings", "GE Buildings", True)
@@ -96,26 +121,24 @@ Module modSettings
         bGETerrain = GetRegSetting(sRootRegistry & "\Settings", "GE Terrain", True)
         bGETrees = GetRegSetting(sRootRegistry & "\Settings", "GE Trees", True)
 
-        eDistanceUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Distance Units", "0"))
-        Select Case eDistanceUnits
-            Case e_DistanceFormat.e_DistanceFormat_Feet
-                sDistanceUnits = GetResString(, "Feet")
-            Case e_DistanceFormat.e_DistanceFormat_Meters
-                sDistanceUnits = GetResString(, "Meters")
-        End Select
-        frmMain.AltimeterInstrumentControl1.SetAlimeterParameters(nAltitude, sDistanceUnits)
+        eNewDistanceUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Distance Units", "0"))
+        If eNewDistanceUnits <> eOldDistanceUnits And nWPCount > -1 Then
+            For nCount = 0 To nWPCount
+                aWPAlt(nCount) = ConvertDistance(aWPAlt(nCount), eOldDistanceUnits, eNewDistanceUnits)
+            Next
+        End If
+        eDistanceUnits = eNewDistanceUnits
+        sDistanceUnits = getDistanceUnitsText
+        frmMain.AltimeterInstrumentControl1.SetAlimeterParameters(nAltitude - nHomeAlt, sDistanceUnits)
 
-        eSpeedUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Speed Units", "2"))
-        Select Case eSpeedUnits
-            Case e_SpeedFormat.e_SpeedFormat_Knots
-                sSpeedUnits = GetResString(, "Knots")
-            Case e_SpeedFormat.e_SpeedFormat_KPH
-                sSpeedUnits = GetResString(, "KPH")
-            Case e_SpeedFormat.e_SpeedFormat_MPerSec
-                sSpeedUnits = GetResString(, "m_s")
-            Case e_SpeedFormat.e_SpeedFormat_MPH
-                sSpeedUnits = GetResString(, "MPH")
-        End Select
+        eNewSpeedUnits = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Speed Units", "2"))
+        If eNewSpeedUnits <> eOldSpeedUnits And nWPCount > -1 Then
+            For nCount = 0 To nWPCount
+                aWPSpeed(nCount) = ConvertSpeed(aWPSpeed(nCount), eOldSpeedUnits, eNewSpeedUnits)
+            Next
+        End If
+        eSpeedUnits = eNewSpeedUnits
+        sSpeedUnits = GetSpeedUnitsText()
 
         'If bInstruments(e_Instruments.e_Instruments_Speed) = True Then
         frmMain.AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, nMaxSpeed, GetResString(, "Speed"), sSpeedUnits)
@@ -145,45 +168,37 @@ Module modSettings
 
         oThrottleColor = GetRegSetting(sRootRegistry & "\Settings", "Throttle Color", e_InstrumentColor.e_InstrumentColor_Orange)
 
-        sSpeechVoice = GetRegSetting(sRootRegistry & "\Settings", "Speech Voice", "Microsoft Sam")
-        bAnnounceWaypoints = GetRegSetting(sRootRegistry & "\Settings", "Speech Waypoint Enabled", False)
-        sSpeechWaypoint = GetRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", GetResString(, "Announce_Waypoints_Default"))
-        bAnnounceModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", False)
-        sSpeechModeChange = GetRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", GetResString(, "Announce_ModeChange_Default"))
-        bAnnounceRegularInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval Enabled", False)
-        sSpeechRegularInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", GetResString(, "Announce_Regular_Interval_Default"))
-        nSpeechInterval = GetRegSetting(sRootRegistry & "\Settings", "Speech Interval", 30)
+        sSpeechVoice = GetRegSetting(sRootRegistry & "\Settings\Speech", "Voice", "Microsoft Sam")
+        bAnnounceWaypoints = GetRegSetting(sRootRegistry & "\Settings\Speech", "Waypoint Enabled", False)
+        sSpeechWaypoint = GetRegSetting(sRootRegistry & "\Settings\Speech", "Waypoint", GetResString(, "Announce_Waypoints_Default"))
+        bAnnounceModeChange = GetRegSetting(sRootRegistry & "\Settings\Speech", "Mode Change Enabled", False)
+        sSpeechModeChange = GetRegSetting(sRootRegistry & "\Settings\Speech", "Mode Change", GetResString(, "Announce_ModeChange_Default"))
+        bAnnounceRegularInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval Enabled", False)
+        sSpeechRegularInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval", GetResString(, "Announce_Regular_Interval_Default"))
+        nSpeechInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Interval", 30)
 
-        nTrackingAngleLeft = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Left", -180)
-        nTrackingAngleRight = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Right", 180)
-        nTrackingAngleUp = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Up", 90)
-        nTrackingAngleDown = GetRegSetting(sRootRegistry & "\Settings", "Tracking Angle Down", 0)
+        bBackLobeTracker = GetRegSetting(sRootRegistry & "\Settings\Tracking", "Back Lobe", True)
 
-        nTrackingServoLeft = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Left", 1000)
-        nTrackingServoRight = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Right", 2000)
-        nTrackingServoUp = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Up", 2000)
-        nTrackingServoDown = GetRegSetting(sRootRegistry & "\Settings", "Tracking Servo Down", 1500)
+        nTrackingOutputType = GetRegSetting(sRootRegistry & "\Settings\Tracking", "Output Type", 0)
 
-        If nTrackingServoLeft < nTrackingServoRight Then
-            frmMain.tbarPan.Minimum = nTrackingServoLeft
-            frmMain.tbarPan.Maximum = nTrackingServoRight
-        Else
-            frmMain.tbarPan.Minimum = nTrackingServoRight
-            frmMain.tbarPan.Maximum = nTrackingServoLeft
+        nConfigDevice = GetRegSetting(sRootRegistry & "\Settings", "Config Device", 0)
+        nConfigVehicle = GetRegSetting(sRootRegistry & "\Settings", "Config Vehicle", 2)
+        nConfigAltOffset = GetRegSetting(sRootRegistry & "\Settings", "Config Generic Alt Offset", 0)
+
+        frmMain.txtMissionDefaultAlt.Text = ConvertDistance(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Altitude", 200), e_DistanceFormat.e_DistanceFormat_Feet, eDistanceUnits)
+        frmMain.txtMissionAttoDefaultSpeed.Text = ConvertSpeed(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Atto Speed", 50), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+
+        If frmMain.bStartup = False Then
+            frmMain.SetMapMode()
+            If webDocument Is Nothing Then
+                frmMain.SetupWebBroswer()
+            End If
         End If
 
-        If nTrackingServoUp < nTrackingServoDown Then
-            frmMain.tbarTilt.Minimum = nTrackingServoUp
-            frmMain.tbarTilt.Maximum = nTrackingServoDown
-        Else
-            frmMain.tbarTilt.Minimum = nTrackingServoDown
-            frmMain.tbarTilt.Maximum = nTrackingServoUp
+        If frmMain.tabInstrumentView.SelectedIndex = 4 Then
+            frmMain.LoadMissionGrid(frmMain.dgMission.SelectedRows(0).Index)
+            frmMain.UpdateMissionGE(frmMain.dgMission.SelectedRows(0).Index)
         End If
-
-        bBackLobeTracker = GetRegSetting(sRootRegistry & "\Settings", "Tracking Back Lobe", True)
-        bTrackingPrediction = GetRegSetting(sRootRegistry & "\Settings", "Tracking Prediction", True)
-
-        nTrackingOutputType = GetRegSetting(sRootRegistry & "\Settings", "Tracking Output Type", 0)
 
     End Sub
 
@@ -209,10 +224,12 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Mission Extrude", bMissionExtrude)
         SaveRegSetting(sRootRegistry & "\Settings", "Mission Color", sMissionColor)
         SaveRegSetting(sRootRegistry & "\Settings", "Mission Width", nMissionWidth)
+        SaveRegSetting(sRootRegistry & "\Settings", "Mission Clamp To Ground", bMissionClampToGround)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Distance Units", eDistanceUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Speed Units", eSpeedUnits)
         SaveRegSetting(sRootRegistry & "\Settings", "Map Update Hz", nMapUpdateRate)
+        SaveRegSetting(sRootRegistry & "\Settings", "Map Source", eMapSelection)
 
         SaveRegSetting(sRootRegistry & "\Settings", "GE Borders", bGEBorders)
         SaveRegSetting(sRootRegistry & "\Settings", "GE Buildings", bGEBuildings)
@@ -237,27 +254,31 @@ Module modSettings
 
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Color", oThrottleColor)
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Voice", sSpeechVoice)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Waypoint Enabled", bAnnounceWaypoints)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Waypoint", sSpeechWaypoint)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change Enabled", bAnnounceModeChange)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Mode Change", sSpeechModeChange)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval Enabled", bAnnounceRegularInterval)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Regular Interval", sSpeechRegularInterval)
-        SaveRegSetting(sRootRegistry & "\Settings", "Speech Interval", nSpeechInterval)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Voice", sSpeechVoice)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Waypoint Enabled", bAnnounceWaypoints)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Waypoint", sSpeechWaypoint)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Mode Change Enabled", bAnnounceModeChange)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Mode Change", sSpeechModeChange)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval Enabled", bAnnounceRegularInterval)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval", sSpeechRegularInterval)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Interval", nSpeechInterval)
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Left", nTrackingAngleLeft)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Right", nTrackingAngleRight)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Up", nTrackingAngleUp)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Angle Down", nTrackingAngleDown)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Left", nTrackingAngleLeft)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Right", nTrackingAngleRight)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Up", nTrackingAngleUp)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Down", nTrackingAngleDown)
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Left", nTrackingServoLeft)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Right", nTrackingServoRight)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Up", nTrackingServoUp)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Servo Down", nTrackingServoDown)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Left", nTrackingServoLeft)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Right", nTrackingServoRight)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Up", nTrackingServoUp)
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Down", nTrackingServoDown)
 
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Back Lobe", bBackLobeTracker)
-        SaveRegSetting(sRootRegistry & "\Settings", "Tracking Prediction", bTrackingPrediction)
+        If nTrackingOutputType >= 4 And nTrackingOutputType <= 6 Then
+            SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Number Pan", nTrackingServoNumberPan)
+            SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Number Tilt", nTrackingServoNumberTilt)
+        End If
+
+        SaveRegSetting(sRootRegistry & "\Settings\Tracking", "Back Lobe", bBackLobeTracker)
 
         If nSpeechInterval < 10 Then
             nSpeechInterval = 10

@@ -24,6 +24,8 @@ Public Class cMessage
         e_MessageType_AttoPilot18
         e_MessageType_Gluonpilot
         e_MessageType_Paparazzi
+        e_MessageType_AttoSetParam
+        e_MessageType_AttoOk
     End Enum
 
     Public ValidMessage As Boolean

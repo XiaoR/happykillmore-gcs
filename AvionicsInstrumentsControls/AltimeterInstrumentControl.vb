@@ -114,7 +114,11 @@ Namespace AvionicsInstrumentControlDemo
         ''' Define the physical value to be displayed on the indicator
         ''' The aircraft altitude in ft
         Public Sub SetAlimeterParameters(ByVal aircraftAltitude As Integer, ByVal unitString As String)
-            altitude = aircraftAltitude
+            If aircraftAltitude < 0 Then
+                altitude = 0
+            Else
+                altitude = aircraftAltitude
+            End If
             sUnitLabel = unitString
 
             Me.Refresh()

@@ -11,7 +11,12 @@ Module modGlobal
     Public Const pi As Double = 3.14159265
     Public sRootRegistry As String = "SOFTWARE\HK_GCS"
 
+    Public objTabViewMapView As TabPage
+    Public webDocument As Object
+
     Public Const e_Instruments_Max = 7
+    Public bPlaneFirstFound As Boolean = False
+
     Public Enum e_Instruments
         e_Instruments_None = -1
         e_Instruments_3DModel = 0
@@ -49,6 +54,12 @@ Module modGlobal
         e_InstrumentLayout_SingleColumn
     End Enum
 
+    Public Enum e_DeviceType
+        e_DeviceType_Generic = 0
+        e_DeviceType_AttoPilot
+        e_DeviceType_APM
+    End Enum
+
     Public Const e_InstrumentColor_Max As Integer = 6
     Public Enum e_InstrumentColor
         e_InstrumentColor_Blue = 0
@@ -76,6 +87,25 @@ Module modGlobal
     Public sBuffer As String
     Public bConnected As Boolean = False
     Public bConnectedTracking As Boolean = False
+
+    Public bWaitingAttoUpdate As Boolean = False
+
+    Public nWPCount As Integer = -1
+    Public aWPLat(0) As String
+    Public aWPLon(0) As String
+    Public aWPAlt(0) As String
+    Public aWPTrigger(0) As String
+    Public aWPSpeed(0) As String
+    Public aWPCommand(0) As String
+
+    Public nHomeAlt As Single
+    Public nHomeAltIndicator As Single
+
+    Public bGoogleLoaded As Boolean = False
+    Public bGoogleFailed As Boolean = False
+
+    Public bNewDevice As Boolean = True
+    Public bNewConnect As Boolean = True
 
     Public nPitch As Single
     Public nRoll As Single
@@ -140,6 +170,10 @@ Module modGlobal
     Public sLastSpeechMode As String
     Public nLastSpeechWaypoint As Integer = -1
 
+    Public sCenterLat As String
+    Public sCenterLong As String
+    Public sCenterAlt As String
+
     Public bShowBinary As Boolean = True
     Public nLatitude As String
     Public nLongitude As String
@@ -165,6 +199,27 @@ Module modGlobal
             GetServoValue = 0
         End If
     End Function
+    Public Function GetDistanceUnitsText() As String
+        Select Case eDistanceUnits
+            Case e_DistanceFormat.e_DistanceFormat_Feet
+                GetDistanceUnitsText = GetResString(, "Feet")
+            Case e_DistanceFormat.e_DistanceFormat_Meters
+                GetDistanceUnitsText = GetResString(, "Meters")
+        End Select
+    End Function
+    Public Function GetSpeedUnitsText() As String
+        Select Case eSpeedUnits
+            Case e_SpeedFormat.e_SpeedFormat_Knots
+                GetSpeedUnitsText = GetResString(, "Knots")
+            Case e_SpeedFormat.e_SpeedFormat_KPH
+                GetSpeedUnitsText = GetResString(, "KPH")
+            Case e_SpeedFormat.e_SpeedFormat_MPerSec
+                GetSpeedUnitsText = GetResString(, "m_s")
+            Case e_SpeedFormat.e_SpeedFormat_MPH
+                GetSpeedUnitsText = GetResString(, "MPH")
+        End Select
+    End Function
+
     Public Function ParseServerAndPort(ByVal inputString As String, ByRef ipaddress As String, ByRef portNumber As Long) As Boolean
         Dim bValidPort As Boolean = False
         Dim bValidIP As Boolean = True
@@ -348,8 +403,15 @@ Module modGlobal
             inputControl.text = GetResString
         End If
     End Function
-    Public Function ConvertSpeed(ByVal inputValue As String, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat) As Single
+    Public Function ConvertSpeed(ByVal inputValue As String, ByVal inputFormat As e_SpeedFormat, ByVal outputFormat As e_SpeedFormat, Optional ByVal formatString As String = "") As Single
         Dim nTemp As Double
+        Dim sNewFormat As String
+
+        If formatString <> "" Then
+            sNewFormat = formatString
+        Else
+            sNewFormat = "#.00"
+        End If
 
         If inputFormat = outputFormat Then
             ConvertSpeed = ConvertPeriodToLocal(inputValue)
@@ -367,13 +429,13 @@ Module modGlobal
 
             Select Case outputFormat
                 Case e_SpeedFormat.e_SpeedFormat_Knots
-                    ConvertSpeed = (nTemp / 1.852).ToString("#.00")
+                    ConvertSpeed = (nTemp / 1.852).ToString(sNewFormat)
                 Case e_SpeedFormat.e_SpeedFormat_KPH
-                    ConvertSpeed = (nTemp).ToString("#.00")
+                    ConvertSpeed = (nTemp).ToString(sNewFormat)
                 Case e_SpeedFormat.e_SpeedFormat_MPerSec
-                    ConvertSpeed = (nTemp / 3.6).ToString("#.00")
+                    ConvertSpeed = (nTemp / 3.6).ToString(sNewFormat)
                 Case e_SpeedFormat.e_SpeedFormat_MPH
-                    ConvertSpeed = (nTemp / 1.609344).ToString("#.00")
+                    ConvertSpeed = (nTemp / 1.609344).ToString(sNewFormat)
             End Select
         End If
     End Function
@@ -453,7 +515,7 @@ Module modGlobal
 
         End If
     End Function
-     Public Function ConvertHexToDec(ByVal inputValue As String, Optional ByVal reverseBytes As Boolean = True, Optional ByVal signedNumber As Boolean = True) As String
+    Public Function ConvertHexToDec(ByVal inputValue As String, Optional ByVal reverseBytes As Boolean = True, Optional ByVal signedNumber As Boolean = True) As String
         Dim sTemp As String
         Dim sTemp2 As String
         Dim nCount As Integer
@@ -567,6 +629,18 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
             End If
 
+            sHeaderCharacters = "$D"
+            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_AttoSetParam
+            End If
+
+            sHeaderCharacters = "$OK"
+            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_AttoOk
+            End If
+
             sHeaderCharacters = "$GPS"
             If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
                 nLastStart = InStr(sBuffer, sHeaderCharacters)
@@ -647,18 +721,22 @@ Module modGlobal
 
             sHeaderCharacters = " "
             Try
-                If sBuffer.Substring(17, 1) = " " And IsNumeric(sBuffer.Substring(0, 17)) = True Then
-                    nLastStart = InStr(sBuffer, sHeaderCharacters) - 17
-                    nMessageType = cMessage.e_MessageType.e_MessageType_Paparazzi
+                If Len(sBuffer) >= 18 Then
+                    If sBuffer.Substring(17, 1) = " " And IsNumeric(sBuffer.Substring(0, 17)) = True Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters) - 17
+                        nMessageType = cMessage.e_MessageType.e_MessageType_Paparazzi
+                    End If
                 End If
             Catch
             End Try
 
             sHeaderCharacters = ":"
             Try
-                If sBuffer.Substring(18, 1) = ":" And IsNumeric(sBuffer.Substring(0, 18)) = True Then
-                    nLastStart = InStr(sBuffer, sHeaderCharacters) - 18
-                    nMessageType = cMessage.e_MessageType.e_MessageType_HKO
+                If Len(sBuffer) >= 19 Then
+                    If sBuffer.Substring(18, 1) = ":" And IsNumeric(sBuffer.Substring(0, 18)) = True Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters) - 18
+                        nMessageType = cMessage.e_MessageType.e_MessageType_HKO
+                    End If
                 End If
             Catch
             End Try
@@ -938,7 +1016,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_AttoPilot, cMessage.e_MessageType.e_MessageType_AttoPilot18
+                    Case cMessage.e_MessageType.e_MessageType_AttoPilot, cMessage.e_MessageType.e_MessageType_AttoPilot18, cMessage.e_MessageType.e_MessageType_AttoSetParam, cMessage.e_MessageType.e_MessageType_AttoOk
                         sHeaderCharacters = "$"
                         sFooterCharacters = vbCrLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1399,15 +1477,18 @@ Module modGlobal
 
         Dim strContents As String
         Dim objReader As StreamReader
-        Try
 
-            objReader = New StreamReader(FullPath)
-            strContents = objReader.ReadToEnd()
-            objReader.Close()
-            Return strContents
-        Catch Ex As Exception
-            ErrInfo = Ex.Message
-        End Try
+        If Dir(FullPath, FileAttribute.Normal) <> "" Then
+            Try
+
+                objReader = New StreamReader(FullPath)
+                strContents = objReader.ReadToEnd()
+                objReader.Close()
+                Return strContents
+            Catch Ex As Exception
+                ErrInfo = Ex.Message
+            End Try
+        End If
     End Function
     Public Function GetRootPath() As String
         GetRootPath = Mid(Application.ExecutablePath, 1, InStrRev(Application.ExecutablePath, "\"))
@@ -1472,17 +1553,23 @@ Module modGlobal
         End If
     End Function
     Public Function ConvertSpeech(ByVal inputString As String) As String
+        Dim nNewAlt As Single
+
+        nNewAlt = nAltitude - nHomeAltIndicator
+        If nNewAlt < 0 Then
+            nNewAlt = 0
+        End If
         ConvertSpeech = inputString
         If nWaypoint = 0 Then
             ConvertSpeech = Replace(ConvertSpeech, "{wpn}", "home")
         Else
             ConvertSpeech = Replace(ConvertSpeech, "{wpn}", nWaypoint)
         End If
-        ConvertSpeech = Replace(ConvertSpeech, "{asp}", Convert.ToInt32(nAirSpeed))
-        ConvertSpeech = Replace(ConvertSpeech, "{gsp}", Convert.ToInt32(nGroundSpeed))
+        ConvertSpeech = Replace(ConvertSpeech, "{asp}", Convert.ToSingle(nAirSpeed).ToString("0"))
+        ConvertSpeech = Replace(ConvertSpeech, "{gsp}", Convert.ToSingle(nGroundSpeed).ToString("0"))
         ConvertSpeech = Replace(ConvertSpeech, "{mode}", sMode)
-        ConvertSpeech = Replace(ConvertSpeech, "{alt}", Convert.ToInt32(nAltitude))
-        ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToInt32(nWaypointAlt))
+        ConvertSpeech = Replace(ConvertSpeech, "{alt}", Convert.ToSingle(nNewAlt).ToString("0"))
+        ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToSingle(nWaypointAlt).ToString("0"))
     End Function
     Public Function LoadLanguageFile()
         If sLanguageFile = "Default" Then
@@ -1492,7 +1579,7 @@ Module modGlobal
         End If
         resourceMgr = ResourceManager.CreateFileBasedResourceManager("Strings", GetRootPath() & "Language", Nothing)
     End Function
-    Public Function GetTrackingHeadingAngle(ByVal homeLat As String, ByVal homeLong As String, ByVal homealt As String, ByVal locationLat As Double, ByVal locationLong As Double, ByVal locationAlt As Single, ByVal headingOffset As Integer, ByVal speed As Single, ByVal heading As Single, ByVal predict As Boolean, ByRef newHeading As Single, ByRef newAngle As Single) As Boolean
+    Public Function GetTrackingHeadingAngle(ByVal homeLat As String, ByVal homeLong As String, ByVal homealt As String, ByVal locationLat As Double, ByVal locationLong As Double, ByVal locationAlt As Single, ByVal headingOffset As Integer, ByVal speed As Single, ByVal heading As Single, ByRef newHeading As Single, ByRef newAngle As Single) As Boolean
         Dim R As Long = 6371
         Dim dLat As Double
         Dim dLon As Double
@@ -1555,5 +1642,18 @@ Module modGlobal
         Else
             NormalizeHeading = inputValue
         End If
+    End Function
+    Public Function GetPololuValue(ByVal inputValue As Long) As String
+        Dim sLower As String
+        Dim nUpper As Long
+        Dim sUpper As String
+
+        sLower = Chr(inputValue And &H7F)
+        nUpper = inputValue And &HFF80
+        nUpper = nUpper >> 7
+        nUpper = nUpper And &H7F
+        sUpper = Chr(nUpper)
+
+        GetPololuValue = sUpper & sLower
     End Function
 End Module
