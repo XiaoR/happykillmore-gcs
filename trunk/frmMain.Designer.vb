@@ -48,12 +48,15 @@ Partial Class frmMain
         Me.cmdOutputFolder = New System.Windows.Forms.Button
         Me.chkRecord = New System.Windows.Forms.CheckBox
         Me.tbarModelScale = New System.Windows.Forms.TrackBar
-        Me.cmdReloadMissionDirectory = New System.Windows.Forms.Button
-        Me.cmdReloadMissions = New System.Windows.Forms.Button
         Me.cmdReloadTrackingPorts = New System.Windows.Forms.Button
         Me.tbarTilt = New System.Windows.Forms.TrackBar
         Me.tbarPan = New System.Windows.Forms.TrackBar
         Me.cboTrackingSet = New System.Windows.Forms.ComboBox
+        Me.cmdReloadMissionDirectory = New System.Windows.Forms.Button
+        Me.cmdReloadMissions = New System.Windows.Forms.Button
+        Me.cmdMissionOverride = New System.Windows.Forms.Button
+        Me.cmdSetHomeAlt = New System.Windows.Forms.Button
+        Me.cmdMissionAttoAdd = New System.Windows.Forms.Button
         Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
@@ -68,9 +71,9 @@ Partial Class frmMain
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem
         Me.tabInstrumentView = New System.Windows.Forms.TabControl
         Me.tabInstruments = New System.Windows.Forms.TabPage
+        Me.cmdZeroYaw = New System.Windows.Forms.Button
         Me.BatteryIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl
         Me.TurnCoordinatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl
-        Me.cmdZeroYaw = New System.Windows.Forms.Button
         Me._3DMesh1 = New HK_GCS._3DMesh
         Me.VerticalSpeedIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl
         Me.HeadingIndicatorInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl
@@ -99,15 +102,80 @@ Partial Class frmMain
         Me.cmdLiveCameraProperties2 = New System.Windows.Forms.Button
         Me.cboLiveCameraSelect2 = New System.Windows.Forms.ComboBox
         Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
-        Me.tabMissionControl = New System.Windows.Forms.TabPage
+        Me.tabMissionPlanning = New System.Windows.Forms.TabPage
+        Me.lblMissionHomeAlt = New System.Windows.Forms.Label
+        Me.grpMissionControlAtto = New System.Windows.Forms.GroupBox
+        Me.txtMissionAttoDefaultSpeed = New System.Windows.Forms.TextBox
+        Me.Label12 = New System.Windows.Forms.Label
+        Me.Label11 = New System.Windows.Forms.Label
+        Me.cboMissionAttoReversePath = New System.Windows.Forms.ComboBox
+        Me.Label10 = New System.Windows.Forms.Label
+        Me.cboMissionAttoAltitudeControl = New System.Windows.Forms.ComboBox
+        Me.Label9 = New System.Windows.Forms.Label
+        Me.cboMissionAttoTriggerControl = New System.Windows.Forms.ComboBox
+        Me.Label8 = New System.Windows.Forms.Label
+        Me.cboMissionAttoLoiterDirection = New System.Windows.Forms.ComboBox
+        Me.Label7 = New System.Windows.Forms.Label
+        Me.cboMissionAttoLoiterDuration = New System.Windows.Forms.ComboBox
+        Me.lblMissionStatus = New System.Windows.Forms.Label
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.prgMission = New System.Windows.Forms.ProgressBar
+        Me.cboMissionAttoLoiter = New System.Windows.Forms.ComboBox
+        Me.cmdMissionWrite = New System.Windows.Forms.Button
+        Me.cmdMissionRead = New System.Windows.Forms.Button
+        Me.txtMissionSpeed = New System.Windows.Forms.TextBox
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.cmdMissionAttoSearch = New System.Windows.Forms.Button
+        Me.txtMissionAddressSearchAtto = New System.Windows.Forms.TextBox
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.txtMissionAltitude = New System.Windows.Forms.TextBox
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.txtMissionLongitude = New System.Windows.Forms.TextBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.txtMissionLatitude = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.grpMissionControlGeneric = New System.Windows.Forms.GroupBox
+        Me.Label13 = New System.Windows.Forms.Label
+        Me.cboMissionGenericOffset = New System.Windows.Forms.ComboBox
+        Me.cmdMissionGenericSearch = New System.Windows.Forms.Button
+        Me.txtMissionAddressSearchGeneric = New System.Windows.Forms.TextBox
+        Me.Label21 = New System.Windows.Forms.Label
+        Me.txtMissionGenericAlt = New System.Windows.Forms.TextBox
+        Me.Label22 = New System.Windows.Forms.Label
+        Me.txtMissionGenericLong = New System.Windows.Forms.TextBox
+        Me.Label23 = New System.Windows.Forms.Label
+        Me.txtMissionGenericLat = New System.Windows.Forms.TextBox
+        Me.Label24 = New System.Windows.Forms.Label
+        Me.chkMissionInsert = New System.Windows.Forms.CheckBox
+        Me.lblMissionDoubleClickLabel = New System.Windows.Forms.Label
+        Me.txtMissionDefaultAlt = New System.Windows.Forms.TextBox
+        Me.lblMissionDefaultAlt = New System.Windows.Forms.Label
         Me.lblMissionLabel = New System.Windows.Forms.Label
         Me.cboMission = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.tabAtto = New System.Windows.Forms.TabPage
-        Me.dgStringResources = New System.Windows.Forms.DataGridView
+        Me.cmdMissionSaveAs = New System.Windows.Forms.Button
+        Me.cmdMissionNew = New System.Windows.Forms.Button
+        Me.dgMission = New System.Windows.Forms.DataGridView
+        Me.tabMissionControl = New System.Windows.Forms.TabPage
+        Me.grpControlAtto = New System.Windows.Forms.GroupBox
+        Me.cboControlAttoWPNumber = New System.Windows.Forms.ComboBox
+        Me.cmdControlAttoResetMission = New System.Windows.Forms.Button
+        Me.cmdControlAttoResetReboot = New System.Windows.Forms.Button
+        Me.cmdControlAttoResetSpeed = New System.Windows.Forms.Button
+        Me.txtControlAttoSpeed = New System.Windows.Forms.TextBox
+        Me.cmdControlAttoSpeed = New System.Windows.Forms.Button
+        Me.lblControlStatus = New System.Windows.Forms.Label
+        Me.cmdControlAttoReturnRally = New System.Windows.Forms.Button
+        Me.txtControlAttoPressure = New System.Windows.Forms.TextBox
+        Me.cmdControlAttoReturnHome = New System.Windows.Forms.Button
+        Me.cmdControlAttoResetBaro = New System.Windows.Forms.Button
+        Me.cmdControlAttoLoiter = New System.Windows.Forms.Button
+        Me.cmdControlAttoResume = New System.Windows.Forms.Button
+        Me.tabConfiguration = New System.Windows.Forms.TabPage
+        Me.lblConfigStatus = New System.Windows.Forms.Label
+        Me.prgConfig = New System.Windows.Forms.ProgressBar
+        Me.cmdConfigWrite = New System.Windows.Forms.Button
+        Me.cmdConfigRead = New System.Windows.Forms.Button
+        Me.dgConfigVariable = New System.Windows.Forms.DataGridView
         Me.grpGPSTime = New System.Windows.Forms.GroupBox
         Me.lblGPSTime = New System.Windows.Forms.Label
         Me.grpMisc = New System.Windows.Forms.GroupBox
@@ -226,6 +294,7 @@ Partial Class frmMain
         Me.tbarSensor3 = New System.Windows.Forms.TrackBar
         Me.tbarSensor2 = New System.Windows.Forms.TrackBar
         Me.tbarSensor1 = New System.Windows.Forms.TrackBar
+        Me.lblResolution = New System.Windows.Forms.Label
         Me.JoystickInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
         Me.cmdExit = New System.Windows.Forms.Button
         Me.cmdSetHome = New System.Windows.Forms.Button
@@ -244,6 +313,12 @@ Partial Class frmMain
         Me.DirectShowControl1 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.tmrTracking = New System.Windows.Forms.Timer(Me.components)
         Me.serialPortTracking = New System.IO.Ports.SerialPort(Me.components)
+        Me.pnlDevice = New System.Windows.Forms.Panel
+        Me.lblVehicle = New System.Windows.Forms.Label
+        Me.cboConfigVehicle = New System.Windows.Forms.ComboBox
+        Me.lblDevice = New System.Windows.Forms.Label
+        Me.cboConfigDevice = New System.Windows.Forms.ComboBox
+        Me.cmdControlAttoTriggerServo = New System.Windows.Forms.Button
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarTilt, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarPan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -257,10 +332,14 @@ Partial Class frmMain
         Me.grpSerialSettings.SuspendLayout()
         Me.tabCommandLine.SuspendLayout()
         Me.tabInstrumentLiveCamera.SuspendLayout()
+        Me.tabMissionPlanning.SuspendLayout()
+        Me.grpMissionControlAtto.SuspendLayout()
+        Me.grpMissionControlGeneric.SuspendLayout()
+        CType(Me.dgMission, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabMissionControl.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabAtto.SuspendLayout()
-        CType(Me.dgStringResources, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpControlAtto.SuspendLayout()
+        Me.tabConfiguration.SuspendLayout()
+        CType(Me.dgConfigVariable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpGPSTime.SuspendLayout()
         Me.grpMisc.SuspendLayout()
         Me.tabPortControl.SuspendLayout()
@@ -289,6 +368,7 @@ Partial Class frmMain
         Me.tabMapView.SuspendLayout()
         Me.tabViewMapView.SuspendLayout()
         Me.tabViewLiveCamera.SuspendLayout()
+        Me.pnlDevice.SuspendLayout()
         Me.SuspendLayout()
         '
         'tmrSearch
@@ -302,6 +382,7 @@ Partial Class frmMain
         Me.serialPortIn.DtrEnable = True
         Me.serialPortIn.ReceivedBytesThreshold = 4096
         Me.serialPortIn.RtsEnable = True
+        Me.serialPortIn.WriteTimeout = 25
         '
         'cmdExpandInstruments
         '
@@ -398,20 +479,6 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.tbarModelScale, resources.GetString("tbarModelScale.ToolTip"))
         Me.tbarModelScale.Value = 10
         '
-        'cmdReloadMissionDirectory
-        '
-        resources.ApplyResources(Me.cmdReloadMissionDirectory, "cmdReloadMissionDirectory")
-        Me.cmdReloadMissionDirectory.Name = "cmdReloadMissionDirectory"
-        Me.ToolTip1.SetToolTip(Me.cmdReloadMissionDirectory, resources.GetString("cmdReloadMissionDirectory.ToolTip"))
-        Me.cmdReloadMissionDirectory.UseVisualStyleBackColor = True
-        '
-        'cmdReloadMissions
-        '
-        resources.ApplyResources(Me.cmdReloadMissions, "cmdReloadMissions")
-        Me.cmdReloadMissions.Name = "cmdReloadMissions"
-        Me.ToolTip1.SetToolTip(Me.cmdReloadMissions, resources.GetString("cmdReloadMissions.ToolTip"))
-        Me.cmdReloadMissions.UseVisualStyleBackColor = True
-        '
         'cmdReloadTrackingPorts
         '
         resources.ApplyResources(Me.cmdReloadTrackingPorts, "cmdReloadTrackingPorts")
@@ -453,6 +520,41 @@ Partial Class frmMain
         Me.cboTrackingSet.Name = "cboTrackingSet"
         Me.ToolTip1.SetToolTip(Me.cboTrackingSet, resources.GetString("cboTrackingSet.ToolTip"))
         '
+        'cmdReloadMissionDirectory
+        '
+        resources.ApplyResources(Me.cmdReloadMissionDirectory, "cmdReloadMissionDirectory")
+        Me.cmdReloadMissionDirectory.Name = "cmdReloadMissionDirectory"
+        Me.ToolTip1.SetToolTip(Me.cmdReloadMissionDirectory, resources.GetString("cmdReloadMissionDirectory.ToolTip"))
+        Me.cmdReloadMissionDirectory.UseVisualStyleBackColor = True
+        '
+        'cmdReloadMissions
+        '
+        resources.ApplyResources(Me.cmdReloadMissions, "cmdReloadMissions")
+        Me.cmdReloadMissions.Name = "cmdReloadMissions"
+        Me.ToolTip1.SetToolTip(Me.cmdReloadMissions, resources.GetString("cmdReloadMissions.ToolTip"))
+        Me.cmdReloadMissions.UseVisualStyleBackColor = True
+        '
+        'cmdMissionOverride
+        '
+        resources.ApplyResources(Me.cmdMissionOverride, "cmdMissionOverride")
+        Me.cmdMissionOverride.Name = "cmdMissionOverride"
+        Me.ToolTip1.SetToolTip(Me.cmdMissionOverride, resources.GetString("cmdMissionOverride.ToolTip"))
+        Me.cmdMissionOverride.UseVisualStyleBackColor = True
+        '
+        'cmdSetHomeAlt
+        '
+        resources.ApplyResources(Me.cmdSetHomeAlt, "cmdSetHomeAlt")
+        Me.cmdSetHomeAlt.Name = "cmdSetHomeAlt"
+        Me.ToolTip1.SetToolTip(Me.cmdSetHomeAlt, resources.GetString("cmdSetHomeAlt.ToolTip"))
+        Me.cmdSetHomeAlt.UseVisualStyleBackColor = True
+        '
+        'cmdMissionAttoAdd
+        '
+        resources.ApplyResources(Me.cmdMissionAttoAdd, "cmdMissionAttoAdd")
+        Me.cmdMissionAttoAdd.Name = "cmdMissionAttoAdd"
+        Me.ToolTip1.SetToolTip(Me.cmdMissionAttoAdd, resources.GetString("cmdMissionAttoAdd.ToolTip"))
+        Me.cmdMissionAttoAdd.UseVisualStyleBackColor = True
+        '
         'tmrComPort
         '
         Me.tmrComPort.Interval = 50
@@ -474,6 +576,7 @@ Partial Class frmMain
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.lblResolution)
         Me.SplitContainer1.Panel2.Controls.Add(Me.JoystickInstrumentControl1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdExit)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdSetHome)
@@ -543,8 +646,9 @@ Partial Class frmMain
         Me.tabInstrumentView.Controls.Add(Me.tabSerialData)
         Me.tabInstrumentView.Controls.Add(Me.tabCommandLine)
         Me.tabInstrumentView.Controls.Add(Me.tabInstrumentLiveCamera)
+        Me.tabInstrumentView.Controls.Add(Me.tabMissionPlanning)
         Me.tabInstrumentView.Controls.Add(Me.tabMissionControl)
-        Me.tabInstrumentView.Controls.Add(Me.tabAtto)
+        Me.tabInstrumentView.Controls.Add(Me.tabConfiguration)
         resources.ApplyResources(Me.tabInstrumentView, "tabInstrumentView")
         Me.tabInstrumentView.Name = "tabInstrumentView"
         Me.tabInstrumentView.SelectedIndex = 0
@@ -552,9 +656,10 @@ Partial Class frmMain
         'tabInstruments
         '
         Me.tabInstruments.BackColor = System.Drawing.Color.Transparent
+        Me.tabInstruments.Controls.Add(Me.cmdSetHomeAlt)
+        Me.tabInstruments.Controls.Add(Me.cmdZeroYaw)
         Me.tabInstruments.Controls.Add(Me.BatteryIndicatorInstrumentControl1)
         Me.tabInstruments.Controls.Add(Me.TurnCoordinatorInstrumentControl1)
-        Me.tabInstruments.Controls.Add(Me.cmdZeroYaw)
         Me.tabInstruments.Controls.Add(Me._3DMesh1)
         Me.tabInstruments.Controls.Add(Me.VerticalSpeedIndicatorInstrumentControl1)
         Me.tabInstruments.Controls.Add(Me.HeadingIndicatorInstrumentControl1)
@@ -564,6 +669,12 @@ Partial Class frmMain
         resources.ApplyResources(Me.tabInstruments, "tabInstruments")
         Me.tabInstruments.Name = "tabInstruments"
         Me.tabInstruments.UseVisualStyleBackColor = True
+        '
+        'cmdZeroYaw
+        '
+        resources.ApplyResources(Me.cmdZeroYaw, "cmdZeroYaw")
+        Me.cmdZeroYaw.Name = "cmdZeroYaw"
+        Me.cmdZeroYaw.UseVisualStyleBackColor = True
         '
         'BatteryIndicatorInstrumentControl1
         '
@@ -576,12 +687,6 @@ Partial Class frmMain
         Me.TurnCoordinatorInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
         resources.ApplyResources(Me.TurnCoordinatorInstrumentControl1, "TurnCoordinatorInstrumentControl1")
         Me.TurnCoordinatorInstrumentControl1.Name = "TurnCoordinatorInstrumentControl1"
-        '
-        'cmdZeroYaw
-        '
-        resources.ApplyResources(Me.cmdZeroYaw, "cmdZeroYaw")
-        Me.cmdZeroYaw.Name = "cmdZeroYaw"
-        Me.cmdZeroYaw.UseVisualStyleBackColor = True
         '
         '_3DMesh1
         '
@@ -769,19 +874,330 @@ Partial Class frmMain
         resources.ApplyResources(Me.DirectShowControl2, "DirectShowControl2")
         Me.DirectShowControl2.Name = "DirectShowControl2"
         '
-        'tabMissionControl
+        'tabMissionPlanning
         '
-        Me.tabMissionControl.Controls.Add(Me.cmdReloadMissionDirectory)
-        Me.tabMissionControl.Controls.Add(Me.cmdReloadMissions)
-        Me.tabMissionControl.Controls.Add(Me.lblMissionLabel)
-        Me.tabMissionControl.Controls.Add(Me.cboMission)
-        Me.tabMissionControl.Controls.Add(Me.Label1)
-        Me.tabMissionControl.Controls.Add(Me.ComboBox1)
-        Me.tabMissionControl.Controls.Add(Me.Button1)
-        Me.tabMissionControl.Controls.Add(Me.DataGridView1)
-        resources.ApplyResources(Me.tabMissionControl, "tabMissionControl")
-        Me.tabMissionControl.Name = "tabMissionControl"
-        Me.tabMissionControl.UseVisualStyleBackColor = True
+        Me.tabMissionPlanning.Controls.Add(Me.cmdMissionOverride)
+        Me.tabMissionPlanning.Controls.Add(Me.lblMissionHomeAlt)
+        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlAtto)
+        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlGeneric)
+        Me.tabMissionPlanning.Controls.Add(Me.chkMissionInsert)
+        Me.tabMissionPlanning.Controls.Add(Me.lblMissionDoubleClickLabel)
+        Me.tabMissionPlanning.Controls.Add(Me.txtMissionDefaultAlt)
+        Me.tabMissionPlanning.Controls.Add(Me.lblMissionDefaultAlt)
+        Me.tabMissionPlanning.Controls.Add(Me.cmdReloadMissionDirectory)
+        Me.tabMissionPlanning.Controls.Add(Me.cmdReloadMissions)
+        Me.tabMissionPlanning.Controls.Add(Me.lblMissionLabel)
+        Me.tabMissionPlanning.Controls.Add(Me.cboMission)
+        Me.tabMissionPlanning.Controls.Add(Me.cmdMissionSaveAs)
+        Me.tabMissionPlanning.Controls.Add(Me.cmdMissionNew)
+        Me.tabMissionPlanning.Controls.Add(Me.dgMission)
+        resources.ApplyResources(Me.tabMissionPlanning, "tabMissionPlanning")
+        Me.tabMissionPlanning.Name = "tabMissionPlanning"
+        Me.tabMissionPlanning.UseVisualStyleBackColor = True
+        '
+        'lblMissionHomeAlt
+        '
+        resources.ApplyResources(Me.lblMissionHomeAlt, "lblMissionHomeAlt")
+        Me.lblMissionHomeAlt.Name = "lblMissionHomeAlt"
+        '
+        'grpMissionControlAtto
+        '
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionAttoAdd)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoDefaultSpeed)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label12)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label11)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoReversePath)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label10)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoAltitudeControl)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label9)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoTriggerControl)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label8)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiterDirection)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label7)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiterDuration)
+        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionStatus)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label6)
+        Me.grpMissionControlAtto.Controls.Add(Me.prgMission)
+        Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiter)
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionWrite)
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionRead)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionSpeed)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label5)
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionAttoSearch)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAddressSearchAtto)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label4)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAltitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label3)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionLongitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label2)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionLatitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label1)
+        resources.ApplyResources(Me.grpMissionControlAtto, "grpMissionControlAtto")
+        Me.grpMissionControlAtto.Name = "grpMissionControlAtto"
+        Me.grpMissionControlAtto.TabStop = False
+        '
+        'txtMissionAttoDefaultSpeed
+        '
+        resources.ApplyResources(Me.txtMissionAttoDefaultSpeed, "txtMissionAttoDefaultSpeed")
+        Me.txtMissionAttoDefaultSpeed.Name = "txtMissionAttoDefaultSpeed"
+        '
+        'Label12
+        '
+        resources.ApplyResources(Me.Label12, "Label12")
+        Me.Label12.Name = "Label12"
+        '
+        'Label11
+        '
+        resources.ApplyResources(Me.Label11, "Label11")
+        Me.Label11.Name = "Label11"
+        '
+        'cboMissionAttoReversePath
+        '
+        Me.cboMissionAttoReversePath.DropDownHeight = 150
+        Me.cboMissionAttoReversePath.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoReversePath.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoReversePath, "cboMissionAttoReversePath")
+        Me.cboMissionAttoReversePath.Name = "cboMissionAttoReversePath"
+        '
+        'Label10
+        '
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        '
+        'cboMissionAttoAltitudeControl
+        '
+        Me.cboMissionAttoAltitudeControl.DropDownHeight = 150
+        Me.cboMissionAttoAltitudeControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoAltitudeControl.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoAltitudeControl, "cboMissionAttoAltitudeControl")
+        Me.cboMissionAttoAltitudeControl.Name = "cboMissionAttoAltitudeControl"
+        '
+        'Label9
+        '
+        resources.ApplyResources(Me.Label9, "Label9")
+        Me.Label9.Name = "Label9"
+        '
+        'cboMissionAttoTriggerControl
+        '
+        Me.cboMissionAttoTriggerControl.DropDownHeight = 150
+        Me.cboMissionAttoTriggerControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoTriggerControl.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoTriggerControl, "cboMissionAttoTriggerControl")
+        Me.cboMissionAttoTriggerControl.Name = "cboMissionAttoTriggerControl"
+        '
+        'Label8
+        '
+        resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.Name = "Label8"
+        '
+        'cboMissionAttoLoiterDirection
+        '
+        Me.cboMissionAttoLoiterDirection.DropDownHeight = 150
+        Me.cboMissionAttoLoiterDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoLoiterDirection.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoLoiterDirection, "cboMissionAttoLoiterDirection")
+        Me.cboMissionAttoLoiterDirection.Name = "cboMissionAttoLoiterDirection"
+        '
+        'Label7
+        '
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
+        '
+        'cboMissionAttoLoiterDuration
+        '
+        Me.cboMissionAttoLoiterDuration.DropDownHeight = 150
+        Me.cboMissionAttoLoiterDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoLoiterDuration.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoLoiterDuration, "cboMissionAttoLoiterDuration")
+        Me.cboMissionAttoLoiterDuration.Name = "cboMissionAttoLoiterDuration"
+        '
+        'lblMissionStatus
+        '
+        resources.ApplyResources(Me.lblMissionStatus, "lblMissionStatus")
+        Me.lblMissionStatus.Name = "lblMissionStatus"
+        '
+        'Label6
+        '
+        resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.Name = "Label6"
+        '
+        'prgMission
+        '
+        resources.ApplyResources(Me.prgMission, "prgMission")
+        Me.prgMission.Name = "prgMission"
+        '
+        'cboMissionAttoLoiter
+        '
+        Me.cboMissionAttoLoiter.DropDownHeight = 150
+        Me.cboMissionAttoLoiter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionAttoLoiter.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionAttoLoiter, "cboMissionAttoLoiter")
+        Me.cboMissionAttoLoiter.Name = "cboMissionAttoLoiter"
+        '
+        'cmdMissionWrite
+        '
+        resources.ApplyResources(Me.cmdMissionWrite, "cmdMissionWrite")
+        Me.cmdMissionWrite.Name = "cmdMissionWrite"
+        Me.cmdMissionWrite.UseVisualStyleBackColor = True
+        '
+        'cmdMissionRead
+        '
+        resources.ApplyResources(Me.cmdMissionRead, "cmdMissionRead")
+        Me.cmdMissionRead.Name = "cmdMissionRead"
+        Me.cmdMissionRead.UseVisualStyleBackColor = True
+        '
+        'txtMissionSpeed
+        '
+        resources.ApplyResources(Me.txtMissionSpeed, "txtMissionSpeed")
+        Me.txtMissionSpeed.Name = "txtMissionSpeed"
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        '
+        'cmdMissionAttoSearch
+        '
+        resources.ApplyResources(Me.cmdMissionAttoSearch, "cmdMissionAttoSearch")
+        Me.cmdMissionAttoSearch.Name = "cmdMissionAttoSearch"
+        Me.cmdMissionAttoSearch.UseVisualStyleBackColor = True
+        '
+        'txtMissionAddressSearchAtto
+        '
+        resources.ApplyResources(Me.txtMissionAddressSearchAtto, "txtMissionAddressSearchAtto")
+        Me.txtMissionAddressSearchAtto.Name = "txtMissionAddressSearchAtto"
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
+        'txtMissionAltitude
+        '
+        resources.ApplyResources(Me.txtMissionAltitude, "txtMissionAltitude")
+        Me.txtMissionAltitude.Name = "txtMissionAltitude"
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'txtMissionLongitude
+        '
+        resources.ApplyResources(Me.txtMissionLongitude, "txtMissionLongitude")
+        Me.txtMissionLongitude.Name = "txtMissionLongitude"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'txtMissionLatitude
+        '
+        resources.ApplyResources(Me.txtMissionLatitude, "txtMissionLatitude")
+        Me.txtMissionLatitude.Name = "txtMissionLatitude"
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'grpMissionControlGeneric
+        '
+        Me.grpMissionControlGeneric.Controls.Add(Me.Label13)
+        Me.grpMissionControlGeneric.Controls.Add(Me.cboMissionGenericOffset)
+        Me.grpMissionControlGeneric.Controls.Add(Me.cmdMissionGenericSearch)
+        Me.grpMissionControlGeneric.Controls.Add(Me.txtMissionAddressSearchGeneric)
+        Me.grpMissionControlGeneric.Controls.Add(Me.Label21)
+        Me.grpMissionControlGeneric.Controls.Add(Me.txtMissionGenericAlt)
+        Me.grpMissionControlGeneric.Controls.Add(Me.Label22)
+        Me.grpMissionControlGeneric.Controls.Add(Me.txtMissionGenericLong)
+        Me.grpMissionControlGeneric.Controls.Add(Me.Label23)
+        Me.grpMissionControlGeneric.Controls.Add(Me.txtMissionGenericLat)
+        Me.grpMissionControlGeneric.Controls.Add(Me.Label24)
+        resources.ApplyResources(Me.grpMissionControlGeneric, "grpMissionControlGeneric")
+        Me.grpMissionControlGeneric.Name = "grpMissionControlGeneric"
+        Me.grpMissionControlGeneric.TabStop = False
+        '
+        'Label13
+        '
+        resources.ApplyResources(Me.Label13, "Label13")
+        Me.Label13.Name = "Label13"
+        '
+        'cboMissionGenericOffset
+        '
+        Me.cboMissionGenericOffset.DropDownHeight = 150
+        Me.cboMissionGenericOffset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionGenericOffset.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionGenericOffset, "cboMissionGenericOffset")
+        Me.cboMissionGenericOffset.Name = "cboMissionGenericOffset"
+        '
+        'cmdMissionGenericSearch
+        '
+        resources.ApplyResources(Me.cmdMissionGenericSearch, "cmdMissionGenericSearch")
+        Me.cmdMissionGenericSearch.Name = "cmdMissionGenericSearch"
+        Me.cmdMissionGenericSearch.UseVisualStyleBackColor = True
+        '
+        'txtMissionAddressSearchGeneric
+        '
+        resources.ApplyResources(Me.txtMissionAddressSearchGeneric, "txtMissionAddressSearchGeneric")
+        Me.txtMissionAddressSearchGeneric.Name = "txtMissionAddressSearchGeneric"
+        '
+        'Label21
+        '
+        resources.ApplyResources(Me.Label21, "Label21")
+        Me.Label21.Name = "Label21"
+        '
+        'txtMissionGenericAlt
+        '
+        resources.ApplyResources(Me.txtMissionGenericAlt, "txtMissionGenericAlt")
+        Me.txtMissionGenericAlt.Name = "txtMissionGenericAlt"
+        '
+        'Label22
+        '
+        resources.ApplyResources(Me.Label22, "Label22")
+        Me.Label22.Name = "Label22"
+        '
+        'txtMissionGenericLong
+        '
+        resources.ApplyResources(Me.txtMissionGenericLong, "txtMissionGenericLong")
+        Me.txtMissionGenericLong.Name = "txtMissionGenericLong"
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
+        '
+        'txtMissionGenericLat
+        '
+        resources.ApplyResources(Me.txtMissionGenericLat, "txtMissionGenericLat")
+        Me.txtMissionGenericLat.Name = "txtMissionGenericLat"
+        '
+        'Label24
+        '
+        resources.ApplyResources(Me.Label24, "Label24")
+        Me.Label24.Name = "Label24"
+        '
+        'chkMissionInsert
+        '
+        resources.ApplyResources(Me.chkMissionInsert, "chkMissionInsert")
+        Me.chkMissionInsert.Name = "chkMissionInsert"
+        Me.chkMissionInsert.UseVisualStyleBackColor = True
+        '
+        'lblMissionDoubleClickLabel
+        '
+        resources.ApplyResources(Me.lblMissionDoubleClickLabel, "lblMissionDoubleClickLabel")
+        Me.lblMissionDoubleClickLabel.Name = "lblMissionDoubleClickLabel"
+        '
+        'txtMissionDefaultAlt
+        '
+        resources.ApplyResources(Me.txtMissionDefaultAlt, "txtMissionDefaultAlt")
+        Me.txtMissionDefaultAlt.Name = "txtMissionDefaultAlt"
+        '
+        'lblMissionDefaultAlt
+        '
+        resources.ApplyResources(Me.lblMissionDefaultAlt, "lblMissionDefaultAlt")
+        Me.lblMissionDefaultAlt.Name = "lblMissionDefaultAlt"
         '
         'lblMissionLabel
         '
@@ -790,46 +1206,41 @@ Partial Class frmMain
         '
         'cboMission
         '
+        Me.cboMission.DropDownHeight = 300
         Me.cboMission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboMission.FormattingEnabled = True
         resources.ApplyResources(Me.cboMission, "cboMission")
         Me.cboMission.Name = "cboMission"
         Me.cboMission.Sorted = True
         '
-        'Label1
+        'cmdMissionSaveAs
         '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
+        resources.ApplyResources(Me.cmdMissionSaveAs, "cmdMissionSaveAs")
+        Me.cmdMissionSaveAs.Name = "cmdMissionSaveAs"
+        Me.cmdMissionSaveAs.UseVisualStyleBackColor = True
         '
-        'ComboBox1
+        'cmdMissionNew
         '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FormattingEnabled = True
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Sorted = True
+        resources.ApplyResources(Me.cmdMissionNew, "cmdMissionNew")
+        Me.cmdMissionNew.Name = "cmdMissionNew"
+        Me.cmdMissionNew.UseVisualStyleBackColor = True
         '
-        'Button1
+        'dgMission
         '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'DataGridView1
-        '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AllowUserToResizeRows = False
-        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgMission.AllowUserToAddRows = False
+        Me.dgMission.AllowUserToDeleteRows = False
+        Me.dgMission.AllowUserToResizeRows = False
+        Me.dgMission.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgMission.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgMission.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgMission.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -837,10 +1248,10 @@ Partial Class frmMain
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
-        Me.DataGridView1.MultiSelect = False
-        Me.DataGridView1.Name = "DataGridView1"
+        Me.dgMission.DefaultCellStyle = DataGridViewCellStyle2
+        resources.ApplyResources(Me.dgMission, "dgMission")
+        Me.dgMission.MultiSelect = False
+        Me.dgMission.Name = "dgMission"
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -848,31 +1259,161 @@ Partial Class frmMain
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.dgMission.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.dgMission.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         '
-        'tabAtto
+        'tabMissionControl
         '
-        Me.tabAtto.Controls.Add(Me.dgStringResources)
-        resources.ApplyResources(Me.tabAtto, "tabAtto")
-        Me.tabAtto.Name = "tabAtto"
-        Me.tabAtto.UseVisualStyleBackColor = True
+        Me.tabMissionControl.Controls.Add(Me.grpControlAtto)
+        resources.ApplyResources(Me.tabMissionControl, "tabMissionControl")
+        Me.tabMissionControl.Name = "tabMissionControl"
+        Me.tabMissionControl.UseVisualStyleBackColor = True
         '
-        'dgStringResources
+        'grpControlAtto
         '
-        Me.dgStringResources.AllowUserToAddRows = False
-        Me.dgStringResources.AllowUserToDeleteRows = False
-        Me.dgStringResources.AllowUserToResizeRows = False
-        Me.dgStringResources.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoTriggerServo)
+        Me.grpControlAtto.Controls.Add(Me.cboControlAttoWPNumber)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResetMission)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResetReboot)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResetSpeed)
+        Me.grpControlAtto.Controls.Add(Me.txtControlAttoSpeed)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoSpeed)
+        Me.grpControlAtto.Controls.Add(Me.lblControlStatus)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoReturnRally)
+        Me.grpControlAtto.Controls.Add(Me.txtControlAttoPressure)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoReturnHome)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResetBaro)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoLoiter)
+        Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResume)
+        resources.ApplyResources(Me.grpControlAtto, "grpControlAtto")
+        Me.grpControlAtto.Name = "grpControlAtto"
+        Me.grpControlAtto.TabStop = False
+        '
+        'cboControlAttoWPNumber
+        '
+        Me.cboControlAttoWPNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboControlAttoWPNumber.FormattingEnabled = True
+        resources.ApplyResources(Me.cboControlAttoWPNumber, "cboControlAttoWPNumber")
+        Me.cboControlAttoWPNumber.Name = "cboControlAttoWPNumber"
+        '
+        'cmdControlAttoResetMission
+        '
+        resources.ApplyResources(Me.cmdControlAttoResetMission, "cmdControlAttoResetMission")
+        Me.cmdControlAttoResetMission.Name = "cmdControlAttoResetMission"
+        Me.cmdControlAttoResetMission.UseVisualStyleBackColor = True
+        '
+        'cmdControlAttoResetReboot
+        '
+        resources.ApplyResources(Me.cmdControlAttoResetReboot, "cmdControlAttoResetReboot")
+        Me.cmdControlAttoResetReboot.Name = "cmdControlAttoResetReboot"
+        Me.cmdControlAttoResetReboot.UseVisualStyleBackColor = True
+        '
+        'cmdControlAttoResetSpeed
+        '
+        resources.ApplyResources(Me.cmdControlAttoResetSpeed, "cmdControlAttoResetSpeed")
+        Me.cmdControlAttoResetSpeed.Name = "cmdControlAttoResetSpeed"
+        Me.cmdControlAttoResetSpeed.UseVisualStyleBackColor = True
+        '
+        'txtControlAttoSpeed
+        '
+        resources.ApplyResources(Me.txtControlAttoSpeed, "txtControlAttoSpeed")
+        Me.txtControlAttoSpeed.Name = "txtControlAttoSpeed"
+        '
+        'cmdControlAttoSpeed
+        '
+        resources.ApplyResources(Me.cmdControlAttoSpeed, "cmdControlAttoSpeed")
+        Me.cmdControlAttoSpeed.Name = "cmdControlAttoSpeed"
+        Me.cmdControlAttoSpeed.UseVisualStyleBackColor = True
+        '
+        'lblControlStatus
+        '
+        resources.ApplyResources(Me.lblControlStatus, "lblControlStatus")
+        Me.lblControlStatus.Name = "lblControlStatus"
+        '
+        'cmdControlAttoReturnRally
+        '
+        resources.ApplyResources(Me.cmdControlAttoReturnRally, "cmdControlAttoReturnRally")
+        Me.cmdControlAttoReturnRally.Name = "cmdControlAttoReturnRally"
+        Me.cmdControlAttoReturnRally.UseVisualStyleBackColor = True
+        '
+        'txtControlAttoPressure
+        '
+        resources.ApplyResources(Me.txtControlAttoPressure, "txtControlAttoPressure")
+        Me.txtControlAttoPressure.Name = "txtControlAttoPressure"
+        '
+        'cmdControlAttoReturnHome
+        '
+        resources.ApplyResources(Me.cmdControlAttoReturnHome, "cmdControlAttoReturnHome")
+        Me.cmdControlAttoReturnHome.Name = "cmdControlAttoReturnHome"
+        Me.cmdControlAttoReturnHome.UseVisualStyleBackColor = True
+        '
+        'cmdControlAttoResetBaro
+        '
+        resources.ApplyResources(Me.cmdControlAttoResetBaro, "cmdControlAttoResetBaro")
+        Me.cmdControlAttoResetBaro.Name = "cmdControlAttoResetBaro"
+        Me.cmdControlAttoResetBaro.UseVisualStyleBackColor = True
+        '
+        'cmdControlAttoLoiter
+        '
+        resources.ApplyResources(Me.cmdControlAttoLoiter, "cmdControlAttoLoiter")
+        Me.cmdControlAttoLoiter.Name = "cmdControlAttoLoiter"
+        Me.cmdControlAttoLoiter.UseVisualStyleBackColor = True
+        '
+        'cmdControlAttoResume
+        '
+        resources.ApplyResources(Me.cmdControlAttoResume, "cmdControlAttoResume")
+        Me.cmdControlAttoResume.Name = "cmdControlAttoResume"
+        Me.cmdControlAttoResume.UseVisualStyleBackColor = True
+        '
+        'tabConfiguration
+        '
+        Me.tabConfiguration.Controls.Add(Me.lblConfigStatus)
+        Me.tabConfiguration.Controls.Add(Me.prgConfig)
+        Me.tabConfiguration.Controls.Add(Me.cmdConfigWrite)
+        Me.tabConfiguration.Controls.Add(Me.cmdConfigRead)
+        Me.tabConfiguration.Controls.Add(Me.dgConfigVariable)
+        resources.ApplyResources(Me.tabConfiguration, "tabConfiguration")
+        Me.tabConfiguration.Name = "tabConfiguration"
+        Me.tabConfiguration.UseVisualStyleBackColor = True
+        '
+        'lblConfigStatus
+        '
+        resources.ApplyResources(Me.lblConfigStatus, "lblConfigStatus")
+        Me.lblConfigStatus.Name = "lblConfigStatus"
+        '
+        'prgConfig
+        '
+        resources.ApplyResources(Me.prgConfig, "prgConfig")
+        Me.prgConfig.Name = "prgConfig"
+        '
+        'cmdConfigWrite
+        '
+        resources.ApplyResources(Me.cmdConfigWrite, "cmdConfigWrite")
+        Me.cmdConfigWrite.Name = "cmdConfigWrite"
+        Me.cmdConfigWrite.UseVisualStyleBackColor = True
+        '
+        'cmdConfigRead
+        '
+        resources.ApplyResources(Me.cmdConfigRead, "cmdConfigRead")
+        Me.cmdConfigRead.Name = "cmdConfigRead"
+        Me.cmdConfigRead.UseVisualStyleBackColor = True
+        '
+        'dgConfigVariable
+        '
+        Me.dgConfigVariable.AllowUserToAddRows = False
+        Me.dgConfigVariable.AllowUserToDeleteRows = False
+        Me.dgConfigVariable.AllowUserToResizeRows = False
+        Me.dgConfigVariable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgConfigVariable.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgStringResources.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.dgStringResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgConfigVariable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgConfigVariable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -880,10 +1421,10 @@ Partial Class frmMain
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgStringResources.DefaultCellStyle = DataGridViewCellStyle5
-        resources.ApplyResources(Me.dgStringResources, "dgStringResources")
-        Me.dgStringResources.MultiSelect = False
-        Me.dgStringResources.Name = "dgStringResources"
+        Me.dgConfigVariable.DefaultCellStyle = DataGridViewCellStyle5
+        resources.ApplyResources(Me.dgConfigVariable, "dgConfigVariable")
+        Me.dgConfigVariable.MultiSelect = False
+        Me.dgConfigVariable.Name = "dgConfigVariable"
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -891,8 +1432,8 @@ Partial Class frmMain
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgStringResources.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.dgStringResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.dgConfigVariable.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.dgConfigVariable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'grpGPSTime
         '
@@ -1226,8 +1767,8 @@ Partial Class frmMain
         '
         'cboOutputFiles
         '
-        Me.cboOutputFiles.FormattingEnabled = True
         resources.ApplyResources(Me.cboOutputFiles, "cboOutputFiles")
+        Me.cboOutputFiles.FormattingEnabled = True
         Me.cboOutputFiles.Name = "cboOutputFiles"
         '
         'TrackBar1
@@ -1301,6 +1842,7 @@ Partial Class frmMain
         Me.cboOutputTypeTracking.FormattingEnabled = True
         resources.ApplyResources(Me.cboOutputTypeTracking, "cboOutputTypeTracking")
         Me.cboOutputTypeTracking.Name = "cboOutputTypeTracking"
+        Me.cboOutputTypeTracking.Sorted = True
         '
         'lblOutputTypeTracking
         '
@@ -1784,6 +2326,11 @@ Partial Class frmMain
         Me.tbarSensor1.TabStop = False
         Me.tbarSensor1.TickStyle = System.Windows.Forms.TickStyle.None
         '
+        'lblResolution
+        '
+        resources.ApplyResources(Me.lblResolution, "lblResolution")
+        Me.lblResolution.Name = "lblResolution"
+        '
         'JoystickInstrumentControl1
         '
         Me.JoystickInstrumentControl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(241, Byte), Integer))
@@ -1832,6 +2379,7 @@ Partial Class frmMain
         Me.tabViewMapView.Controls.Add(Me.WebBrowser1)
         resources.ApplyResources(Me.tabViewMapView, "tabViewMapView")
         Me.tabViewMapView.Name = "tabViewMapView"
+        Me.tabViewMapView.Tag = "Google Earth"
         Me.tabViewMapView.UseVisualStyleBackColor = True
         '
         'chkViewFirstPerson
@@ -1874,6 +2422,7 @@ Partial Class frmMain
         Me.tabViewLiveCamera.Controls.Add(Me.DirectShowControl1)
         resources.ApplyResources(Me.tabViewLiveCamera, "tabViewLiveCamera")
         Me.tabViewLiveCamera.Name = "tabViewLiveCamera"
+        Me.tabViewLiveCamera.Tag = "Camera"
         Me.tabViewLiveCamera.UseVisualStyleBackColor = True
         '
         'cmdLiveCameraProperties1
@@ -1904,10 +2453,52 @@ Partial Class frmMain
         Me.serialPortTracking.RtsEnable = True
         Me.serialPortTracking.WriteTimeout = 25
         '
+        'pnlDevice
+        '
+        Me.pnlDevice.BackColor = System.Drawing.Color.White
+        Me.pnlDevice.Controls.Add(Me.lblVehicle)
+        Me.pnlDevice.Controls.Add(Me.cboConfigVehicle)
+        Me.pnlDevice.Controls.Add(Me.lblDevice)
+        Me.pnlDevice.Controls.Add(Me.cboConfigDevice)
+        resources.ApplyResources(Me.pnlDevice, "pnlDevice")
+        Me.pnlDevice.Name = "pnlDevice"
+        '
+        'lblVehicle
+        '
+        resources.ApplyResources(Me.lblVehicle, "lblVehicle")
+        Me.lblVehicle.Name = "lblVehicle"
+        '
+        'cboConfigVehicle
+        '
+        Me.cboConfigVehicle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboConfigVehicle.FormattingEnabled = True
+        resources.ApplyResources(Me.cboConfigVehicle, "cboConfigVehicle")
+        Me.cboConfigVehicle.Name = "cboConfigVehicle"
+        '
+        'lblDevice
+        '
+        resources.ApplyResources(Me.lblDevice, "lblDevice")
+        Me.lblDevice.Name = "lblDevice"
+        '
+        'cboConfigDevice
+        '
+        Me.cboConfigDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboConfigDevice.FormattingEnabled = True
+        resources.ApplyResources(Me.cboConfigDevice, "cboConfigDevice")
+        Me.cboConfigDevice.Name = "cboConfigDevice"
+        Me.cboConfigDevice.Sorted = True
+        '
+        'cmdControlAttoTriggerServo
+        '
+        resources.ApplyResources(Me.cmdControlAttoTriggerServo, "cmdControlAttoTriggerServo")
+        Me.cmdControlAttoTriggerServo.Name = "cmdControlAttoTriggerServo"
+        Me.cmdControlAttoTriggerServo.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlDevice)
         Me.Controls.Add(Me.SplitContainer1)
         Me.KeyPreview = True
         Me.Name = "frmMain"
@@ -1928,11 +2519,18 @@ Partial Class frmMain
         Me.tabCommandLine.ResumeLayout(False)
         Me.tabCommandLine.PerformLayout()
         Me.tabInstrumentLiveCamera.ResumeLayout(False)
+        Me.tabMissionPlanning.ResumeLayout(False)
+        Me.tabMissionPlanning.PerformLayout()
+        Me.grpMissionControlAtto.ResumeLayout(False)
+        Me.grpMissionControlAtto.PerformLayout()
+        Me.grpMissionControlGeneric.ResumeLayout(False)
+        Me.grpMissionControlGeneric.PerformLayout()
+        CType(Me.dgMission, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabMissionControl.ResumeLayout(False)
-        Me.tabMissionControl.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabAtto.ResumeLayout(False)
-        CType(Me.dgStringResources, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grpControlAtto.ResumeLayout(False)
+        Me.grpControlAtto.PerformLayout()
+        Me.tabConfiguration.ResumeLayout(False)
+        CType(Me.dgConfigVariable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpGPSTime.ResumeLayout(False)
         Me.grpMisc.ResumeLayout(False)
         Me.tabPortControl.ResumeLayout(False)
@@ -1963,6 +2561,7 @@ Partial Class frmMain
         Me.tabMapView.ResumeLayout(False)
         Me.tabViewMapView.ResumeLayout(False)
         Me.tabViewLiveCamera.ResumeLayout(False)
+        Me.pnlDevice.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -2149,17 +2748,9 @@ Partial Class frmMain
     Friend WithEvents lblGPSTime As System.Windows.Forms.Label
     Friend WithEvents txtSocket As System.Windows.Forms.TextBox
     Friend WithEvents JoystickInstrumentControl1 As HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
-    Friend WithEvents tabAtto As System.Windows.Forms.TabPage
-    Friend WithEvents dgStringResources As System.Windows.Forms.DataGridView
-    Friend WithEvents tabMissionControl As System.Windows.Forms.TabPage
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents cmdReloadMissionDirectory As System.Windows.Forms.Button
-    Friend WithEvents cmdReloadMissions As System.Windows.Forms.Button
-    Friend WithEvents lblMissionLabel As System.Windows.Forms.Label
-    Friend WithEvents cboMission As System.Windows.Forms.ComboBox
+    Friend WithEvents tabConfiguration As System.Windows.Forms.TabPage
+    Friend WithEvents dgConfigVariable As System.Windows.Forms.DataGridView
+    Friend WithEvents tabMissionPlanning As System.Windows.Forms.TabPage
     Friend WithEvents cboOutputTypeTracking As System.Windows.Forms.ComboBox
     Friend WithEvents lblOutputTypeTracking As System.Windows.Forms.Label
     Friend WithEvents lblStatusTracking As System.Windows.Forms.Label
@@ -2180,4 +2771,87 @@ Partial Class frmMain
     Friend WithEvents cboTrackingSet As System.Windows.Forms.ComboBox
     Friend WithEvents cmdTrackingCalibrate As System.Windows.Forms.Button
     Friend WithEvents lblTrackerAngle As System.Windows.Forms.Label
+    Friend WithEvents cmdConfigRead As System.Windows.Forms.Button
+    Friend WithEvents cmdConfigWrite As System.Windows.Forms.Button
+    Friend WithEvents prgConfig As System.Windows.Forms.ProgressBar
+    Friend WithEvents lblConfigStatus As System.Windows.Forms.Label
+    Friend WithEvents grpMissionControlAtto As System.Windows.Forms.GroupBox
+    Friend WithEvents lblMissionStatus As System.Windows.Forms.Label
+    Friend WithEvents prgMission As System.Windows.Forms.ProgressBar
+    Friend WithEvents cmdMissionWrite As System.Windows.Forms.Button
+    Friend WithEvents cmdMissionRead As System.Windows.Forms.Button
+    Friend WithEvents dgMission As System.Windows.Forms.DataGridView
+    Friend WithEvents pnlDevice As System.Windows.Forms.Panel
+    Friend WithEvents lblVehicle As System.Windows.Forms.Label
+    Friend WithEvents cboConfigVehicle As System.Windows.Forms.ComboBox
+    Friend WithEvents lblDevice As System.Windows.Forms.Label
+    Friend WithEvents cboConfigDevice As System.Windows.Forms.ComboBox
+    Friend WithEvents txtMissionLongitude As System.Windows.Forms.TextBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionLatitude As System.Windows.Forms.TextBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionSpeed As System.Windows.Forms.TextBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents cmdMissionAttoSearch As System.Windows.Forms.Button
+    Friend WithEvents txtMissionAddressSearchAtto As System.Windows.Forms.TextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionAltitude As System.Windows.Forms.TextBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoLoiterDirection As System.Windows.Forms.ComboBox
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoLoiterDuration As System.Windows.Forms.ComboBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoLoiter As System.Windows.Forms.ComboBox
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoReversePath As System.Windows.Forms.ComboBox
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoAltitudeControl As System.Windows.Forms.ComboBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionAttoTriggerControl As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdMissionSaveAs As System.Windows.Forms.Button
+    Friend WithEvents cmdMissionNew As System.Windows.Forms.Button
+    Friend WithEvents txtMissionDefaultAlt As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionDefaultAlt As System.Windows.Forms.Label
+    Friend WithEvents cmdReloadMissionDirectory As System.Windows.Forms.Button
+    Friend WithEvents cmdReloadMissions As System.Windows.Forms.Button
+    Friend WithEvents lblMissionLabel As System.Windows.Forms.Label
+    Friend WithEvents cboMission As System.Windows.Forms.ComboBox
+    Friend WithEvents txtMissionAttoDefaultSpeed As System.Windows.Forms.TextBox
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionDoubleClickLabel As System.Windows.Forms.Label
+    Friend WithEvents chkMissionInsert As System.Windows.Forms.CheckBox
+    Friend WithEvents grpMissionControlGeneric As System.Windows.Forms.GroupBox
+    Friend WithEvents cmdMissionGenericSearch As System.Windows.Forms.Button
+    Friend WithEvents txtMissionAddressSearchGeneric As System.Windows.Forms.TextBox
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionGenericAlt As System.Windows.Forms.TextBox
+    Friend WithEvents Label22 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionGenericLong As System.Windows.Forms.TextBox
+    Friend WithEvents Label23 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionGenericLat As System.Windows.Forms.TextBox
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionGenericOffset As System.Windows.Forms.ComboBox
+    Friend WithEvents lblMissionHomeAlt As System.Windows.Forms.Label
+    Friend WithEvents lblResolution As System.Windows.Forms.Label
+    Friend WithEvents tabMissionControl As System.Windows.Forms.TabPage
+    Friend WithEvents cmdMissionOverride As System.Windows.Forms.Button
+    Friend WithEvents grpControlAtto As System.Windows.Forms.GroupBox
+    Friend WithEvents cmdControlAttoReturnHome As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoResetBaro As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoLoiter As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoResume As System.Windows.Forms.Button
+    Friend WithEvents txtControlAttoPressure As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlAttoReturnRally As System.Windows.Forms.Button
+    Friend WithEvents lblControlStatus As System.Windows.Forms.Label
+    Friend WithEvents txtControlAttoSpeed As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlAttoSpeed As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoResetSpeed As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoResetMission As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoResetReboot As System.Windows.Forms.Button
+    Friend WithEvents cboControlAttoWPNumber As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdSetHomeAlt As System.Windows.Forms.Button
+    Friend WithEvents cmdMissionAttoAdd As System.Windows.Forms.Button
+    Friend WithEvents cmdControlAttoTriggerServo As System.Windows.Forms.Button
 End Class

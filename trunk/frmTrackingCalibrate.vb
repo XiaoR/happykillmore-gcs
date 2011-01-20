@@ -3,6 +3,40 @@ Public Class frmTrackingCalibrate
 
     Private Sub frmTrackingCalibrate_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim nCount As Integer
+        Dim nMinServo As Integer
+        Dim nMaxServo As Integer
+
+        lblMiniSSCNote.Visible = False
+        Select Case nTrackingOutputType
+            Case 4
+                nMinServo = 1
+                nMaxServo = 6
+                ShowServoSelect(True)
+            Case 5
+                nMinServo = 0
+                nMaxServo = 7
+                ShowServoSelect(True)
+            Case 6
+                lblMiniSSCNote.Visible = True
+                nMinServo = 0
+                nMaxServo = 255
+                ShowServoSelect(True)
+            Case Else
+                ShowServoSelect(False)
+        End Select
+
+        If nTrackingOutputType >= 4 And nTrackingOutputType <= 6 Then
+            cboPanServo.Items.Clear()
+            cboTiltServo.Items.Clear()
+            For nCount = nMinServo To nMaxServo
+                cboPanServo.Items.Add(nCount)
+                cboTiltServo.Items.Add(nCount)
+            Next
+            cboPanServo.Text = nTrackingServoNumberPan
+            cboTiltServo.Text = nTrackingServoNumberTilt
+        End If
+
+        Me.Text = frmMain.cboOutputTypeTracking.Text & " " & GetResString(, "Tracking Calibration")
 
         nStartup = True
         With cboLeft
@@ -33,6 +67,28 @@ Public Class frmTrackingCalibrate
             .Text = nTrackingAngleDown
         End With
 
+        If nTrackingOutputType = 5 Then
+            tbarLeft.Minimum = 500
+            tbarRight.Minimum = 500
+            tbarUp.Minimum = 500
+            tbarDown.Minimum = 500
+
+            tbarLeft.Maximum = 5500
+            tbarRight.Maximum = 5500
+            tbarUp.Maximum = 5500
+            tbarDown.Maximum = 5500
+        ElseIf nTrackingOutputType = 6 Then
+            tbarLeft.Minimum = 0
+            tbarRight.Minimum = 0
+            tbarUp.Minimum = 0
+            tbarDown.Minimum = 0
+
+            tbarLeft.Maximum = 254
+            tbarRight.Maximum = 254
+            tbarUp.Maximum = 254
+            tbarDown.Maximum = 254
+        End If
+
         tbarLeft.Value = nTrackingServoLeft
         tbarRight.Value = nTrackingServoRight
         tbarUp.Value = nTrackingServoUp
@@ -44,11 +100,15 @@ Public Class frmTrackingCalibrate
         lblDown.Text = tbarDown.Value
 
         chkBackLobe.Checked = bBackLobeTracker
-        chkPrediction.Checked = bTrackingPrediction
 
         nStartup = False
     End Sub
-
+    Private Sub ShowServoSelect(ByVal enabled As Boolean)
+        lblPanServo.Visible = enabled
+        lblTiltServo.Visible = enabled
+        cboPanServo.Visible = enabled
+        cboTiltServo.Visible = enabled
+    End Sub
     Private Sub tbarLeft_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarLeft.Scroll, tbarRight.Scroll, tbarUp.Scroll, tbarDown.Scroll
         If nStartup = True Then
             Exit Sub
@@ -56,16 +116,16 @@ Public Class frmTrackingCalibrate
 
         Select Case sender.name
             Case "tbarLeft"
-                frmMain.SendTrackingServoPanTilt(sender.value, )
+                frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), sender.value, )
                 lblLeft.Text = sender.value
             Case "tbarRight"
-                frmMain.SendTrackingServoPanTilt(sender.value, )
+                frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), sender.value, )
                 lblRight.Text = sender.value
             Case "tbarUp"
-                frmMain.SendTrackingServoPanTilt(, sender.value)
+                frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , sender.value)
                 lblUp.Text = sender.value
             Case "tbarDown"
-                frmMain.SendTrackingServoPanTilt(, sender.value)
+                frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , sender.value)
                 lblDown.Text = sender.value
         End Select
     End Sub
@@ -85,18 +145,21 @@ Public Class frmTrackingCalibrate
         nTrackingServoUp = tbarUp.Value
         nTrackingServoDown = tbarDown.Value
 
+        nTrackingServoNumberPan = cboPanServo.Text
+        nTrackingServoNumberTilt = cboTiltServo.Text
+
         bBackLobeTracker = chkBackLobe.Checked
-        bTrackingPrediction = chkPrediction.Checked
 
         SaveSettings()
+        frmMain.cboOutputTypeTracking_SelectedIndexChanged(Nothing, Nothing)
         Me.Dispose()
     End Sub
 
     Private Sub cmdCenterPan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCenterPan.Click
-        frmMain.SendTrackingServoPanTilt(1500, )
+        frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), (tbarLeft.Value + tbarRight.Value) / 2, )
     End Sub
 
     Private Sub cmdCenterTilt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCenterTilt.Click
-        frmMain.SendTrackingServoPanTilt(, 1500)
+        frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , (tbarUp.Value + tbarDown.Value) / 2)
     End Sub
 End Class

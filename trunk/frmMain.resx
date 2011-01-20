@@ -672,66 +672,6 @@
   <data name="&gt;&gt;tbarModelScale.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="cmdReloadMissionDirectory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdReloadMissionDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>513, 9</value>
-  </data>
-  <data name="cmdReloadMissionDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 23</value>
-  </data>
-  <data name="cmdReloadMissionDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="cmdReloadMissionDirectory.Text" xml:space="preserve">
-    <value>R</value>
-  </data>
-  <data name="cmdReloadMissionDirectory.ToolTip" xml:space="preserve">
-    <value>Reload Mission</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissionDirectory.Name" xml:space="preserve">
-    <value>cmdReloadMissionDirectory</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissionDirectory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissionDirectory.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissionDirectory.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="cmdReloadMissions.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdReloadMissions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>535, 9</value>
-  </data>
-  <data name="cmdReloadMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 23</value>
-  </data>
-  <data name="cmdReloadMissions.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="cmdReloadMissions.Text" xml:space="preserve">
-    <value>&lt;</value>
-  </data>
-  <data name="cmdReloadMissions.ToolTip" xml:space="preserve">
-    <value>Reload Mission Directory</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissions.Name" xml:space="preserve">
-    <value>cmdReloadMissions</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissions.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
-  </data>
-  <data name="&gt;&gt;cmdReloadMissions.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="cmdReloadTrackingPorts.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -845,6 +785,162 @@
   </data>
   <data name="&gt;&gt;cboTrackingSet.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>514, 40</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 23</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.Text" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="cmdReloadMissionDirectory.ToolTip" xml:space="preserve">
+    <value>Reload Mission</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissionDirectory.Name" xml:space="preserve">
+    <value>cmdReloadMissionDirectory</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissionDirectory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissionDirectory.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissionDirectory.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cmdReloadMissions.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdReloadMissions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>536, 40</value>
+  </data>
+  <data name="cmdReloadMissions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 23</value>
+  </data>
+  <data name="cmdReloadMissions.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="cmdReloadMissions.Text" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="cmdReloadMissions.ToolTip" xml:space="preserve">
+    <value>Reload Mission Directory</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissions.Name" xml:space="preserve">
+    <value>cmdReloadMissions</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissions.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cmdReloadMissions.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cmdMissionOverride.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdMissionOverride.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionOverride.Location" type="System.Drawing.Point, System.Drawing">
+    <value>216, 41</value>
+  </data>
+  <data name="cmdMissionOverride.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 23</value>
+  </data>
+  <data name="cmdMissionOverride.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="cmdMissionOverride.Text" xml:space="preserve">
+    <value>Override</value>
+  </data>
+  <data name="cmdMissionOverride.ToolTip" xml:space="preserve">
+    <value>Override mission and go to selected waypoint</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionOverride.Name" xml:space="preserve">
+    <value>cmdMissionOverride</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionOverride.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionOverride.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionOverride.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cmdSetHomeAlt.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 6.75pt</value>
+  </data>
+  <data name="cmdSetHomeAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdSetHomeAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>325, 241</value>
+  </data>
+  <data name="cmdSetHomeAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 23</value>
+  </data>
+  <data name="cmdSetHomeAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="cmdSetHomeAlt.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="cmdSetHomeAlt.ToolTip" xml:space="preserve">
+    <value>Set Home Altitude</value>
+  </data>
+  <data name="&gt;&gt;cmdSetHomeAlt.Name" xml:space="preserve">
+    <value>cmdSetHomeAlt</value>
+  </data>
+  <data name="&gt;&gt;cmdSetHomeAlt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdSetHomeAlt.Parent" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;cmdSetHomeAlt.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cmdMissionAttoAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionAttoAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>464, 117</value>
+  </data>
+  <data name="cmdMissionAttoAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 23</value>
+  </data>
+  <data name="cmdMissionAttoAdd.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="cmdMissionAttoAdd.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="cmdMissionAttoAdd.ToolTip" xml:space="preserve">
+    <value>Manual Add Waypoint</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoAdd.Name" xml:space="preserve">
+    <value>cmdMissionAttoAdd</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoAdd.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoAdd.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="tmrComPort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>584, 13</value>
@@ -969,60 +1065,6 @@
   <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="BatteryIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 135</value>
-  </data>
-  <data name="BatteryIndicatorInstrumentControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 163</value>
-  </data>
-  <data name="BatteryIndicatorInstrumentControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="BatteryIndicatorInstrumentControl1.Text" xml:space="preserve">
-    <value>BatteryIndicatorInstrumentControl1</value>
-  </data>
-  <data name="BatteryIndicatorInstrumentControl1.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Name" xml:space="preserve">
-    <value>BatteryIndicatorInstrumentControl1</value>
-  </data>
-  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Parent" xml:space="preserve">
-    <value>tabInstruments</value>
-  </data>
-  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TurnCoordinatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>193, 115</value>
-  </data>
-  <data name="TurnCoordinatorInstrumentControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 183</value>
-  </data>
-  <data name="TurnCoordinatorInstrumentControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="TurnCoordinatorInstrumentControl1.Text" xml:space="preserve">
-    <value>TurnCoordinatorInstrumentControl1</value>
-  </data>
-  <data name="TurnCoordinatorInstrumentControl1.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Name" xml:space="preserve">
-    <value>TurnCoordinatorInstrumentControl1</value>
-  </data>
-  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Parent" xml:space="preserve">
-    <value>tabInstruments</value>
-  </data>
-  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="cmdZeroYaw.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 6.75pt</value>
   </data>
@@ -1030,7 +1072,7 @@
     <value>NoControl</value>
   </data>
   <data name="cmdZeroYaw.Location" type="System.Drawing.Point, System.Drawing">
-    <value>505, 343</value>
+    <value>505, 300</value>
   </data>
   <data name="cmdZeroYaw.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 23</value>
@@ -1051,7 +1093,61 @@
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;cmdZeroYaw.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BatteryIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>192, 189</value>
+  </data>
+  <data name="BatteryIndicatorInstrumentControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 163</value>
+  </data>
+  <data name="BatteryIndicatorInstrumentControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="BatteryIndicatorInstrumentControl1.Text" xml:space="preserve">
+    <value>BatteryIndicatorInstrumentControl1</value>
+  </data>
+  <data name="BatteryIndicatorInstrumentControl1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Name" xml:space="preserve">
+    <value>BatteryIndicatorInstrumentControl1</value>
+  </data>
+  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Type" xml:space="preserve">
+    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Parent" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="TurnCoordinatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 190</value>
+  </data>
+  <data name="TurnCoordinatorInstrumentControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 183</value>
+  </data>
+  <data name="TurnCoordinatorInstrumentControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="TurnCoordinatorInstrumentControl1.Text" xml:space="preserve">
+    <value>TurnCoordinatorInstrumentControl1</value>
+  </data>
+  <data name="TurnCoordinatorInstrumentControl1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Name" xml:space="preserve">
+    <value>TurnCoordinatorInstrumentControl1</value>
+  </data>
+  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Type" xml:space="preserve">
+    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Parent" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="_3DMesh1.Location" type="System.Drawing.Point, System.Drawing">
     <value>378, 192</value>
@@ -1066,13 +1162,13 @@
     <value>_3DMesh1</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Type" xml:space="preserve">
-    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="VerticalSpeedIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>192, 192</value>
@@ -1090,13 +1186,13 @@
     <value>VerticalSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="HeadingIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 192</value>
@@ -1114,13 +1210,13 @@
     <value>HeadingIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="AttitudeIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>378, 6</value>
@@ -1138,13 +1234,13 @@
     <value>AttitudeIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="AltimeterInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>192, 6</value>
@@ -1162,13 +1258,13 @@
     <value>AltimeterInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="AirSpeedIndicatorInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 6</value>
@@ -1186,13 +1282,13 @@
     <value>AirSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="tabInstruments.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1201,7 +1297,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabInstruments.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+    <value>565, 327</value>
   </data>
   <data name="tabInstruments.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1525,7 +1621,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabSerialData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+    <value>565, 327</value>
   </data>
   <data name="tabSerialData.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1678,7 +1774,7 @@
     <value>4, 22</value>
   </data>
   <data name="tabCommandLine.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+    <value>565, 327</value>
   </data>
   <data name="tabCommandLine.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1762,7 +1858,7 @@
     <value>DirectShowControl2</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Parent" xml:space="preserve">
     <value>tabInstrumentLiveCamera</value>
@@ -1774,7 +1870,7 @@
     <value>4, 22</value>
   </data>
   <data name="tabInstrumentLiveCamera.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+    <value>565, 327</value>
   </data>
   <data name="tabInstrumentLiveCamera.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1794,74 +1890,791 @@
   <data name="&gt;&gt;tabInstrumentLiveCamera.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lblMissionLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblMissionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblMissionHomeAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblMissionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 12</value>
+  <data name="lblMissionHomeAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 135</value>
   </data>
-  <data name="lblMissionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+  <data name="lblMissionHomeAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 20</value>
   </data>
-  <data name="lblMissionLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+  <data name="lblMissionHomeAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
   </data>
-  <data name="lblMissionLabel.Text" xml:space="preserve">
-    <value>Mission:</value>
+  <data name="lblMissionHomeAlt.Text" xml:space="preserve">
+    <value>Home Alt:</value>
   </data>
-  <data name="lblMissionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <data name="lblMissionHomeAlt.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;lblMissionLabel.Name" xml:space="preserve">
-    <value>lblMissionLabel</value>
+  <data name="&gt;&gt;lblMissionHomeAlt.Name" xml:space="preserve">
+    <value>lblMissionHomeAlt</value>
   </data>
-  <data name="&gt;&gt;lblMissionLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblMissionHomeAlt.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblMissionLabel.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
+  <data name="&gt;&gt;lblMissionHomeAlt.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
   </data>
-  <data name="&gt;&gt;lblMissionLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblMissionHomeAlt.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtMissionAttoDefaultSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>466, 92</value>
+  </data>
+  <data name="txtMissionAttoDefaultSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 20</value>
+  </data>
+  <data name="txtMissionAttoDefaultSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAttoDefaultSpeed.Name" xml:space="preserve">
+    <value>txtMissionAttoDefaultSpeed</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAttoDefaultSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAttoDefaultSpeed.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAttoDefaultSpeed.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>373, 92</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 19</value>
+  </data>
+  <data name="Label12.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Default Speed:</value>
+  </data>
+  <data name="Label12.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label12.Name" xml:space="preserve">
+    <value>Label12</value>
+  </data>
+  <data name="&gt;&gt;Label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label12.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="cboMission.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 9</value>
+  <data name="Label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="cboMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 21</value>
+  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 39</value>
   </data>
-  <data name="cboMission.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 19</value>
   </data>
-  <data name="&gt;&gt;cboMission.Name" xml:space="preserve">
-    <value>cboMission</value>
+  <data name="Label11.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
   </data>
-  <data name="&gt;&gt;cboMission.Type" xml:space="preserve">
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Reverse:</value>
+  </data>
+  <data name="Label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
+    <value>Label11</value>
+  </data>
+  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cboMissionAttoReversePath.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoReversePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>448, 38</value>
+  </data>
+  <data name="cboMissionAttoReversePath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 21</value>
+  </data>
+  <data name="cboMissionAttoReversePath.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoReversePath.Name" xml:space="preserve">
+    <value>cboMissionAttoReversePath</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoReversePath.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cboMission.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
+  <data name="&gt;&gt;cboMissionAttoReversePath.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;cboMission.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;cboMissionAttoReversePath.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>359, 14</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 19</value>
+  </data>
+  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Altitude:</value>
+  </data>
+  <data name="Label10.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
+    <value>Label10</value>
+  </data>
+  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cboMissionAttoAltitudeControl.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoAltitudeControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>448, 13</value>
+  </data>
+  <data name="cboMissionAttoAltitudeControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 21</value>
+  </data>
+  <data name="cboMissionAttoAltitudeControl.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoAltitudeControl.Name" xml:space="preserve">
+    <value>cboMissionAttoAltitudeControl</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoAltitudeControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoAltitudeControl.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoAltitudeControl.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 93</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="Label9.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Control:</value>
+  </data>
+  <data name="Label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
+    <value>Label9</value>
+  </data>
+  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="cboMissionAttoTriggerControl.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoTriggerControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 92</value>
+  </data>
+  <data name="cboMissionAttoTriggerControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 21</value>
+  </data>
+  <data name="cboMissionAttoTriggerControl.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoTriggerControl.Name" xml:space="preserve">
+    <value>cboMissionAttoTriggerControl</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoTriggerControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoTriggerControl.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoTriggerControl.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="Label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 65</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="Label8.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Direction:</value>
+  </data>
+  <data name="Label8.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
+  </data>
+  <data name="&gt;&gt;Label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label8.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cboMissionAttoLoiterDirection.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoLoiterDirection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 64</value>
+  </data>
+  <data name="cboMissionAttoLoiterDirection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 21</value>
+  </data>
+  <data name="cboMissionAttoLoiterDirection.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDirection.Name" xml:space="preserve">
+    <value>cboMissionAttoLoiterDirection</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDirection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDirection.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDirection.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="Label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 39</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="Label7.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Duration:</value>
+  </data>
+  <data name="Label7.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label7.Name" xml:space="preserve">
+    <value>Label7</value>
+  </data>
+  <data name="&gt;&gt;Label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="cboMissionAttoLoiterDuration.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoLoiterDuration.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 38</value>
+  </data>
+  <data name="cboMissionAttoLoiterDuration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 21</value>
+  </data>
+  <data name="cboMissionAttoLoiterDuration.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDuration.Name" xml:space="preserve">
+    <value>cboMissionAttoLoiterDuration</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDuration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDuration.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiterDuration.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lblMissionStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 141</value>
+  </data>
+  <data name="lblMissionStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 13</value>
+  </data>
+  <data name="lblMissionStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="lblMissionStatus.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="lblMissionStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatus.Name" xml:space="preserve">
+    <value>lblMissionStatus</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatus.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatus.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="Label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 15</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="Label6.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Loiter:</value>
+  </data>
+  <data name="Label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="prgMission.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="prgMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 157</value>
+  </data>
+  <data name="prgMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 10</value>
+  </data>
+  <data name="prgMission.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;prgMission.Name" xml:space="preserve">
+    <value>prgMission</value>
+  </data>
+  <data name="&gt;&gt;prgMission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;prgMission.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;prgMission.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cboMissionAttoLoiter.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionAttoLoiter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 13</value>
+  </data>
+  <data name="cboMissionAttoLoiter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 21</value>
+  </data>
+  <data name="cboMissionAttoLoiter.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiter.Name" xml:space="preserve">
+    <value>cboMissionAttoLoiter</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiter.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboMissionAttoLoiter.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="cmdMissionWrite.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdMissionWrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionWrite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>84, 144</value>
+  </data>
+  <data name="cmdMissionWrite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionWrite.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="cmdMissionWrite.Text" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionWrite.Name" xml:space="preserve">
+    <value>cmdMissionWrite</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionWrite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionWrite.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionWrite.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="cmdMissionRead.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdMissionRead.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionRead.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 144</value>
+  </data>
+  <data name="cmdMissionRead.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionRead.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="cmdMissionRead.Text" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionRead.Name" xml:space="preserve">
+    <value>cmdMissionRead</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionRead.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionRead.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionRead.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="txtMissionSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 92</value>
+  </data>
+  <data name="txtMissionSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;txtMissionSpeed.Name" xml:space="preserve">
+    <value>txtMissionSpeed</value>
+  </data>
+  <data name="&gt;&gt;txtMissionSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionSpeed.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionSpeed.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 92</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label5.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Speed:</value>
+  </data>
+  <data name="Label5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
+    <value>Label5</value>
+  </data>
+  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="cmdMissionAttoSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionAttoSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>383, 117</value>
+  </data>
+  <data name="cmdMissionAttoSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionAttoSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="cmdMissionAttoSearch.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoSearch.Name" xml:space="preserve">
+    <value>cmdMissionAttoSearch</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoSearch.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionAttoSearch.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="txtMissionAddressSearchAtto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 118</value>
+  </data>
+  <data name="txtMissionAddressSearchAtto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 20</value>
+  </data>
+  <data name="txtMissionAddressSearchAtto.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchAtto.Name" xml:space="preserve">
+    <value>txtMissionAddressSearchAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchAtto.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchAtto.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchAtto.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="Label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 118</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label4.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="Label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="txtMissionAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 65</value>
+  </data>
+  <data name="txtMissionAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAltitude.Name" xml:space="preserve">
+    <value>txtMissionAltitude</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAltitude.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAltitude.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="Label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 65</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Altitude:</value>
+  </data>
+  <data name="Label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="txtMissionLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 39</value>
+  </data>
+  <data name="txtMissionLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLongitude.Name" xml:space="preserve">
+    <value>txtMissionLongitude</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLongitude.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLongitude.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="Label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 39</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="Label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="txtMissionLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 13</value>
+  </data>
+  <data name="txtMissionLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLatitude.Name" xml:space="preserve">
+    <value>txtMissionLatitude</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLatitude.Parent" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtMissionLatitude.ZOrder" xml:space="preserve">
+    <value>28</value>
   </data>
   <data name="Label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 9</value>
+    <value>5, 13</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 17</value>
+    <value>75, 20</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>32</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>AP Device:</value>
+    <value>Latitude:</value>
   </data>
   <data name="Label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -1873,94 +2686,1054 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
+    <value>grpMissionControlAtto</value>
   </data>
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>29</value>
   </data>
-  <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 9</value>
+  <data name="grpMissionControlAtto.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 21</value>
+  <data name="grpMissionControlAtto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 157</value>
   </data>
-  <data name="ComboBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+  <data name="grpMissionControlAtto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 174</value>
   </data>
-  <data name="&gt;&gt;ComboBox1.Name" xml:space="preserve">
-    <value>ComboBox1</value>
+  <data name="grpMissionControlAtto.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
   </data>
-  <data name="&gt;&gt;ComboBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grpMissionControlAtto.Text" xml:space="preserve">
+    <value>WP #1</value>
   </data>
-  <data name="&gt;&gt;ComboBox1.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
+  <data name="&gt;&gt;grpMissionControlAtto.Name" xml:space="preserve">
+    <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;ComboBox1.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;grpMissionControlAtto.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="&gt;&gt;grpMissionControlAtto.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlAtto.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 119</value>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 39</value>
   </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 18</value>
+  </data>
+  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Offset:</value>
+  </data>
+  <data name="Label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label13.Name" xml:space="preserve">
+    <value>Label13</value>
+  </data>
+  <data name="&gt;&gt;Label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label13.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;Label13.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboMissionGenericOffset.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMissionGenericOffset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 37</value>
+  </data>
+  <data name="cboMissionGenericOffset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 21</value>
+  </data>
+  <data name="cboMissionGenericOffset.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="&gt;&gt;cboMissionGenericOffset.Name" xml:space="preserve">
+    <value>cboMissionGenericOffset</value>
+  </data>
+  <data name="&gt;&gt;cboMissionGenericOffset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionGenericOffset.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;cboMissionGenericOffset.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdMissionGenericSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionGenericSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>382, 64</value>
+  </data>
+  <data name="cmdMissionGenericSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 23</value>
   </data>
-  <data name="Button1.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="cmdMissionGenericSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
   </data>
-  <data name="Button1.Text" xml:space="preserve">
-    <value>Connect</value>
+  <data name="cmdMissionGenericSearch.Text" xml:space="preserve">
+    <value>Search</value>
   </data>
-  <data name="&gt;&gt;Button1.Name" xml:space="preserve">
-    <value>Button1</value>
+  <data name="&gt;&gt;cmdMissionGenericSearch.Name" xml:space="preserve">
+    <value>cmdMissionGenericSearch</value>
   </data>
-  <data name="&gt;&gt;Button1.Type" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionGenericSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Button1.Parent" xml:space="preserve">
-    <value>tabMissionControl</value>
+  <data name="&gt;&gt;cmdMissionGenericSearch.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
   </data>
-  <data name="&gt;&gt;Button1.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;cmdMissionGenericSearch.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="DataGridView1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 186</value>
+  <data name="txtMissionAddressSearchGeneric.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 65</value>
   </data>
-  <data name="DataGridView1.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>25</value>
+  <data name="txtMissionAddressSearchGeneric.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 20</value>
   </data>
-  <data name="DataGridView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>551, 159</value>
+  <data name="txtMissionAddressSearchGeneric.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
   </data>
-  <data name="DataGridView1.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;txtMissionAddressSearchGeneric.Name" xml:space="preserve">
+    <value>txtMissionAddressSearchGeneric</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchGeneric.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchGeneric.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchGeneric.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;DataGridView1.Name" xml:space="preserve">
-    <value>DataGridView1</value>
+  <data name="Label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;DataGridView1.Type" xml:space="preserve">
+  <data name="Label21.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 65</value>
+  </data>
+  <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label21.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="Label21.Text" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="Label21.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label21.Name" xml:space="preserve">
+    <value>Label21</value>
+  </data>
+  <data name="&gt;&gt;Label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label21.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;Label21.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtMissionGenericAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 13</value>
+  </data>
+  <data name="txtMissionGenericAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 20</value>
+  </data>
+  <data name="txtMissionGenericAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericAlt.Name" xml:space="preserve">
+    <value>txtMissionGenericAlt</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericAlt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericAlt.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericAlt.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="Label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label22.Location" type="System.Drawing.Point, System.Drawing">
+    <value>208, 13</value>
+  </data>
+  <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label22.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="Label22.Text" xml:space="preserve">
+    <value>Altitude:</value>
+  </data>
+  <data name="Label22.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label22.Name" xml:space="preserve">
+    <value>Label22</value>
+  </data>
+  <data name="&gt;&gt;Label22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label22.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;Label22.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="txtMissionGenericLong.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 39</value>
+  </data>
+  <data name="txtMissionGenericLong.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionGenericLong.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLong.Name" xml:space="preserve">
+    <value>txtMissionGenericLong</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLong.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLong.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLong.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="Label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 39</value>
+  </data>
+  <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label23.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="Label23.Text" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="Label23.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label23.Name" xml:space="preserve">
+    <value>Label23</value>
+  </data>
+  <data name="&gt;&gt;Label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label23.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;Label23.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="txtMissionGenericLat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 13</value>
+  </data>
+  <data name="txtMissionGenericLat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionGenericLat.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLat.Name" xml:space="preserve">
+    <value>txtMissionGenericLat</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLat.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;txtMissionGenericLat.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="Label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 13</value>
+  </data>
+  <data name="Label24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label24.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="Label24.Text" xml:space="preserve">
+    <value>Latitude:</value>
+  </data>
+  <data name="Label24.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label24.Name" xml:space="preserve">
+    <value>Label24</value>
+  </data>
+  <data name="&gt;&gt;Label24.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label24.Parent" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;Label24.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="grpMissionControlGeneric.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="grpMissionControlGeneric.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 162</value>
+  </data>
+  <data name="grpMissionControlGeneric.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 96</value>
+  </data>
+  <data name="grpMissionControlGeneric.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="grpMissionControlGeneric.Text" xml:space="preserve">
+    <value>WP #1</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlGeneric.Name" xml:space="preserve">
+    <value>grpMissionControlGeneric</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlGeneric.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlGeneric.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlGeneric.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkMissionInsert.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkMissionInsert.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="chkMissionInsert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkMissionInsert.Location" type="System.Drawing.Point, System.Drawing">
+    <value>473, 142</value>
+  </data>
+  <data name="chkMissionInsert.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 17</value>
+  </data>
+  <data name="chkMissionInsert.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="chkMissionInsert.Text" xml:space="preserve">
+    <value>Insert Mode</value>
+  </data>
+  <data name="&gt;&gt;chkMissionInsert.Name" xml:space="preserve">
+    <value>chkMissionInsert</value>
+  </data>
+  <data name="&gt;&gt;chkMissionInsert.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkMissionInsert.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;chkMissionInsert.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 139</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 20</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.Text" xml:space="preserve">
+    <value>Double-Click Map to add a new waypoint</value>
+  </data>
+  <data name="lblMissionDoubleClickLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDoubleClickLabel.Name" xml:space="preserve">
+    <value>lblMissionDoubleClickLabel</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDoubleClickLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDoubleClickLabel.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDoubleClickLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="txtMissionDefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>495, 11</value>
+  </data>
+  <data name="txtMissionDefaultAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="txtMissionDefaultAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;txtMissionDefaultAlt.Name" xml:space="preserve">
+    <value>txtMissionDefaultAlt</value>
+  </data>
+  <data name="&gt;&gt;txtMissionDefaultAlt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionDefaultAlt.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;txtMissionDefaultAlt.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblMissionDefaultAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionDefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>401, 12</value>
+  </data>
+  <data name="lblMissionDefaultAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 19</value>
+  </data>
+  <data name="lblMissionDefaultAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="lblMissionDefaultAlt.Text" xml:space="preserve">
+    <value>Default Altitude:</value>
+  </data>
+  <data name="lblMissionDefaultAlt.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDefaultAlt.Name" xml:space="preserve">
+    <value>lblMissionDefaultAlt</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDefaultAlt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDefaultAlt.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;lblMissionDefaultAlt.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblMissionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>264, 43</value>
+  </data>
+  <data name="lblMissionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>99, 17</value>
+  </data>
+  <data name="lblMissionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="lblMissionLabel.Text" xml:space="preserve">
+    <value>Load Mission:</value>
+  </data>
+  <data name="lblMissionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionLabel.Name" xml:space="preserve">
+    <value>lblMissionLabel</value>
+  </data>
+  <data name="&gt;&gt;lblMissionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionLabel.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;lblMissionLabel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cboMission.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 41</value>
+  </data>
+  <data name="cboMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 21</value>
+  </data>
+  <data name="cboMission.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="&gt;&gt;cboMission.Name" xml:space="preserve">
+    <value>cboMission</value>
+  </data>
+  <data name="&gt;&gt;cboMission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMission.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cboMission.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="cmdMissionSaveAs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionSaveAs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 40</value>
+  </data>
+  <data name="cmdMissionSaveAs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="cmdMissionSaveAs.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="cmdMissionSaveAs.Text" xml:space="preserve">
+    <value>Save Mission As...</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionSaveAs.Name" xml:space="preserve">
+    <value>cmdMissionSaveAs</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionSaveAs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionSaveAs.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionSaveAs.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="cmdMissionNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionNew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 40</value>
+  </data>
+  <data name="cmdMissionNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="cmdMissionNew.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="cmdMissionNew.Text" xml:space="preserve">
+    <value>New Mission</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionNew.Name" xml:space="preserve">
+    <value>cmdMissionNew</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionNew.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionNew.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="dgMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 69</value>
+  </data>
+  <data name="dgMission.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="dgMission.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="dgMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 59</value>
+  </data>
+  <data name="dgMission.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;dgMission.Name" xml:space="preserve">
+    <value>dgMission</value>
+  </data>
+  <data name="&gt;&gt;dgMission.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;DataGridView1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;dgMission.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;dgMission.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="tabMissionPlanning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabMissionPlanning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>565, 327</value>
+  </data>
+  <data name="tabMissionPlanning.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="tabMissionPlanning.Text" xml:space="preserve">
+    <value>Waypoints</value>
+  </data>
+  <data name="&gt;&gt;tabMissionPlanning.Name" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;tabMissionPlanning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabMissionPlanning.Parent" xml:space="preserve">
+    <value>tabInstrumentView</value>
+  </data>
+  <data name="&gt;&gt;tabMissionPlanning.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 135</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="cmdControlAttoTriggerServo.Text" xml:space="preserve">
+    <value>Trigger Servo</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoTriggerServo.Name" xml:space="preserve">
+    <value>cmdControlAttoTriggerServo</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoTriggerServo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoTriggerServo.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoTriggerServo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboControlAttoWPNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>205, 106</value>
+  </data>
+  <data name="cboControlAttoWPNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 21</value>
+  </data>
+  <data name="cboControlAttoWPNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="&gt;&gt;cboControlAttoWPNumber.Name" xml:space="preserve">
+    <value>cboControlAttoWPNumber</value>
+  </data>
+  <data name="&gt;&gt;cboControlAttoWPNumber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboControlAttoWPNumber.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cboControlAttoWPNumber.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdControlAttoResetMission.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoResetMission.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoResetMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 106</value>
+  </data>
+  <data name="cmdControlAttoResetMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoResetMission.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="cmdControlAttoResetMission.Text" xml:space="preserve">
+    <value>Restart Mission</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetMission.Name" xml:space="preserve">
+    <value>cmdControlAttoResetMission</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetMission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetMission.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetMission.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 135</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="cmdControlAttoResetReboot.Text" xml:space="preserve">
+    <value>Reboot AttoPilot</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetReboot.Name" xml:space="preserve">
+    <value>cmdControlAttoResetReboot</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetReboot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetReboot.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetReboot.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 77</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="cmdControlAttoResetSpeed.Text" xml:space="preserve">
+    <value>Reset Speed Override</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetSpeed.Name" xml:space="preserve">
+    <value>cmdControlAttoResetSpeed</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetSpeed.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetSpeed.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtControlAttoSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 49</value>
+  </data>
+  <data name="txtControlAttoSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="txtControlAttoSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoSpeed.Name" xml:space="preserve">
+    <value>txtControlAttoSpeed</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoSpeed.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoSpeed.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cmdControlAttoSpeed.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoSpeed.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 48</value>
+  </data>
+  <data name="cmdControlAttoSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="cmdControlAttoSpeed.Text" xml:space="preserve">
+    <value>Set Speed</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoSpeed.Name" xml:space="preserve">
+    <value>cmdControlAttoSpeed</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoSpeed.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoSpeed.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblControlStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblControlStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 169</value>
+  </data>
+  <data name="lblControlStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 13</value>
+  </data>
+  <data name="lblControlStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="lblControlStatus.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="lblControlStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblControlStatus.Name" xml:space="preserve">
+    <value>lblControlStatus</value>
+  </data>
+  <data name="&gt;&gt;lblControlStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblControlStatus.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;lblControlStatus.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 49</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="cmdControlAttoReturnRally.Text" xml:space="preserve">
+    <value>Return to Rally</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnRally.Name" xml:space="preserve">
+    <value>cmdControlAttoReturnRally</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnRally.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnRally.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnRally.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="txtControlAttoPressure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 20</value>
+  </data>
+  <data name="txtControlAttoPressure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="txtControlAttoPressure.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoPressure.Name" xml:space="preserve">
+    <value>txtControlAttoPressure</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoPressure.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoPressure.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;txtControlAttoPressure.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 20</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="cmdControlAttoReturnHome.Text" xml:space="preserve">
+    <value>Return to Home</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnHome.Name" xml:space="preserve">
+    <value>cmdControlAttoReturnHome</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnHome.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnHome.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoReturnHome.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 19</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="cmdControlAttoResetBaro.Text" xml:space="preserve">
+    <value>Reset Baro Pressure</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetBaro.Name" xml:space="preserve">
+    <value>cmdControlAttoResetBaro</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetBaro.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetBaro.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResetBaro.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="cmdControlAttoLoiter.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoLoiter.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoLoiter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 78</value>
+  </data>
+  <data name="cmdControlAttoLoiter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoLoiter.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="cmdControlAttoLoiter.Text" xml:space="preserve">
+    <value>Loiter Now</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoLoiter.Name" xml:space="preserve">
+    <value>cmdControlAttoLoiter</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoLoiter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoLoiter.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoLoiter.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="cmdControlAttoResume.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlAttoResume.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlAttoResume.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 107</value>
+  </data>
+  <data name="cmdControlAttoResume.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 23</value>
+  </data>
+  <data name="cmdControlAttoResume.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="cmdControlAttoResume.Text" xml:space="preserve">
+    <value>Resume Flight Plan</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResume.Name" xml:space="preserve">
+    <value>cmdControlAttoResume</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResume.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResume.Parent" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;cmdControlAttoResume.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="grpControlAtto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 41</value>
+  </data>
+  <data name="grpControlAtto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>539, 192</value>
+  </data>
+  <data name="grpControlAtto.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="grpControlAtto.Text" xml:space="preserve">
+    <value>Control Modes</value>
+  </data>
+  <data name="&gt;&gt;grpControlAtto.Name" xml:space="preserve">
+    <value>grpControlAtto</value>
+  </data>
+  <data name="&gt;&gt;grpControlAtto.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpControlAtto.Parent" xml:space="preserve">
     <value>tabMissionControl</value>
   </data>
-  <data name="&gt;&gt;DataGridView1.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;grpControlAtto.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tabMissionControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
   <data name="tabMissionControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+    <value>565, 327</value>
   </data>
   <data name="tabMissionControl.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="tabMissionControl.Text" xml:space="preserve">
-    <value>Mission Control</value>
+    <value>Control</value>
   </data>
   <data name="&gt;&gt;tabMissionControl.Name" xml:space="preserve">
     <value>tabMissionControl</value>
@@ -1972,61 +3745,175 @@
     <value>tabInstrumentView</value>
   </data>
   <data name="&gt;&gt;tabMissionControl.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
-  <data name="dgStringResources.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 6</value>
+  <data name="lblConfigStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="dgStringResources.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>25</value>
+  <data name="lblConfigStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>171, 311</value>
   </data>
-  <data name="dgStringResources.Size" type="System.Drawing.Size, System.Drawing">
-    <value>551, 339</value>
+  <data name="lblConfigStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>386, 13</value>
   </data>
-  <data name="dgStringResources.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="lblConfigStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
   </data>
-  <data name="&gt;&gt;dgStringResources.Name" xml:space="preserve">
-    <value>dgStringResources</value>
+  <data name="lblConfigStatus.Text" xml:space="preserve">
+    <value>Status:</value>
   </data>
-  <data name="&gt;&gt;dgStringResources.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblConfigStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;dgStringResources.Parent" xml:space="preserve">
-    <value>tabAtto</value>
+  <data name="&gt;&gt;lblConfigStatus.Name" xml:space="preserve">
+    <value>lblConfigStatus</value>
   </data>
-  <data name="&gt;&gt;dgStringResources.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblConfigStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblConfigStatus.Parent" xml:space="preserve">
+    <value>tabConfiguration</value>
+  </data>
+  <data name="&gt;&gt;lblConfigStatus.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabAtto.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="prgConfig.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="prgConfig.Location" type="System.Drawing.Point, System.Drawing">
+    <value>171, 327</value>
+  </data>
+  <data name="prgConfig.Size" type="System.Drawing.Size, System.Drawing">
+    <value>386, 10</value>
+  </data>
+  <data name="prgConfig.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;prgConfig.Name" xml:space="preserve">
+    <value>prgConfig</value>
+  </data>
+  <data name="&gt;&gt;prgConfig.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;prgConfig.Parent" xml:space="preserve">
+    <value>tabConfiguration</value>
+  </data>
+  <data name="&gt;&gt;prgConfig.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdConfigWrite.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdConfigWrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdConfigWrite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 314</value>
+  </data>
+  <data name="cmdConfigWrite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdConfigWrite.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="cmdConfigWrite.Text" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigWrite.Name" xml:space="preserve">
+    <value>cmdConfigWrite</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigWrite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigWrite.Parent" xml:space="preserve">
+    <value>tabConfiguration</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigWrite.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmdConfigRead.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdConfigRead.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdConfigRead.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 314</value>
+  </data>
+  <data name="cmdConfigRead.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdConfigRead.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="cmdConfigRead.Text" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigRead.Name" xml:space="preserve">
+    <value>cmdConfigRead</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigRead.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigRead.Parent" xml:space="preserve">
+    <value>tabConfiguration</value>
+  </data>
+  <data name="&gt;&gt;cmdConfigRead.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="dgConfigVariable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 43</value>
+  </data>
+  <data name="dgConfigVariable.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="dgConfigVariable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>551, 265</value>
+  </data>
+  <data name="dgConfigVariable.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;dgConfigVariable.Name" xml:space="preserve">
+    <value>dgConfigVariable</value>
+  </data>
+  <data name="&gt;&gt;dgConfigVariable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgConfigVariable.Parent" xml:space="preserve">
+    <value>tabConfiguration</value>
+  </data>
+  <data name="&gt;&gt;dgConfigVariable.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tabConfiguration.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <data name="tabAtto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 351</value>
+  <data name="tabConfiguration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>565, 327</value>
   </data>
-  <data name="tabAtto.TabIndex" type="System.Int32, mscorlib">
+  <data name="tabConfiguration.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="tabAtto.Text" xml:space="preserve">
-    <value>AttoPilot</value>
+  <data name="tabConfiguration.Text" xml:space="preserve">
+    <value>Configuration</value>
   </data>
-  <data name="&gt;&gt;tabAtto.Name" xml:space="preserve">
-    <value>tabAtto</value>
+  <data name="&gt;&gt;tabConfiguration.Name" xml:space="preserve">
+    <value>tabConfiguration</value>
   </data>
-  <data name="&gt;&gt;tabAtto.Type" xml:space="preserve">
+  <data name="&gt;&gt;tabConfiguration.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabAtto.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tabConfiguration.Parent" xml:space="preserve">
     <value>tabInstrumentView</value>
   </data>
-  <data name="&gt;&gt;tabAtto.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;tabConfiguration.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="tabInstrumentView.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 28</value>
   </data>
   <data name="tabInstrumentView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>573, 377</value>
+    <value>573, 353</value>
   </data>
   <data name="tabInstrumentView.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -3258,6 +5145,9 @@
   <data name="&gt;&gt;lblBaudRate.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="cmdConnect.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="cmdConnect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -3422,6 +5312,9 @@
   </data>
   <data name="&gt;&gt;tabPortComPort.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="cboOutputFiles.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="cboOutputFiles.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 13</value>
@@ -3694,7 +5587,7 @@
     <value>48</value>
   </data>
   <data name="lblOutputTypeTracking.Text" xml:space="preserve">
-    <value>Output Type:</value>
+    <value>Output:</value>
   </data>
   <data name="lblOutputTypeTracking.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -5247,6 +7140,33 @@
   <data name="&gt;&gt;SplitContainer1.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="lblResolution.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>498, 8</value>
+  </data>
+  <data name="lblResolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 13</value>
+  </data>
+  <data name="lblResolution.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="lblResolution.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblResolution.Name" xml:space="preserve">
+    <value>lblResolution</value>
+  </data>
+  <data name="&gt;&gt;lblResolution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblResolution.Parent" xml:space="preserve">
+    <value>SplitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;lblResolution.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="JoystickInstrumentControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 350</value>
   </data>
@@ -5266,13 +7186,13 @@
     <value>JoystickInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;JoystickInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;JoystickInstrumentControl1.Parent" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;JoystickInstrumentControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cmdExit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -5299,7 +7219,10 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;cmdExit.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  <data name="cmdSetHome.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="cmdSetHome.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -5326,7 +7249,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;cmdSetHome.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="cmdClearMap.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -5353,7 +7276,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;cmdClearMap.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="cmdCenterOnPlane.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -5380,7 +7303,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;cmdCenterOnPlane.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="chkViewFirstPerson.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -5638,7 +7561,7 @@
     <value>DirectShowControl1</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.1.31.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Parent" xml:space="preserve">
     <value>tabViewLiveCamera</value>
@@ -5692,7 +7615,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;tabMapView.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel2.Name" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
@@ -5725,7 +7648,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="tmrTracking.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>682, 14</value>
@@ -5733,6 +7656,132 @@
   <metadata name="serialPortTracking.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>793, 14</value>
   </metadata>
+  <data name="lblVehicle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblVehicle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 3</value>
+  </data>
+  <data name="lblVehicle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 21</value>
+  </data>
+  <data name="lblVehicle.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="lblVehicle.Text" xml:space="preserve">
+    <value>Vehicle:</value>
+  </data>
+  <data name="lblVehicle.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblVehicle.Name" xml:space="preserve">
+    <value>lblVehicle</value>
+  </data>
+  <data name="&gt;&gt;lblVehicle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblVehicle.Parent" xml:space="preserve">
+    <value>pnlDevice</value>
+  </data>
+  <data name="&gt;&gt;lblVehicle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboConfigVehicle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>238, 3</value>
+  </data>
+  <data name="cboConfigVehicle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 21</value>
+  </data>
+  <data name="cboConfigVehicle.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;cboConfigVehicle.Name" xml:space="preserve">
+    <value>cboConfigVehicle</value>
+  </data>
+  <data name="&gt;&gt;cboConfigVehicle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboConfigVehicle.Parent" xml:space="preserve">
+    <value>pnlDevice</value>
+  </data>
+  <data name="&gt;&gt;cboConfigVehicle.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblDevice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblDevice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 3</value>
+  </data>
+  <data name="lblDevice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 21</value>
+  </data>
+  <data name="lblDevice.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="lblDevice.Text" xml:space="preserve">
+    <value>Device:</value>
+  </data>
+  <data name="lblDevice.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblDevice.Name" xml:space="preserve">
+    <value>lblDevice</value>
+  </data>
+  <data name="&gt;&gt;lblDevice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDevice.Parent" xml:space="preserve">
+    <value>pnlDevice</value>
+  </data>
+  <data name="&gt;&gt;lblDevice.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboConfigDevice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="cboConfigDevice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 21</value>
+  </data>
+  <data name="cboConfigDevice.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;cboConfigDevice.Name" xml:space="preserve">
+    <value>cboConfigDevice</value>
+  </data>
+  <data name="&gt;&gt;cboConfigDevice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboConfigDevice.Parent" xml:space="preserve">
+    <value>pnlDevice</value>
+  </data>
+  <data name="&gt;&gt;cboConfigDevice.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pnlDevice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 57</value>
+  </data>
+  <data name="pnlDevice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>298, 28</value>
+  </data>
+  <data name="pnlDevice.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="pnlDevice.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlDevice.Name" xml:space="preserve">
+    <value>pnlDevice</value>
+  </data>
+  <data name="&gt;&gt;pnlDevice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlDevice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlDevice.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

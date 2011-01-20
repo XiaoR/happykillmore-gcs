@@ -9,8 +9,25 @@
     <!--<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"></script>-->
     <script type="text/javascript">
 
+    var googleFailed = false;
+    var mapsFailed = false;
+    try
+    {
     google.load('earth', '1');
-
+    }
+    catch(err)
+    {
+        googleFailed = true;
+    }
+    try
+    {
+    google.load("maps", "2.xx");
+    }
+    catch(err)
+    {
+        mapsFailed = true;
+    }
+    
     var ge = null;
     var lineString = null;
     var lineStringPlacemark = null;
@@ -43,6 +60,9 @@
 
     var homeGroundAltitude = 0;
     var homePoint = null;
+    var homePlacemark = null;
+    
+    var homeSet = false;
     
     var isLoaded = false;
     var lastLat = 0;
@@ -57,6 +77,7 @@
     var planeLoc = null;
     var homeSet = false;
     var planeLink = null;
+    var sDragHref = null;
     //var viewerOptions = null;
     
     var modelLoaded = false;
@@ -66,31 +87,31 @@
     var nScale = 5;
 
     function init() {
-      google.earth.createInstance('map3d', initCallback, failureCallback);
+      try
+      {
+        google.earth.createInstance('map3d', initCallback, failureCallback);
+      }
+      catch(err)
+      {
+        googleFailed = true;
+        window.external.JSGoogleLoadFail_();
+     }
     }
-
+        
     function initCallback(pluginInstance) {
         ge = pluginInstance;
-        ge.getWindow().setVisibility(true);
         google.earth.addEventListener(ge.getView(), "viewchange", eventListener);
-
+        google.earth.addEventListener(ge.getWindow(), 'dblclick', function(event)
+        {
+            event.preventDefault();
+            window.external.JSDoubleClick_(event.getLatitude(), event.getLongitude());
+        });
+            
         ge.getOptions().setStatusBarVisibility(true); 
         ge.getOptions().setScaleLegendVisibility(true); 
         ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
         ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
-        
-//        try
-//        {
-//            ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true); 
-//           ge.getLayerRoot().enableLayerById(ge.LAYER_TERRAIN, true); 
-//            ge.getLayerRoot().enableLayerById(ge.LAYER_BUILDINGS, true); 
-//            ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true); 
-//            ge.getLayerRoot().enableLayerById(ge.LAYER_TREES, true); 
-            //ge.getOptions().setTerrainExaggeration(2.2);
-//        }
-//        catch(err)
-//        {
-//        }
+        ge.getWindow().setVisibility(true);
 
 	    // Create the placemark 
 	    lineStringPlacemark = ge.createPlacemark(''); 
@@ -127,8 +148,60 @@
 	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
         //viewerOptions = ge.createViewerOptions(''); 
 
+        planeLink = ge.createLink('');
+        planeOrient = ge.createOrientation(''); 
+        planeModel = ge.createModel('');
+        
+        homePlacemark = ge.createPlacemark(''); 
+
+	        // Add the placemark to Earth. 
+
+              // listen for mousedown on the window (look specifically for point placemarks)
+              google.earth.addEventListener(ge.getWindow(), 'mousedown', function(event) {
+                if (event.getTarget().getType() == 'KmlPlacemark' &&
+                    event.getTarget().getGeometry().getType() == 'KmlPoint') {
+                  //event.preventDefault();
+                  var placemark = event.getTarget();
+
+                  dragInfo = {
+                    placemark: event.getTarget(),
+                    dragged: false
+                  };
+                  sDragHref=event.getTarget().getComputedStyle().getIconStyle().getIcon().getHref();
+                    window.external.JSClick_(sDragHref);
+                }
+              });
+
+              // listen for mousemove on the globe
+              google.earth.addEventListener(ge.getGlobe(), 'mousemove', function(event) {
+                if (dragInfo) {
+                  event.preventDefault();
+                  var point = dragInfo.placemark.getGeometry();
+                  point.setLatitude(event.getLatitude());
+                  point.setLongitude(event.getLongitude());
+                  dragInfo.dragged = true;
+
+                }
+              });
+
+              // listen for mouseup on the window
+              google.earth.addEventListener(ge.getWindow(), 'mouseup', function(event) {
+                if (dragInfo) {
+                  if (dragInfo.dragged) {
+                    // if the placemark was dragged, prevent balloons from popping up
+                    event.preventDefault();
+ 
+                    window.external.JSDragDrop_(sDragHref,event.getLatitude(), event.getLongitude(),homeGroundAltitude);
+                    //window.external.JSDragDrop_("0","1.0","2.0");
+
+                  }
+
+                  dragInfo = null;
+                }
+              });
+              
         // tell the application the plugin is ready
-        //window.external.JSInitSuccessCallback_(pluginInstance);
+        window.external.JSInitSuccessCallback_(pluginInstance);
         isLoaded = true;
     }
 
@@ -147,7 +220,25 @@
     }
 
     function failureCallback(error) {
-      //window.external.JSInitErrorCallback_(error);
+      window.external.JSInitErrorCallback_(error);
+    }
+    
+    function getAddress(addressString) {
+        try
+        {        
+            var geocoder = new google.maps.ClientGeocoder();
+            geocoder.getLatLng(addressString, function(point) {
+              if (point) {
+                var lookAt = ge.createLookAt('');
+                lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 
+                           0, 60, 20000);
+                ge.getView().setAbstractView(lookAt);
+              }
+            });  
+        }
+        catch(err)
+        {
+        }
     }
     
     function clearMap() {
@@ -157,6 +248,7 @@
    		        features.removeChild(features.getFirstChild()); 
 	        } 
 	        modelLoaded = false;
+	        //homeSet = false;
     	    
 	        //flightString = ge.createLineString(''); 
 	        // Create the placemark 
@@ -186,7 +278,7 @@
 	        lineString.setExtrude(true); 
             linePolyStyle = lineStringPlacemark.getStyleSelector().getPolyStyle();
     	    
-            buildPlaneModel();
+            buildPlaneModel(modelURL);
         }
         catch(err)
         {
@@ -209,11 +301,32 @@
 	    camera.setAltitude(lastAlt + 50);  
         ge.getView().setAbstractView(camera);
     }
+
+    function centerOnLocation(lat,long, altitude,tilt,forceAlt) {
+	    // Get the current view 
+	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
+
+	    camera.setLatitude(lat); 
+	    camera.setLongitude(long); 
+        //if (altOffset == 0) {
+    	    if (camera.GetAltitude() < altitude + 1500) {
+                camera.setAltitude(altitude + 1500);
+            } else if (forceAlt == true) {
+                camera.setAltitude(altitude + 1500);
+            }
+        //} else {
+    	//    if (camera.GetAltitude() < altitude + homeGroundAltitude + 6) {
+        //        camera.setAltitude(altitude + homeGroundAltitude + 6);
+        //    }
+        //}
+        if (tilt!=-1){
+	        camera.setTilt(tilt);
+	    }
+        ge.getView().setAbstractView(camera);
+    }
     
     function changeModelScale(newScale) {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+
         nScale = newScale;
         planeModel.getScale().setX(nScale);
         planeModel.getScale().setY(nScale);
@@ -223,16 +336,12 @@
     }
 
     function changeAltOffset(newOffset) {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+
         eAltOffset = newOffset;
     }
     
     function loadModel(newModelURL,headingOffset) {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+
         modelURL = newModelURL;
         nDaeHeadingOffset = headingOffset;
         planeLink.setHref(newModelURL);
@@ -240,8 +349,29 @@
         planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
         modelLoaded = true;
     }
+    
+    function initPlaneCamera(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera) {
+        eAltOffset = altOffset;
+        nScale = scale;
+        ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
+	    lookAt.setLatitude(lat); 
+        lookAt.setLongitude(long);  
+        lookAt.setAltitude(altitude);  
+        lookAt.setRange(1500);  
+        lookAt.setTilt(50); 
+	    //camera.setLatitude(lat); 
+	    //camera.setLongitude(long);  
+	    //camera.setTilt(0);
+	    //camera.setRange(1500);  
+	    //camera.setTilt(50); 
+        ge.getView().setAbstractView(lookAt);
+        buildPlaneModel(newModelURL);
+        changeView (0, altitude, 0, 0, newModelURL);
+        //homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+    }
 
-    function buildPlaneModel(){
+    function buildPlaneModel(newModelURL){
+        modelURL = newModelURL;
         var planePlacemark = ge.createPlacemark('');
         planePlacemark.setName('planeModel');
         planeModel = ge.createModel('');
@@ -266,43 +396,12 @@
         modelLoaded = true;
     }
     
-    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset) {
-        if (isLoaded == false){
-            return;
-        }
-
-        camera.setLatitude(lat); 
-        camera.setLongitude(long);  
-        lookAt.setLatitude(lat); 
-        lookAt.setLongitude(long);  
-        
+    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera) {        
         eAltOffset = altOffset;
         nScale = scale;
-	    var features = ge.getFeatures(); 
-	    while (features.getFirstChild()) { 
-   		    features.removeChild(features.getFirstChild()); 
-	    }
-
-        ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT); 
-
-        modelURL = newModelURL;
-        buildPlaneModel();
 
 	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
-	    if (homeGroundAltitude == 0){
-		    homeGroundAltitude = altitude;
-	    }
 
-        planeLoc.setLatitude(lat);
-        planeLoc.setLongitude(long);
-        if (eAltOffset == 0) {
-            planeLoc.setAltitude(altitude);
-        } else {
-            planeLoc.setAltitude(altitude + homeGroundAltitude);
-        }
-
-	    // Create the placemark. 
-	    var placemark = ge.createPlacemark(''); 
 	    //placemark.setName("Home");  
 
 	    // Define a custom icon. 
@@ -311,65 +410,46 @@
 	    var style = ge.createStyle(''); 
 	    style.getIconStyle().setIcon(icon); 
 	    //style.getIconStyle().setScale(0.5); 
-	    placemark.setStyleSelector(style);  
+	    homePlacemark.setStyleSelector(style);  
 
 	    // Set the placemark's location.   
-	    homePoint = ge.createPoint(''); 
+	    //if (homeSet == false){
+	        homePoint = ge.createPoint(''); 
+	    //}
+
+
+	    // Create the placemark. 
 	    homePoint.setLatitude(lat); 
 	    homePoint.setLongitude(long); 
-	    //point.setAltitudeMode(ge.ALTITUDE_RELATIVE_TO_GROUND);
-	    homePoint.setAltitude(homeGroundAltitude); 
-	    placemark.setGeometry(homePoint);  
+	    homePoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
 
-	    // Add the placemark to Earth. 
-	    ge.getFeatures().appendChild(placemark); 
-
-		//document.getElementById('homeGroundAltitude') = homeGroundAltitude;
+        homePlacemark.setGeometry(homePoint);  
+        ge.getFeatures().appendChild(homePlacemark); 
+	    
 	    lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
 
-	    // Get the current view 
-	    //lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_ABSOLUTE);  
-	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
-
-	    // Set new latitude and longitude values 
-
-	    // Update the view in Google Earth 
-
-//	    camera.setLatitude(lat); 
-//	    camera.setLongitude(long);  
-//	    camera.setRange(1500);  
-
-//	    camera.setTilt(50); 
-
-	    // Update the view in Google Earth 
-//	    ge.getView().setAbstractView(camera);
-
 	    homeSet = true;
-	    
-	    changeView (newView, altitude, pitch, roll, newModelURL);
-	    if (newView == 0){
-	    	lookAt.setLatitude(lat); 
-	        lookAt.setLongitude(long);  
-	        lookAt.setRange(1500);  
-	        lookAt.setTilt(50); 
-	        ge.getView().setAbstractView(lookAt);
-	     }
-
+ 
+ 	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+	    window.external.JSHomeAlt_(homeGroundAltitude,eAltOffset);
+//       }
     }   
 
     function drawHomeLine() {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+
 	    lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude(), homePoint.getLongitude(),homeGroundAltitude); 
 	    ge.getFeatures().appendChild(lineStringPlacemark);
         }
     	
-    function addWaypoint(lat, long, altitude, index, missionExtrude, missionColor, missionWidth, altOffset) {
+    function addWaypoint(lat, long, altitude, index, missionExtrude, missionColor, missionWidth, altOffset, clampToGround) {
         // Create the placemark. 
-        if (isLoaded == false){
-            return;
-        }
+
+ 	    //homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+	    //window.external.JSHomeAlt_(homeGroundAltitude,eAltOffset);
+	    //if (homeGroundAltitude <= 0){
+	    //    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+	    //}
+	    //window.external.JSHomeAlt_(homeGroundAltitude,eAltOffset);
         
         eAltOffset = altOffset;
         if (index != "-1"){
@@ -382,9 +462,10 @@
 	        var style = ge.createStyle(''); 
 	        style.getIconStyle().setIcon(icon); 
 	        style.getIconStyle().setScale(0.7); 
+	        //placemark.setName(index);
 	        placemark.setStyleSelector(style);  
 
-	        homeGroundAltitude = ge.getGlobe().getGroundAltitude(homePoint.getLatitude(), homePoint.getLongitude());
+	        //homeGroundAltitude = ge.getGlobe().getGroundAltitude(homePoint.getLatitude(), homePoint.getLongitude());
 		    //document.getElementById('homeGroundAltitude') = homeGroundAltitude;
 
     //		if(homeGroundAltitude == 0) {
@@ -395,21 +476,30 @@
 		    var point = ge.createPoint('');     
 		    point.setLatitude(lat); 
 		    point.setLongitude(long); 
-		    point.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-            if (eAltOffset == 0) {
-		        point.setAltitude(altitude); 
+		    if (clampToGround == true) {
+		        point.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
+	            lineString.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
 		    } else {
-		        point.setAltitude(altitude + homeGroundAltitude); 
+		        point.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+ 	            lineString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+               if (altOffset == 0) {
+		            point.setAltitude(altitude); 
+		        } else {
+		            point.setAltitude(altitude + homeGroundAltitude); 
+		        }
 		    }
-		    point.setAltitude(altitude); 
+		    //point.setAltitude(altitude); 
 		    //point.setAltitude(altitude + homeGroundAltitude); 
 		    placemark.setGeometry(point);  
 
-		    // Add the placemark to Earth. 
-		    ge.getFeatures().appendChild(placemark); 
+
+              // add the placemark to the earth DOM
+              ge.getFeatures().appendChild(placemark);
+
+
     	}
 
-        if (eAltOffset == 0) {
+        if (altOffset == 0) {
 	        lineString.getCoordinates().pushLatLngAlt(lat,long,altitude); 
 	    } else {
 	        lineString.getCoordinates().pushLatLngAlt(lat,long,altitude + homeGroundAltitude); 
@@ -425,9 +515,7 @@
     }
     
     function updateAttitude(heading,headingOffset,pitch,roll) {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+
 //        planeOrient.setHeading(heading);
         nDaeHeadingOffset = headingOffset;
         planeOrient.setTilt(pitch); 
@@ -446,9 +534,10 @@
 	    var nNewAltitude = 0;
 	    var currentGroundAlt = 0;
 	    var nCameraHeading = 0;
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+	    
+//	    if (modelLoaded == false) {
+//	        return;
+//	    }
 
         eAltOffset = altOffset;
         nDaeHeadingOffset = headingOffset;
@@ -587,9 +676,9 @@
     }
     
     function changeView(newView,altitude,pitch,roll,newModelURL) {
-        if (isLoaded == false || homeSet == false){
-            return;
-        }
+//        if (isLoaded == false || homeSet == false){
+//            return;
+//        }
         
         viewType = newView;
         ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT);

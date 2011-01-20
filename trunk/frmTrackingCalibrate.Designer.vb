@@ -48,7 +48,11 @@ Partial Class frmTrackingCalibrate
         Me.chkBackLobe = New System.Windows.Forms.CheckBox
         Me.cmdCenterTilt = New System.Windows.Forms.Button
         Me.cmdCenterPan = New System.Windows.Forms.Button
-        Me.chkPrediction = New System.Windows.Forms.CheckBox
+        Me.lblTiltServo = New System.Windows.Forms.Label
+        Me.cboTiltServo = New System.Windows.Forms.ComboBox
+        Me.lblPanServo = New System.Windows.Forms.Label
+        Me.cboPanServo = New System.Windows.Forms.ComboBox
+        Me.lblMiniSSCNote = New System.Windows.Forms.Label
         CType(Me.tbarUp, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarDown, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,8 +75,8 @@ Partial Class frmTrackingCalibrate
         Me.tbarUp.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.tbarUp.LargeChange = 1
         Me.tbarUp.Location = New System.Drawing.Point(135, 123)
-        Me.tbarUp.Maximum = 2500
-        Me.tbarUp.Minimum = 500
+        Me.tbarUp.Maximum = 2750
+        Me.tbarUp.Minimum = 250
         Me.tbarUp.Name = "tbarUp"
         Me.tbarUp.Size = New System.Drawing.Size(332, 18)
         Me.tbarUp.TabIndex = 57
@@ -87,8 +91,8 @@ Partial Class frmTrackingCalibrate
         Me.tbarLeft.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.tbarLeft.LargeChange = 1
         Me.tbarLeft.Location = New System.Drawing.Point(135, 33)
-        Me.tbarLeft.Maximum = 2500
-        Me.tbarLeft.Minimum = 500
+        Me.tbarLeft.Maximum = 2750
+        Me.tbarLeft.Minimum = 250
         Me.tbarLeft.Name = "tbarLeft"
         Me.tbarLeft.Size = New System.Drawing.Size(332, 18)
         Me.tbarLeft.TabIndex = 56
@@ -184,8 +188,8 @@ Partial Class frmTrackingCalibrate
         Me.tbarDown.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.tbarDown.LargeChange = 1
         Me.tbarDown.Location = New System.Drawing.Point(135, 148)
-        Me.tbarDown.Maximum = 2500
-        Me.tbarDown.Minimum = 500
+        Me.tbarDown.Maximum = 2750
+        Me.tbarDown.Minimum = 250
         Me.tbarDown.Name = "tbarDown"
         Me.tbarDown.Size = New System.Drawing.Size(332, 18)
         Me.tbarDown.TabIndex = 68
@@ -200,8 +204,8 @@ Partial Class frmTrackingCalibrate
         Me.tbarRight.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.tbarRight.LargeChange = 1
         Me.tbarRight.Location = New System.Drawing.Point(135, 60)
-        Me.tbarRight.Maximum = 2500
-        Me.tbarRight.Minimum = 500
+        Me.tbarRight.Maximum = 2750
+        Me.tbarRight.Minimum = 250
         Me.tbarRight.Name = "tbarRight"
         Me.tbarRight.Size = New System.Drawing.Size(332, 18)
         Me.tbarRight.TabIndex = 69
@@ -220,18 +224,18 @@ Partial Class frmTrackingCalibrate
         '
         'Label7
         '
-        Me.Label7.Location = New System.Drawing.Point(70, 204)
+        Me.Label7.Location = New System.Drawing.Point(98, 255)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(451, 60)
+        Me.Label7.Size = New System.Drawing.Size(369, 36)
         Me.Label7.TabIndex = 71
         Me.Label7.Text = "Warning!! Be CAREFUL when adjusting the sliders. Some servos may be damaged by ch" & _
-            "anging the values too much! Advance until the servo freezes and back off a bit."
+            "anging the values too much!"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cmdSave
         '
         Me.cmdSave.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.cmdSave.Location = New System.Drawing.Point(16, 257)
+        Me.cmdSave.Location = New System.Drawing.Point(12, 268)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(70, 23)
         Me.cmdSave.TabIndex = 72
@@ -241,7 +245,7 @@ Partial Class frmTrackingCalibrate
         'cmdCancel
         '
         Me.cmdCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.cmdCancel.Location = New System.Drawing.Point(477, 257)
+        Me.cmdCancel.Location = New System.Drawing.Point(476, 268)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(70, 23)
         Me.cmdCancel.TabIndex = 73
@@ -295,10 +299,9 @@ Partial Class frmTrackingCalibrate
         '
         'chkBackLobe
         '
-        Me.chkBackLobe.AutoSize = True
-        Me.chkBackLobe.Location = New System.Drawing.Point(135, 172)
+        Me.chkBackLobe.Location = New System.Drawing.Point(135, 176)
         Me.chkBackLobe.Name = "chkBackLobe"
-        Me.chkBackLobe.Size = New System.Drawing.Size(264, 17)
+        Me.chkBackLobe.Size = New System.Drawing.Size(332, 21)
         Me.chkBackLobe.TabIndex = 79
         Me.chkBackLobe.Text = "Use side && back lobes when flying behind antenna"
         Me.chkBackLobe.UseVisualStyleBackColor = True
@@ -323,23 +326,61 @@ Partial Class frmTrackingCalibrate
         Me.cmdCenterPan.Text = "Center"
         Me.cmdCenterPan.UseVisualStyleBackColor = True
         '
-        'chkPrediction
+        'lblTiltServo
         '
-        Me.chkPrediction.AutoSize = True
-        Me.chkPrediction.Location = New System.Drawing.Point(135, 195)
-        Me.chkPrediction.Name = "chkPrediction"
-        Me.chkPrediction.Size = New System.Drawing.Size(135, 17)
-        Me.chkPrediction.TabIndex = 82
-        Me.chkPrediction.Text = "Use tracking prediction"
-        Me.chkPrediction.UseVisualStyleBackColor = True
-        Me.chkPrediction.Visible = False
+        Me.lblTiltServo.Location = New System.Drawing.Point(277, 200)
+        Me.lblTiltServo.Name = "lblTiltServo"
+        Me.lblTiltServo.Size = New System.Drawing.Size(96, 21)
+        Me.lblTiltServo.TabIndex = 85
+        Me.lblTiltServo.Text = "Tilt Servo:"
+        Me.lblTiltServo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'cboTiltServo
+        '
+        Me.cboTiltServo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboTiltServo.FormattingEnabled = True
+        Me.cboTiltServo.Location = New System.Drawing.Point(379, 200)
+        Me.cboTiltServo.Name = "cboTiltServo"
+        Me.cboTiltServo.Size = New System.Drawing.Size(58, 21)
+        Me.cboTiltServo.TabIndex = 84
+        '
+        'lblPanServo
+        '
+        Me.lblPanServo.Location = New System.Drawing.Point(105, 200)
+        Me.lblPanServo.Name = "lblPanServo"
+        Me.lblPanServo.Size = New System.Drawing.Size(96, 21)
+        Me.lblPanServo.TabIndex = 83
+        Me.lblPanServo.Text = "Pan Servo:"
+        Me.lblPanServo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'cboPanServo
+        '
+        Me.cboPanServo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboPanServo.FormattingEnabled = True
+        Me.cboPanServo.Location = New System.Drawing.Point(207, 200)
+        Me.cboPanServo.Name = "cboPanServo"
+        Me.cboPanServo.Size = New System.Drawing.Size(58, 21)
+        Me.cboPanServo.TabIndex = 82
+        '
+        'lblMiniSSCNote
+        '
+        Me.lblMiniSSCNote.Location = New System.Drawing.Point(11, 226)
+        Me.lblMiniSSCNote.Name = "lblMiniSSCNote"
+        Me.lblMiniSSCNote.Size = New System.Drawing.Size(534, 20)
+        Me.lblMiniSSCNote.TabIndex = 86
+        Me.lblMiniSSCNote.Text = "Note: For MiniSSC, add 8 to your servo number to double your travel"
+        Me.lblMiniSSCNote.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'frmTrackingCalibrate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(558, 289)
-        Me.Controls.Add(Me.chkPrediction)
+        Me.ClientSize = New System.Drawing.Size(558, 303)
+        Me.Controls.Add(Me.lblMiniSSCNote)
+        Me.Controls.Add(Me.lblTiltServo)
+        Me.Controls.Add(Me.cboTiltServo)
+        Me.Controls.Add(Me.lblPanServo)
+        Me.Controls.Add(Me.cboPanServo)
         Me.Controls.Add(Me.cmdCenterPan)
         Me.Controls.Add(Me.cmdCenterTilt)
         Me.Controls.Add(Me.chkBackLobe)
@@ -376,7 +417,6 @@ Partial Class frmTrackingCalibrate
         CType(Me.tbarDown, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarRight, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents cboLeft As System.Windows.Forms.ComboBox
@@ -405,5 +445,9 @@ Partial Class frmTrackingCalibrate
     Friend WithEvents chkBackLobe As System.Windows.Forms.CheckBox
     Friend WithEvents cmdCenterTilt As System.Windows.Forms.Button
     Friend WithEvents cmdCenterPan As System.Windows.Forms.Button
-    Friend WithEvents chkPrediction As System.Windows.Forms.CheckBox
+    Friend WithEvents lblTiltServo As System.Windows.Forms.Label
+    Friend WithEvents cboTiltServo As System.Windows.Forms.ComboBox
+    Friend WithEvents lblPanServo As System.Windows.Forms.Label
+    Friend WithEvents cboPanServo As System.Windows.Forms.ComboBox
+    Friend WithEvents lblMiniSSCNote As System.Windows.Forms.Label
 End Class

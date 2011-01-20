@@ -60,9 +60,37 @@ Namespace My.Resources
             End Set
         End Property
         
+        Friend ReadOnly Property Blank() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Blank", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Delete() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Delete", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property down() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("down", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Play() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Play", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property up() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("up", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

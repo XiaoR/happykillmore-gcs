@@ -160,6 +160,13 @@ Public Class frmSettings
             .SelectedIndex = nThrottleChannel
         End With
 
+        With cboMapSource
+            .Items.Clear()
+            .Items.Add(GetResString(, "None"))
+            .Items.Add("Google Earth")
+            .SelectedIndex = eMapSelection
+        End With
+
         cboVoltageColor.Items.Clear()
         cboAmperageColor.Items.Clear()
         cboMAHColor.Items.Clear()
@@ -193,6 +200,7 @@ Public Class frmSettings
         cmdFlightColor.BackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sFlightColor, 7, 2), 16), Convert.ToInt32(Mid(sFlightColor, 5, 2), 16), Convert.ToInt32(Mid(sFlightColor, 3, 2), 16))
         tbarFlightWidth.Value = nFlightWidth
         tbarFlightOpacity.Value = Convert.ToInt32(Mid(sFlightColor, 1, 2), 16)
+        chkClampToGround.Checked = bMissionClampToGround
 
         chkMissionExtrude.Checked = bMissionExtrude
         cmdMissionColor.BackColor = Color.FromArgb(255, Convert.ToInt32(Mid(sMissionColor, 7, 2), 16), Convert.ToInt32(Mid(sMissionColor, 5, 2), 16), Convert.ToInt32(Mid(sMissionColor, 3, 2), 16))
@@ -284,6 +292,9 @@ Public Class frmSettings
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
         Dim nCount As Integer
 
+        eOldDistanceUnits = eDistanceUnits
+        eOldSpeedUnits = eSpeedUnits
+
         eDistanceUnits = cboDistanceUnits.SelectedIndex
         eSpeedUnits = cboSpeedUnits.SelectedIndex
         nMaxSpeed = Convert.ToInt32(cboMaxSpeed.Text)
@@ -293,6 +304,12 @@ Public Class frmSettings
         bHeadingReverse = chkHeadingReverse.Checked
         nThrottleChannel = cboThrottleChannel.SelectedIndex
         eAltOffset = cboAltitudeOffset.SelectedIndex
+        If eMapSelection <> cboMapSource.SelectedIndex Then
+            bPlaneFirstFound = False
+            bGoogleLoaded = False
+            bGoogleFailed = False
+        End If
+        eMapSelection = cboMapSource.SelectedIndex
 
         nMapUpdateRate = cboMapUpdateRate.SelectedIndex + 1
 
@@ -303,6 +320,7 @@ Public Class frmSettings
         sMissionColor = GetColor(cmdMissionColor.BackColor, tbarMissionOpacity.Value)
         nMissionWidth = tbarMissionWidth.Value
         bMissionExtrude = chkMissionExtrude.Checked
+        bMissionClampToGround = chkClampToGround.Checked
 
         If cbo3DModel.Text <> sModelName Then
             sModelName = cbo3DModel.Text
@@ -400,7 +418,7 @@ Public Class frmSettings
         cmdModeChangePlay.Enabled = chkAnnounceModeChange.Checked
     End Sub
 
-    Private Sub chkGE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged
+    Private Sub chkGE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGERoads.CheckedChanged, chkGEBorders.CheckedChanged, chkGEBuildings.CheckedChanged, chkGETerrain.CheckedChanged, chkGETrees.CheckedChanged, chkFlightExtrude.CheckedChanged, chkMissionExtrude.CheckedChanged, chkClampToGround.CheckedChanged
         If sender.Checked = True Then
             sender.Text = GetResString(, "Yes")
         Else

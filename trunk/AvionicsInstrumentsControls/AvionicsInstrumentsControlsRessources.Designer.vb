@@ -92,6 +92,20 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property Bandeau_Dérouleur1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Bandeau_Dérouleur1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property Bandeau_Dérouleur2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Bandeau_Dérouleur2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property BatteryBlue() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("BatteryBlue", resourceCulture)

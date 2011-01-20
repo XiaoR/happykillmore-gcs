@@ -1268,6 +1268,28 @@ GroundControlStation
  Define the physical value to be displayed on the indicator
  The aircraft heading in °deg
 
+</member><member name="P:HK_GCS.My.Resources.TextFiles.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.SetConfig">
+	<summary>
+  Looks up a localized string similar to $1,Mix Enable,0,1,0,Enable flag for Elevon/V-tail mixing. 0 = FALSE, 1 = TRUE
+$2,Mix Servo1 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 1 servo direction
+$3,Mix Servo2 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 2 servo direction
+$4,Servo 1 Gain,0,100,10,Is 10x format. Aileron, or with elevons it is the aileron component of the mix
+$5,Servo 2 Gain,0,100,10,Is 10x format. Elevator, or with elevons it is the elevator component of the mix
+$6,Servo 3 Gain,0,100 [rest of string was truncated]";.
+</summary>
+</member><member name="T:HK_GCS.My.Resources.TextFiles">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
 </member>
 </members>
 </doc>

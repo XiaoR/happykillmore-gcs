@@ -92,7 +92,7 @@ Module modRegistry
             regKey.Close()
         End If
     End Function
-    Public Sub SaveRegSetting(ByVal Section As String, ByVal Key As String, ByVal value As String, Optional ByVal hKeyName As RegistryHive = RegistryHive.LocalMachine)
+    Public Sub SaveRegSetting(ByVal Section As String, ByVal Key As String, ByVal value As String, Optional ByVal hKeyName As RegistryHive = RegistryHive.LocalMachine, Optional ByVal valueKind As Microsoft.Win32.RegistryValueKind = RegistryValueKind.String)
         Dim regKey As RegistryKey
 
         Select Case hKeyName
@@ -134,7 +134,7 @@ Module modRegistry
             End Select
         End If
 
-        regKey.SetValue(Key, value)
+        regKey.SetValue(Key, value, valueKind)
         regKey.Close()
     End Sub
 End Module

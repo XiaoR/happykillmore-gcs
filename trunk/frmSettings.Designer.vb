@@ -29,6 +29,8 @@ Partial Class frmSettings
         Me.tabSettings = New System.Windows.Forms.TabControl
         Me.tabGeneral = New System.Windows.Forms.TabPage
         Me.grpGeneral = New System.Windows.Forms.GroupBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.cboMapSource = New System.Windows.Forms.ComboBox
         Me.lblAltitudeOffset = New System.Windows.Forms.Label
         Me.cboAltitudeOffset = New System.Windows.Forms.ComboBox
         Me.lblLanguage = New System.Windows.Forms.Label
@@ -137,6 +139,8 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
+        Me.lblClamptoGround = New System.Windows.Forms.Label
+        Me.chkClampToGround = New System.Windows.Forms.CheckBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -187,6 +191,8 @@ Partial Class frmSettings
         '
         'grpGeneral
         '
+        Me.grpGeneral.Controls.Add(Me.Label1)
+        Me.grpGeneral.Controls.Add(Me.cboMapSource)
         Me.grpGeneral.Controls.Add(Me.lblAltitudeOffset)
         Me.grpGeneral.Controls.Add(Me.cboAltitudeOffset)
         Me.grpGeneral.Controls.Add(Me.lblLanguage)
@@ -212,6 +218,18 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpGeneral, "grpGeneral")
         Me.grpGeneral.Name = "grpGeneral"
         Me.grpGeneral.TabStop = False
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'cboMapSource
+        '
+        Me.cboMapSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMapSource.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMapSource, "cboMapSource")
+        Me.cboMapSource.Name = "cboMapSource"
         '
         'lblAltitudeOffset
         '
@@ -428,6 +446,8 @@ Partial Class frmSettings
         '
         'grpMissionPath
         '
+        Me.grpMissionPath.Controls.Add(Me.lblClamptoGround)
+        Me.grpMissionPath.Controls.Add(Me.chkClampToGround)
         Me.grpMissionPath.Controls.Add(Me.lblMissionOpacity)
         Me.grpMissionPath.Controls.Add(Me.tbarMissionOpacity)
         Me.grpMissionPath.Controls.Add(Me.lblMissionExtrude)
@@ -942,6 +962,17 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
+        'lblClamptoGround
+        '
+        resources.ApplyResources(Me.lblClamptoGround, "lblClamptoGround")
+        Me.lblClamptoGround.Name = "lblClamptoGround"
+        '
+        'chkClampToGround
+        '
+        resources.ApplyResources(Me.chkClampToGround, "chkClampToGround")
+        Me.chkClampToGround.Name = "chkClampToGround"
+        Me.chkClampToGround.UseVisualStyleBackColor = True
+        '
         'frmSettings
         '
         resources.ApplyResources(Me, "$this")
@@ -1090,4 +1121,8 @@ Partial Class frmSettings
     Friend WithEvents chkAnnounceRegularInterval As System.Windows.Forms.CheckBox
     Friend WithEvents lblSpeechInterval As System.Windows.Forms.Label
     Friend WithEvents cboSpeechInterval As System.Windows.Forms.ComboBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents cboMapSource As System.Windows.Forms.ComboBox
+    Friend WithEvents lblClamptoGround As System.Windows.Forms.Label
+    Friend WithEvents chkClampToGround As System.Windows.Forms.CheckBox
 End Class
