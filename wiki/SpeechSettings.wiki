@@ -7,6 +7,8 @@
    * {wpa} - Desired waypoint altitude
    * {gsp} - Ground speed
    * {mode} - Current mode
+   * {alarm} - Alarm Timeout
+   * (warning} - Warning Timeout
 
  * Announce on Waypoint will fire any time the waypoint number changes. In the case where waypoint number is 0, the word "home" will be substituded. 
  * Sample phrase: Arrived at waypoint {wpn} at {gsp} miles per hour. Current altitude is {alt}, desired alt is {wpa}. 
