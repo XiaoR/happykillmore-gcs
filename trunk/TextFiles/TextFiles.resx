@@ -118,7 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\SetConfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="APMCommands" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>apmcommands.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="APMModes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>apmmodes.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="AttoSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>attosetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GluonSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>gluonsetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MAVlinkSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mavlinksetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
