@@ -41,6 +41,22 @@ Module modChecksums
         GetSiRFChecksum = Hex(nA).PadLeft(4, "0")
         GetSiRFChecksum = Chr("&h" & Mid(GetSiRFChecksum, 1, 2)) & Chr("&h" & Mid(GetSiRFChecksum, 3, 2))
     End Function
+    Public Function GetXbeeChecksum(ByVal inputString As String) As String
+        Dim nLength As Integer
+        Dim nCount As Integer
+        Dim nA As Long
+
+        nA = 0
+
+        nLength = Len(inputString)
+        For nCount = 1 To nLength
+            nA = nA + Asc(Mid(inputString, nCount, 1))
+        Next nCount
+
+        nA = nA And CDec("&HFF")
+        nA = CDec("&HFF") - nA
+        GetXbeeChecksum = Chr("&h" & Hex(nA).PadLeft(2, "0"))
+    End Function
     Public Function GetuBloxChecksum(ByVal inputString As String) As String
         Dim nLength As Integer
         Dim nCount As Integer

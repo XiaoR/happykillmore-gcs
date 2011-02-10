@@ -29,6 +29,10 @@ Partial Class frmSettings
         Me.tabSettings = New System.Windows.Forms.TabControl
         Me.tabGeneral = New System.Windows.Forms.TabPage
         Me.grpGeneral = New System.Windows.Forms.GroupBox
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.cboWarningTimeout = New System.Windows.Forms.ComboBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.cboAlarmTimeout = New System.Windows.Forms.ComboBox
         Me.Label1 = New System.Windows.Forms.Label
         Me.cboMapSource = New System.Windows.Forms.ComboBox
         Me.lblAltitudeOffset = New System.Windows.Forms.Label
@@ -47,13 +51,13 @@ Partial Class frmSettings
         Me.chkPitchReverse = New System.Windows.Forms.CheckBox
         Me.cbo3DModel = New System.Windows.Forms.ComboBox
         Me.lbl3DModel = New System.Windows.Forms.Label
-        Me.cboMaxSpeed = New System.Windows.Forms.ComboBox
-        Me.lblMaxSpeed = New System.Windows.Forms.Label
         Me.lblSpeedUnits = New System.Windows.Forms.Label
         Me.cboSpeedUnits = New System.Windows.Forms.ComboBox
         Me.lblDistanceUnits = New System.Windows.Forms.Label
         Me.cboDistanceUnits = New System.Windows.Forms.ComboBox
         Me.tabGoogleEarth = New System.Windows.Forms.TabPage
+        Me.grpGoogleEarthKey = New System.Windows.Forms.GroupBox
+        Me.txtGoogleEarthKey = New System.Windows.Forms.TextBox
         Me.grpGoogleEarthFeatures = New System.Windows.Forms.GroupBox
         Me.lblGETerrain = New System.Windows.Forms.Label
         Me.chkGETerrain = New System.Windows.Forms.CheckBox
@@ -66,6 +70,8 @@ Partial Class frmSettings
         Me.lblGERoads = New System.Windows.Forms.Label
         Me.chkGERoads = New System.Windows.Forms.CheckBox
         Me.grpMissionPath = New System.Windows.Forms.GroupBox
+        Me.lblClamptoGround = New System.Windows.Forms.Label
+        Me.chkClampToGround = New System.Windows.Forms.CheckBox
         Me.lblMissionOpacity = New System.Windows.Forms.Label
         Me.tbarMissionOpacity = New System.Windows.Forms.TrackBar
         Me.lblMissionExtrude = New System.Windows.Forms.Label
@@ -87,6 +93,8 @@ Partial Class frmSettings
         Me.cmdFlightColor = New System.Windows.Forms.Button
         Me.tabInstruments = New System.Windows.Forms.TabPage
         Me.grpBatteryThrottle = New System.Windows.Forms.GroupBox
+        Me.cboMaxSpeed = New System.Windows.Forms.ComboBox
+        Me.lblMaxSpeed = New System.Windows.Forms.Label
         Me.cboThrottleColor = New System.Windows.Forms.ComboBox
         Me.lblThrottleColor = New System.Windows.Forms.Label
         Me.cboMAHColor = New System.Windows.Forms.ComboBox
@@ -115,6 +123,12 @@ Partial Class frmSettings
         Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
         Me.chkInstSpeed = New System.Windows.Forms.CheckBox
         Me.tabSpeech = New System.Windows.Forms.TabPage
+        Me.cmdAlarmPlay = New System.Windows.Forms.Button
+        Me.txtAnnounceAlarm = New System.Windows.Forms.TextBox
+        Me.chkAnnounceLinkAlarm = New System.Windows.Forms.CheckBox
+        Me.cmdWarningPlay = New System.Windows.Forms.Button
+        Me.txtAnnounceWarning = New System.Windows.Forms.TextBox
+        Me.chkAnnounceLinkWarning = New System.Windows.Forms.CheckBox
         Me.lblSpeechInterval = New System.Windows.Forms.Label
         Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
         Me.cmdRegularIntervalPlay = New System.Windows.Forms.Button
@@ -139,12 +153,15 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.lblClamptoGround = New System.Windows.Forms.Label
-        Me.chkClampToGround = New System.Windows.Forms.CheckBox
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.cbo2wayRetries = New System.Windows.Forms.ComboBox
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.cbo2wayTimeout = New System.Windows.Forms.ComboBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
         Me.tabGoogleEarth.SuspendLayout()
+        Me.grpGoogleEarthKey.SuspendLayout()
         Me.grpGoogleEarthFeatures.SuspendLayout()
         Me.grpMissionPath.SuspendLayout()
         CType(Me.tbarMissionOpacity, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -191,6 +208,14 @@ Partial Class frmSettings
         '
         'grpGeneral
         '
+        Me.grpGeneral.Controls.Add(Me.Label5)
+        Me.grpGeneral.Controls.Add(Me.cbo2wayTimeout)
+        Me.grpGeneral.Controls.Add(Me.Label4)
+        Me.grpGeneral.Controls.Add(Me.cbo2wayRetries)
+        Me.grpGeneral.Controls.Add(Me.Label3)
+        Me.grpGeneral.Controls.Add(Me.cboWarningTimeout)
+        Me.grpGeneral.Controls.Add(Me.Label2)
+        Me.grpGeneral.Controls.Add(Me.cboAlarmTimeout)
         Me.grpGeneral.Controls.Add(Me.Label1)
         Me.grpGeneral.Controls.Add(Me.cboMapSource)
         Me.grpGeneral.Controls.Add(Me.lblAltitudeOffset)
@@ -209,8 +234,6 @@ Partial Class frmSettings
         Me.grpGeneral.Controls.Add(Me.chkPitchReverse)
         Me.grpGeneral.Controls.Add(Me.cbo3DModel)
         Me.grpGeneral.Controls.Add(Me.lbl3DModel)
-        Me.grpGeneral.Controls.Add(Me.cboMaxSpeed)
-        Me.grpGeneral.Controls.Add(Me.lblMaxSpeed)
         Me.grpGeneral.Controls.Add(Me.lblSpeedUnits)
         Me.grpGeneral.Controls.Add(Me.cboSpeedUnits)
         Me.grpGeneral.Controls.Add(Me.lblDistanceUnits)
@@ -218,6 +241,30 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpGeneral, "grpGeneral")
         Me.grpGeneral.Name = "grpGeneral"
         Me.grpGeneral.TabStop = False
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'cboWarningTimeout
+        '
+        Me.cboWarningTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboWarningTimeout.FormattingEnabled = True
+        resources.ApplyResources(Me.cboWarningTimeout, "cboWarningTimeout")
+        Me.cboWarningTimeout.Name = "cboWarningTimeout"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'cboAlarmTimeout
+        '
+        Me.cboAlarmTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboAlarmTimeout.FormattingEnabled = True
+        resources.ApplyResources(Me.cboAlarmTimeout, "cboAlarmTimeout")
+        Me.cboAlarmTimeout.Name = "cboAlarmTimeout"
         '
         'Label1
         '
@@ -328,18 +375,6 @@ Partial Class frmSettings
         resources.ApplyResources(Me.lbl3DModel, "lbl3DModel")
         Me.lbl3DModel.Name = "lbl3DModel"
         '
-        'cboMaxSpeed
-        '
-        Me.cboMaxSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboMaxSpeed.FormattingEnabled = True
-        resources.ApplyResources(Me.cboMaxSpeed, "cboMaxSpeed")
-        Me.cboMaxSpeed.Name = "cboMaxSpeed"
-        '
-        'lblMaxSpeed
-        '
-        resources.ApplyResources(Me.lblMaxSpeed, "lblMaxSpeed")
-        Me.lblMaxSpeed.Name = "lblMaxSpeed"
-        '
         'lblSpeedUnits
         '
         resources.ApplyResources(Me.lblSpeedUnits, "lblSpeedUnits")
@@ -366,12 +401,25 @@ Partial Class frmSettings
         '
         'tabGoogleEarth
         '
+        Me.tabGoogleEarth.Controls.Add(Me.grpGoogleEarthKey)
         Me.tabGoogleEarth.Controls.Add(Me.grpGoogleEarthFeatures)
         Me.tabGoogleEarth.Controls.Add(Me.grpMissionPath)
         Me.tabGoogleEarth.Controls.Add(Me.grpFlightPath)
         resources.ApplyResources(Me.tabGoogleEarth, "tabGoogleEarth")
         Me.tabGoogleEarth.Name = "tabGoogleEarth"
         Me.tabGoogleEarth.UseVisualStyleBackColor = True
+        '
+        'grpGoogleEarthKey
+        '
+        Me.grpGoogleEarthKey.Controls.Add(Me.txtGoogleEarthKey)
+        resources.ApplyResources(Me.grpGoogleEarthKey, "grpGoogleEarthKey")
+        Me.grpGoogleEarthKey.Name = "grpGoogleEarthKey"
+        Me.grpGoogleEarthKey.TabStop = False
+        '
+        'txtGoogleEarthKey
+        '
+        resources.ApplyResources(Me.txtGoogleEarthKey, "txtGoogleEarthKey")
+        Me.txtGoogleEarthKey.Name = "txtGoogleEarthKey"
         '
         'grpGoogleEarthFeatures
         '
@@ -459,6 +507,17 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpMissionPath, "grpMissionPath")
         Me.grpMissionPath.Name = "grpMissionPath"
         Me.grpMissionPath.TabStop = False
+        '
+        'lblClamptoGround
+        '
+        resources.ApplyResources(Me.lblClamptoGround, "lblClamptoGround")
+        Me.lblClamptoGround.Name = "lblClamptoGround"
+        '
+        'chkClampToGround
+        '
+        resources.ApplyResources(Me.chkClampToGround, "chkClampToGround")
+        Me.chkClampToGround.Name = "chkClampToGround"
+        Me.chkClampToGround.UseVisualStyleBackColor = True
         '
         'lblMissionOpacity
         '
@@ -608,6 +667,8 @@ Partial Class frmSettings
         '
         'grpBatteryThrottle
         '
+        Me.grpBatteryThrottle.Controls.Add(Me.cboMaxSpeed)
+        Me.grpBatteryThrottle.Controls.Add(Me.lblMaxSpeed)
         Me.grpBatteryThrottle.Controls.Add(Me.cboThrottleColor)
         Me.grpBatteryThrottle.Controls.Add(Me.lblThrottleColor)
         Me.grpBatteryThrottle.Controls.Add(Me.cboMAHColor)
@@ -629,6 +690,18 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpBatteryThrottle, "grpBatteryThrottle")
         Me.grpBatteryThrottle.Name = "grpBatteryThrottle"
         Me.grpBatteryThrottle.TabStop = False
+        '
+        'cboMaxSpeed
+        '
+        Me.cboMaxSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMaxSpeed.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMaxSpeed, "cboMaxSpeed")
+        Me.cboMaxSpeed.Name = "cboMaxSpeed"
+        '
+        'lblMaxSpeed
+        '
+        resources.ApplyResources(Me.lblMaxSpeed, "lblMaxSpeed")
+        Me.lblMaxSpeed.Name = "lblMaxSpeed"
         '
         'cboThrottleColor
         '
@@ -792,6 +865,12 @@ Partial Class frmSettings
         '
         'tabSpeech
         '
+        Me.tabSpeech.Controls.Add(Me.cmdAlarmPlay)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceAlarm)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkAlarm)
+        Me.tabSpeech.Controls.Add(Me.cmdWarningPlay)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceWarning)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkWarning)
         Me.tabSpeech.Controls.Add(Me.lblSpeechInterval)
         Me.tabSpeech.Controls.Add(Me.cboSpeechInterval)
         Me.tabSpeech.Controls.Add(Me.cmdRegularIntervalPlay)
@@ -809,6 +888,42 @@ Partial Class frmSettings
         resources.ApplyResources(Me.tabSpeech, "tabSpeech")
         Me.tabSpeech.Name = "tabSpeech"
         Me.tabSpeech.UseVisualStyleBackColor = True
+        '
+        'cmdAlarmPlay
+        '
+        resources.ApplyResources(Me.cmdAlarmPlay, "cmdAlarmPlay")
+        Me.cmdAlarmPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdAlarmPlay.Name = "cmdAlarmPlay"
+        Me.cmdAlarmPlay.UseVisualStyleBackColor = True
+        '
+        'txtAnnounceAlarm
+        '
+        resources.ApplyResources(Me.txtAnnounceAlarm, "txtAnnounceAlarm")
+        Me.txtAnnounceAlarm.Name = "txtAnnounceAlarm"
+        '
+        'chkAnnounceLinkAlarm
+        '
+        resources.ApplyResources(Me.chkAnnounceLinkAlarm, "chkAnnounceLinkAlarm")
+        Me.chkAnnounceLinkAlarm.Name = "chkAnnounceLinkAlarm"
+        Me.chkAnnounceLinkAlarm.UseVisualStyleBackColor = True
+        '
+        'cmdWarningPlay
+        '
+        resources.ApplyResources(Me.cmdWarningPlay, "cmdWarningPlay")
+        Me.cmdWarningPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdWarningPlay.Name = "cmdWarningPlay"
+        Me.cmdWarningPlay.UseVisualStyleBackColor = True
+        '
+        'txtAnnounceWarning
+        '
+        resources.ApplyResources(Me.txtAnnounceWarning, "txtAnnounceWarning")
+        Me.txtAnnounceWarning.Name = "txtAnnounceWarning"
+        '
+        'chkAnnounceLinkWarning
+        '
+        resources.ApplyResources(Me.chkAnnounceLinkWarning, "chkAnnounceLinkWarning")
+        Me.chkAnnounceLinkWarning.Name = "chkAnnounceLinkWarning"
+        Me.chkAnnounceLinkWarning.UseVisualStyleBackColor = True
         '
         'lblSpeechInterval
         '
@@ -962,16 +1077,29 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'lblClamptoGround
+        'Label4
         '
-        resources.ApplyResources(Me.lblClamptoGround, "lblClamptoGround")
-        Me.lblClamptoGround.Name = "lblClamptoGround"
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
         '
-        'chkClampToGround
+        'cbo2wayRetries
         '
-        resources.ApplyResources(Me.chkClampToGround, "chkClampToGround")
-        Me.chkClampToGround.Name = "chkClampToGround"
-        Me.chkClampToGround.UseVisualStyleBackColor = True
+        Me.cbo2wayRetries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbo2wayRetries.FormattingEnabled = True
+        resources.ApplyResources(Me.cbo2wayRetries, "cbo2wayRetries")
+        Me.cbo2wayRetries.Name = "cbo2wayRetries"
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        '
+        'cbo2wayTimeout
+        '
+        Me.cbo2wayTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbo2wayTimeout.FormattingEnabled = True
+        resources.ApplyResources(Me.cbo2wayTimeout, "cbo2wayTimeout")
+        Me.cbo2wayTimeout.Name = "cbo2wayTimeout"
         '
         'frmSettings
         '
@@ -988,6 +1116,8 @@ Partial Class frmSettings
         Me.tabGeneral.ResumeLayout(False)
         Me.grpGeneral.ResumeLayout(False)
         Me.tabGoogleEarth.ResumeLayout(False)
+        Me.grpGoogleEarthKey.ResumeLayout(False)
+        Me.grpGoogleEarthKey.PerformLayout()
         Me.grpGoogleEarthFeatures.ResumeLayout(False)
         Me.grpMissionPath.ResumeLayout(False)
         CType(Me.tbarMissionOpacity, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1028,8 +1158,6 @@ Partial Class frmSettings
     Friend WithEvents chkPitchReverse As System.Windows.Forms.CheckBox
     Friend WithEvents cbo3DModel As System.Windows.Forms.ComboBox
     Friend WithEvents lbl3DModel As System.Windows.Forms.Label
-    Friend WithEvents cboMaxSpeed As System.Windows.Forms.ComboBox
-    Friend WithEvents lblMaxSpeed As System.Windows.Forms.Label
     Friend WithEvents lblSpeedUnits As System.Windows.Forms.Label
     Friend WithEvents cboSpeedUnits As System.Windows.Forms.ComboBox
     Friend WithEvents lblDistanceUnits As System.Windows.Forms.Label
@@ -1125,4 +1253,22 @@ Partial Class frmSettings
     Friend WithEvents cboMapSource As System.Windows.Forms.ComboBox
     Friend WithEvents lblClamptoGround As System.Windows.Forms.Label
     Friend WithEvents chkClampToGround As System.Windows.Forms.CheckBox
+    Friend WithEvents cmdAlarmPlay As System.Windows.Forms.Button
+    Friend WithEvents txtAnnounceAlarm As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceLinkAlarm As System.Windows.Forms.CheckBox
+    Friend WithEvents cmdWarningPlay As System.Windows.Forms.Button
+    Friend WithEvents txtAnnounceWarning As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceLinkWarning As System.Windows.Forms.CheckBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents cboAlarmTimeout As System.Windows.Forms.ComboBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents cboWarningTimeout As System.Windows.Forms.ComboBox
+    Friend WithEvents grpGoogleEarthKey As System.Windows.Forms.GroupBox
+    Friend WithEvents txtGoogleEarthKey As System.Windows.Forms.TextBox
+    Friend WithEvents cboMaxSpeed As System.Windows.Forms.ComboBox
+    Friend WithEvents lblMaxSpeed As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents cbo2wayTimeout As System.Windows.Forms.ComboBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cbo2wayRetries As System.Windows.Forms.ComboBox
 End Class

@@ -62,7 +62,40 @@ Module modRegistry
         ' Stores all the cached changes to your INI file
         FlushPrivateProfileString(0, 0, 0, IIf(filename <> "", filename, strFilename))
     End Sub
+    Public Function DeleteRegSetting(ByVal section As String, ByVal subSection As String, Optional ByVal hKeyName As RegistryHive = RegistryHive.LocalMachine) As Boolean
+        Dim regKey As RegistryKey
 
+        Select Case hKeyName
+            Case RegistryHive.ClassesRoot
+                regKey = Registry.ClassesRoot.OpenSubKey(section, True)
+            Case RegistryHive.CurrentConfig
+                regKey = Registry.CurrentConfig.OpenSubKey(section, True)
+            Case RegistryHive.CurrentUser
+                regKey = Registry.CurrentUser.OpenSubKey(section, True)
+            Case RegistryHive.DynData
+                regKey = Registry.DynData.OpenSubKey(section, True)
+            Case RegistryHive.LocalMachine
+                regKey = Registry.LocalMachine.OpenSubKey(section, True)
+            Case RegistryHive.PerformanceData
+                regKey = Registry.PerformanceData.OpenSubKey(section, True)
+            Case RegistryHive.Users
+                regKey = Registry.Users.OpenSubKey(section, True)
+            Case Else
+                regKey = Registry.LocalMachine.OpenSubKey(section, True)
+        End Select
+
+        If regKey Is Nothing Then
+            DeleteRegSetting = False
+        Else
+            Try
+                regKey.DeleteSubKeyTree(subSection)
+                DeleteRegSetting = True
+            Catch
+                DeleteRegSetting = False
+            End Try
+            regKey.Close()
+        End If
+    End Function
     Public Function GetRegSetting(ByVal Section As String, ByVal Key As String, Optional ByVal defaultValue As String = "", Optional ByVal hKeyName As RegistryHive = RegistryHive.LocalMachine) As String
         Dim regKey As RegistryKey
 
@@ -132,6 +165,10 @@ Module modRegistry
                 Case Else
                     regKey = Registry.LocalMachine.CreateSubKey(Section)
             End Select
+        End If
+
+        If value Is Nothing Then
+            value = ""
         End If
 
         regKey.SetValue(Key, value, valueKind)

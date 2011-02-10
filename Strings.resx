@@ -172,6 +172,9 @@
     <value>Amps</value>
     <comment>Short - 6 characters or less</comment>
   </data>
+  <data name="Announce_Alarm_Default" xml:space="preserve">
+    <value>Danger! Danger! Signal lost for more than {alarm} seconds</value>
+  </data>
   <data name="Announce_ModeChange" xml:space="preserve">
     <value>Announce Mode Change</value>
   </data>
@@ -183,6 +186,9 @@
   </data>
   <data name="Announce_Regular_Interval_Default" xml:space="preserve">
     <value>en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour</value>
+  </data>
+  <data name="Announce_Warning_Default" xml:space="preserve">
+    <value>Warning, Signal lost for {warning} seconds</value>
   </data>
   <data name="Announce_Waypoints" xml:space="preserve">
     <value>Announce Waypoints</value>

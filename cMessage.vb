@@ -22,7 +22,9 @@ Public Class cMessage
         e_MessageType_FY21AP
         e_MessageType_AttoPilot
         e_MessageType_AttoPilot18
-        e_MessageType_Gluonpilot
+        e_MessageType_GluonpilotT
+        e_MessageType_GluonpilotC
+        e_MessageType_GluonpilotD
         e_MessageType_Paparazzi
         e_MessageType_AttoSetParam
         e_MessageType_AttoOk
@@ -39,4 +41,5 @@ Public Class cMessage
     Public VisibleSentence As String
     Public GPSDateTime As Date
     Public ValidDateTime As Boolean
+    Public VehicleID As Integer
 End Class

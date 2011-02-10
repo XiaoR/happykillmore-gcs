@@ -57,11 +57,14 @@ Partial Class frmMain
         Me.cmdMissionOverride = New System.Windows.Forms.Button
         Me.cmdSetHomeAlt = New System.Windows.Forms.Button
         Me.cmdMissionAttoAdd = New System.Windows.Forms.Button
+        Me.cmdMissionMavlinkAdd = New System.Windows.Forms.Button
         Me.tmrComPort = New System.Windows.Forms.Timer(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
         Me.mnuFile = New System.Windows.Forms.ToolStripDropDownButton
         Me.mnuSettings = New System.Windows.Forms.ToolStripMenuItem
+        Me.mnuJoystickCalibration = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator
         Me.mnuExit = New System.Windows.Forms.ToolStripMenuItem
         Me.mnuHelp = New System.Windows.Forms.ToolStripDropDownButton
@@ -103,7 +106,24 @@ Partial Class frmMain
         Me.cboLiveCameraSelect2 = New System.Windows.Forms.ComboBox
         Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.tabMissionPlanning = New System.Windows.Forms.TabPage
-        Me.lblMissionHomeAlt = New System.Windows.Forms.Label
+        Me.grpMissionControlMavlink = New System.Windows.Forms.GroupBox
+        Me.Label19 = New System.Windows.Forms.Label
+        Me.cboMissionMavlinkCommand = New System.Windows.Forms.ComboBox
+        Me.lblMissionStatusMavlink = New System.Windows.Forms.Label
+        Me.prgMissionMavlink = New System.Windows.Forms.ProgressBar
+        Me.cmdMissionMavlinkWrite = New System.Windows.Forms.Button
+        Me.cmdMissionMavlinkRead = New System.Windows.Forms.Button
+        Me.txtMissionMavlinkArg1 = New System.Windows.Forms.TextBox
+        Me.lblMissionMavlinkArg1 = New System.Windows.Forms.Label
+        Me.cmdMissionMavlinkSearch = New System.Windows.Forms.Button
+        Me.txtMissionAddressSearchMavlink = New System.Windows.Forms.TextBox
+        Me.Label33 = New System.Windows.Forms.Label
+        Me.txtMissionMavlinkArg2 = New System.Windows.Forms.TextBox
+        Me.lblMissionMavlinkArg2 = New System.Windows.Forms.Label
+        Me.txtMissionMavlinkArg4 = New System.Windows.Forms.TextBox
+        Me.lblMissionMavlinkArg4 = New System.Windows.Forms.Label
+        Me.txtMissionMavlinkArg3 = New System.Windows.Forms.TextBox
+        Me.lblMissionMavlinkArg3 = New System.Windows.Forms.Label
         Me.grpMissionControlAtto = New System.Windows.Forms.GroupBox
         Me.txtMissionAttoDefaultSpeed = New System.Windows.Forms.TextBox
         Me.Label12 = New System.Windows.Forms.Label
@@ -117,23 +137,24 @@ Partial Class frmMain
         Me.cboMissionAttoLoiterDirection = New System.Windows.Forms.ComboBox
         Me.Label7 = New System.Windows.Forms.Label
         Me.cboMissionAttoLoiterDuration = New System.Windows.Forms.ComboBox
-        Me.lblMissionStatus = New System.Windows.Forms.Label
+        Me.lblMissionStatusAtto = New System.Windows.Forms.Label
         Me.Label6 = New System.Windows.Forms.Label
-        Me.prgMission = New System.Windows.Forms.ProgressBar
+        Me.prgMissionAtto = New System.Windows.Forms.ProgressBar
         Me.cboMissionAttoLoiter = New System.Windows.Forms.ComboBox
-        Me.cmdMissionWrite = New System.Windows.Forms.Button
-        Me.cmdMissionRead = New System.Windows.Forms.Button
-        Me.txtMissionSpeed = New System.Windows.Forms.TextBox
+        Me.cmdMissionAttoWrite = New System.Windows.Forms.Button
+        Me.cmdMissionAttoRead = New System.Windows.Forms.Button
+        Me.txtMissionAttoSpeed = New System.Windows.Forms.TextBox
         Me.Label5 = New System.Windows.Forms.Label
         Me.cmdMissionAttoSearch = New System.Windows.Forms.Button
         Me.txtMissionAddressSearchAtto = New System.Windows.Forms.TextBox
         Me.Label4 = New System.Windows.Forms.Label
-        Me.txtMissionAltitude = New System.Windows.Forms.TextBox
+        Me.txtMissionAttoAltitude = New System.Windows.Forms.TextBox
         Me.Label3 = New System.Windows.Forms.Label
-        Me.txtMissionLongitude = New System.Windows.Forms.TextBox
+        Me.txtMissionAttoLongitude = New System.Windows.Forms.TextBox
         Me.Label2 = New System.Windows.Forms.Label
-        Me.txtMissionLatitude = New System.Windows.Forms.TextBox
+        Me.txtMissionAttoLatitude = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
+        Me.lblMissionHomeAlt = New System.Windows.Forms.Label
         Me.grpMissionControlGeneric = New System.Windows.Forms.GroupBox
         Me.Label13 = New System.Windows.Forms.Label
         Me.cboMissionGenericOffset = New System.Windows.Forms.ComboBox
@@ -156,14 +177,26 @@ Partial Class frmMain
         Me.cmdMissionNew = New System.Windows.Forms.Button
         Me.dgMission = New System.Windows.Forms.DataGridView
         Me.tabMissionControl = New System.Windows.Forms.TabPage
+        Me.grpControlMavlink = New System.Windows.Forms.GroupBox
+        Me.Label26 = New System.Windows.Forms.Label
+        Me.cboControlMavlinkMessageSendRate = New System.Windows.Forms.ComboBox
+        Me.cmdControlMavlinkSetHome = New System.Windows.Forms.Button
+        Me.txtControlMavlinkSetAltitude = New System.Windows.Forms.TextBox
+        Me.cboControlMavlinkAction = New System.Windows.Forms.ComboBox
+        Me.cmdControlMavlinkAction = New System.Windows.Forms.Button
+        Me.cmdControlMavlinkSetAltitude = New System.Windows.Forms.Button
+        Me.cboControlMavlinkMode = New System.Windows.Forms.ComboBox
+        Me.lblControlMavlinkStatus = New System.Windows.Forms.Label
+        Me.cmdControlMavlinkMode = New System.Windows.Forms.Button
         Me.grpControlAtto = New System.Windows.Forms.GroupBox
+        Me.cmdControlAttoTriggerServo = New System.Windows.Forms.Button
         Me.cboControlAttoWPNumber = New System.Windows.Forms.ComboBox
         Me.cmdControlAttoResetMission = New System.Windows.Forms.Button
         Me.cmdControlAttoResetReboot = New System.Windows.Forms.Button
         Me.cmdControlAttoResetSpeed = New System.Windows.Forms.Button
         Me.txtControlAttoSpeed = New System.Windows.Forms.TextBox
         Me.cmdControlAttoSpeed = New System.Windows.Forms.Button
-        Me.lblControlStatus = New System.Windows.Forms.Label
+        Me.lblControlAttoStatus = New System.Windows.Forms.Label
         Me.cmdControlAttoReturnRally = New System.Windows.Forms.Button
         Me.txtControlAttoPressure = New System.Windows.Forms.TextBox
         Me.cmdControlAttoReturnHome = New System.Windows.Forms.Button
@@ -294,6 +327,27 @@ Partial Class frmMain
         Me.tbarSensor3 = New System.Windows.Forms.TrackBar
         Me.tbarSensor2 = New System.Windows.Forms.TrackBar
         Me.tbarSensor1 = New System.Windows.Forms.TrackBar
+        Me.tabPortJoystick = New System.Windows.Forms.TabPage
+        Me.lblJoystickMode = New System.Windows.Forms.Label
+        Me.tbarJoystickMode = New System.Windows.Forms.TrackBar
+        Me.Label20 = New System.Windows.Forms.Label
+        Me.cboJoystickOutput = New System.Windows.Forms.ComboBox
+        Me.lblJoystickDevice = New System.Windows.Forms.Label
+        Me.chkJoystickEnable = New System.Windows.Forms.CheckBox
+        Me.cmdJoystickCalibrate = New System.Windows.Forms.Button
+        Me.lblJoystickRudder = New System.Windows.Forms.Label
+        Me.lblJoystickAileron = New System.Windows.Forms.Label
+        Me.lblJoystickElevator = New System.Windows.Forms.Label
+        Me.tbarJoystickRudder = New System.Windows.Forms.TrackBar
+        Me.tbarJoystickAileron = New System.Windows.Forms.TrackBar
+        Me.tbarJoystickElevator = New System.Windows.Forms.TrackBar
+        Me.Label18 = New System.Windows.Forms.Label
+        Me.Label17 = New System.Windows.Forms.Label
+        Me.Label16 = New System.Windows.Forms.Label
+        Me.Label15 = New System.Windows.Forms.Label
+        Me.lblJoystickThrottle = New System.Windows.Forms.Label
+        Me.tbarJoystickThrottle = New System.Windows.Forms.TrackBar
+        Me.Label14 = New System.Windows.Forms.Label
         Me.lblResolution = New System.Windows.Forms.Label
         Me.JoystickInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
         Me.cmdExit = New System.Windows.Forms.Button
@@ -302,6 +356,7 @@ Partial Class frmMain
         Me.cmdCenterOnPlane = New System.Windows.Forms.Button
         Me.tabMapView = New System.Windows.Forms.TabControl
         Me.tabViewMapView = New System.Windows.Forms.TabPage
+        Me.chkViewHeadLock = New System.Windows.Forms.CheckBox
         Me.chkViewFirstPerson = New System.Windows.Forms.CheckBox
         Me.chkViewChaseCam = New System.Windows.Forms.CheckBox
         Me.chkViewOverhead = New System.Windows.Forms.CheckBox
@@ -318,7 +373,12 @@ Partial Class frmMain
         Me.cboConfigVehicle = New System.Windows.Forms.ComboBox
         Me.lblDevice = New System.Windows.Forms.Label
         Me.cboConfigDevice = New System.Windows.Forms.ComboBox
-        Me.cmdControlAttoTriggerServo = New System.Windows.Forms.Button
+        Me.tmrJoystick = New System.Windows.Forms.Timer(Me.components)
+        Me.pnlLinkLost = New System.Windows.Forms.Panel
+        Me.lblLinkLostMessageType = New System.Windows.Forms.Label
+        Me.lblLinkLostTime = New System.Windows.Forms.Label
+        Me.lblLinkLostMessage = New System.Windows.Forms.Label
+        Me.lblLinkLostLabel = New System.Windows.Forms.Label
         CType(Me.tbarModelScale, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarTilt, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarPan, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -333,10 +393,12 @@ Partial Class frmMain
         Me.tabCommandLine.SuspendLayout()
         Me.tabInstrumentLiveCamera.SuspendLayout()
         Me.tabMissionPlanning.SuspendLayout()
+        Me.grpMissionControlMavlink.SuspendLayout()
         Me.grpMissionControlAtto.SuspendLayout()
         Me.grpMissionControlGeneric.SuspendLayout()
         CType(Me.dgMission, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabMissionControl.SuspendLayout()
+        Me.grpControlMavlink.SuspendLayout()
         Me.grpControlAtto.SuspendLayout()
         Me.tabConfiguration.SuspendLayout()
         CType(Me.dgConfigVariable, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -365,10 +427,17 @@ Partial Class frmMain
         CType(Me.tbarSensor3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabPortJoystick.SuspendLayout()
+        CType(Me.tbarJoystickMode, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickRudder, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickAileron, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickElevator, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickThrottle, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabMapView.SuspendLayout()
         Me.tabViewMapView.SuspendLayout()
         Me.tabViewLiveCamera.SuspendLayout()
         Me.pnlDevice.SuspendLayout()
+        Me.pnlLinkLost.SuspendLayout()
         Me.SuspendLayout()
         '
         'tmrSearch
@@ -379,9 +448,7 @@ Partial Class frmMain
         '
         'serialPortIn
         '
-        Me.serialPortIn.DtrEnable = True
         Me.serialPortIn.ReceivedBytesThreshold = 4096
-        Me.serialPortIn.RtsEnable = True
         Me.serialPortIn.WriteTimeout = 25
         '
         'cmdExpandInstruments
@@ -555,6 +622,13 @@ Partial Class frmMain
         Me.ToolTip1.SetToolTip(Me.cmdMissionAttoAdd, resources.GetString("cmdMissionAttoAdd.ToolTip"))
         Me.cmdMissionAttoAdd.UseVisualStyleBackColor = True
         '
+        'cmdMissionMavlinkAdd
+        '
+        resources.ApplyResources(Me.cmdMissionMavlinkAdd, "cmdMissionMavlinkAdd")
+        Me.cmdMissionMavlinkAdd.Name = "cmdMissionMavlinkAdd"
+        Me.ToolTip1.SetToolTip(Me.cmdMissionMavlinkAdd, resources.GetString("cmdMissionMavlinkAdd.ToolTip"))
+        Me.cmdMissionMavlinkAdd.UseVisualStyleBackColor = True
+        '
         'tmrComPort
         '
         Me.tmrComPort.Interval = 50
@@ -594,7 +668,7 @@ Partial Class frmMain
         'mnuFile
         '
         Me.mnuFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.mnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuSettings, Me.ToolStripMenuItem2, Me.mnuExit})
+        Me.mnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuSettings, Me.mnuJoystickCalibration, Me.ToolStripMenuItem3, Me.ToolStripMenuItem2, Me.mnuExit})
         resources.ApplyResources(Me.mnuFile, "mnuFile")
         Me.mnuFile.Name = "mnuFile"
         '
@@ -602,6 +676,16 @@ Partial Class frmMain
         '
         Me.mnuSettings.Name = "mnuSettings"
         resources.ApplyResources(Me.mnuSettings, "mnuSettings")
+        '
+        'mnuJoystickCalibration
+        '
+        Me.mnuJoystickCalibration.Name = "mnuJoystickCalibration"
+        resources.ApplyResources(Me.mnuJoystickCalibration, "mnuJoystickCalibration")
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
         '
         'ToolStripMenuItem2
         '
@@ -876,9 +960,10 @@ Partial Class frmMain
         '
         'tabMissionPlanning
         '
+        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlMavlink)
+        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlAtto)
         Me.tabMissionPlanning.Controls.Add(Me.cmdMissionOverride)
         Me.tabMissionPlanning.Controls.Add(Me.lblMissionHomeAlt)
-        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlAtto)
         Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlGeneric)
         Me.tabMissionPlanning.Controls.Add(Me.chkMissionInsert)
         Me.tabMissionPlanning.Controls.Add(Me.lblMissionDoubleClickLabel)
@@ -895,10 +980,120 @@ Partial Class frmMain
         Me.tabMissionPlanning.Name = "tabMissionPlanning"
         Me.tabMissionPlanning.UseVisualStyleBackColor = True
         '
-        'lblMissionHomeAlt
+        'grpMissionControlMavlink
         '
-        resources.ApplyResources(Me.lblMissionHomeAlt, "lblMissionHomeAlt")
-        Me.lblMissionHomeAlt.Name = "lblMissionHomeAlt"
+        Me.grpMissionControlMavlink.Controls.Add(Me.Label19)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkCommand)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkAdd)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionStatusMavlink)
+        Me.grpMissionControlMavlink.Controls.Add(Me.prgMissionMavlink)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkWrite)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkRead)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg1)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg1)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkSearch)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionAddressSearchMavlink)
+        Me.grpMissionControlMavlink.Controls.Add(Me.Label33)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg2)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg2)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg4)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg4)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg3)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg3)
+        resources.ApplyResources(Me.grpMissionControlMavlink, "grpMissionControlMavlink")
+        Me.grpMissionControlMavlink.Name = "grpMissionControlMavlink"
+        Me.grpMissionControlMavlink.TabStop = False
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
+        '
+        'cboMissionMavlinkCommand
+        '
+        Me.cboMissionMavlinkCommand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionMavlinkCommand.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionMavlinkCommand, "cboMissionMavlinkCommand")
+        Me.cboMissionMavlinkCommand.Name = "cboMissionMavlinkCommand"
+        Me.cboMissionMavlinkCommand.Sorted = True
+        '
+        'lblMissionStatusMavlink
+        '
+        resources.ApplyResources(Me.lblMissionStatusMavlink, "lblMissionStatusMavlink")
+        Me.lblMissionStatusMavlink.Name = "lblMissionStatusMavlink"
+        '
+        'prgMissionMavlink
+        '
+        resources.ApplyResources(Me.prgMissionMavlink, "prgMissionMavlink")
+        Me.prgMissionMavlink.Name = "prgMissionMavlink"
+        '
+        'cmdMissionMavlinkWrite
+        '
+        resources.ApplyResources(Me.cmdMissionMavlinkWrite, "cmdMissionMavlinkWrite")
+        Me.cmdMissionMavlinkWrite.Name = "cmdMissionMavlinkWrite"
+        Me.cmdMissionMavlinkWrite.UseVisualStyleBackColor = True
+        '
+        'cmdMissionMavlinkRead
+        '
+        resources.ApplyResources(Me.cmdMissionMavlinkRead, "cmdMissionMavlinkRead")
+        Me.cmdMissionMavlinkRead.Name = "cmdMissionMavlinkRead"
+        Me.cmdMissionMavlinkRead.UseVisualStyleBackColor = True
+        '
+        'txtMissionMavlinkArg1
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg1, "txtMissionMavlinkArg1")
+        Me.txtMissionMavlinkArg1.Name = "txtMissionMavlinkArg1"
+        '
+        'lblMissionMavlinkArg1
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg1, "lblMissionMavlinkArg1")
+        Me.lblMissionMavlinkArg1.Name = "lblMissionMavlinkArg1"
+        '
+        'cmdMissionMavlinkSearch
+        '
+        resources.ApplyResources(Me.cmdMissionMavlinkSearch, "cmdMissionMavlinkSearch")
+        Me.cmdMissionMavlinkSearch.Name = "cmdMissionMavlinkSearch"
+        Me.cmdMissionMavlinkSearch.UseVisualStyleBackColor = True
+        '
+        'txtMissionAddressSearchMavlink
+        '
+        resources.ApplyResources(Me.txtMissionAddressSearchMavlink, "txtMissionAddressSearchMavlink")
+        Me.txtMissionAddressSearchMavlink.Name = "txtMissionAddressSearchMavlink"
+        '
+        'Label33
+        '
+        resources.ApplyResources(Me.Label33, "Label33")
+        Me.Label33.Name = "Label33"
+        '
+        'txtMissionMavlinkArg2
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg2, "txtMissionMavlinkArg2")
+        Me.txtMissionMavlinkArg2.Name = "txtMissionMavlinkArg2"
+        '
+        'lblMissionMavlinkArg2
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg2, "lblMissionMavlinkArg2")
+        Me.lblMissionMavlinkArg2.Name = "lblMissionMavlinkArg2"
+        '
+        'txtMissionMavlinkArg4
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg4, "txtMissionMavlinkArg4")
+        Me.txtMissionMavlinkArg4.Name = "txtMissionMavlinkArg4"
+        '
+        'lblMissionMavlinkArg4
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg4, "lblMissionMavlinkArg4")
+        Me.lblMissionMavlinkArg4.Name = "lblMissionMavlinkArg4"
+        '
+        'txtMissionMavlinkArg3
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg3, "txtMissionMavlinkArg3")
+        Me.txtMissionMavlinkArg3.Name = "txtMissionMavlinkArg3"
+        '
+        'lblMissionMavlinkArg3
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg3, "lblMissionMavlinkArg3")
+        Me.lblMissionMavlinkArg3.Name = "lblMissionMavlinkArg3"
         '
         'grpMissionControlAtto
         '
@@ -915,22 +1110,22 @@ Partial Class frmMain
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiterDirection)
         Me.grpMissionControlAtto.Controls.Add(Me.Label7)
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiterDuration)
-        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionStatus)
+        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionStatusAtto)
         Me.grpMissionControlAtto.Controls.Add(Me.Label6)
-        Me.grpMissionControlAtto.Controls.Add(Me.prgMission)
+        Me.grpMissionControlAtto.Controls.Add(Me.prgMissionAtto)
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoLoiter)
-        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionWrite)
-        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionRead)
-        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionSpeed)
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionAttoWrite)
+        Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionAttoRead)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoSpeed)
         Me.grpMissionControlAtto.Controls.Add(Me.Label5)
         Me.grpMissionControlAtto.Controls.Add(Me.cmdMissionAttoSearch)
         Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAddressSearchAtto)
         Me.grpMissionControlAtto.Controls.Add(Me.Label4)
-        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAltitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoAltitude)
         Me.grpMissionControlAtto.Controls.Add(Me.Label3)
-        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionLongitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoLongitude)
         Me.grpMissionControlAtto.Controls.Add(Me.Label2)
-        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionLatitude)
+        Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoLatitude)
         Me.grpMissionControlAtto.Controls.Add(Me.Label1)
         resources.ApplyResources(Me.grpMissionControlAtto, "grpMissionControlAtto")
         Me.grpMissionControlAtto.Name = "grpMissionControlAtto"
@@ -1011,20 +1206,20 @@ Partial Class frmMain
         resources.ApplyResources(Me.cboMissionAttoLoiterDuration, "cboMissionAttoLoiterDuration")
         Me.cboMissionAttoLoiterDuration.Name = "cboMissionAttoLoiterDuration"
         '
-        'lblMissionStatus
+        'lblMissionStatusAtto
         '
-        resources.ApplyResources(Me.lblMissionStatus, "lblMissionStatus")
-        Me.lblMissionStatus.Name = "lblMissionStatus"
+        resources.ApplyResources(Me.lblMissionStatusAtto, "lblMissionStatusAtto")
+        Me.lblMissionStatusAtto.Name = "lblMissionStatusAtto"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
         Me.Label6.Name = "Label6"
         '
-        'prgMission
+        'prgMissionAtto
         '
-        resources.ApplyResources(Me.prgMission, "prgMission")
-        Me.prgMission.Name = "prgMission"
+        resources.ApplyResources(Me.prgMissionAtto, "prgMissionAtto")
+        Me.prgMissionAtto.Name = "prgMissionAtto"
         '
         'cboMissionAttoLoiter
         '
@@ -1034,22 +1229,22 @@ Partial Class frmMain
         resources.ApplyResources(Me.cboMissionAttoLoiter, "cboMissionAttoLoiter")
         Me.cboMissionAttoLoiter.Name = "cboMissionAttoLoiter"
         '
-        'cmdMissionWrite
+        'cmdMissionAttoWrite
         '
-        resources.ApplyResources(Me.cmdMissionWrite, "cmdMissionWrite")
-        Me.cmdMissionWrite.Name = "cmdMissionWrite"
-        Me.cmdMissionWrite.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cmdMissionAttoWrite, "cmdMissionAttoWrite")
+        Me.cmdMissionAttoWrite.Name = "cmdMissionAttoWrite"
+        Me.cmdMissionAttoWrite.UseVisualStyleBackColor = True
         '
-        'cmdMissionRead
+        'cmdMissionAttoRead
         '
-        resources.ApplyResources(Me.cmdMissionRead, "cmdMissionRead")
-        Me.cmdMissionRead.Name = "cmdMissionRead"
-        Me.cmdMissionRead.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cmdMissionAttoRead, "cmdMissionAttoRead")
+        Me.cmdMissionAttoRead.Name = "cmdMissionAttoRead"
+        Me.cmdMissionAttoRead.UseVisualStyleBackColor = True
         '
-        'txtMissionSpeed
+        'txtMissionAttoSpeed
         '
-        resources.ApplyResources(Me.txtMissionSpeed, "txtMissionSpeed")
-        Me.txtMissionSpeed.Name = "txtMissionSpeed"
+        resources.ApplyResources(Me.txtMissionAttoSpeed, "txtMissionAttoSpeed")
+        Me.txtMissionAttoSpeed.Name = "txtMissionAttoSpeed"
         '
         'Label5
         '
@@ -1072,35 +1267,40 @@ Partial Class frmMain
         resources.ApplyResources(Me.Label4, "Label4")
         Me.Label4.Name = "Label4"
         '
-        'txtMissionAltitude
+        'txtMissionAttoAltitude
         '
-        resources.ApplyResources(Me.txtMissionAltitude, "txtMissionAltitude")
-        Me.txtMissionAltitude.Name = "txtMissionAltitude"
+        resources.ApplyResources(Me.txtMissionAttoAltitude, "txtMissionAttoAltitude")
+        Me.txtMissionAttoAltitude.Name = "txtMissionAttoAltitude"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
         '
-        'txtMissionLongitude
+        'txtMissionAttoLongitude
         '
-        resources.ApplyResources(Me.txtMissionLongitude, "txtMissionLongitude")
-        Me.txtMissionLongitude.Name = "txtMissionLongitude"
+        resources.ApplyResources(Me.txtMissionAttoLongitude, "txtMissionAttoLongitude")
+        Me.txtMissionAttoLongitude.Name = "txtMissionAttoLongitude"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
         Me.Label2.Name = "Label2"
         '
-        'txtMissionLatitude
+        'txtMissionAttoLatitude
         '
-        resources.ApplyResources(Me.txtMissionLatitude, "txtMissionLatitude")
-        Me.txtMissionLatitude.Name = "txtMissionLatitude"
+        resources.ApplyResources(Me.txtMissionAttoLatitude, "txtMissionAttoLatitude")
+        Me.txtMissionAttoLatitude.Name = "txtMissionAttoLatitude"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
+        '
+        'lblMissionHomeAlt
+        '
+        resources.ApplyResources(Me.lblMissionHomeAlt, "lblMissionHomeAlt")
+        Me.lblMissionHomeAlt.Name = "lblMissionHomeAlt"
         '
         'grpMissionControlGeneric
         '
@@ -1264,10 +1464,92 @@ Partial Class frmMain
         '
         'tabMissionControl
         '
+        Me.tabMissionControl.Controls.Add(Me.grpControlMavlink)
         Me.tabMissionControl.Controls.Add(Me.grpControlAtto)
         resources.ApplyResources(Me.tabMissionControl, "tabMissionControl")
         Me.tabMissionControl.Name = "tabMissionControl"
         Me.tabMissionControl.UseVisualStyleBackColor = True
+        '
+        'grpControlMavlink
+        '
+        Me.grpControlMavlink.Controls.Add(Me.Label26)
+        Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkMessageSendRate)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkSetHome)
+        Me.grpControlMavlink.Controls.Add(Me.txtControlMavlinkSetAltitude)
+        Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkAction)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkAction)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkSetAltitude)
+        Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkMode)
+        Me.grpControlMavlink.Controls.Add(Me.lblControlMavlinkStatus)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkMode)
+        resources.ApplyResources(Me.grpControlMavlink, "grpControlMavlink")
+        Me.grpControlMavlink.Name = "grpControlMavlink"
+        Me.grpControlMavlink.TabStop = False
+        '
+        'Label26
+        '
+        resources.ApplyResources(Me.Label26, "Label26")
+        Me.Label26.Name = "Label26"
+        '
+        'cboControlMavlinkMessageSendRate
+        '
+        Me.cboControlMavlinkMessageSendRate.DropDownHeight = 300
+        Me.cboControlMavlinkMessageSendRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboControlMavlinkMessageSendRate.FormattingEnabled = True
+        resources.ApplyResources(Me.cboControlMavlinkMessageSendRate, "cboControlMavlinkMessageSendRate")
+        Me.cboControlMavlinkMessageSendRate.Name = "cboControlMavlinkMessageSendRate"
+        '
+        'cmdControlMavlinkSetHome
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkSetHome, "cmdControlMavlinkSetHome")
+        Me.cmdControlMavlinkSetHome.Name = "cmdControlMavlinkSetHome"
+        Me.cmdControlMavlinkSetHome.UseVisualStyleBackColor = True
+        '
+        'txtControlMavlinkSetAltitude
+        '
+        resources.ApplyResources(Me.txtControlMavlinkSetAltitude, "txtControlMavlinkSetAltitude")
+        Me.txtControlMavlinkSetAltitude.Name = "txtControlMavlinkSetAltitude"
+        '
+        'cboControlMavlinkAction
+        '
+        Me.cboControlMavlinkAction.DropDownHeight = 300
+        Me.cboControlMavlinkAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboControlMavlinkAction.FormattingEnabled = True
+        resources.ApplyResources(Me.cboControlMavlinkAction, "cboControlMavlinkAction")
+        Me.cboControlMavlinkAction.Name = "cboControlMavlinkAction"
+        Me.cboControlMavlinkAction.Sorted = True
+        '
+        'cmdControlMavlinkAction
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkAction, "cmdControlMavlinkAction")
+        Me.cmdControlMavlinkAction.Name = "cmdControlMavlinkAction"
+        Me.cmdControlMavlinkAction.UseVisualStyleBackColor = True
+        '
+        'cmdControlMavlinkSetAltitude
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkSetAltitude, "cmdControlMavlinkSetAltitude")
+        Me.cmdControlMavlinkSetAltitude.Name = "cmdControlMavlinkSetAltitude"
+        Me.cmdControlMavlinkSetAltitude.UseVisualStyleBackColor = True
+        '
+        'cboControlMavlinkMode
+        '
+        Me.cboControlMavlinkMode.DropDownHeight = 300
+        Me.cboControlMavlinkMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboControlMavlinkMode.FormattingEnabled = True
+        resources.ApplyResources(Me.cboControlMavlinkMode, "cboControlMavlinkMode")
+        Me.cboControlMavlinkMode.Name = "cboControlMavlinkMode"
+        Me.cboControlMavlinkMode.Sorted = True
+        '
+        'lblControlMavlinkStatus
+        '
+        resources.ApplyResources(Me.lblControlMavlinkStatus, "lblControlMavlinkStatus")
+        Me.lblControlMavlinkStatus.Name = "lblControlMavlinkStatus"
+        '
+        'cmdControlMavlinkMode
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkMode, "cmdControlMavlinkMode")
+        Me.cmdControlMavlinkMode.Name = "cmdControlMavlinkMode"
+        Me.cmdControlMavlinkMode.UseVisualStyleBackColor = True
         '
         'grpControlAtto
         '
@@ -1278,7 +1560,7 @@ Partial Class frmMain
         Me.grpControlAtto.Controls.Add(Me.cmdControlAttoResetSpeed)
         Me.grpControlAtto.Controls.Add(Me.txtControlAttoSpeed)
         Me.grpControlAtto.Controls.Add(Me.cmdControlAttoSpeed)
-        Me.grpControlAtto.Controls.Add(Me.lblControlStatus)
+        Me.grpControlAtto.Controls.Add(Me.lblControlAttoStatus)
         Me.grpControlAtto.Controls.Add(Me.cmdControlAttoReturnRally)
         Me.grpControlAtto.Controls.Add(Me.txtControlAttoPressure)
         Me.grpControlAtto.Controls.Add(Me.cmdControlAttoReturnHome)
@@ -1288,6 +1570,12 @@ Partial Class frmMain
         resources.ApplyResources(Me.grpControlAtto, "grpControlAtto")
         Me.grpControlAtto.Name = "grpControlAtto"
         Me.grpControlAtto.TabStop = False
+        '
+        'cmdControlAttoTriggerServo
+        '
+        resources.ApplyResources(Me.cmdControlAttoTriggerServo, "cmdControlAttoTriggerServo")
+        Me.cmdControlAttoTriggerServo.Name = "cmdControlAttoTriggerServo"
+        Me.cmdControlAttoTriggerServo.UseVisualStyleBackColor = True
         '
         'cboControlAttoWPNumber
         '
@@ -1325,10 +1613,10 @@ Partial Class frmMain
         Me.cmdControlAttoSpeed.Name = "cmdControlAttoSpeed"
         Me.cmdControlAttoSpeed.UseVisualStyleBackColor = True
         '
-        'lblControlStatus
+        'lblControlAttoStatus
         '
-        resources.ApplyResources(Me.lblControlStatus, "lblControlStatus")
-        Me.lblControlStatus.Name = "lblControlStatus"
+        resources.ApplyResources(Me.lblControlAttoStatus, "lblControlAttoStatus")
+        Me.lblControlAttoStatus.Name = "lblControlAttoStatus"
         '
         'cmdControlAttoReturnRally
         '
@@ -1630,6 +1918,7 @@ Partial Class frmMain
         Me.tabPortControl.Controls.Add(Me.tabPortTracking)
         Me.tabPortControl.Controls.Add(Me.tabPortServos)
         Me.tabPortControl.Controls.Add(Me.tabPortSensors)
+        Me.tabPortControl.Controls.Add(Me.tabPortJoystick)
         resources.ApplyResources(Me.tabPortControl, "tabPortControl")
         Me.tabPortControl.Name = "tabPortControl"
         Me.tabPortControl.SelectedIndex = 0
@@ -2326,6 +2615,166 @@ Partial Class frmMain
         Me.tbarSensor1.TabStop = False
         Me.tbarSensor1.TickStyle = System.Windows.Forms.TickStyle.None
         '
+        'tabPortJoystick
+        '
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickMode)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickMode)
+        Me.tabPortJoystick.Controls.Add(Me.Label20)
+        Me.tabPortJoystick.Controls.Add(Me.cboJoystickOutput)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickDevice)
+        Me.tabPortJoystick.Controls.Add(Me.chkJoystickEnable)
+        Me.tabPortJoystick.Controls.Add(Me.cmdJoystickCalibrate)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickRudder)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickAileron)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickElevator)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickRudder)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickAileron)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickElevator)
+        Me.tabPortJoystick.Controls.Add(Me.Label18)
+        Me.tabPortJoystick.Controls.Add(Me.Label17)
+        Me.tabPortJoystick.Controls.Add(Me.Label16)
+        Me.tabPortJoystick.Controls.Add(Me.Label15)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickThrottle)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickThrottle)
+        Me.tabPortJoystick.Controls.Add(Me.Label14)
+        resources.ApplyResources(Me.tabPortJoystick, "tabPortJoystick")
+        Me.tabPortJoystick.Name = "tabPortJoystick"
+        Me.tabPortJoystick.UseVisualStyleBackColor = True
+        '
+        'lblJoystickMode
+        '
+        resources.ApplyResources(Me.lblJoystickMode, "lblJoystickMode")
+        Me.lblJoystickMode.Name = "lblJoystickMode"
+        '
+        'tbarJoystickMode
+        '
+        resources.ApplyResources(Me.tbarJoystickMode, "tbarJoystickMode")
+        Me.tbarJoystickMode.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickMode.LargeChange = 1
+        Me.tbarJoystickMode.Maximum = 10000
+        Me.tbarJoystickMode.Minimum = -10000
+        Me.tbarJoystickMode.Name = "tbarJoystickMode"
+        Me.tbarJoystickMode.TabStop = False
+        Me.tbarJoystickMode.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'Label20
+        '
+        resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.Name = "Label20"
+        '
+        'cboJoystickOutput
+        '
+        Me.cboJoystickOutput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboJoystickOutput.FormattingEnabled = True
+        resources.ApplyResources(Me.cboJoystickOutput, "cboJoystickOutput")
+        Me.cboJoystickOutput.Name = "cboJoystickOutput"
+        '
+        'lblJoystickDevice
+        '
+        resources.ApplyResources(Me.lblJoystickDevice, "lblJoystickDevice")
+        Me.lblJoystickDevice.Name = "lblJoystickDevice"
+        '
+        'chkJoystickEnable
+        '
+        resources.ApplyResources(Me.chkJoystickEnable, "chkJoystickEnable")
+        Me.chkJoystickEnable.Name = "chkJoystickEnable"
+        Me.chkJoystickEnable.UseVisualStyleBackColor = True
+        '
+        'cmdJoystickCalibrate
+        '
+        resources.ApplyResources(Me.cmdJoystickCalibrate, "cmdJoystickCalibrate")
+        Me.cmdJoystickCalibrate.Name = "cmdJoystickCalibrate"
+        Me.cmdJoystickCalibrate.UseVisualStyleBackColor = True
+        '
+        'lblJoystickRudder
+        '
+        resources.ApplyResources(Me.lblJoystickRudder, "lblJoystickRudder")
+        Me.lblJoystickRudder.Name = "lblJoystickRudder"
+        '
+        'lblJoystickAileron
+        '
+        resources.ApplyResources(Me.lblJoystickAileron, "lblJoystickAileron")
+        Me.lblJoystickAileron.Name = "lblJoystickAileron"
+        '
+        'lblJoystickElevator
+        '
+        resources.ApplyResources(Me.lblJoystickElevator, "lblJoystickElevator")
+        Me.lblJoystickElevator.Name = "lblJoystickElevator"
+        '
+        'tbarJoystickRudder
+        '
+        resources.ApplyResources(Me.tbarJoystickRudder, "tbarJoystickRudder")
+        Me.tbarJoystickRudder.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickRudder.LargeChange = 1
+        Me.tbarJoystickRudder.Maximum = 10000
+        Me.tbarJoystickRudder.Minimum = -10000
+        Me.tbarJoystickRudder.Name = "tbarJoystickRudder"
+        Me.tbarJoystickRudder.TabStop = False
+        Me.tbarJoystickRudder.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'tbarJoystickAileron
+        '
+        resources.ApplyResources(Me.tbarJoystickAileron, "tbarJoystickAileron")
+        Me.tbarJoystickAileron.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickAileron.LargeChange = 1
+        Me.tbarJoystickAileron.Maximum = 10000
+        Me.tbarJoystickAileron.Minimum = -10000
+        Me.tbarJoystickAileron.Name = "tbarJoystickAileron"
+        Me.tbarJoystickAileron.TabStop = False
+        Me.tbarJoystickAileron.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'tbarJoystickElevator
+        '
+        resources.ApplyResources(Me.tbarJoystickElevator, "tbarJoystickElevator")
+        Me.tbarJoystickElevator.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickElevator.LargeChange = 1
+        Me.tbarJoystickElevator.Maximum = 10000
+        Me.tbarJoystickElevator.Minimum = -10000
+        Me.tbarJoystickElevator.Name = "tbarJoystickElevator"
+        Me.tbarJoystickElevator.TabStop = False
+        Me.tbarJoystickElevator.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'Label18
+        '
+        resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.Name = "Label18"
+        '
+        'Label17
+        '
+        resources.ApplyResources(Me.Label17, "Label17")
+        Me.Label17.Name = "Label17"
+        '
+        'Label16
+        '
+        resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.Name = "Label16"
+        '
+        'Label15
+        '
+        resources.ApplyResources(Me.Label15, "Label15")
+        Me.Label15.Name = "Label15"
+        '
+        'lblJoystickThrottle
+        '
+        resources.ApplyResources(Me.lblJoystickThrottle, "lblJoystickThrottle")
+        Me.lblJoystickThrottle.Name = "lblJoystickThrottle"
+        '
+        'tbarJoystickThrottle
+        '
+        resources.ApplyResources(Me.tbarJoystickThrottle, "tbarJoystickThrottle")
+        Me.tbarJoystickThrottle.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickThrottle.LargeChange = 1
+        Me.tbarJoystickThrottle.Maximum = 10000
+        Me.tbarJoystickThrottle.Minimum = -10000
+        Me.tbarJoystickThrottle.Name = "tbarJoystickThrottle"
+        Me.tbarJoystickThrottle.TabStop = False
+        Me.tbarJoystickThrottle.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'Label14
+        '
+        resources.ApplyResources(Me.Label14, "Label14")
+        Me.Label14.Name = "Label14"
+        '
         'lblResolution
         '
         resources.ApplyResources(Me.lblResolution, "lblResolution")
@@ -2371,6 +2820,7 @@ Partial Class frmMain
         '
         'tabViewMapView
         '
+        Me.tabViewMapView.Controls.Add(Me.chkViewHeadLock)
         Me.tabViewMapView.Controls.Add(Me.tbarModelScale)
         Me.tabViewMapView.Controls.Add(Me.chkViewFirstPerson)
         Me.tabViewMapView.Controls.Add(Me.chkViewChaseCam)
@@ -2381,6 +2831,14 @@ Partial Class frmMain
         Me.tabViewMapView.Name = "tabViewMapView"
         Me.tabViewMapView.Tag = "Google Earth"
         Me.tabViewMapView.UseVisualStyleBackColor = True
+        '
+        'chkViewHeadLock
+        '
+        resources.ApplyResources(Me.chkViewHeadLock, "chkViewHeadLock")
+        Me.chkViewHeadLock.Checked = True
+        Me.chkViewHeadLock.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkViewHeadLock.Name = "chkViewHeadLock"
+        Me.chkViewHeadLock.UseVisualStyleBackColor = True
         '
         'chkViewFirstPerson
         '
@@ -2488,16 +2946,50 @@ Partial Class frmMain
         Me.cboConfigDevice.Name = "cboConfigDevice"
         Me.cboConfigDevice.Sorted = True
         '
-        'cmdControlAttoTriggerServo
+        'tmrJoystick
         '
-        resources.ApplyResources(Me.cmdControlAttoTriggerServo, "cmdControlAttoTriggerServo")
-        Me.cmdControlAttoTriggerServo.Name = "cmdControlAttoTriggerServo"
-        Me.cmdControlAttoTriggerServo.UseVisualStyleBackColor = True
+        Me.tmrJoystick.Interval = 50
+        '
+        'pnlLinkLost
+        '
+        Me.pnlLinkLost.BackColor = System.Drawing.Color.Yellow
+        Me.pnlLinkLost.Controls.Add(Me.lblLinkLostMessageType)
+        Me.pnlLinkLost.Controls.Add(Me.lblLinkLostTime)
+        Me.pnlLinkLost.Controls.Add(Me.lblLinkLostMessage)
+        Me.pnlLinkLost.Controls.Add(Me.lblLinkLostLabel)
+        resources.ApplyResources(Me.pnlLinkLost, "pnlLinkLost")
+        Me.pnlLinkLost.Name = "pnlLinkLost"
+        '
+        'lblLinkLostMessageType
+        '
+        Me.lblLinkLostMessageType.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.lblLinkLostMessageType, "lblLinkLostMessageType")
+        Me.lblLinkLostMessageType.Name = "lblLinkLostMessageType"
+        '
+        'lblLinkLostTime
+        '
+        Me.lblLinkLostTime.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.lblLinkLostTime, "lblLinkLostTime")
+        Me.lblLinkLostTime.Name = "lblLinkLostTime"
+        '
+        'lblLinkLostMessage
+        '
+        Me.lblLinkLostMessage.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.lblLinkLostMessage, "lblLinkLostMessage")
+        Me.lblLinkLostMessage.Name = "lblLinkLostMessage"
+        '
+        'lblLinkLostLabel
+        '
+        Me.lblLinkLostLabel.BackColor = System.Drawing.Color.White
+        Me.lblLinkLostLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me.lblLinkLostLabel, "lblLinkLostLabel")
+        Me.lblLinkLostLabel.Name = "lblLinkLostLabel"
         '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.pnlLinkLost)
         Me.Controls.Add(Me.pnlDevice)
         Me.Controls.Add(Me.SplitContainer1)
         Me.KeyPreview = True
@@ -2521,12 +3013,16 @@ Partial Class frmMain
         Me.tabInstrumentLiveCamera.ResumeLayout(False)
         Me.tabMissionPlanning.ResumeLayout(False)
         Me.tabMissionPlanning.PerformLayout()
+        Me.grpMissionControlMavlink.ResumeLayout(False)
+        Me.grpMissionControlMavlink.PerformLayout()
         Me.grpMissionControlAtto.ResumeLayout(False)
         Me.grpMissionControlAtto.PerformLayout()
         Me.grpMissionControlGeneric.ResumeLayout(False)
         Me.grpMissionControlGeneric.PerformLayout()
         CType(Me.dgMission, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabMissionControl.ResumeLayout(False)
+        Me.grpControlMavlink.ResumeLayout(False)
+        Me.grpControlMavlink.PerformLayout()
         Me.grpControlAtto.ResumeLayout(False)
         Me.grpControlAtto.PerformLayout()
         Me.tabConfiguration.ResumeLayout(False)
@@ -2558,10 +3054,17 @@ Partial Class frmMain
         CType(Me.tbarSensor3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabPortJoystick.ResumeLayout(False)
+        CType(Me.tbarJoystickMode, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickRudder, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickAileron, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickElevator, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickThrottle, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabMapView.ResumeLayout(False)
         Me.tabViewMapView.ResumeLayout(False)
         Me.tabViewLiveCamera.ResumeLayout(False)
         Me.pnlDevice.ResumeLayout(False)
+        Me.pnlLinkLost.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -2776,26 +3279,26 @@ Partial Class frmMain
     Friend WithEvents prgConfig As System.Windows.Forms.ProgressBar
     Friend WithEvents lblConfigStatus As System.Windows.Forms.Label
     Friend WithEvents grpMissionControlAtto As System.Windows.Forms.GroupBox
-    Friend WithEvents lblMissionStatus As System.Windows.Forms.Label
-    Friend WithEvents prgMission As System.Windows.Forms.ProgressBar
-    Friend WithEvents cmdMissionWrite As System.Windows.Forms.Button
-    Friend WithEvents cmdMissionRead As System.Windows.Forms.Button
+    Friend WithEvents lblMissionStatusAtto As System.Windows.Forms.Label
+    Friend WithEvents prgMissionAtto As System.Windows.Forms.ProgressBar
+    Friend WithEvents cmdMissionAttoWrite As System.Windows.Forms.Button
+    Friend WithEvents cmdMissionAttoRead As System.Windows.Forms.Button
     Friend WithEvents dgMission As System.Windows.Forms.DataGridView
     Friend WithEvents pnlDevice As System.Windows.Forms.Panel
     Friend WithEvents lblVehicle As System.Windows.Forms.Label
     Friend WithEvents cboConfigVehicle As System.Windows.Forms.ComboBox
     Friend WithEvents lblDevice As System.Windows.Forms.Label
     Friend WithEvents cboConfigDevice As System.Windows.Forms.ComboBox
-    Friend WithEvents txtMissionLongitude As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionAttoLongitude As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents txtMissionLatitude As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionAttoLatitude As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents txtMissionSpeed As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionAttoSpeed As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents cmdMissionAttoSearch As System.Windows.Forms.Button
     Friend WithEvents txtMissionAddressSearchAtto As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents txtMissionAltitude As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionAttoAltitude As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents cboMissionAttoLoiterDirection As System.Windows.Forms.ComboBox
@@ -2844,7 +3347,7 @@ Partial Class frmMain
     Friend WithEvents cmdControlAttoResume As System.Windows.Forms.Button
     Friend WithEvents txtControlAttoPressure As System.Windows.Forms.TextBox
     Friend WithEvents cmdControlAttoReturnRally As System.Windows.Forms.Button
-    Friend WithEvents lblControlStatus As System.Windows.Forms.Label
+    Friend WithEvents lblControlAttoStatus As System.Windows.Forms.Label
     Friend WithEvents txtControlAttoSpeed As System.Windows.Forms.TextBox
     Friend WithEvents cmdControlAttoSpeed As System.Windows.Forms.Button
     Friend WithEvents cmdControlAttoResetSpeed As System.Windows.Forms.Button
@@ -2854,4 +3357,64 @@ Partial Class frmMain
     Friend WithEvents cmdSetHomeAlt As System.Windows.Forms.Button
     Friend WithEvents cmdMissionAttoAdd As System.Windows.Forms.Button
     Friend WithEvents cmdControlAttoTriggerServo As System.Windows.Forms.Button
+    Friend WithEvents mnuJoystickCalibration As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tabPortJoystick As System.Windows.Forms.TabPage
+    Friend WithEvents lblJoystickRudder As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickAileron As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickElevator As System.Windows.Forms.Label
+    Friend WithEvents tbarJoystickRudder As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarJoystickAileron As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarJoystickElevator As System.Windows.Forms.TrackBar
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickThrottle As System.Windows.Forms.Label
+    Friend WithEvents tbarJoystickThrottle As System.Windows.Forms.TrackBar
+    Friend WithEvents tmrJoystick As System.Windows.Forms.Timer
+    Friend WithEvents chkJoystickEnable As System.Windows.Forms.CheckBox
+    Friend WithEvents cmdJoystickCalibrate As System.Windows.Forms.Button
+    Friend WithEvents lblJoystickDevice As System.Windows.Forms.Label
+    Friend WithEvents cboJoystickOutput As System.Windows.Forms.ComboBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickMode As System.Windows.Forms.Label
+    Friend WithEvents tbarJoystickMode As System.Windows.Forms.TrackBar
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents pnlLinkLost As System.Windows.Forms.Panel
+    Friend WithEvents lblLinkLostTime As System.Windows.Forms.Label
+    Friend WithEvents lblLinkLostMessage As System.Windows.Forms.Label
+    Friend WithEvents lblLinkLostLabel As System.Windows.Forms.Label
+    Friend WithEvents lblLinkLostMessageType As System.Windows.Forms.Label
+    Friend WithEvents chkViewHeadLock As System.Windows.Forms.CheckBox
+    Friend WithEvents grpMissionControlMavlink As System.Windows.Forms.GroupBox
+    Friend WithEvents cmdMissionMavlinkAdd As System.Windows.Forms.Button
+    Friend WithEvents lblMissionStatusMavlink As System.Windows.Forms.Label
+    Friend WithEvents prgMissionMavlink As System.Windows.Forms.ProgressBar
+    Friend WithEvents cmdMissionMavlinkWrite As System.Windows.Forms.Button
+    Friend WithEvents cmdMissionMavlinkRead As System.Windows.Forms.Button
+    Friend WithEvents txtMissionMavlinkArg1 As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionMavlinkArg1 As System.Windows.Forms.Label
+    Friend WithEvents cmdMissionMavlinkSearch As System.Windows.Forms.Button
+    Friend WithEvents txtMissionAddressSearchMavlink As System.Windows.Forms.TextBox
+    Friend WithEvents Label33 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionMavlinkArg2 As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionMavlinkArg2 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionMavlinkArg4 As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionMavlinkArg4 As System.Windows.Forms.Label
+    Friend WithEvents txtMissionMavlinkArg3 As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionMavlinkArg3 As System.Windows.Forms.Label
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionMavlinkCommand As System.Windows.Forms.ComboBox
+    Friend WithEvents grpControlMavlink As System.Windows.Forms.GroupBox
+    Friend WithEvents cboControlMavlinkAction As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdControlMavlinkAction As System.Windows.Forms.Button
+    Friend WithEvents cboControlMavlinkMode As System.Windows.Forms.ComboBox
+    Friend WithEvents lblControlMavlinkStatus As System.Windows.Forms.Label
+    Friend WithEvents cmdControlMavlinkMode As System.Windows.Forms.Button
+    Friend WithEvents txtControlMavlinkSetAltitude As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlMavlinkSetAltitude As System.Windows.Forms.Button
+    Friend WithEvents Label26 As System.Windows.Forms.Label
+    Friend WithEvents cboControlMavlinkMessageSendRate As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdControlMavlinkSetHome As System.Windows.Forms.Button
 End Class

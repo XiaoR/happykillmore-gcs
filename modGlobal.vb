@@ -17,6 +17,46 @@ Module modGlobal
     Public Const e_Instruments_Max = 7
     Public bPlaneFirstFound As Boolean = False
 
+    Public Enum e_MavlinkHandshake
+        e_MavlinkHandshake_None = 0
+        e_MavlinkHandshake_TotalCountRequest
+        e_MavlinkHandshake_TotalCountRespond
+        e_MavlinkHandshake_WaypointRequest
+        e_MavlinkHandshake_WaypointRespond
+        e_MavlinkHandshake_DoneRequesting
+        e_MavlinkHandshake_TotalCountSet
+        e_MavlinkHandshake_TotalCountSetRespond
+        e_MavlinkHandshake_WaypointSet
+        e_MavlinkHandshake_WaypointSetRespond
+    End Enum
+    Public Enum e_DeviceTypes
+        e_DeviceTypes_None = 0
+        e_DeviceTypes_NMEA
+        e_DeviceTypes_uBlox
+        e_DeviceTypes_SiRF
+        e_DeviceTypes_Mediatek
+        e_DeviceTypes_Mediatek16
+        e_DeviceTypes_ArduIMU
+        e_DeviceTypes_ArduPilotLegacy
+        e_DeviceTypes_ArduPilotMega
+        e_DeviceTypes_UDB
+        e_DeviceTypes_AttoPilot
+        e_DeviceTypes_FY21AP
+        e_DeviceTypes_GluonPilot
+        e_DeviceTypes_Paparazzi
+        e_DeviceTypes_MavLink
+    End Enum
+    Public Enum e_JoystickCenter
+        e_JoystickCenter_None = 0
+        e_JoystickCenter_Slow
+        e_JoystickCenter_Fast
+    End Enum
+    Public Enum e_JoystickOutput
+        e_JoystickOutput_None = 0
+        e_JoystickOutput_Atto
+        e_JoystickOutput_UDB
+        e_JoystickOutput_Millswood
+    End Enum
     Public Enum e_Instruments
         e_Instruments_None = -1
         e_Instruments_3DModel = 0
@@ -54,11 +94,11 @@ Module modGlobal
         e_InstrumentLayout_SingleColumn
     End Enum
 
-    Public Enum e_DeviceType
-        e_DeviceType_Generic = 0
-        e_DeviceType_AttoPilot
-        e_DeviceType_APM
-    End Enum
+    'Public Enum e_DeviceType
+    '    e_DeviceType_Generic = 0
+    '    e_DeviceType_AttoPilot
+    '    e_DeviceType_APM
+    'End Enum
 
     Public Const e_InstrumentColor_Max As Integer = 6
     Public Enum e_InstrumentColor
@@ -76,6 +116,8 @@ Module modGlobal
         e_AltOffset_HomeALt = 1
     End Enum
 
+    Public oActiveDevices As cActiveDevices
+
     Public resourceMgr As ResourceManager
 
     Public Delegate Sub MyDelegate()
@@ -89,6 +131,10 @@ Module modGlobal
     Public bConnectedTracking As Boolean = False
 
     Public bWaitingAttoUpdate As Boolean = False
+    Public bWaitingMavlinkUpdate As Boolean = False
+    Public bWaitingMavlinkWrite As Boolean = False
+    Public bWaitingGluonUpdate As Boolean = False
+    Public bWaitingGluonWrite As Boolean = False
 
     Public nWPCount As Integer = -1
     Public aWPLat(0) As String
@@ -97,6 +143,15 @@ Module modGlobal
     Public aWPTrigger(0) As String
     Public aWPSpeed(0) As String
     Public aWPCommand(0) As String
+
+    Public aCommandName() As String
+    Public aCommandValue() As Integer
+    Public aModeName() As String
+    Public aModeValue() As Integer
+    Public aCommandArg1() As String
+    Public aCommandArg2() As String
+    Public aCommandArg3() As String
+    Public aCommandArg4() As String
 
     Public nHomeAlt As Single
     Public nHomeAltIndicator As Single
@@ -116,6 +171,7 @@ Module modGlobal
     Public nSocketPortNumber As Long
     Public sSocketIPaddress As String
     Public nSocketType As Integer
+    Public bHeadLock As Boolean = True
 
     Public nYawOffset As Single
     Public sLanguageFile As String
@@ -130,10 +186,20 @@ Module modGlobal
     Public bAnnounceRegularInterval As Boolean
     Public sSpeechRegularInterval As String
     Public nSpeechInterval As Long
+    Public bAnnounceLinkWarning As Boolean
+    Public sSpeechWarning As String
+    Public bAnnounceLinkAlarm As Boolean
+    Public sSpeechAlarm As String
 
-    Public nWaypoint As Integer
+    Public n2WayRetries As Integer
+    Public n2WayTimeout As Integer
+
+    Public nWaypoint As Integer = 0
     Public nWaypointAlt As Single
     Public nDistance As Single
+
+    Public nAlarmTimeout As Integer
+    Public nWarningTimeout As Integer
 
     Public aLastAtlitudes(0 To 9) As Single
     Public nLastAltIndex As Integer
@@ -178,6 +244,7 @@ Module modGlobal
     Public nLatitude As String
     Public nLongitude As String
     Public nAltitude As Single
+    Public nBaro As Single
     Public nGroundSpeed As Single
     Public nAirSpeed As Single
     Public nHeading As Single
@@ -280,7 +347,9 @@ Module modGlobal
         Try
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
-            inputString = inputString.Substring(0, InStr(inputString, ".") - 1)
+            If InStr(inputString, ".") <> 0 Then
+                inputString = inputString.Substring(0, InStr(inputString, ".") - 1)
+            End If
             inputString = inputString.PadLeft(6, "0")
             GetNMEATime = GetNMEATime.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
         Catch
@@ -290,7 +359,7 @@ Module modGlobal
         Try
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
-            GetMediaTekv16Date = GetMediaTekv16Date.Parse(inputString.Substring(4, 2) & "/" & inputString.Substring(6, 2) & "/" & inputString.Substring(0, 4), cf).Date
+            GetMediaTekv16Date = GetMediaTekv16Date.Parse(inputString.Substring(2, 2) & "/" & inputString.Substring(0, 2) & "/" & inputString.Substring(4, 2), cf).Date
         Catch
         End Try
     End Function
@@ -371,7 +440,7 @@ Module modGlobal
                 End If
             End If
         Catch err2 As Exception
-            Debug.Print(err2.Message)
+            Debug.Print("Missing Word in Strings.resx" & vbCrLf & err2.Message)
             If GetResString = "" Then
                 GetResString = defaultValue
             End If
@@ -502,7 +571,7 @@ Module modGlobal
         Else
             Select Case inputFormat
                 Case e_LatLongFormat.e_LatLongFormat_DD_DDDDDD
-                    ConvertLatLongFormat = (Mid(inputValue, 1, InStr(inputValue, ".") - 1) & Convert.ToDouble(Mid(inputValue, InStr(inputValue, "."))) * 60)
+                    ConvertLatLongFormat = (Mid(inputValue, 1, InStr(inputValue, ".") - 1) & Convert.ToDouble(ConvertPeriodToLocal(Mid(inputValue, InStr(inputValue, "."))) * 60))
                 Case e_LatLongFormat.e_LatLongFormat_DDMM_MMMM
                     If InStr(inputValue, ".") <> 0 Then
                         ConvertLatLongFormat = Mid(inputValue, 1, InStr(inputValue, ".") - 3) & (Convert.ToDouble(ConvertPeriodToLocal(Mid(inputValue, InStr(inputValue, ".") - 2))) / 60).ToString(".000000")
@@ -512,7 +581,6 @@ Module modGlobal
                 Case Else
                     ConvertLatLongFormat = inputValue.ToString(sFormat)
             End Select
-
         End If
     End Function
     Public Function ConvertHexToDec(ByVal inputValue As String, Optional ByVal reverseBytes As Boolean = True, Optional ByVal signedNumber As Boolean = True) As String
@@ -550,7 +618,9 @@ Module modGlobal
     Public Function ConvertLatLongFY21AP(ByVal inputValue As String) As String
         Dim nTemp As Double
 
-        nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H7FFF
+        nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputValue, 2, 1))).PadLeft(2, "0")) And &H7FFF
+
+        'nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H7FFF
         nTemp = (nTemp + CDec("&h" & Hex(Asc(Mid(inputValue, 3, 1))) & Hex(Asc(Mid(inputValue, 4, 1)))) * 0.00001) / 60
         If nTemp > 32768 Then
             nTemp = nTemp - 32768
@@ -573,6 +643,8 @@ Module modGlobal
         Dim nSizeOffset As Integer
         Dim sSplit() As String
         Dim sValues() As String
+        Dim nXBeeAPIStart As Integer
+        Dim nXBeeAPIDataLength As Integer
 
         nLastStart = 999
         GetNextSentence = New cMessage
@@ -595,8 +667,32 @@ Module modGlobal
 
             sHeaderCharacters = "T"
             If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_Gluonpilot
+                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
+                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotT
+                    End If
+                End If
+            End If
+
+            sHeaderCharacters = "CA"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
+                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotC
+                    End If
+                End If
+            End If
+
+            sHeaderCharacters = "D"
+            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
+                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
+                        nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotD
+                    End If
+                End If
             End If
 
             sHeaderCharacters = "F13:"
@@ -741,6 +837,29 @@ Module modGlobal
             Catch
             End Try
 
+            'X-Bee API Filter
+            Try
+                Do While InStr(sBuffer, Chr(&H7E)) <> 0
+                    nXBeeAPIStart = InStr(sBuffer, Chr(&H7E))
+                    If Len(sBuffer) > nXBeeAPIStart + 2 Then
+                        nXBeeAPIDataLength = Convert.ToInt32(Hex(Asc(Mid(sBuffer, nXBeeAPIStart + 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(sBuffer, nXBeeAPIStart + 2, 1))).PadLeft(2, "0"), 16)
+                        If Len(sBuffer) >= nXBeeAPIStart + nXBeeAPIDataLength + 2 Then
+                            If Mid(sBuffer, nXBeeAPIStart + nXBeeAPIDataLength + 2, 1) = GetXbeeChecksum(Mid(sBuffer, nXBeeAPIStart + 2, nXBeeAPIDataLength)) Then
+                                sBuffer = Replace(sBuffer, Mid(sBuffer, nXBeeAPIStart, nXBeeAPIDataLength + 4), "")
+                            Else
+                                Exit Do
+                            End If
+                        Else
+                            Exit Do
+                        End If
+                    Else
+                        Exit Do
+                    End If
+                Loop
+            Catch ex2 As Exception
+                Debug.Print("X-Bee API Filter Error: " & ex2.Message)
+            End Try
+
             If nMessageType <> cMessage.e_MessageType.e_MessageType_None Then
                 Select Case nMessageType
                     Case cMessage.e_MessageType.e_MessageType_Test
@@ -802,6 +921,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Paparazzi) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "Paparazzi"
                                 .Packet = sTemp
@@ -825,6 +945,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "Serial UDB Extra"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -849,6 +970,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "Serial UDB Extra"
                                 .Packet = Mid(sTemp, 5, Len(sTemp) - 7)
@@ -882,6 +1004,7 @@ Module modGlobal
                                     .VisibleSentence = .Header & " - " & sOutput
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
+                                        oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduIMU) = Now.Ticks
                                     Else
                                         .ValidMessage = False
                                     End If
@@ -899,6 +1022,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "AP Attitude"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -917,6 +1041,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "AP Mode Change"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -935,6 +1060,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .ValidMessage = True
                                 .Header = "AP GPS"
                                 .Packet = Mid(sTemp, 4, Len(sTemp) - 6)
@@ -945,9 +1071,13 @@ Module modGlobal
                                     For nCount = 0 To UBound(sSplit)
                                         sValues = Split(sSplit(nCount), ":")
                                         If UCase(sValues(0) = "TOW") Then
-                                            dGPSTime = GetuBloxTime(Convert.ToDouble(sValues(1) / 1000))
-                                            .ValidDateTime = True
-                                            Exit For
+                                            If UBound(sValues) >= 1 Then
+                                                If IsNumeric(sValues(1)) = True Then
+                                                    dGPSTime = GetuBloxTime(Convert.ToDouble(sValues(1) / 1000))
+                                                    .ValidDateTime = True
+                                                    Exit For
+                                                End If
+                                            End If
                                         End If
                                     Next
                                 Catch
@@ -975,6 +1105,7 @@ Module modGlobal
                                 .VisibleSentence = "NMEA - " & sTemp
                                 If .Checksum = GetChecksum(.Packet) Then
                                     .ValidMessage = True
+                                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_NMEA) = Now.Ticks
                                     Try
                                         sSplit = Split(.Packet, ",")
                                         Select Case .Header
@@ -993,8 +1124,14 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_Gluonpilot
-                        sHeaderCharacters = "T"
+                    Case cMessage.e_MessageType.e_MessageType_GluonpilotT, cMessage.e_MessageType.e_MessageType_GluonpilotC, cMessage.e_MessageType.e_MessageType_GluonpilotD
+                        If nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotC Then
+                            sHeaderCharacters = "CA"
+                        ElseIf nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotD Then
+                            sHeaderCharacters = "D"
+                        ElseIf nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotT Then
+                            sHeaderCharacters = "T"
+                        End If
                         sFooterCharacters = vbLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
                             nLastStart = InStr(sBuffer, sHeaderCharacters)
@@ -1010,7 +1147,12 @@ Module modGlobal
                                 .Packet = Mid(sTemp, 4)
                                 .PacketLength = Len(.Packet)
                                 .VisibleSentence = "Gluonpilot - " & sTemp
-                                .ValidMessage = True
+                                If Mid(sTemp, 3, 1) = ";" Then
+                                    .ValidMessage = True
+                                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_GluonPilot) = Now.Ticks
+                                Else
+                                    .ValidMessage = False
+                                End If
 
                                 'Waiting on response from Tom on Date/Time field
                             End With
@@ -1036,6 +1178,7 @@ Module modGlobal
                                 .VisibleSentence = "AttoPilot - " & sTemp
                                 If .Checksum = GetChecksum(.Packet) Then
                                     .ValidMessage = True
+                                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
                                     Try
                                         sSplit = Split(.Packet, ",")
                                         If nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot Then
@@ -1070,6 +1213,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .Header = Mid(sTemp, 1, 5)
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -1091,6 +1235,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .Header = Trim(Mid(sTemp, 1, 7))
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -1112,6 +1257,7 @@ Module modGlobal
                             With GetNextSentence
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
+                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
                                 .Header = ""
                                 .Packet = sTemp
                                 .PacketLength = Len(.Packet)
@@ -1148,6 +1294,7 @@ Module modGlobal
                                     .VisibleSentence = .Header & " - " & sOutput
                                     If .Checksum = GetSiRFChecksum(.Packet) Then
                                         .ValidMessage = True
+                                        oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_SiRF) = Now.Ticks
                                         Try
                                             If .ID = 91 Then
                                                 .GPSDateTime = CDate(GetNMEADate(Asc(Mid(.Packet, 15, 1)).ToString("00") & Asc(Mid(.Packet, 14, 1)).ToString("00") & Microsoft.VisualBasic.Right(ConvertHexToDec(Mid(.Packet, 12, 2), False), 2)) & " " & GetNMEATime(Asc(Mid(.Packet, 16, 1)).ToString("00") & Asc(Mid(.Packet, 17, 1)).ToString("00") & Asc(Mid(.Packet, 18, 1)).ToString("00")))
@@ -1190,6 +1337,7 @@ Module modGlobal
                                     .VisibleSentence = .Header & " - " & Trim(sOutput)
                                     If .Checksum = GetFY21APChecksum(.Packet) Then
                                         .ValidMessage = True
+                                        oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_FY21AP) = Now.Ticks
                                         Try
                                             If .ID = 242 Then
                                                 .GPSDateTime = CDate(GetNMEADate(Asc(Mid(.Packet, 33, 1)).ToString("00") & Asc(Mid(.Packet, 32, 1)).ToString("00") & Asc(Mid(.Packet, 34, 1)).ToString("00")) & " " & GetNMEATime(Asc(Mid(.Packet, 29, 1)).ToString("00") & Asc(Mid(.Packet, 30, 1)).ToString("00") & Asc(Mid(.Packet, 31, 1)).ToString("00")))
@@ -1206,7 +1354,7 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_MediaTekv16
                         sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 37 Then
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 37 Then
                             With GetNextSentence
                                 nPacketSize = 32
                                 .MessageType = nMessageType
@@ -1225,14 +1373,16 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     .RawMessage = sTemp
-                                    .Packet = Mid(sTemp, 4, Len(sTemp) - 5)
+                                    .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
                                     .PacketLength = Len(.Packet)
                                     .Checksum = Strings.Right(sTemp, 2)
                                     .VisibleSentence = .Header & " - " & sOutput
                                     If .Checksum = GetuBloxChecksum(.Packet) Then
                                         .ValidMessage = True
+                                        oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Mediatek) = Now.Ticks
                                         Try
-                                            .GPSDateTime = CDate(GetMediaTekv16Date(ConvertHexToDec(Mid(.Packet, 23, 4), False)) & " " & GetMediaTekv16Time(Convert.ToInt32(ConvertHexToDec(Mid(.Packet, 27, 4), False))))
+                                            'Debug.Print(.Packet)
+                                            .GPSDateTime = CDate(GetMediaTekv16Date(ConvertHexToDec(Mid(.Packet, 24, 4), True)) & " " & GetMediaTekv16Time(Convert.ToInt32(ConvertHexToDec(Mid(.Packet, 28, 4), True))))
                                             .ValidDateTime = True
                                         Catch
                                         End Try
@@ -1278,6 +1428,11 @@ Module modGlobal
                                         .VisibleSentence = .Header & " - " & sOutput
                                         If .Checksum = GetuBloxChecksum(.Packet) Then
                                             .ValidMessage = True
+                                            If .MessageType = cMessage.e_MessageType.e_MessageType_uBlox Then
+                                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_uBlox) = Now.Ticks
+                                            ElseIf .MessageType = cMessage.e_MessageType.e_MessageType_MediaTek Then
+                                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Mediatek) = Now.Ticks
+                                            End If
                                             Try
                                                 Select Case Asc(Mid(.Packet, 2, 1))
                                                     Case 2, 3, 4, 18
@@ -1328,6 +1483,7 @@ Module modGlobal
                                         .VisibleSentence = .Header & " - " & Trim(sOutput)
                                         If .Checksum = GetuBloxChecksum(.Packet) Then
                                             .ValidMessage = True
+                                            oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotMega) = Now.Ticks
                                         Else
                                             .ValidMessage = False
                                         End If
@@ -1355,11 +1511,15 @@ Module modGlobal
                                         For nCount = 1 To Len(sTemp)
                                             sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
                                         Next
+                                        If Asc(Mid(sTemp, 6, 1)) = 39 Then
+                                            Debug.Print(sOutput)
+                                        End If
                                     Else
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
                                         .RawMessage = sTemp
+                                        .VehicleID = Asc(Mid(sTemp, 4, 1))
                                         .ID = Asc(Mid(sTemp, 6, 1))
                                         .Packet = Mid(sTemp, 1, Len(sTemp) - 2)
                                         .PacketLength = Len(.Packet)
@@ -1369,10 +1529,12 @@ Module modGlobal
                                         'Debug.Print(".checksum=" & Hex(Asc(Mid(.Checksum, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(.Checksum, 2, 1))).PadLeft(2, "0"))
                                         If .Checksum = crc_calculate(.Packet) Then
                                             .ValidMessage = True
+                                            oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_MavLink) = Now.Ticks
                                             Try
-                                                Select Case Asc(Mid(.Packet, 6, 1))
+                                                Select Case .ID
                                                     Case 2, 28, 30, 32, 33
-                                                        .GPSDateTime = CDate(GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8))) & " " & GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8))))
+                                                        '.GPSDateTime = CDate(GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8))) & " " & GetMAVlinkTime(ConvertMavlinkToLong(Mid(.Packet, 7, 8))))
+                                                        'fix this!!!!
                                                         .ValidDateTime = True
                                                 End Select
                                             Catch
@@ -1395,15 +1557,28 @@ Module modGlobal
         End Try
 
         If GetNextSentence.Packet <> "" Then
-            'System.Diagnostics.Debug.Print("Len=" & Len(GetNextSentence.RawMessage))
-            'GpS_Parser1_RawPacket1(GetNextSentence.RawMessage)
+            Do While Asc(Mid(sBuffer, 1, 1)) = 10 Or Asc(Mid(sBuffer, 1, 1)) = 13
+                sBuffer = Mid(sBuffer, 2)
+                nLastStart = nLastStart - 1
+            Loop
+            If nLastStart <> 1 Then
+                'If InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0 Then
+                '    Do While InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0
+                '        frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, InStr(Mid(sBuffer, 1, nLastStart), vbCr) - 1))
+                '        sBuffer = Mid(sBuffer, InStr(Mid(sBuffer, 1, nLastStart), vbCr))
+                '    Loop
+                'Else
+                frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, nLastStart - 1))
+                'End If
+            End If
             sBuffer = Mid(sBuffer, nLastStart + Len(sTemp))
             Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
                 sBuffer = Mid(sBuffer, 2)
             Loop
         End If
-        If Len(sBuffer) > 500 Then
-            sBuffer = Mid(sBuffer, Len(sBuffer) - 500)
+        If Len(sBuffer) > 1000 Then
+            frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, 500))
+            sBuffer = Mid(sBuffer, 501)
             'System.Diagnostics.Debug.Assert(False)
             'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
         End If
@@ -1570,6 +1745,8 @@ Module modGlobal
         ConvertSpeech = Replace(ConvertSpeech, "{mode}", sMode)
         ConvertSpeech = Replace(ConvertSpeech, "{alt}", Convert.ToSingle(nNewAlt).ToString("0"))
         ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToSingle(nWaypointAlt).ToString("0"))
+        ConvertSpeech = Replace(ConvertSpeech, "{alarm}", Convert.ToInt32(nAlarmTimeout).ToString("0"))
+        ConvertSpeech = Replace(ConvertSpeech, "{warning}", Convert.ToInt32(nWarningTimeout).ToString("0"))
     End Function
     Public Function LoadLanguageFile()
         If sLanguageFile = "Default" Then

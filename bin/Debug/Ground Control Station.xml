@@ -84,6 +84,10 @@ GroundControlStation
 	<summary>
   Looks up a localized string similar to Amps.
 </summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Alarm_Default">
+	<summary>
+  Looks up a localized string similar to Danger! Danger! Signal lost for more than {alarm} seconds.
+</summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Announce_ModeChange">
 	<summary>
   Looks up a localized string similar to Announce Mode Change.
@@ -99,6 +103,10 @@ GroundControlStation
 </member><member name="P:HK_GCS.My.Resources.Strings.Announce_Regular_Interval_Default">
 	<summary>
   Looks up a localized string similar to en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.Strings.Announce_Warning_Default">
+	<summary>
+  Looks up a localized string similar to Warning, Signal lost for {warning} seconds.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.Strings.Announce_Waypoints">
 	<summary>
@@ -1167,38 +1175,40 @@ GroundControlStation
  The aircraft turn rate in °deg per minutes
  The aircraft turn quality
 
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisCount">
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.components">
 	<summary>
- Number of axes on the joystick.
+ Required designer variable.
  </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisA">
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.InitializeComponent">
 	<summary>
- The first axis on the joystick.
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
  </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisB">
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.SetVerticalSpeedIndicatorParameters(System.Int32,System.String,System.String,System.String,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft vertical speed in ft per minutes
+
+</member><member name="F:HK_GCS.DirectShowControl.DirectShowControl.components">
 	<summary>
- The second axis on the joystick.
+ Required designer variable.
  </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisC">
+</member><member name="M:HK_GCS.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
+ Clean up any resources being used.
+ true if managed resources should be disposed; otherwise, false.
+
+</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.components">
 	<summary>
- The third axis on the joystick.
+ Required designer variable.
  </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisD">
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.InitializeComponent">
 	<summary>
- The fourth axis on the joystick.
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
  </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisE">
-	<summary>
- The fifth axis on the joystick.
- </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.AxisF">
-	<summary>
- The sixth axis on the joystick.
- </summary>
-</member><member name="P:HK_GCS.JoystickInterface.Joystick.Buttons">
-	<summary>
- Array of buttons availiable on the joystick. This also includes PoV hats.
- </summary>
+</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.SetHeadingIndicatorParameters(System.Int32)">
+ Define the physical value to be displayed on the indicator
+ The aircraft heading in °deg
+
 </member><member name="M:HK_GCS.JoystickInterface.Joystick.#ctor(System.IntPtr)">
 	<summary>
  Constructor for the class.
@@ -1234,40 +1244,6 @@ GroundControlStation
 	<summary>
  Class to interface with a joystick device.
  </summary>
-</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.components">
-	<summary>
- Required designer variable.
- </summary>
-</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.InitializeComponent">
-	<summary>
- Required method for Designer support - do not modify 
- the contents of this method with the code editor.
- </summary>
-</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.SetVerticalSpeedIndicatorParameters(System.Int32,System.String,System.String,System.String,System.String)">
- Define the physical value to be displayed on the indicator
- The aircraft vertical speed in ft per minutes
-
-</member><member name="F:HK_GCS.DirectShowControl.DirectShowControl.components">
-	<summary>
- Required designer variable.
- </summary>
-</member><member name="M:HK_GCS.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
- Clean up any resources being used.
- true if managed resources should be disposed; otherwise, false.
-
-</member><member name="F:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.components">
-	<summary>
- Required designer variable.
- </summary>
-</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.InitializeComponent">
-	<summary>
- Required method for Designer support - do not modify 
- the contents of this method with the code editor.
- </summary>
-</member><member name="M:HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.SetHeadingIndicatorParameters(System.Int32)">
- Define the physical value to be displayed on the indicator
- The aircraft heading in °deg
-
 </member><member name="P:HK_GCS.My.Resources.TextFiles.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
@@ -1277,7 +1253,39 @@ GroundControlStation
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
-</member><member name="P:HK_GCS.My.Resources.TextFiles.SetConfig">
+</member><member name="P:HK_GCS.My.Resources.TextFiles.APMCommands">
+	<summary>
+  Looks up a localized string similar to // Command IDs - Must
+0,BLANK
+10,WAYPOINT,Altitude,,Latitude,Longitude
+11,LOITER,Altitude,,Latitude,Longitude
+12,LOITER_N_TURNS,Altitude,Turns,Latitude,Longitude
+13,LOITER_TIME,Altitude,Time,Latitude,Longitude
+14,RTL,Altitude,,Latitude,Longitude
+15,LAND,Altitude,,Latitude,Longitude
+16,TAKEOFF,Altitude,Angle
+
+// Command IDs - May
+20,DELAY,,Time
+//CLIMB // NOT IMPLEMENTED
+22,LAND_OPTIONS,AirSpeed,Dist to WP,Throttle,Pitch Deg.
+// pitch in deg, airspeed  m/s, throttle %, track WP 1 or 0
+
+// Com [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.APMModes">
+	<summary>
+  Looks up a localized string similar to // Auto Pilot modes
+// ----------------
+MANUAL 0
+CIRCLE 1 // When flying sans GPS, and we loose the radio, just circle
+STABILIZE 2
+
+FLY_BY_WIRE_A 5 // Fly By Wire A has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical = manual throttle
+FLY_BY_WIRE_B 6 // Fly By Wire B has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical =&gt; desired airspeed
+// Fly By Wire B = Fly By Wire A if you  [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.AttoSetConfig">
 	<summary>
   Looks up a localized string similar to $1,Mix Enable,0,1,0,Enable flag for Elevon/V-tail mixing. 0 = FALSE, 1 = TRUE
 $2,Mix Servo1 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 1 servo direction
@@ -1285,6 +1293,35 @@ $3,Mix Servo2 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon
 $4,Servo 1 Gain,0,100,10,Is 10x format. Aileron, or with elevons it is the aileron component of the mix
 $5,Servo 2 Gain,0,100,10,Is 10x format. Elevator, or with elevons it is the elevator component of the mix
 $6,Servo 3 Gain,0,100 [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.GluonSetConfig">
+	<summary>
+  Looks up a localized string similar to //Arg Number,Name,Min,Max,Default,Mult,Add,Bit,Desc
+1,acc_x_neutral,,,,1,0,,
+2,acc_y_neutral,,,,1,0,,
+3,acc_z_neutral,,,,1,0,,
+4,gyro_x_neutral,,,,1,0,,
+5,gyro_y_neutral,,,,1,0,,
+6,gyro_z_neutral,,,,1,0,,
+
+7,telemetry_basicgps,,,,1,0,,
+8,telemetry_ppm,,,,1,0,,
+9,telemetry_gyroaccraw,,,,1,0,,
+10,telemetry_gyroaccproc,,,,1,0,,
+11,telemetry_pressuretemp,,,,1,0,,
+12,telemetry_attitude,,,,1,0,,
+
+13,gps_initial_baudrate,,,,10,,0,,
+14,gps_operational_baudrate,,,,10,0,,
+
+15,channel_ap,,,,1,1,,
+16 [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS.My.Resources.TextFiles.MAVlinkSetConfig">
+	<summary>
+  Looks up a localized string similar to HDNG2RLL_P,0,,0.7,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
+HDNG2RLL_I,0,,0.01,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, The I term is used to control drift.
+HDNG2RLL_D,0,,0.02,1,NAV_ROLL_D - Navigation control gains, Tuning values for the navigation control PID loops, The D [rest of string was truncated]";.
 </summary>
 </member><member name="T:HK_GCS.My.Resources.TextFiles">
 	<summary>

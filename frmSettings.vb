@@ -129,6 +129,17 @@ Public Class frmSettings
             End Try
         End With
 
+        cboWarningTimeout.Items.Clear()
+        cboAlarmTimeout.Items.Clear()
+        cboWarningTimeout.Items.Add("None")
+        cboAlarmTimeout.Items.Add("None")
+        For nCount = 1 To 60
+            cboWarningTimeout.Items.Add(nCount & " " & GetResString(, "secs"))
+            cboAlarmTimeout.Items.Add(nCount & " " & GetResString(, "secs"))
+        Next
+        cboWarningTimeout.SelectedIndex = nWarningTimeout
+        cboAlarmTimeout.SelectedIndex = nAlarmTimeout
+
         With cboSpeechInterval
             .Items.Add("10 " & GetResString(, "secs"))
             .Items.Add("15 " & GetResString(, "secs"))
@@ -142,6 +153,20 @@ Public Class frmSettings
             .Items.Add("180 " & GetResString(, "secs"))
             .Items.Add("240 " & GetResString(, "secs"))
             .Text = nSpeechInterval & " " & GetResString(, "secs")
+        End With
+
+        With cbo2wayRetries
+            For nCount = 1 To 10
+                .Items.Add(nCount)
+            Next nCount
+            .SelectedIndex = n2WayRetries - 1
+        End With
+
+        With cbo2wayTimeout
+            For nCount = 1 To 10
+                .Items.Add(nCount & " " & GetResString(, "secs"))
+            Next
+            .SelectedIndex = n2WayTimeout - 1
         End With
 
         With cboMaxSpeed
@@ -233,6 +258,8 @@ Public Class frmSettings
             .SelectedIndex = eAltOffset
         End With
 
+        txtGoogleEarthKey.Text = sGoogleEarthKey
+
         chkInst3DModel.Enabled = Not b3DModelFailed
         chkInstSpeed.Checked = bInstruments(e_Instruments.e_Instruments_Speed)
         chkInstAltimeter.Checked = bInstruments(e_Instruments.e_Instruments_Altimeter)
@@ -252,6 +279,12 @@ Public Class frmSettings
         chkAnnounceRegularInterval.Checked = bAnnounceRegularInterval
         txtAnnounceRegularInterval.Text = sSpeechRegularInterval
         chkAnnounceRegularInterval_CheckedChanged(Nothing, Nothing)
+        chkAnnounceLinkWarning.Checked = bAnnounceLinkWarning
+        txtAnnounceWarning.Text = sSpeechWarning
+        chkAnnounceLinkWarning_CheckedChanged(Nothing, Nothing)
+        chkAnnounceLinkAlarm.Checked = bAnnounceLinkAlarm
+        txtAnnounceAlarm.Text = sSpeechAlarm
+        chkAnnounceLinkAlarm_CheckedChanged(Nothing, Nothing)
 
     End Sub
     Private Sub LoadLanguages(ByVal inputCombo As ComboBox)
@@ -311,11 +344,17 @@ Public Class frmSettings
         End If
         eMapSelection = cboMapSource.SelectedIndex
 
+        nWarningTimeout = cboWarningTimeout.SelectedIndex
+        nAlarmTimeout = cboAlarmTimeout.SelectedIndex
+
         nMapUpdateRate = cboMapUpdateRate.SelectedIndex + 1
 
         sFlightColor = GetColor(cmdFlightColor.BackColor, tbarFlightOpacity.Value)
         nFlightWidth = tbarFlightWidth.Value
         bFlightExtrude = chkFlightExtrude.Checked
+
+        n2WayRetries = cbo2wayRetries.SelectedIndex + 1
+        n2WayTimeout = cbo2wayTimeout.SelectedIndex + 1
 
         sMissionColor = GetColor(cmdMissionColor.BackColor, tbarMissionOpacity.Value)
         nMissionWidth = tbarMissionWidth.Value
@@ -329,6 +368,7 @@ Public Class frmSettings
         End If
 
         sLanguageFile = aLanguages(cboLanguage.SelectedIndex)
+        sGoogleEarthKey = txtGoogleEarthKey.Text
 
         bInstruments(e_Instruments.e_Instruments_Speed) = chkInstSpeed.Checked
         bInstruments(e_Instruments.e_Instruments_Altimeter) = chkInstAltimeter.Checked
@@ -360,6 +400,10 @@ Public Class frmSettings
         bAnnounceRegularInterval = chkAnnounceRegularInterval.Checked
         sSpeechRegularInterval = txtAnnounceRegularInterval.Text
         nSpeechInterval = cboSpeechInterval.Text.Substring(0, InStr(cboSpeechInterval.Text, " ") - 1)
+        bAnnounceLinkWarning = chkAnnounceLinkWarning.Checked
+        sSpeechWarning = txtAnnounceWarning.Text
+        bAnnounceLinkAlarm = chkAnnounceLinkAlarm.Checked
+        sSpeechAlarm = txtAnnounceAlarm.Text
 
         bGEBorders = chkGEBorders.Checked
         bGEBuildings = chkGEBuildings.Checked
@@ -405,14 +449,6 @@ Public Class frmSettings
         cboSpeechInterval.Enabled = chkAnnounceRegularInterval.Checked
     End Sub
 
-    Private Sub cmdWaypointPlay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWaypointPlay.Click
-        PlayMessage(txtAnnounceWaypoints.Text, cboVoice.Text)
-    End Sub
-
-    Private Sub cmdModeChangPlaye_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdModeChangePlay.Click
-        PlayMessage(txtAnnounceModeChange.Text, cboVoice.Text)
-    End Sub
-
     Private Sub chkAnnounceModeChange_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceModeChange.CheckedChanged
         txtAnnounceModeChange.Enabled = chkAnnounceModeChange.Checked
         cmdModeChangePlay.Enabled = chkAnnounceModeChange.Checked
@@ -443,8 +479,28 @@ Public Class frmSettings
         End If
     End Sub
 
-    Private Sub cmdRegularIntervalPlay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegularIntervalPlay.Click
-        PlayMessage(txtAnnounceRegularInterval.Text, cboVoice.Text)
+    Private Sub Play_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegularIntervalPlay.Click, cmdWaypointPlay.Click, cmdModeChangePlay.Click, cmdAlarmPlay.Click, cmdWarningPlay.Click
+        Select Case sender.name
+            Case "cmdRegularIntervalPlay"
+                PlayMessage(txtAnnounceRegularInterval.Text, cboVoice.Text)
+            Case "cmdWaypointPlay"
+                PlayMessage(txtAnnounceWaypoints.Text, cboVoice.Text)
+            Case "cmdModeChangePlay"
+                PlayMessage(txtAnnounceModeChange.Text, cboVoice.Text)
+            Case "cmdAlarmPlay"
+                PlayMessage(txtAnnounceAlarm.Text, cboVoice.Text)
+            Case "cmdWarningPlay"
+                PlayMessage(txtAnnounceWarning.Text, cboVoice.Text)
+        End Select
     End Sub
 
+    Private Sub chkAnnounceLinkWarning_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceLinkWarning.CheckedChanged
+        txtAnnounceWarning.Enabled = chkAnnounceLinkWarning.Checked
+        cmdWarningPlay.Enabled = chkAnnounceLinkWarning.Checked
+    End Sub
+
+    Private Sub chkAnnounceLinkAlarm_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceLinkAlarm.CheckedChanged
+        txtAnnounceAlarm.Enabled = chkAnnounceLinkAlarm.Checked
+        cmdAlarmPlay.Enabled = chkAnnounceLinkAlarm.Checked
+    End Sub
 End Class

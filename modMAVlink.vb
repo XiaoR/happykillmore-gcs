@@ -12,32 +12,74 @@ Module modMAVlink
             ConvertMavlinkToSingle = 0
         End If
     End Function
+    Public Function ConvertSingleToMavlink(ByVal inputNumber As Single) As String
+        Dim sTemp As String = ""
+        Dim nCount As Integer
+        Dim bByte(0 To 3) As Byte
+
+        bByte = BitConverter.GetBytes(inputNumber)
+        ConvertSingleToMavlink = ""
+        For nCount = 3 To 0 Step -1
+            ConvertSingleToMavlink = ConvertSingleToMavlink & Chr(bByte(nCount))
+        Next
+    End Function
     Public Function ConvertMavlinkToInteger(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Integer
         ConvertMavlinkToInteger = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 2, 1))).PadLeft(2, "0"))
+
         If is2sCompliment = True Then
             If ConvertMavlinkToInteger > CInt("&h7FFF") Then
                 ConvertMavlinkToInteger = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToInteger) + 1)
             End If
         End If
     End Function
-    Public Function ConvertMavlinkToLong(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Long
+    Public Function ConvertMavlinkToInteger32(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Integer
+        ConvertMavlinkToInteger32 = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 2, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 3, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 4, 1))).PadLeft(2, "0"))
+
+        If is2sCompliment = True Then
+            If ConvertMavlinkToInteger32 > CInt("&h7FFFFFFF") Then
+                ConvertMavlinkToInteger32 = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToInteger32) + 1)
+            End If
+        End If
+    End Function
+    Public Function ConvertIntegerToMavlink(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As String
+        Dim sTemp As String
+        If inputValue > CInt("&h7FFF") Then
+            inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
+        End If
+        sTemp = Hex(inputValue).PadLeft(4, "0")
+        ConvertIntegerToMavlink = Chr("&H" & Mid(sTemp, 1, 2)) & Chr("&H" & Mid(sTemp, 3, 2))
+    End Function
+    Public Function ConvertInteger32ToMavlink(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As String
+        Dim sTemp As String
+        If inputValue > CInt("&h7FFFFF") Then
+            inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
+        End If
+        sTemp = Hex(inputValue).PadLeft(8, "0")
+        ConvertInteger32ToMavlink = Chr("&H" & Mid(sTemp, 1, 2)) & Chr("&H" & Mid(sTemp, 3, 2)) & Chr("&H" & Mid(sTemp, 5, 2)) & Chr("&H" & Mid(sTemp, 7, 2))
+    End Function
+    Public Function ConvertMavlinkToLong(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Int64
         Dim sTemp As String = ""
         Dim bByte(0 To 7) As Byte
         Dim nCount As Integer
 
-        sTemp = ""
-        For nCount = 1 To Len(inputString)
-            sTemp = sTemp & Hex(Asc(Mid(inputString, nCount, 1))).PadLeft(2, "0")
-        Next
+        Try
+            sTemp = ""
+            For nCount = 1 To Len(inputString)
+                sTemp = sTemp & Hex(Asc(Mid(inputString, nCount, 1))).PadLeft(2, "0")
+            Next
+            'sTemp = "00000012DFFF55BD0"
 
-        ConvertMavlinkToLong = CLng("&h" & sTemp)
-        If is2sCompliment = True Then
-            If ConvertMavlinkToLong > CInt("&h7FFFFFFF") Then
-                ConvertMavlinkToLong = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToLong) + 1)
+            ConvertMavlinkToLong = CLng("&H" & sTemp)
+            If is2sCompliment = True Then
+                If ConvertMavlinkToLong > CInt("&h7FFFFFFF") Then
+                    ConvertMavlinkToLong = -(((2 ^ (4 * 4) - 1) Xor ConvertMavlinkToLong) + 1)
+                End If
             End If
-        End If
+        Catch ex As Exception
+            Debug.Print(ex.Message)
+        End Try
     End Function
-    Public Function GetMAVlinkDate(ByVal inputValue As Long) As Date
+    Public Function GetMAVlinkDate(ByVal inputValue As Int64) As Date
         Dim dTempDate As Date
 
         Dim cf As System.Globalization.CultureInfo
@@ -48,10 +90,14 @@ Module modMAVlink
     Public Function GetMAVlinkTime(ByVal inputValue As Long) As Date
         Dim dTempDate As Date
 
-        Dim cf As System.Globalization.CultureInfo
-        cf = New System.Globalization.CultureInfo("en-US")
-        dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
-        GetMAVlinkTime = dTempDate.ToLongTimeString
+        Try
+            Dim cf As System.Globalization.CultureInfo
+            cf = New System.Globalization.CultureInfo("en-US")
+            dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
+            GetMAVlinkTime = dTempDate.ToLongTimeString
+        Catch ex2 As Exception
+            Debug.Print(ex2.Message)
+        End Try
     End Function
     Public Function MavlinkScaledToStandard(ByVal inputValue As Integer) As Integer
         MavlinkScaledToStandard = (((inputValue + 10000) / 20000) * 1000) + 1000
@@ -112,9 +158,34 @@ Module modMAVlink
                 GetMavAction = "Land"
             Case 27
                 GetMavAction = "Loiter"
+            Case 28
+                GetMavAction = "Set Origin"
+            Case 29
+                GetMavAction = "Relay On"
+            Case 30
+                GetMavAction = "Relay Off"
+            Case 31
+                GetMavAction = "Get Image"
+            Case 32
+                GetMavAction = "Video Start"
+            Case 33
+                GetMavAction = "Video Stop"
+            Case 34
+                GetMavAction = "Reset Map"
+            Case 35
+                GetMavAction = "Reset Plan"
         End Select
     End Function
     Public Function GetMavMode(ByVal inputMode As Integer) As String
+        Dim nCount As Integer
+
+        For nCount = 0 To UBound(aCommandName)
+            If inputMode = aCommandValue(nCount) Then
+                GetMavMode = aCommandName(nCount)
+                Exit For
+            End If
+        Next
+
         Select Case inputMode
             Case 1
                 GetMavMode = "Locked"

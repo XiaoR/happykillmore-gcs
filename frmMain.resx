@@ -649,7 +649,7 @@
     <value>NoControl</value>
   </data>
   <data name="tbarModelScale.Location" type="System.Drawing.Point, System.Drawing">
-    <value>340, 473</value>
+    <value>423, 471</value>
   </data>
   <data name="tbarModelScale.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 26</value>
@@ -670,7 +670,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;tbarModelScale.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cmdReloadTrackingPorts.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -814,7 +814,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cmdReloadMissionDirectory.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="cmdReloadMissions.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -844,7 +844,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cmdReloadMissions.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="cmdMissionOverride.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -877,7 +877,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cmdMissionOverride.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="cmdSetHomeAlt.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 6.75pt</value>
@@ -942,6 +942,36 @@
   <data name="&gt;&gt;cmdMissionAttoAdd.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="cmdMissionMavlinkAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionMavlinkAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>465, 89</value>
+  </data>
+  <data name="cmdMissionMavlinkAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 23</value>
+  </data>
+  <data name="cmdMissionMavlinkAdd.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="cmdMissionMavlinkAdd.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="cmdMissionMavlinkAdd.ToolTip" xml:space="preserve">
+    <value>Manual Add Waypoint</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkAdd.Name" xml:space="preserve">
+    <value>cmdMissionMavlinkAdd</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkAdd.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkAdd.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <metadata name="tmrComPort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>584, 13</value>
   </metadata>
@@ -958,16 +988,28 @@
     <value>False</value>
   </data>
   <data name="mnuSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
+    <value>202, 22</value>
   </data>
   <data name="mnuSettings.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="mnuJoystickCalibration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="mnuJoystickCalibration.Text" xml:space="preserve">
+    <value>Joystick Calibration</value>
+  </data>
+  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Heartbeat Configuration</value>
+  </data>
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 6</value>
+    <value>199, 6</value>
   </data>
   <data name="mnuExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
+    <value>202, 22</value>
   </data>
   <data name="mnuExit.Text" xml:space="preserve">
     <value>Exit</value>
@@ -1114,7 +1156,7 @@
     <value>BatteryIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;BatteryIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1141,7 +1183,7 @@
     <value>TurnCoordinatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;TurnCoordinatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1162,7 +1204,7 @@
     <value>_3DMesh1</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Type" xml:space="preserve">
-    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS._3DMesh, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_3DMesh1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1186,7 +1228,7 @@
     <value>VerticalSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;VerticalSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1210,7 +1252,7 @@
     <value>HeadingIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;HeadingIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1234,7 +1276,7 @@
     <value>AttitudeIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AttitudeIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1258,7 +1300,7 @@
     <value>AltimeterInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AltimeterInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AltimeterInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1282,7 +1324,7 @@
     <value>AirSpeedIndicatorInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AirSpeedIndicatorInstrumentControl1.Parent" xml:space="preserve">
     <value>tabInstruments</value>
@@ -1858,7 +1900,7 @@
     <value>DirectShowControl2</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl2.Parent" xml:space="preserve">
     <value>tabInstrumentLiveCamera</value>
@@ -1890,35 +1932,479 @@
   <data name="&gt;&gt;tabInstrumentLiveCamera.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lblMissionHomeAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="Label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblMissionHomeAlt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 135</value>
+  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 17</value>
   </data>
-  <data name="lblMissionHomeAlt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 20</value>
+  <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 17</value>
   </data>
-  <data name="lblMissionHomeAlt.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
+  <data name="Label19.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
   </data>
-  <data name="lblMissionHomeAlt.Text" xml:space="preserve">
-    <value>Home Alt:</value>
+  <data name="Label19.Text" xml:space="preserve">
+    <value>Command:</value>
   </data>
-  <data name="lblMissionHomeAlt.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
+  <data name="Label19.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lblMissionHomeAlt.Name" xml:space="preserve">
-    <value>lblMissionHomeAlt</value>
+  <data name="&gt;&gt;Label19.Name" xml:space="preserve">
+    <value>Label19</value>
   </data>
-  <data name="&gt;&gt;lblMissionHomeAlt.Type" xml:space="preserve">
+  <data name="&gt;&gt;Label19.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblMissionHomeAlt.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Label19.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;Label19.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboMissionMavlinkCommand.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 15</value>
+  </data>
+  <data name="cboMissionMavlinkCommand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 21</value>
+  </data>
+  <data name="cboMissionMavlinkCommand.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="&gt;&gt;cboMissionMavlinkCommand.Name" xml:space="preserve">
+    <value>cboMissionMavlinkCommand</value>
+  </data>
+  <data name="&gt;&gt;cboMissionMavlinkCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboMissionMavlinkCommand.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cboMissionMavlinkCommand.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblMissionStatusMavlink.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionStatusMavlink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 113</value>
+  </data>
+  <data name="lblMissionStatusMavlink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 13</value>
+  </data>
+  <data name="lblMissionStatusMavlink.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="lblMissionStatusMavlink.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="lblMissionStatusMavlink.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatusMavlink.Name" xml:space="preserve">
+    <value>lblMissionStatusMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatusMavlink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatusMavlink.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionStatusMavlink.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="prgMissionMavlink.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="prgMissionMavlink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 129</value>
+  </data>
+  <data name="prgMissionMavlink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 10</value>
+  </data>
+  <data name="prgMissionMavlink.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;prgMissionMavlink.Name" xml:space="preserve">
+    <value>prgMissionMavlink</value>
+  </data>
+  <data name="&gt;&gt;prgMissionMavlink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;prgMissionMavlink.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;prgMissionMavlink.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 116</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="cmdMissionMavlinkWrite.Text" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkWrite.Name" xml:space="preserve">
+    <value>cmdMissionMavlinkWrite</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkWrite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkWrite.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkWrite.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 116</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="cmdMissionMavlinkRead.Text" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkRead.Name" xml:space="preserve">
+    <value>cmdMissionMavlinkRead</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkRead.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkRead.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkRead.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="txtMissionMavlinkArg1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 40</value>
+  </data>
+  <data name="txtMissionMavlinkArg1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 20</value>
+  </data>
+  <data name="txtMissionMavlinkArg1.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg1.Name" xml:space="preserve">
+    <value>txtMissionMavlinkArg1</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg1.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 40</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.Text" xml:space="preserve">
+    <value>Speed:</value>
+  </data>
+  <data name="lblMissionMavlinkArg1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg1.Name" xml:space="preserve">
+    <value>lblMissionMavlinkArg1</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg1.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cmdMissionMavlinkSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdMissionMavlinkSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>384, 89</value>
+  </data>
+  <data name="cmdMissionMavlinkSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <data name="cmdMissionMavlinkSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="cmdMissionMavlinkSearch.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkSearch.Name" xml:space="preserve">
+    <value>cmdMissionMavlinkSearch</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkSearch.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdMissionMavlinkSearch.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txtMissionAddressSearchMavlink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 90</value>
+  </data>
+  <data name="txtMissionAddressSearchMavlink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 20</value>
+  </data>
+  <data name="txtMissionAddressSearchMavlink.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchMavlink.Name" xml:space="preserve">
+    <value>txtMissionAddressSearchMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchMavlink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchMavlink.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionAddressSearchMavlink.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="Label33.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label33.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 90</value>
+  </data>
+  <data name="Label33.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="Label33.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="Label33.Text" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="Label33.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;Label33.Name" xml:space="preserve">
+    <value>Label33</value>
+  </data>
+  <data name="&gt;&gt;Label33.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label33.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;Label33.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="txtMissionMavlinkArg2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 65</value>
+  </data>
+  <data name="txtMissionMavlinkArg2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
+  </data>
+  <data name="txtMissionMavlinkArg2.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg2.Name" xml:space="preserve">
+    <value>txtMissionMavlinkArg2</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg2.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg2.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 65</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.Text" xml:space="preserve">
+    <value>Altitude:</value>
+  </data>
+  <data name="lblMissionMavlinkArg2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg2.Name" xml:space="preserve">
+    <value>lblMissionMavlinkArg2</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg2.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg2.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="txtMissionMavlinkArg4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>286, 42</value>
+  </data>
+  <data name="txtMissionMavlinkArg4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionMavlinkArg4.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg4.Name" xml:space="preserve">
+    <value>txtMissionMavlinkArg4</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg4.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg4.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>210, 42</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.Text" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="lblMissionMavlinkArg4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg4.Name" xml:space="preserve">
+    <value>lblMissionMavlinkArg4</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg4.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg4.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="txtMissionMavlinkArg3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>286, 16</value>
+  </data>
+  <data name="txtMissionMavlinkArg3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtMissionMavlinkArg3.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg3.Name" xml:space="preserve">
+    <value>txtMissionMavlinkArg3</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg3.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtMissionMavlinkArg3.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>210, 16</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.Text" xml:space="preserve">
+    <value>Latitude:</value>
+  </data>
+  <data name="lblMissionMavlinkArg3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg3.Name" xml:space="preserve">
+    <value>lblMissionMavlinkArg3</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg3.Parent" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblMissionMavlinkArg3.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="grpMissionControlMavlink.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="grpMissionControlMavlink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 86</value>
+  </data>
+  <data name="grpMissionControlMavlink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 148</value>
+  </data>
+  <data name="grpMissionControlMavlink.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="grpMissionControlMavlink.Text" xml:space="preserve">
+    <value>WP #1</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlMavlink.Name" xml:space="preserve">
+    <value>grpMissionControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlMavlink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpMissionControlMavlink.Parent" xml:space="preserve">
     <value>tabMissionPlanning</value>
   </data>
-  <data name="&gt;&gt;lblMissionHomeAlt.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;grpMissionControlMavlink.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="txtMissionAttoDefaultSpeed.Location" type="System.Drawing.Point, System.Drawing">
     <value>466, 92</value>
@@ -2241,34 +2727,34 @@
   <data name="&gt;&gt;cboMissionAttoLoiterDuration.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
-  <data name="lblMissionStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblMissionStatusAtto.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblMissionStatus.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblMissionStatusAtto.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 141</value>
   </data>
-  <data name="lblMissionStatus.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblMissionStatusAtto.Size" type="System.Drawing.Size, System.Drawing">
     <value>369, 13</value>
   </data>
-  <data name="lblMissionStatus.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblMissionStatusAtto.TabIndex" type="System.Int32, mscorlib">
     <value>37</value>
   </data>
-  <data name="lblMissionStatus.Text" xml:space="preserve">
+  <data name="lblMissionStatusAtto.Text" xml:space="preserve">
     <value>Status:</value>
   </data>
-  <data name="lblMissionStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblMissionStatusAtto.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;lblMissionStatus.Name" xml:space="preserve">
-    <value>lblMissionStatus</value>
+  <data name="&gt;&gt;lblMissionStatusAtto.Name" xml:space="preserve">
+    <value>lblMissionStatusAtto</value>
   </data>
-  <data name="&gt;&gt;lblMissionStatus.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblMissionStatusAtto.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblMissionStatus.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblMissionStatusAtto.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;lblMissionStatus.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblMissionStatusAtto.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
   <data name="Label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2301,28 +2787,28 @@
   <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="prgMission.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="prgMissionAtto.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="prgMission.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="prgMissionAtto.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 157</value>
   </data>
-  <data name="prgMission.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="prgMissionAtto.Size" type="System.Drawing.Size, System.Drawing">
     <value>369, 10</value>
   </data>
-  <data name="prgMission.TabIndex" type="System.Int32, mscorlib">
+  <data name="prgMissionAtto.TabIndex" type="System.Int32, mscorlib">
     <value>34</value>
   </data>
-  <data name="&gt;&gt;prgMission.Name" xml:space="preserve">
-    <value>prgMission</value>
+  <data name="&gt;&gt;prgMissionAtto.Name" xml:space="preserve">
+    <value>prgMissionAtto</value>
   </data>
-  <data name="&gt;&gt;prgMission.Type" xml:space="preserve">
+  <data name="&gt;&gt;prgMissionAtto.Type" xml:space="preserve">
     <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;prgMission.Parent" xml:space="preserve">
+  <data name="&gt;&gt;prgMissionAtto.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;prgMission.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;prgMissionAtto.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
   <data name="cboMissionAttoLoiter.IntegralHeight" type="System.Boolean, mscorlib">
@@ -2349,85 +2835,85 @@
   <data name="&gt;&gt;cboMissionAttoLoiter.ZOrder" xml:space="preserve">
     <value>16</value>
   </data>
-  <data name="cmdMissionWrite.Enabled" type="System.Boolean, mscorlib">
+  <data name="cmdMissionAttoWrite.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="cmdMissionWrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="cmdMissionAttoWrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="cmdMissionWrite.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cmdMissionAttoWrite.Location" type="System.Drawing.Point, System.Drawing">
     <value>84, 144</value>
   </data>
-  <data name="cmdMissionWrite.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cmdMissionAttoWrite.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 23</value>
   </data>
-  <data name="cmdMissionWrite.TabIndex" type="System.Int32, mscorlib">
+  <data name="cmdMissionAttoWrite.TabIndex" type="System.Int32, mscorlib">
     <value>33</value>
   </data>
-  <data name="cmdMissionWrite.Text" xml:space="preserve">
+  <data name="cmdMissionAttoWrite.Text" xml:space="preserve">
     <value>Write</value>
   </data>
-  <data name="&gt;&gt;cmdMissionWrite.Name" xml:space="preserve">
-    <value>cmdMissionWrite</value>
+  <data name="&gt;&gt;cmdMissionAttoWrite.Name" xml:space="preserve">
+    <value>cmdMissionAttoWrite</value>
   </data>
-  <data name="&gt;&gt;cmdMissionWrite.Type" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoWrite.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cmdMissionWrite.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoWrite.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;cmdMissionWrite.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoWrite.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="cmdMissionRead.Enabled" type="System.Boolean, mscorlib">
+  <data name="cmdMissionAttoRead.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="cmdMissionRead.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="cmdMissionAttoRead.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="cmdMissionRead.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cmdMissionAttoRead.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 144</value>
   </data>
-  <data name="cmdMissionRead.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cmdMissionAttoRead.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 23</value>
   </data>
-  <data name="cmdMissionRead.TabIndex" type="System.Int32, mscorlib">
+  <data name="cmdMissionAttoRead.TabIndex" type="System.Int32, mscorlib">
     <value>32</value>
   </data>
-  <data name="cmdMissionRead.Text" xml:space="preserve">
+  <data name="cmdMissionAttoRead.Text" xml:space="preserve">
     <value>Read</value>
   </data>
-  <data name="&gt;&gt;cmdMissionRead.Name" xml:space="preserve">
-    <value>cmdMissionRead</value>
+  <data name="&gt;&gt;cmdMissionAttoRead.Name" xml:space="preserve">
+    <value>cmdMissionAttoRead</value>
   </data>
-  <data name="&gt;&gt;cmdMissionRead.Type" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoRead.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cmdMissionRead.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoRead.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;cmdMissionRead.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cmdMissionAttoRead.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
-  <data name="txtMissionSpeed.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtMissionAttoSpeed.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 92</value>
   </data>
-  <data name="txtMissionSpeed.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtMissionAttoSpeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 20</value>
   </data>
-  <data name="txtMissionSpeed.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtMissionAttoSpeed.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
   </data>
-  <data name="&gt;&gt;txtMissionSpeed.Name" xml:space="preserve">
-    <value>txtMissionSpeed</value>
+  <data name="&gt;&gt;txtMissionAttoSpeed.Name" xml:space="preserve">
+    <value>txtMissionAttoSpeed</value>
   </data>
-  <data name="&gt;&gt;txtMissionSpeed.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoSpeed.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtMissionSpeed.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoSpeed.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;txtMissionSpeed.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoSpeed.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
   <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2538,25 +3024,25 @@
   <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
     <value>23</value>
   </data>
-  <data name="txtMissionAltitude.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtMissionAttoAltitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 65</value>
   </data>
-  <data name="txtMissionAltitude.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtMissionAttoAltitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 20</value>
   </data>
-  <data name="txtMissionAltitude.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtMissionAttoAltitude.TabIndex" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
-  <data name="&gt;&gt;txtMissionAltitude.Name" xml:space="preserve">
-    <value>txtMissionAltitude</value>
+  <data name="&gt;&gt;txtMissionAttoAltitude.Name" xml:space="preserve">
+    <value>txtMissionAttoAltitude</value>
   </data>
-  <data name="&gt;&gt;txtMissionAltitude.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoAltitude.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtMissionAltitude.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoAltitude.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;txtMissionAltitude.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoAltitude.ZOrder" xml:space="preserve">
     <value>24</value>
   </data>
   <data name="Label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2589,25 +3075,25 @@
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
     <value>25</value>
   </data>
-  <data name="txtMissionLongitude.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtMissionAttoLongitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 39</value>
   </data>
-  <data name="txtMissionLongitude.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtMissionAttoLongitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 20</value>
   </data>
-  <data name="txtMissionLongitude.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtMissionAttoLongitude.TabIndex" type="System.Int32, mscorlib">
     <value>34</value>
   </data>
-  <data name="&gt;&gt;txtMissionLongitude.Name" xml:space="preserve">
-    <value>txtMissionLongitude</value>
+  <data name="&gt;&gt;txtMissionAttoLongitude.Name" xml:space="preserve">
+    <value>txtMissionAttoLongitude</value>
   </data>
-  <data name="&gt;&gt;txtMissionLongitude.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLongitude.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtMissionLongitude.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLongitude.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;txtMissionLongitude.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLongitude.ZOrder" xml:space="preserve">
     <value>26</value>
   </data>
   <data name="Label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2640,25 +3126,25 @@
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
     <value>27</value>
   </data>
-  <data name="txtMissionLatitude.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtMissionAttoLatitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 13</value>
   </data>
-  <data name="txtMissionLatitude.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtMissionAttoLatitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 20</value>
   </data>
-  <data name="txtMissionLatitude.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtMissionAttoLatitude.TabIndex" type="System.Int32, mscorlib">
     <value>33</value>
   </data>
-  <data name="&gt;&gt;txtMissionLatitude.Name" xml:space="preserve">
-    <value>txtMissionLatitude</value>
+  <data name="&gt;&gt;txtMissionAttoLatitude.Name" xml:space="preserve">
+    <value>txtMissionAttoLatitude</value>
   </data>
-  <data name="&gt;&gt;txtMissionLatitude.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLatitude.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtMissionLatitude.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLatitude.Parent" xml:space="preserve">
     <value>grpMissionControlAtto</value>
   </data>
-  <data name="&gt;&gt;txtMissionLatitude.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtMissionAttoLatitude.ZOrder" xml:space="preserve">
     <value>28</value>
   </data>
   <data name="Label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2716,7 +3202,37 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;grpMissionControlAtto.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
+  </data>
+  <data name="lblMissionHomeAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMissionHomeAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 135</value>
+  </data>
+  <data name="lblMissionHomeAlt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 20</value>
+  </data>
+  <data name="lblMissionHomeAlt.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="lblMissionHomeAlt.Text" xml:space="preserve">
+    <value>Home Alt:</value>
+  </data>
+  <data name="lblMissionHomeAlt.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblMissionHomeAlt.Name" xml:space="preserve">
+    <value>lblMissionHomeAlt</value>
+  </data>
+  <data name="&gt;&gt;lblMissionHomeAlt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMissionHomeAlt.Parent" xml:space="preserve">
+    <value>tabMissionPlanning</value>
+  </data>
+  <data name="&gt;&gt;lblMissionHomeAlt.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="Label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3028,7 +3544,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;grpMissionControlGeneric.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="chkMissionInsert.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3061,7 +3577,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;chkMissionInsert.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="lblMissionDoubleClickLabel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
@@ -3094,7 +3610,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;lblMissionDoubleClickLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="txtMissionDefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
     <value>495, 11</value>
@@ -3115,7 +3631,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;txtMissionDefaultAlt.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="lblMissionDefaultAlt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3145,7 +3661,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;lblMissionDefaultAlt.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="lblMissionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3175,7 +3691,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;lblMissionLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="cboMission.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -3199,7 +3715,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cboMission.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="cmdMissionSaveAs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3226,7 +3742,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cmdMissionSaveAs.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="cmdMissionNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3253,7 +3769,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;cmdMissionNew.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="dgMission.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 69</value>
@@ -3280,7 +3796,7 @@
     <value>tabMissionPlanning</value>
   </data>
   <data name="&gt;&gt;dgMission.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="tabMissionPlanning.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -3305,6 +3821,303 @@
   </data>
   <data name="&gt;&gt;tabMissionPlanning.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="Label26.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 21</value>
+  </data>
+  <data name="Label26.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 21</value>
+  </data>
+  <data name="Label26.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="Label26.Text" xml:space="preserve">
+    <value>Message Send Rate</value>
+  </data>
+  <data name="Label26.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;Label26.Name" xml:space="preserve">
+    <value>Label26</value>
+  </data>
+  <data name="&gt;&gt;Label26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label26.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;Label26.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboControlMavlinkMessageSendRate.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboControlMavlinkMessageSendRate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 21</value>
+  </data>
+  <data name="cboControlMavlinkMessageSendRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 21</value>
+  </data>
+  <data name="cboControlMavlinkMessageSendRate.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMessageSendRate.Name" xml:space="preserve">
+    <value>cboControlMavlinkMessageSendRate</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMessageSendRate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMessageSendRate.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMessageSendRate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.Location" type="System.Drawing.Point, System.Drawing">
+    <value>143, 101</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 23</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="cmdControlMavlinkSetHome.Text" xml:space="preserve">
+    <value>Set Home</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetHome.Name" xml:space="preserve">
+    <value>cmdControlMavlinkSetHome</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetHome.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetHome.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetHome.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtControlMavlinkSetAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 74</value>
+  </data>
+  <data name="txtControlMavlinkSetAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 20</value>
+  </data>
+  <data name="txtControlMavlinkSetAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="&gt;&gt;txtControlMavlinkSetAltitude.Name" xml:space="preserve">
+    <value>txtControlMavlinkSetAltitude</value>
+  </data>
+  <data name="&gt;&gt;txtControlMavlinkSetAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtControlMavlinkSetAltitude.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;txtControlMavlinkSetAltitude.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cboControlMavlinkAction.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboControlMavlinkAction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 47</value>
+  </data>
+  <data name="cboControlMavlinkAction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 21</value>
+  </data>
+  <data name="cboControlMavlinkAction.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkAction.Name" xml:space="preserve">
+    <value>cboControlMavlinkAction</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkAction.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkAction.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkAction.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cmdControlMavlinkAction.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlMavlinkAction.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlMavlinkAction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 45</value>
+  </data>
+  <data name="cmdControlMavlinkAction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="cmdControlMavlinkAction.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="cmdControlMavlinkAction.Text" xml:space="preserve">
+    <value>Perform Action</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkAction.Name" xml:space="preserve">
+    <value>cmdControlMavlinkAction</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkAction.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkAction.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkAction.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>143, 73</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 23</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="cmdControlMavlinkSetAltitude.Text" xml:space="preserve">
+    <value>Set Altitude</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetAltitude.Name" xml:space="preserve">
+    <value>cmdControlMavlinkSetAltitude</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetAltitude.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkSetAltitude.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cboControlMavlinkMode.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboControlMavlinkMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 21</value>
+  </data>
+  <data name="cboControlMavlinkMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 21</value>
+  </data>
+  <data name="cboControlMavlinkMode.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMode.Name" xml:space="preserve">
+    <value>cboControlMavlinkMode</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMode.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cboControlMavlinkMode.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblControlMavlinkStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblControlMavlinkStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 134</value>
+  </data>
+  <data name="lblControlMavlinkStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>369, 13</value>
+  </data>
+  <data name="lblControlMavlinkStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="lblControlMavlinkStatus.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="lblControlMavlinkStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblControlMavlinkStatus.Name" xml:space="preserve">
+    <value>lblControlMavlinkStatus</value>
+  </data>
+  <data name="&gt;&gt;lblControlMavlinkStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblControlMavlinkStatus.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;lblControlMavlinkStatus.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cmdControlMavlinkMode.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cmdControlMavlinkMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdControlMavlinkMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 19</value>
+  </data>
+  <data name="cmdControlMavlinkMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="cmdControlMavlinkMode.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="cmdControlMavlinkMode.Text" xml:space="preserve">
+    <value>Set Mode</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkMode.Name" xml:space="preserve">
+    <value>cmdControlMavlinkMode</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkMode.Parent" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;cmdControlMavlinkMode.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="grpControlMavlink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 42</value>
+  </data>
+  <data name="grpControlMavlink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>504, 157</value>
+  </data>
+  <data name="grpControlMavlink.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="grpControlMavlink.Text" xml:space="preserve">
+    <value>Control Modes</value>
+  </data>
+  <data name="&gt;&gt;grpControlMavlink.Name" xml:space="preserve">
+    <value>grpControlMavlink</value>
+  </data>
+  <data name="&gt;&gt;grpControlMavlink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpControlMavlink.Parent" xml:space="preserve">
+    <value>tabMissionControl</value>
+  </data>
+  <data name="&gt;&gt;grpControlMavlink.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cmdControlAttoTriggerServo.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -3498,34 +4311,34 @@
   <data name="&gt;&gt;cmdControlAttoSpeed.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="lblControlStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblControlAttoStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblControlStatus.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblControlAttoStatus.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 169</value>
   </data>
-  <data name="lblControlStatus.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblControlAttoStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>369, 13</value>
   </data>
-  <data name="lblControlStatus.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblControlAttoStatus.TabIndex" type="System.Int32, mscorlib">
     <value>38</value>
   </data>
-  <data name="lblControlStatus.Text" xml:space="preserve">
+  <data name="lblControlAttoStatus.Text" xml:space="preserve">
     <value>Status:</value>
   </data>
-  <data name="lblControlStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lblControlAttoStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;lblControlStatus.Name" xml:space="preserve">
-    <value>lblControlStatus</value>
+  <data name="&gt;&gt;lblControlAttoStatus.Name" xml:space="preserve">
+    <value>lblControlAttoStatus</value>
   </data>
-  <data name="&gt;&gt;lblControlStatus.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblControlAttoStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblControlStatus.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblControlAttoStatus.Parent" xml:space="preserve">
     <value>grpControlAtto</value>
   </data>
-  <data name="&gt;&gt;lblControlStatus.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblControlAttoStatus.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="cmdControlAttoReturnRally.Enabled" type="System.Boolean, mscorlib">
@@ -3721,7 +4534,7 @@
     <value>tabMissionControl</value>
   </data>
   <data name="&gt;&gt;grpControlAtto.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tabMissionControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -7107,6 +7920,588 @@
   <data name="&gt;&gt;tabPortSensors.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="lblJoystickMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 114</value>
+  </data>
+  <data name="lblJoystickMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 11</value>
+  </data>
+  <data name="lblJoystickMode.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="lblJoystickMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickMode.Name" xml:space="preserve">
+    <value>lblJoystickMode</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickMode.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickMode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tbarJoystickMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarJoystickMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarJoystickMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 110</value>
+  </data>
+  <data name="tbarJoystickMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 18</value>
+  </data>
+  <data name="tbarJoystickMode.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickMode.Name" xml:space="preserve">
+    <value>tbarJoystickMode</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickMode.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickMode.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 112</value>
+  </data>
+  <data name="Label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label20.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="Label20.Text" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="Label20.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label20.Name" xml:space="preserve">
+    <value>Label20</value>
+  </data>
+  <data name="&gt;&gt;Label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label20.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label20.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboJoystickOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 130</value>
+  </data>
+  <data name="cboJoystickOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 21</value>
+  </data>
+  <data name="cboJoystickOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="&gt;&gt;cboJoystickOutput.Name" xml:space="preserve">
+    <value>cboJoystickOutput</value>
+  </data>
+  <data name="&gt;&gt;cboJoystickOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboJoystickOutput.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;cboJoystickOutput.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblJoystickDevice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickDevice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>22, 10</value>
+  </data>
+  <data name="lblJoystickDevice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 20</value>
+  </data>
+  <data name="lblJoystickDevice.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="lblJoystickDevice.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickDevice.Name" xml:space="preserve">
+    <value>lblJoystickDevice</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickDevice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickDevice.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickDevice.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkJoystickEnable.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkJoystickEnable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkJoystickEnable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>192, 128</value>
+  </data>
+  <data name="chkJoystickEnable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 24</value>
+  </data>
+  <data name="chkJoystickEnable.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="chkJoystickEnable.Text" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="chkJoystickEnable.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkJoystickEnable.Name" xml:space="preserve">
+    <value>chkJoystickEnable</value>
+  </data>
+  <data name="&gt;&gt;chkJoystickEnable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkJoystickEnable.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;chkJoystickEnable.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cmdJoystickCalibrate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdJoystickCalibrate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>192, 8</value>
+  </data>
+  <data name="cmdJoystickCalibrate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 24</value>
+  </data>
+  <data name="cmdJoystickCalibrate.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="cmdJoystickCalibrate.Text" xml:space="preserve">
+    <value>Calibrate</value>
+  </data>
+  <data name="&gt;&gt;cmdJoystickCalibrate.Name" xml:space="preserve">
+    <value>cmdJoystickCalibrate</value>
+  </data>
+  <data name="&gt;&gt;cmdJoystickCalibrate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdJoystickCalibrate.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;cmdJoystickCalibrate.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblJoystickRudder.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickRudder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 95</value>
+  </data>
+  <data name="lblJoystickRudder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 11</value>
+  </data>
+  <data name="lblJoystickRudder.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="lblJoystickRudder.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickRudder.Name" xml:space="preserve">
+    <value>lblJoystickRudder</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickRudder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickRudder.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickRudder.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblJoystickAileron.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickAileron.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 76</value>
+  </data>
+  <data name="lblJoystickAileron.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 11</value>
+  </data>
+  <data name="lblJoystickAileron.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="lblJoystickAileron.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickAileron.Name" xml:space="preserve">
+    <value>lblJoystickAileron</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickAileron.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickAileron.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickAileron.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="lblJoystickElevator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickElevator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 57</value>
+  </data>
+  <data name="lblJoystickElevator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 11</value>
+  </data>
+  <data name="lblJoystickElevator.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="lblJoystickElevator.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickElevator.Name" xml:space="preserve">
+    <value>lblJoystickElevator</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickElevator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickElevator.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickElevator.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="tbarJoystickRudder.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarJoystickRudder.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarJoystickRudder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 91</value>
+  </data>
+  <data name="tbarJoystickRudder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 18</value>
+  </data>
+  <data name="tbarJoystickRudder.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickRudder.Name" xml:space="preserve">
+    <value>tbarJoystickRudder</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickRudder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickRudder.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickRudder.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="tbarJoystickAileron.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarJoystickAileron.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarJoystickAileron.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 72</value>
+  </data>
+  <data name="tbarJoystickAileron.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 18</value>
+  </data>
+  <data name="tbarJoystickAileron.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickAileron.Name" xml:space="preserve">
+    <value>tbarJoystickAileron</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickAileron.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickAileron.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickAileron.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="tbarJoystickElevator.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarJoystickElevator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarJoystickElevator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 53</value>
+  </data>
+  <data name="tbarJoystickElevator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 18</value>
+  </data>
+  <data name="tbarJoystickElevator.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickElevator.Name" xml:space="preserve">
+    <value>tbarJoystickElevator</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickElevator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickElevator.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickElevator.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="Label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 93</value>
+  </data>
+  <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label18.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="Label18.Text" xml:space="preserve">
+    <value>Rudder</value>
+  </data>
+  <data name="Label18.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label18.Name" xml:space="preserve">
+    <value>Label18</value>
+  </data>
+  <data name="&gt;&gt;Label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label18.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label18.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="Label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 74</value>
+  </data>
+  <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label17.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="Label17.Text" xml:space="preserve">
+    <value>Aileron</value>
+  </data>
+  <data name="Label17.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label17.Name" xml:space="preserve">
+    <value>Label17</value>
+  </data>
+  <data name="&gt;&gt;Label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label17.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label17.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="Label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 55</value>
+  </data>
+  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label16.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Elevator</value>
+  </data>
+  <data name="Label16.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label16.Name" xml:space="preserve">
+    <value>Label16</value>
+  </data>
+  <data name="&gt;&gt;Label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label16.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="Label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 36</value>
+  </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label15.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>Throttle</value>
+  </data>
+  <data name="Label15.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label15.Name" xml:space="preserve">
+    <value>Label15</value>
+  </data>
+  <data name="&gt;&gt;Label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label15.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label15.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="lblJoystickThrottle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblJoystickThrottle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 38</value>
+  </data>
+  <data name="lblJoystickThrottle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 11</value>
+  </data>
+  <data name="lblJoystickThrottle.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="lblJoystickThrottle.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickThrottle.Name" xml:space="preserve">
+    <value>lblJoystickThrottle</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickThrottle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickThrottle.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;lblJoystickThrottle.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="tbarJoystickThrottle.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbarJoystickThrottle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbarJoystickThrottle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 34</value>
+  </data>
+  <data name="tbarJoystickThrottle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 18</value>
+  </data>
+  <data name="tbarJoystickThrottle.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickThrottle.Name" xml:space="preserve">
+    <value>tbarJoystickThrottle</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickThrottle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickThrottle.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tbarJoystickThrottle.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="Label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 133</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="Label14.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="Label14.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;Label14.Name" xml:space="preserve">
+    <value>Label14</value>
+  </data>
+  <data name="&gt;&gt;Label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label14.Parent" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;Label14.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="tabPortJoystick.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPortJoystick.Size" type="System.Drawing.Size, System.Drawing">
+    <value>264, 164</value>
+  </data>
+  <data name="tabPortJoystick.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tabPortJoystick.Text" xml:space="preserve">
+    <value>Joystick</value>
+  </data>
+  <data name="&gt;&gt;tabPortJoystick.Name" xml:space="preserve">
+    <value>tabPortJoystick</value>
+  </data>
+  <data name="&gt;&gt;tabPortJoystick.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPortJoystick.Parent" xml:space="preserve">
+    <value>tabPortControl</value>
+  </data>
+  <data name="&gt;&gt;tabPortJoystick.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="tabPortControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 411</value>
   </data>
@@ -7186,7 +8581,7 @@
     <value>JoystickInstrumentControl1</value>
   </data>
   <data name="&gt;&gt;JoystickInstrumentControl1.Type" xml:space="preserve">
-    <value>HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;JoystickInstrumentControl1.Parent" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
@@ -7305,6 +8700,42 @@
   <data name="&gt;&gt;cmdCenterOnPlane.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="chkViewHeadLock.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="chkViewHeadLock.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="chkViewHeadLock.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkViewHeadLock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 471</value>
+  </data>
+  <data name="chkViewHeadLock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 24</value>
+  </data>
+  <data name="chkViewHeadLock.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="chkViewHeadLock.Text" xml:space="preserve">
+    <value>Head Lock</value>
+  </data>
+  <data name="chkViewHeadLock.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;chkViewHeadLock.Name" xml:space="preserve">
+    <value>chkViewHeadLock</value>
+  </data>
+  <data name="&gt;&gt;chkViewHeadLock.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkViewHeadLock.Parent" xml:space="preserve">
+    <value>tabViewMapView</value>
+  </data>
+  <data name="&gt;&gt;chkViewHeadLock.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="chkViewFirstPerson.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
   </data>
@@ -7339,7 +8770,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;chkViewFirstPerson.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="chkViewChaseCam.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -7375,7 +8806,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;chkViewChaseCam.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="chkViewOverhead.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -7411,7 +8842,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;chkViewOverhead.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="chkViewNoTracking.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -7447,7 +8878,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;chkViewNoTracking.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="WebBrowser1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 9</value>
@@ -7468,7 +8899,7 @@
     <value>tabViewMapView</value>
   </data>
   <data name="&gt;&gt;WebBrowser1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="tabViewMapView.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -7561,7 +8992,7 @@
     <value>DirectShowControl1</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Type" xml:space="preserve">
-    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.15.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>HK_GCS.DirectShowControl.DirectShowControl, Ground Control Station, Version=1.2.34.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DirectShowControl1.Parent" xml:space="preserve">
     <value>tabViewLiveCamera</value>
@@ -7648,7 +9079,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="tmrTracking.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>682, 14</value>
@@ -7660,7 +9091,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblVehicle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>178, 3</value>
+    <value>243, 3</value>
   </data>
   <data name="lblVehicle.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 21</value>
@@ -7687,7 +9118,7 @@
     <value>0</value>
   </data>
   <data name="cboConfigVehicle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>238, 3</value>
+    <value>303, 3</value>
   </data>
   <data name="cboConfigVehicle.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 21</value>
@@ -7741,7 +9172,7 @@
     <value>65, 3</value>
   </data>
   <data name="cboConfigDevice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 21</value>
+    <value>157, 21</value>
   </data>
   <data name="cboConfigDevice.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
@@ -7762,7 +9193,7 @@
     <value>17, 57</value>
   </data>
   <data name="pnlDevice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>298, 28</value>
+    <value>355, 28</value>
   </data>
   <data name="pnlDevice.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
@@ -7780,6 +9211,159 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pnlDevice.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="tmrJoystick.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>933, 14</value>
+  </metadata>
+  <data name="lblLinkLostMessageType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 11.25pt, style=Bold</value>
+  </data>
+  <data name="lblLinkLostMessageType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLinkLostMessageType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 79</value>
+  </data>
+  <data name="lblLinkLostMessageType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 21</value>
+  </data>
+  <data name="lblLinkLostMessageType.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblLinkLostMessageType.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessageType.Name" xml:space="preserve">
+    <value>lblLinkLostMessageType</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessageType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessageType.Parent" xml:space="preserve">
+    <value>pnlLinkLost</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessageType.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblLinkLostTime.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 11.25pt, style=Bold</value>
+  </data>
+  <data name="lblLinkLostTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLinkLostTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 58</value>
+  </data>
+  <data name="lblLinkLostTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 21</value>
+  </data>
+  <data name="lblLinkLostTime.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblLinkLostTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostTime.Name" xml:space="preserve">
+    <value>lblLinkLostTime</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostTime.Parent" xml:space="preserve">
+    <value>pnlLinkLost</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostTime.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblLinkLostMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 12pt, style=Bold</value>
+  </data>
+  <data name="lblLinkLostMessage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLinkLostMessage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 37</value>
+  </data>
+  <data name="lblLinkLostMessage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 23</value>
+  </data>
+  <data name="lblLinkLostMessage.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblLinkLostMessage.Text" xml:space="preserve">
+    <value>Telemetry Link Lost</value>
+  </data>
+  <data name="lblLinkLostMessage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessage.Name" xml:space="preserve">
+    <value>lblLinkLostMessage</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessage.Parent" xml:space="preserve">
+    <value>pnlLinkLost</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostMessage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblLinkLostLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 20.25pt, style=Bold</value>
+  </data>
+  <data name="lblLinkLostLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblLinkLostLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="lblLinkLostLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 92</value>
+  </data>
+  <data name="lblLinkLostLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblLinkLostLabel.Text" xml:space="preserve">
+    <value>WARNING</value>
+  </data>
+  <data name="lblLinkLostLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostLabel.Name" xml:space="preserve">
+    <value>lblLinkLostLabel</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostLabel.Parent" xml:space="preserve">
+    <value>pnlLinkLost</value>
+  </data>
+  <data name="&gt;&gt;lblLinkLostLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pnlLinkLost.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 255</value>
+  </data>
+  <data name="pnlLinkLost.Size" type="System.Drawing.Size, System.Drawing">
+    <value>252, 116</value>
+  </data>
+  <data name="pnlLinkLost.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="pnlLinkLost.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlLinkLost.Name" xml:space="preserve">
+    <value>pnlLinkLost</value>
+  </data>
+  <data name="&gt;&gt;pnlLinkLost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlLinkLost.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlLinkLost.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -7873,6 +9457,18 @@
   <data name="&gt;&gt;mnuSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;mnuJoystickCalibration.Name" xml:space="preserve">
+    <value>mnuJoystickCalibration</value>
+  </data>
+  <data name="&gt;&gt;mnuJoystickCalibration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItem3.Name" xml:space="preserve">
+    <value>ToolStripMenuItem3</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItem3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;ToolStripMenuItem2.Name" xml:space="preserve">
     <value>ToolStripMenuItem2</value>
   </data>
@@ -7926,6 +9522,12 @@
   </data>
   <data name="&gt;&gt;serialPortTracking.Type" xml:space="preserve">
     <value>System.IO.Ports.SerialPort, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmrJoystick.Name" xml:space="preserve">
+    <value>tmrJoystick</value>
+  </data>
+  <data name="&gt;&gt;tmrJoystick.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>
