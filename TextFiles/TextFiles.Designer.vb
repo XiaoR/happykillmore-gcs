@@ -65,6 +65,48 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to // Command IDs - Must
+        '''0,BLANK
+        '''10,WAYPOINT,Altitude,,Latitude,Longitude
+        '''11,LOITER,Altitude,,Latitude,Longitude
+        '''12,LOITER_N_TURNS,Altitude,Turns,Latitude,Longitude
+        '''13,LOITER_TIME,Altitude,Time,Latitude,Longitude
+        '''14,RTL,Altitude,,Latitude,Longitude
+        '''15,LAND,Altitude,,Latitude,Longitude
+        '''16,TAKEOFF,Altitude,Angle
+        '''
+        '''// Command IDs - May
+        '''20,DELAY,,Time
+        '''//CLIMB // NOT IMPLEMENTED
+        '''22,LAND_OPTIONS,AirSpeed,Dist to WP,Throttle,Pitch Deg.
+        '''// pitch in deg, airspeed  m/s, throttle %, track WP 1 or 0
+        '''
+        '''// Com [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property APMCommands() As String
+            Get
+                Return ResourceManager.GetString("APMCommands", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to // Auto Pilot modes
+        '''// ----------------
+        '''MANUAL 0
+        '''CIRCLE 1 // When flying sans GPS, and we loose the radio, just circle
+        '''STABILIZE 2
+        '''
+        '''FLY_BY_WIRE_A 5 // Fly By Wire A has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical = manual throttle
+        '''FLY_BY_WIRE_B 6 // Fly By Wire B has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical =&gt; desired airspeed
+        '''// Fly By Wire B = Fly By Wire A if you  [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property APMModes() As String
+            Get
+                Return ResourceManager.GetString("APMModes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to $1,Mix Enable,0,1,0,Enable flag for Elevon/V-tail mixing. 0 = FALSE, 1 = TRUE
         '''$2,Mix Servo1 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 1 servo direction
         '''$3,Mix Servo2 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 2 servo direction
@@ -72,9 +114,48 @@ Namespace My.Resources
         '''$5,Servo 2 Gain,0,100,10,Is 10x format. Elevator, or with elevons it is the elevator component of the mix
         '''$6,Servo 3 Gain,0,100 [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend Shared ReadOnly Property SetConfig() As String
+        Friend Shared ReadOnly Property AttoSetConfig() As String
             Get
-                Return ResourceManager.GetString("SetConfig", resourceCulture)
+                Return ResourceManager.GetString("AttoSetConfig", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to //Arg Number,Name,Min,Max,Default,Mult,Add,Bit,Desc
+        '''1,acc_x_neutral,,,,1,0,,
+        '''2,acc_y_neutral,,,,1,0,,
+        '''3,acc_z_neutral,,,,1,0,,
+        '''4,gyro_x_neutral,,,,1,0,,
+        '''5,gyro_y_neutral,,,,1,0,,
+        '''6,gyro_z_neutral,,,,1,0,,
+        '''
+        '''7,telemetry_basicgps,,,,1,0,,
+        '''8,telemetry_ppm,,,,1,0,,
+        '''9,telemetry_gyroaccraw,,,,1,0,,
+        '''10,telemetry_gyroaccproc,,,,1,0,,
+        '''11,telemetry_pressuretemp,,,,1,0,,
+        '''12,telemetry_attitude,,,,1,0,,
+        '''
+        '''13,gps_initial_baudrate,,,,10,,0,,
+        '''14,gps_operational_baudrate,,,,10,0,,
+        '''
+        '''15,channel_ap,,,,1,1,,
+        '''16 [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property GluonSetConfig() As String
+            Get
+                Return ResourceManager.GetString("GluonSetConfig", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to HDNG2RLL_P,0,,0.7,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
+        '''HDNG2RLL_I,0,,0.01,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, The I term is used to control drift.
+        '''HDNG2RLL_D,0,,0.02,1,NAV_ROLL_D - Navigation control gains, Tuning values for the navigation control PID loops, The D [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property MAVlinkSetConfig() As String
+            Get
+                Return ResourceManager.GetString("MAVlinkSetConfig", resourceCulture)
             End Get
         End Property
     End Class
