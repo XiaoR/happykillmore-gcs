@@ -110,22 +110,36 @@ Public Class frmTrackingCalibrate
         cboTiltServo.Visible = enabled
     End Sub
     Private Sub tbarLeft_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarLeft.Scroll, tbarRight.Scroll, tbarUp.Scroll, tbarDown.Scroll
+        Dim nPanServoLocal As Integer
+        Dim nTiltServoLocal As Integer
+
         If nStartup = True Then
             Exit Sub
         End If
 
+        If cboPanServo.Visible = True Then
+            nPanServoLocal = Convert.ToInt32(cboPanServo.Text)
+        Else
+            nPanServoLocal = -1
+        End If
+        If cboTiltServo.Visible = True Then
+            nTiltServoLocal = Convert.ToInt32(cboTiltServo.Text)
+        Else
+            nTiltServoLocal = -1
+        End If
+
         Select Case sender.name
             Case "tbarLeft"
-                frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), sender.value, )
+                frmMain.SendTrackerMessage(nPanServoLocal, sender.value)
                 lblLeft.Text = sender.value
             Case "tbarRight"
-                frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), sender.value, )
+                frmMain.SendTrackerMessage(nPanServoLocal, sender.value)
                 lblRight.Text = sender.value
             Case "tbarUp"
-                frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , sender.value)
+                frmMain.SendTrackerMessage(nTiltServoLocal, , sender.value)
                 lblUp.Text = sender.value
             Case "tbarDown"
-                frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , sender.value)
+                frmMain.SendTrackerMessage(nTiltServoLocal, , sender.value)
                 lblDown.Text = sender.value
         End Select
     End Sub

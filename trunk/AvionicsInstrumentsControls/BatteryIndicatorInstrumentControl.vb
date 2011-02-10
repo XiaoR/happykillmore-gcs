@@ -114,7 +114,7 @@ Namespace AvionicsInstrumentControlDemo
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
             Dim fontSize As Single
-            fontSize = Me.Width / 180 * 10
+            fontSize = Me.Width / 180 * 9
             Using string_format As New StringFormat()
                 string_format.Alignment = StringAlignment.Center
                 string_format.LineAlignment = StringAlignment.Near

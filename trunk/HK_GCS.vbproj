@@ -103,7 +103,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AvionicsInstrumentsControlsRessources.resx</DependentUpon>
     </Compile>
-    <Compile Include="AvionicsInstrumentsControls\cJoystick.vb" />
     <Compile Include="AvionicsInstrumentsControls\HeadingIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -119,8 +118,22 @@
     <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cActiveDevices.vb" />
     <Compile Include="cAsyncSocket.vb" />
+    <Compile Include="cJoystick.vb" />
     <Compile Include="cValueDesc.vb" />
+    <Compile Include="frmHeartbeat.Designer.vb">
+      <DependentUpon>frmHeartbeat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmHeartbeat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmJoystick.Designer.vb">
+      <DependentUpon>frmJoystick.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmJoystick.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTrackingCalibrate.Designer.vb">
       <DependentUpon>frmTrackingCalibrate.vb</DependentUpon>
     </Compile>
@@ -207,6 +220,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmHeartbeat.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHeartbeat.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmJoystick.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmJoystick.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.vb</DependentUpon>
@@ -261,7 +282,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\SetConfig.txt" />
     <Content Include="Javascript\Maps.html" />
     <Content Include="Javascript\pluginhost.html" />
     <None Include="Resources\BatteryGreen.bmp" />
@@ -284,6 +304,7 @@
     <None Include="Resources\Delete.gif" />
     <None Include="Resources\down.gif" />
     <None Include="Resources\Delete.ico" />
+    <Content Include="Resources\F510_smi.jpg" />
     <Content Include="Resources\Images\Button.gif" />
     <Content Include="Resources\PLANE.ICO" />
     <Content Include="Resources\GroundSpeedNeedle.bmp" />
@@ -308,7 +329,11 @@
     <None Include="Resources\up.gif" />
     <Content Include="Resources\VerticalSpeedIndicator_Background.bmp" />
     <Content Include="Resources\VerticalSpeedNeedle.bmp" />
-    <Content Include="TextFiles\SetConfig.txt" />
+    <Content Include="TextFiles\APMCommands.txt" />
+    <Content Include="TextFiles\APMModes.txt" />
+    <Content Include="TextFiles\GluonSetConfig.txt" />
+    <Content Include="TextFiles\MAVlinkSetConfig.txt" />
+    <Content Include="TextFiles\AttoSetConfig.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -326,6 +351,9 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

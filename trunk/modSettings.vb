@@ -16,6 +16,8 @@ Module modSettings
     Public nThrottleChannel As Integer = 1
     Public eMapSelection As e_MapSelection = e_MapSelection.e_MapSelection_GoogleEarth
 
+    Public sGoogleEarthKey As String
+
     Public bInstruments(0 To e_Instruments_Max) As Boolean
     Public b3DModelFailed As Boolean = False
 
@@ -32,6 +34,8 @@ Module modSettings
     Public eSpeedUnits As e_SpeedFormat = e_SpeedFormat.e_SpeedFormat_MPH
     Public sSpeedUnits As String
     Public sDistanceUnits As String
+
+    Public nMavlinkTelemetryRate As Integer
 
     Public nTrackingAngleLeft As Integer
     Public nTrackingAngleRight As Integer
@@ -53,6 +57,86 @@ Module modSettings
     Public nConfigVehicle As Integer
     Public sConfigFormatString As String = "0.000000"
     Public nConfigAltOffset As e_AltOffset
+
+    Public sJoystickDevice As String
+    Public nJoystickOutput As e_JoystickOutput
+    Public nJoystickThrottle As Integer
+    Public nJoystickElevator As Integer
+    Public nJoystickAileron As Integer
+    Public nJoystickRudder As Integer
+    Public nJoystickMode As Integer
+
+    Public bJoystickThrottleReverse As Boolean
+    Public bJoystickElevatorReverse As Boolean
+    Public bJoystickAileronReverse As Boolean
+    Public bJoystickRudderReverse As Boolean
+    Public bJoystickModeReverse As Boolean
+
+    Public nJoystickThrottleMin As Integer
+    Public nJoystickElevatorMin As Integer
+    Public nJoystickAileronMin As Integer
+    Public nJoystickRudderMin As Integer
+    Public nJoystickModeMin As Integer
+
+    Public nJoystickThrottleMax As Integer
+    Public nJoystickElevatorMax As Integer
+    Public nJoystickAileronMax As Integer
+    Public nJoystickRudderMax As Integer
+    Public nJoystickModeMax As Integer
+
+    Public nJoystickThrottleServo As Integer
+    Public nJoystickElevatorServo As Integer
+    Public nJoystickAileronServo As Integer
+    Public nJoystickRudderServo As Integer
+    Public nJoystickModeServo As Integer
+
+    Public nJoystickThrottlePosition As Integer
+    Public nJoystickElevatorPosition As Integer
+    Public nJoystickAileronPosition As Integer
+    Public nJoystickRudderPosition As Integer
+    Public nJoystickModePosition As Integer
+
+    Public bHeartbeat1 As Boolean
+    Public bHeartbeat2 As Boolean
+    Public bHeartbeat3 As Boolean
+    Public bHeartbeat4 As Boolean
+    Public bHeartbeat5 As Boolean
+    Public bHeartbeat6 As Boolean
+
+    Public bHeartbeatRun1 As Boolean = False
+    Public bHeartbeatRun2 As Boolean = False
+    Public bHeartbeatRun3 As Boolean = False
+    Public bHeartbeatRun4 As Boolean = False
+    Public bHeartbeatRun5 As Boolean = False
+    Public bHeartbeatRun6 As Boolean = False
+
+    Public sHeartbeatName1 As String
+    Public sHeartbeatName2 As String
+    Public sHeartbeatName3 As String
+    Public sHeartbeatName4 As String
+    Public sHeartbeatName5 As String
+    Public sHeartbeatName6 As String
+
+    Public nHeartbeatDevice1 As Integer
+    Public nHeartbeatDevice2 As Integer
+    Public nHeartbeatDevice3 As Integer
+    Public nHeartbeatDevice4 As Integer
+    Public nHeartbeatDevice5 As Integer
+    Public nHeartbeatDevice6 As Integer
+
+    Public nHeartbeatRate1 As Integer
+    Public nHeartbeatRate2 As Integer
+    Public nHeartbeatRate3 As Integer
+    Public nHeartbeatRate4 As Integer
+    Public nHeartbeatRate5 As Integer
+    Public nHeartbeatRate6 As Integer
+
+    Public sHeartbeat1 As String
+    Public sHeartbeat2 As String
+    Public sHeartbeat3 As String
+    Public sHeartbeat4 As String
+    Public sHeartbeat5 As String
+    Public sHeartbeat6 As String
 
     Public eOldSpeedUnits As Integer
     Public eOldDistanceUnits As Integer
@@ -80,7 +164,7 @@ Module modSettings
     Public Enum e_ConfigDevice
         e_ConfigDevice_Generic = 0
         e_ConfigDevice_AttoPilot
-        e_ConfigDevice_ArduPilotMega
+        e_ConfigDevice_MAVlink
         e_ConfigDevice_Gluonpilot
         e_ConfigDevice_FY21AP
     End Enum
@@ -93,6 +177,8 @@ Module modSettings
         bIsAdmin = GetRegSetting(sRootRegistry & "\Settings", "Admin Mode", False)
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
 
+        sGoogleEarthKey = GetRegSetting(sRootRegistry & "\Settings", "Google Earth Key")
+
         sModelName = GetRegSetting(sRootRegistry & "\Settings", "3D Model", "EasyStar")
         nMaxSpeed = GetRegSetting(sRootRegistry & "\Settings", "Max Speed", "120")
         bPitchReverse = GetRegSetting(sRootRegistry & "\Settings", "Pitch Reverse", False)
@@ -104,11 +190,16 @@ Module modSettings
         nHomeOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Home Offset", "0"))
         eMapSelection = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Source", "1"))
 
+        n2WayRetries = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "2-way Reties", "3"))
+        n2WayTimeout = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "2-way Timeout", "2"))
+
         nMapUpdateRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Update Hz", "2"))
 
         bFlightExtrude = GetRegSetting(sRootRegistry & "\Settings", "Flight Extrude", True)
         sFlightColor = GetRegSetting(sRootRegistry & "\Settings", "Flight Color", "8A00FFFF")
         nFlightWidth = GetRegSetting(sRootRegistry & "\Settings", "Flight Width", 2)
+
+        nMavlinkTelemetryRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Mavlink Telemetry Rate", "4"))
 
         bMissionExtrude = GetRegSetting(sRootRegistry & "\Settings", "Mission Extrude", True)
         sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "720000FF")
@@ -176,6 +267,13 @@ Module modSettings
         bAnnounceRegularInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval Enabled", False)
         sSpeechRegularInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval", GetResString(, "Announce_Regular_Interval_Default"))
         nSpeechInterval = GetRegSetting(sRootRegistry & "\Settings\Speech", "Interval", 30)
+        bAnnounceLinkWarning = GetRegSetting(sRootRegistry & "\Settings\Speech", "Warning Enabled", True)
+        sSpeechWarning = GetRegSetting(sRootRegistry & "\Settings\Speech", "Warning", GetResString(, "Announce_Warning_Default"))
+        bAnnounceLinkAlarm = GetRegSetting(sRootRegistry & "\Settings\Speech", "Alarm Enabled", True)
+        sSpeechAlarm = GetRegSetting(sRootRegistry & "\Settings\Speech", "Alarm", GetResString(, "Announce_Alarm_Default"))
+
+        nWarningTimeout = GetRegSetting(sRootRegistry & "\Settings", "Warning Timeout", 3)
+        nAlarmTimeout = GetRegSetting(sRootRegistry & "\Settings", "Alarm Timeout", 10)
 
         bBackLobeTracker = GetRegSetting(sRootRegistry & "\Settings\Tracking", "Back Lobe", True)
 
@@ -188,11 +286,81 @@ Module modSettings
         frmMain.txtMissionDefaultAlt.Text = ConvertDistance(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Altitude", 200), e_DistanceFormat.e_DistanceFormat_Feet, eDistanceUnits)
         frmMain.txtMissionAttoDefaultSpeed.Text = ConvertSpeed(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Atto Speed", 50), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
 
+        sJoystickDevice = GetRegSetting(sRootRegistry & "\Settings\Joystick", "Device", "")
+        nJoystickOutput = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Output", 0)
+
+        nJoystickThrottle = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Input", 3)
+        nJoystickElevator = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Input", 0)
+        nJoystickAileron = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Input", 1)
+        nJoystickRudder = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Input", 4)
+        nJoystickMode = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Input", 7)
+
+        bJoystickThrottleReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Reverse", True)
+        bJoystickElevatorReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Reverse", False)
+        bJoystickAileronReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Reverse", False)
+        bJoystickRudderReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Reverse", False)
+        bJoystickModeReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Reverse", False)
+
+        nJoystickThrottleMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Min", 32767)
+        nJoystickElevatorMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Min", 32767)
+        nJoystickAileronMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Min", 32767)
+        nJoystickRudderMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Min", 32767)
+        nJoystickModeMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Min", 32767)
+
+        nJoystickThrottleMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Max", 32767)
+        nJoystickElevatorMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Max", 32767)
+        nJoystickAileronMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Max", 32767)
+        nJoystickRudderMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Max", 32767)
+        nJoystickModeMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Max", 32767)
+
+        nJoystickThrottleServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Servo", 0)
+        nJoystickElevatorServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Servo", 0)
+        nJoystickAileronServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Servo", 0)
+        nJoystickRudderServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Servo", 0)
+        nJoystickModeServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Servo", 0)
+
+        bHeartbeat1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Enabled", False)
+        bHeartbeat2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Enabled", False)
+        bHeartbeat3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Enabled", False)
+        bHeartbeat4 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Enabled", False)
+        bHeartbeat5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Enabled", False)
+        bHeartbeat6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Enabled", True)
+
+        sHeartbeatName1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Name", "")
+        sHeartbeatName2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Name", "")
+        sHeartbeatName3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Name", "")
+        sHeartbeatName4 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Name", "868 Xbee Reset")
+        sHeartbeatName5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Name", "Mediatek Binary")
+        sHeartbeatName6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Name", "NMEA Setup")
+
+        nHeartbeatDevice1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Device", 0)
+        nHeartbeatDevice2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Device", 0)
+        nHeartbeatDevice3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Device", 0)
+        nHeartbeatDevice4 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Device", 0)
+        nHeartbeatDevice5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Device", 1)
+        nHeartbeatDevice6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Device", 1)
+
+        nHeartbeatRate1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Rate", 1)
+        nHeartbeatRate2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Rate", 1)
+        nHeartbeatRate3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Rate", 1)
+        nHeartbeatRate4 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Rate", -60)
+        nHeartbeatRate5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Rate", 1)
+        nHeartbeatRate6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Rate", -999)
+
+        sHeartbeat1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Output", "")
+        sHeartbeat2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Output", "")
+        sHeartbeat3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Output", "")
+        sHeartbeat4 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Output", "@@@<SLEEP 2>ATFR<CR><LF>")
+        sHeartbeat5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Output", "$PMTK220,250*29<CR><LF>$PGCMD,16,0,0,0,0,0*6A<CR><LF>")
+        sHeartbeat6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Output", "$PMTK330,220*2E<CR><LF>$PMTK313,1*2E<CR><LF>$PMTK301,2*2E<CR><LF>$PMTK220,200*2C<CR><LF>$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28<CR><LF>")
+
         If frmMain.bStartup = False Then
             frmMain.SetMapMode()
-            If webDocument Is Nothing Then
+            'If webDocument Is Nothing Then
+            If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
                 frmMain.SetupWebBroswer()
             End If
+            'End If
         End If
 
         If frmMain.tabInstrumentView.SelectedIndex = 4 Then
@@ -205,6 +373,8 @@ Module modSettings
     Public Sub SaveSettings()
         Dim nCount As Integer
 
+        SaveRegSetting(sRootRegistry & "\Settings", "Google Earth Key", sGoogleEarthKey)
+
         SaveRegSetting(sRootRegistry & "\Settings", "Language File", sLanguageFile)
 
         SaveRegSetting(sRootRegistry & "\Settings", "3D Model", sModelName)
@@ -216,6 +386,9 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Channel", nThrottleChannel)
         SaveRegSetting(sRootRegistry & "\Settings", "Altitude Offset", eAltOffset)
         SaveRegSetting(sRootRegistry & "\Settings", "Home Offset", nHomeOffset)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "2-way Reties", n2WayRetries)
+        SaveRegSetting(sRootRegistry & "\Settings", "2-way Timeout", n2WayTimeout)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Extrude", bFlightExtrude)
         SaveRegSetting(sRootRegistry & "\Settings", "Flight Color", sFlightColor)
@@ -263,6 +436,14 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval", sSpeechRegularInterval)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Interval", nSpeechInterval)
 
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning Enabled", bAnnounceLinkWarning)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning", sSpeechWarning)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Alarm Enabled", bAnnounceLinkAlarm)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Alarm", sSpeechAlarm)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Warning Timeout", nWarningTimeout)
+        SaveRegSetting(sRootRegistry & "\Settings", "Alarm Timeout", nAlarmTimeout)
+
         SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Left", nTrackingAngleLeft)
         SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Right", nTrackingAngleRight)
         SaveRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Angle Up", nTrackingAngleUp)
@@ -279,6 +460,73 @@ Module modSettings
         End If
 
         SaveRegSetting(sRootRegistry & "\Settings\Tracking", "Back Lobe", bBackLobeTracker)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", "Device", sJoystickDevice)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Input", nJoystickThrottle)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Input", nJoystickElevator)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Input", nJoystickAileron)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Input", nJoystickRudder)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Input", nJoystickMode)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Reverse", bJoystickThrottleReverse)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Reverse", bJoystickElevatorReverse)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Reverse", bJoystickAileronReverse)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Reverse", bJoystickRudderReverse)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Reverse", bJoystickModeReverse)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Min", nJoystickThrottleMin)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Min", nJoystickElevatorMin)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Min", nJoystickAileronMin)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Min", nJoystickRudderMin)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Min", nJoystickModeMin)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Max", nJoystickThrottleMax)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Max", nJoystickElevatorMax)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Max", nJoystickAileronMax)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Max", nJoystickRudderMax)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Max", nJoystickModeMax)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Servo", nJoystickThrottleServo)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Servo", nJoystickElevatorServo)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Servo", nJoystickAileronServo)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Servo", nJoystickRudderServo)
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Servo", nJoystickModeServo)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Enabled", bHeartbeat1)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Enabled", bHeartbeat2)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Enabled", bHeartbeat3)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Enabled", bHeartbeat4)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Enabled", bHeartbeat5)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Enabled", bHeartbeat6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Name", sHeartbeatName1)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Name", sHeartbeatName2)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Name", sHeartbeatName3)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Name", sHeartbeatName4)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Name", sHeartbeatName5)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Name", sHeartbeatName6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Device", nHeartbeatDevice1)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Device", nHeartbeatDevice2)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Device", nHeartbeatDevice3)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Device", nHeartbeatDevice4)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Device", nHeartbeatDevice5)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Device", nHeartbeatDevice6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Rate", nHeartbeatRate1)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Rate", nHeartbeatRate2)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Rate", nHeartbeatRate3)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Rate", nHeartbeatRate4)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Rate", nHeartbeatRate5)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Rate", nHeartbeatRate6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Output", sHeartbeat1)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Output", sHeartbeat2)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Output", sHeartbeat3)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Output", sHeartbeat4)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Output", sHeartbeat5)
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Output", sHeartbeat6)
 
         If nSpeechInterval < 10 Then
             nSpeechInterval = 10

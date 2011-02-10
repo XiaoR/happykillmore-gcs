@@ -6,8 +6,9 @@
     <title>Google Earth Plug-in</title>
     <!-- NOTE: replace the key below with your own key -->
     <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA0Fr-33jU5znk3eeIujbO7BTJMCHS-jujuL6EC_OZAQIbzgaqGxSc7loBqiXeUNQ8d7DjBpAZtmBctg"></script>
-    <!--<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"></script>-->
+    <!--<script type="text/javascript" src="http://www.google.com/jsapi?key=<GoogleEarthKey>"></script>-->
     <script type="text/javascript">
+    onerror=licenseError
 
     var googleFailed = false;
     var mapsFailed = false;
@@ -97,7 +98,11 @@
         window.external.JSGoogleLoadFail_();
      }
     }
-        
+
+    function licenseError() {
+        window.external.JSGoogleLicenseFail_();
+    }
+
     function initCallback(pluginInstance) {
         ge = pluginInstance;
         google.earth.addEventListener(ge.getView(), "viewchange", eventListener);
@@ -148,6 +153,7 @@
 	    camera = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);  
         //viewerOptions = ge.createViewerOptions(''); 
 
+        planeLoc = ge.createLocation('');
         planeLink = ge.createLink('');
         planeOrient = ge.createOrientation(''); 
         planeModel = ge.createModel('');
@@ -230,8 +236,8 @@
             geocoder.getLatLng(addressString, function(point) {
               if (point) {
                 var lookAt = ge.createLookAt('');
-                lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 
-                           0, 60, 20000);
+                lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND,0, 60, 20000);
+                //lookAt.setTilt(0)
                 ge.getView().setAbstractView(lookAt);
               }
             });  
@@ -527,7 +533,7 @@
 //		}
     }
 
-    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,headingOffset,pitch,roll,altOffset) {
+    function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,headingOffset,pitch,roll,altOffset,headLock) {
 	    var nAngle = 0;
 	    var nNewHeading = 0;
 	    var nRange = 0;
@@ -539,6 +545,10 @@
 //	        return;
 //	    }
 
+        if (ge == null) {
+            return;
+        }
+        
         eAltOffset = altOffset;
         nDaeHeadingOffset = headingOffset;
         nLocked = 1;
@@ -546,11 +556,12 @@
             nRange = currentRange - lastRange;
         }
         
-	    if (cameraTracking != 3) {
+        if (cameraTracking != 3) {
             ge.getOptions().setFlyToSpeed(1); 
         } else {
             ge.getOptions().setFlyToSpeed(4.5); 
         }
+        ge.getOptions().setUnitsFeetMiles(isMeters);
             
         nCameraHeading = heading - headingOffset
         if (nCameraHeading < 0) {
@@ -558,7 +569,6 @@
         }
             
         //if (isMeters == "True"){
-            ge.getOptions().setUnitsFeetMiles(isMeters);
         //} else {
         //    ge.getOptions().setUnitsFeetMiles(true);
         //}
@@ -609,8 +619,13 @@
                 //lookAt.setRange(ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND).getRange().toFixed(2)); 
 		        //lookAt.setRange(nRange);
 		        camera.setTilt(0);  
-		        camera.setHeading(nCameraHeading); 
-		        lookAt.setHeading(nCameraHeading); 
+		        if (headLock == true) {
+		            camera.setHeading(nCameraHeading); 
+		            lookAt.setHeading(nCameraHeading);
+		        } else {
+		            camera.setHeading(currentHeading); 
+		            lookAt.setHeading(currentHeading);
+		        } 
 		        camera.setAltitude(currentRange);
 		        ge.getView().setAbstractView(camera);
 		        lastRange = altitude;
@@ -618,13 +633,20 @@
                 //lookAt.setRange(currentRange); 
 		        lookAt.setLatitude(lat); 
 		        lookAt.setLongitude(long);  
-                if (eAltOffset == 0) {
+ 		        lookAt.setRange(400); 
+		        lookAt.setTilt(60);  
+               if (eAltOffset == 0) {
  		            lookAt.setAltitude(altitude); 
                 } else {
 		            lookAt.setAltitude(altitude + homeGroundAltitude); 
                 }
-		        lookAt.setHeading(nCameraHeading); 
-		        camera.setHeading(nCameraHeading); 
+		        if (headLock == true) {
+		            lookAt.setHeading(nCameraHeading); 
+		            camera.setHeading(nCameraHeading); 
+		        } else {
+		            camera.setHeading(currentHeading); 
+		            lookAt.setHeading(currentHeading);
+		        }
 		        //lookAt.setRange(currentRange-altitude);
 		        //camera.setAltitude(currentRange);
 		        lookAt.setTilt(60);  
@@ -637,7 +659,11 @@
                 } else {
 		            camera.setAltitude(altitude + homeGroundAltitude); 
                 }
-		        camera.setHeading(nCameraHeading); 
+		        if (headLock == true) {
+		            camera.setHeading(nCameraHeading); 
+		        } else {
+		            camera.setHeading(currentHeading); 
+		        }
 		        camera.setRoll(roll); 
 		        camera.setTilt(90 - pitch); 
 		        ge.getView().setAbstractView(camera);
@@ -693,13 +719,19 @@
             }
             lookAt.setRange(30); 
 		    lookAt.setTilt(0);  
-		    ge.getView().setAbstractView(lookAt);
+		    if (lastLat != 0 && lastLong != 0)
+		    {
+		        ge.getView().setAbstractView(lookAt);
+		    }
 		} else if(newView == 2) {
             loadModel(newModelURL);
 		    lookAt.setRange(400); 
 		    lookAt.setTilt(60);  
 		    //lookAt.setAltitude(altitude); 
-		    ge.getView().setAbstractView(lookAt);
+		    if (lastLat != 0 && lastLong != 0)
+		    {
+		        ge.getView().setAbstractView(lookAt);
+		    }
 		} else if(newView == 3) {
             planeModel.setLink(null);
 		    //camera.setRange(-5); 
@@ -710,12 +742,15 @@
             //viewerOptions.setOption(ge.OPTION_STREET_VIEW, ge.OPTION_STATE_ENABLED) 
 
 
-		    ge.getView().setAbstractView(camera);		    
+		    if (lastLat != 0 && lastLong != 0)
+		    {
+		        ge.getView().setAbstractView(camera);	
+		    }	    
         }	
     }
 
     function eventListener(event) {
-        if (nLocked == 0){
+        //if (nLocked == 0){
   	           var lookAtCurrent = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
 //  	        lookAtCurrent.setLatitude(planeLoc.getLatitude());
 //  	        lookAtCurrent.setLongitude(planeLoc.getLongitude());
@@ -724,9 +759,9 @@
 //	        currentRange = lookAtCurrent.getRange();
 	    currentRange = lookAtCurrent.getAltitude();
 	    //currentTilt = cameraCurrent.getTilt().toFixed(2);
-	    //currentHeading = cameraCurrent.getHeading().toFixed(2);
+	    currentHeading = lookAtCurrent.getHeading().toFixed(2);
 	    //cameraRange = cameraCurrent.getRange().toFixed(2);
-	    }
+	    //}
     }
     </script>
     <style type="text/css">

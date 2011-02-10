@@ -191,6 +191,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Danger! Danger! Signal lost for more than {alarm} seconds.
+        '''</summary>
+        Friend Shared ReadOnly Property Announce_Alarm_Default() As String
+            Get
+                Return ResourceManager.GetString("Announce_Alarm_Default", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Announce Mode Change.
         '''</summary>
         Friend Shared ReadOnly Property Announce_ModeChange() As String
@@ -223,6 +232,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Announce_Regular_Interval_Default() As String
             Get
                 Return ResourceManager.GetString("Announce_Regular_Interval_Default", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Warning, Signal lost for {warning} seconds.
+        '''</summary>
+        Friend Shared ReadOnly Property Announce_Warning_Default() As String
+            Get
+                Return ResourceManager.GetString("Announce_Warning_Default", resourceCulture)
             End Get
         End Property
         
