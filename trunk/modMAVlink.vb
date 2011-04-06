@@ -23,6 +23,19 @@ Module modMAVlink
             ConvertSingleToMavlink = ConvertSingleToMavlink & Chr(bByte(nCount))
         Next
     End Function
+    Public Function ConvertSingleToMavlinkByte(ByVal inputNumber As Single, Optional ByVal is2sCompliment As Boolean = False) As Byte()
+        Dim bByte(0 To 3) As Byte
+
+        If is2sCompliment = True Then
+            If inputNumber > CInt("&h7FFF") Then
+                inputNumber = -(((2 ^ (4 * 4) - 1) Xor inputNumber) + 1)
+            End If
+        End If
+        'FIX314
+        bByte = BitConverter.GetBytes(inputNumber)
+        Array.Reverse(bByte)
+        Return bByte
+    End Function
     Public Function ConvertMavlinkToInteger(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Integer
         ConvertMavlinkToInteger = CInt("&h" & Hex(Asc(Mid(inputString, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputString, 2, 1))).PadLeft(2, "0"))
 
@@ -47,7 +60,29 @@ Module modMAVlink
             inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
         End If
         sTemp = Hex(inputValue).PadLeft(4, "0")
-        ConvertIntegerToMavlink = Chr("&H" & Mid(sTemp, 1, 2)) & Chr("&H" & Mid(sTemp, 3, 2))
+        ConvertIntegerToMavlink = ConvertChrHex(Mid(sTemp, 1, 2)) & ConvertChrHex(Mid(sTemp, 3, 2))
+    End Function
+    Public Function ConvertIntegerToMavlinkByte(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As Byte()
+        Dim arr(0 To 1) As Byte
+        If inputValue > CInt("&h7FFF") Then
+            inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
+        End If
+        arr(0) = (inputValue >> 8) And &HFF
+        arr(1) = inputValue And &HFF
+        Return arr
+    End Function
+    Public Function ConvertInteger32ToMavlinkByte(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As Byte()
+        Dim arr(0 To 3) As Byte
+        If inputValue > CInt("&h7FFFFF") Then
+            inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
+        End If
+        'sTemp = Hex(inputValue).PadLeft(8, "0")
+        'ConvertInteger32ToMavlink = ConvertChrHex(Mid(sTemp, 1, 2)) & ConvertChrHex(Mid(sTemp, 3, 2)) & ConvertChrHex(Mid(sTemp, 5, 2)) & ConvertChrHex(Mid(sTemp, 7, 2))
+        arr(0) = (inputValue >> 24) And &HFF
+        arr(1) = (inputValue >> 16) And &HFF
+        arr(2) = (inputValue >> 8) And &HFF
+        arr(3) = inputValue And &HFF
+        Return arr
     End Function
     Public Function ConvertInteger32ToMavlink(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As String
         Dim sTemp As String
@@ -55,7 +90,7 @@ Module modMAVlink
             inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
         End If
         sTemp = Hex(inputValue).PadLeft(8, "0")
-        ConvertInteger32ToMavlink = Chr("&H" & Mid(sTemp, 1, 2)) & Chr("&H" & Mid(sTemp, 3, 2)) & Chr("&H" & Mid(sTemp, 5, 2)) & Chr("&H" & Mid(sTemp, 7, 2))
+        ConvertInteger32ToMavlink = ConvertChrHex(Mid(sTemp, 1, 2)) & ConvertChrHex(Mid(sTemp, 3, 2)) & ConvertChrHex(Mid(sTemp, 5, 2)) & ConvertChrHex(Mid(sTemp, 7, 2))
     End Function
     Public Function ConvertMavlinkToLong(ByVal inputString As String, Optional ByVal is2sCompliment As Boolean = False) As Int64
         Dim sTemp As String = ""
@@ -101,6 +136,66 @@ Module modMAVlink
     End Function
     Public Function MavlinkScaledToStandard(ByVal inputValue As Integer) As Integer
         MavlinkScaledToStandard = (((inputValue + 10000) / 20000) * 1000) + 1000
+    End Function
+    Public Function CorrectReadMissionData(ByVal inputValue As Double, ByVal multiplier As Single, ByVal unitType As String, Optional ByVal formatString As String = "") As String
+        Dim nTemp As Double
+        Try
+            nTemp = inputValue
+            If multiplier <> 0 Then
+                nTemp = nTemp * multiplier
+            End If
+            If unitType <> "" Then
+                Select Case unitType
+                    Case "m"
+                        nTemp = ConvertDistance(nTemp, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                    Case "ft"
+                        nTemp = ConvertDistance(nTemp, e_DistanceFormat.e_DistanceFormat_Feet, eDistanceUnits)
+                    Case "m/s"
+                        nTemp = ConvertSpeed(nTemp, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                    Case "knots"
+                        nTemp = ConvertSpeed(nTemp, e_SpeedFormat.e_SpeedFormat_Knots, eSpeedUnits)
+                    Case "kph"
+                        nTemp = ConvertSpeed(nTemp, e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
+                    Case "mph"
+                        nTemp = ConvertSpeed(nTemp, e_SpeedFormat.e_SpeedFormat_MPH, eSpeedUnits)
+                End Select
+            End If
+            If formatString <> "" Then
+                CorrectReadMissionData = nTemp.ToString(formatString)
+            Else
+                CorrectReadMissionData = Convert.ToString(nTemp)
+            End If
+        Catch
+        End Try
+    End Function
+    Public Function CorrectWriteMissionData(ByVal inputValue As String, ByVal multiplier As Single, ByVal unitType As String) As String
+        Dim nTemp As Double
+        Try
+            If IsNumeric(inputValue) = True Then
+                nTemp = Convert.ToDouble(inputValue)
+                If multiplier <> 0 Then
+                    nTemp = nTemp / multiplier
+                End If
+                If unitType <> "" Then
+                    Select Case unitType
+                        Case "m"
+                            nTemp = ConvertDistance(nTemp, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)
+                        Case "ft"
+                            nTemp = ConvertDistance(nTemp, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)
+                        Case "m/s"
+                            nTemp = ConvertSpeed(nTemp, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)
+                        Case "knots"
+                            nTemp = ConvertSpeed(nTemp, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_Knots)
+                        Case "kph"
+                            nTemp = ConvertSpeed(nTemp, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_KPH)
+                        Case "mph"
+                            nTemp = ConvertSpeed(nTemp, eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPH)
+                    End Select
+                End If
+                CorrectWriteMissionData = nTemp
+            End If
+        Catch
+        End Try
     End Function
     Public Function GetMavAction(ByVal inputAction As Integer) As String
         Select Case inputAction
@@ -176,15 +271,42 @@ Module modMAVlink
                 GetMavAction = "Reset Plan"
         End Select
     End Function
+    Public Function GetAPMMode(ByVal modeNumber As Integer, ByVal navNumber As Integer) As String
+        Select Case modeNumber
+            Case 2
+                GetAPMMode = "Manual"
+            Case 3
+                GetAPMMode = "Stabilize"
+            Case 4
+                Select Case navNumber
+                    Case 3 'Waypoint
+                        GetAPMMode = "Auto"
+                    Case 5 'Returning
+                        GetAPMMode = "Auto - Return to Launch"
+                    Case 2 'Loiter
+                        GetAPMMode = "Auto - Loiter"
+                    Case 1 ' Liftoff
+                        GetAPMMode = "Auto - Take-Off"
+                    Case 6 'Lanfing
+                        GetAPMMode = "Auto - Land"
+                End Select
+            Case 5 'Test1
+                GetAPMMode = "Fly By Wire A"
+            Case 6 'Test2
+                GetAPMMode = "Fly By Wire B"
+            Case 7 'Test3
+                GetAPMMode = "Circle"
+        End Select
+    End Function
     Public Function GetMavMode(ByVal inputMode As Integer) As String
         Dim nCount As Integer
 
-        For nCount = 0 To UBound(aCommandName)
-            If inputMode = aCommandValue(nCount) Then
-                GetMavMode = aCommandName(nCount)
-                Exit For
-            End If
-        Next
+        'For nCount = 0 To UBound(aCommandName)
+        '    If inputMode = aCommandValue(nCount) Then
+        '        GetMavMode = aCommandName(nCount)
+        '        Exit For
+        '    End If
+        'Next
 
         Select Case inputMode
             Case 1

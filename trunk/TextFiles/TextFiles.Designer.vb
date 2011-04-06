@@ -65,23 +65,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to // Command IDs - Must
-        '''0,BLANK
-        '''10,WAYPOINT,Altitude,,Latitude,Longitude
-        '''11,LOITER,Altitude,,Latitude,Longitude
-        '''12,LOITER_N_TURNS,Altitude,Turns,Latitude,Longitude
-        '''13,LOITER_TIME,Altitude,Time,Latitude,Longitude
-        '''14,RTL,Altitude,,Latitude,Longitude
-        '''15,LAND,Altitude,,Latitude,Longitude
-        '''16,TAKEOFF,Altitude,Angle
-        '''
-        '''// Command IDs - May
-        '''20,DELAY,,Time
-        '''//CLIMB // NOT IMPLEMENTED
-        '''22,LAND_OPTIONS,AirSpeed,Dist to WP,Throttle,Pitch Deg.
-        '''// pitch in deg, airspeed  m/s, throttle %, track WP 1 or 0
-        '''
-        '''// Com [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to // Command IDs
+        '''// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},&lt;Multiplier&gt;,~Format~
+        '''16,Waypoint,Hold Time ~0.0~,Radius [m] ~0.00~ (Acceptance radius - if the sphere with this radius is hit the waypoint counts as reached),,,Latitude,Longitude,Altitude [m] ~0.00~
+        '''//17,Loiter,,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
+        '''//18,Loiter Turns,Turns ~0~,,Radius [m] ~0.00~ (Radius around waypoint. If pos [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property APMCommands() As String
             Get
@@ -92,17 +80,33 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to // Auto Pilot modes
         '''// ----------------
-        '''MANUAL 0
-        '''CIRCLE 1 // When flying sans GPS, and we loose the radio, just circle
-        '''STABILIZE 2
-        '''
-        '''FLY_BY_WIRE_A 5 // Fly By Wire A has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical = manual throttle
-        '''FLY_BY_WIRE_B 6 // Fly By Wire B has left stick horizontal =&gt; desired roll angle, left stick vertical =&gt; desired pitch angle, right stick vertical =&gt; desired airspeed
-        '''// Fly By Wire B = Fly By Wire A if you  [rest of string was truncated]&quot;;.
+        '''//Manual 0
+        '''//Circle,1
+        '''Stabilize,2
+        '''Fly By Wire A,5 
+        '''Fly By Wire B,6 
+        '''Auto,10
+        '''Return to Launch,11
+        '''Loiter,12
+        '''//Takeoff 13
+        '''//Land 14
+        '''//Waypoint 16
+        '''.
         '''</summary>
         Friend Shared ReadOnly Property APMModes() As String
             Get
                 Return ResourceManager.GetString("APMModes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to HDNG2RLL_P,0,,0.7,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
+        '''HDNG2RLL_I,0,,0.01,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, The I term is used to control drift.
+        '''HDNG2RLL_D,0,,0.02,1,NAV_ROLL_D - Navigation control gains, Tuning values for the navigation control PID loops, The D [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property APMSetConfig() As String
+            Get
+                Return ResourceManager.GetString("APMSetConfig", resourceCulture)
             End Get
         End Property
         
@@ -121,6 +125,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to // Command IDs
+        '''// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},&lt;Multiplier&gt;,~Format~
+        '''0,Empty
+        '''1,Climb,Climb To [m] ~0.00~
+        '''2,From to Relative,Circle Center (North) [m] ~0.00~,Circle Center (East) [m] ~0.00~,Circle Radius [m] ~0.00~,Height [m] ~0.00~
+        '''3,From to Absolute,Latitude,Longitude,Altitude
+        '''4,Fly to Relative,Distance (North) [m] ~0.00~,Distance (East) [m] ~0.00~,Altitude [m] ~0.00~
+        '''5,Fly to Absolute,Latitude,Longitude,Altitude [m] ~0.00~
+        '''6,Goto Line,Line Number
+        '''7,Circle Absolute [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property GluonCommands() As String
+            Get
+                Return ResourceManager.GetString("GluonCommands", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to //Arg Number,Name,Min,Max,Default,Mult,Add,Bit,Desc
         '''1,acc_x_neutral,,,,1,0,,
         '''2,acc_y_neutral,,,,1,0,,
@@ -129,33 +151,21 @@ Namespace My.Resources
         '''5,gyro_y_neutral,,,,1,0,,
         '''6,gyro_z_neutral,,,,1,0,,
         '''
-        '''7,telemetry_basicgps,,,,1,0,,
-        '''8,telemetry_ppm,,,,1,0,,
-        '''9,telemetry_gyroaccraw,,,,1,0,,
-        '''10,telemetry_gyroaccproc,,,,1,0,,
-        '''11,telemetry_pressuretemp,,,,1,0,,
-        '''12,telemetry_attitude,,,,1,0,,
+        '''7,telemetry_basicgps,0,10,,1,0,,
+        '''8,telemetry_ppm,0,10,,1,0,,
+        '''9,telemetry_gyroaccraw,0,10,,1,0,,
+        '''10,telemetry_gyroaccproc,0,10,,1,0,,
+        '''11,telemetry_pressuretemp,0,10,,1,0,,
+        '''12,telemetry_attitude,0,10,,1,0,,
         '''
-        '''13,gps_initial_baudrate,,,,10,,0,,
+        '''13,gps_initial_baudrate,,,,10,0,,
         '''14,gps_operational_baudrate,,,,10,0,,
         '''
-        '''15,channel_ap,,,,1,1,,
-        '''16 [rest of string was truncated]&quot;;.
+        '''15,channe [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property GluonSetConfig() As String
             Get
                 Return ResourceManager.GetString("GluonSetConfig", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to HDNG2RLL_P,0,,0.7,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
-        '''HDNG2RLL_I,0,,0.01,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, The I term is used to control drift.
-        '''HDNG2RLL_D,0,,0.02,1,NAV_ROLL_D - Navigation control gains, Tuning values for the navigation control PID loops, The D [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend Shared ReadOnly Property MAVlinkSetConfig() As String
-            Get
-                Return ResourceManager.GetString("MAVlinkSetConfig", resourceCulture)
             End Get
         End Property
     End Class

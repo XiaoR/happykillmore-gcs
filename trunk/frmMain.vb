@@ -20,7 +20,7 @@ Public Class frmMain
     'Declare Function OleCreatePropertyFrame Lib "oleaut32.dll" (ByVal hwndOwner As IntPtr, ByVal x As Long, ByVal y As Long, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszCaption As String, ByVal cObjects As Integer, <MarshalAs(UnmanagedType.Interface, ArraySubType:=UnmanagedType.IUnknown)> ByRef ppUnk As System.IntPtr, ByVal cPages As Long, ByVal pPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal pvReserved As IntPtr) As Integer
     Declare Function OleCreatePropertyFrame Lib "oleaut32.dll" (ByVal hwndOwner As IntPtr, ByVal x As Long, ByVal y As Long, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszCaption As String, ByVal cObjects As Integer, ByRef ppUnk As Object, ByVal cPages As Long, ByVal pPageClsID As IntPtr, ByVal lcid As Integer, ByVal dwReserved As Integer, ByVal pvReserved As IntPtr) As Integer
 
-    Const g_DefaultAttoTrigger As String = "00001010"
+    Const g_DefaultAttoTrigger As String = "00000010"
 
     Private mediaControl As IMediaControl = Nothing
     'Private graphBuilder As IGraphBuilder = Nothing
@@ -34,11 +34,13 @@ Public Class frmMain
     Dim drow As DataRow
 
     Dim nParameterCount As Integer
+    Dim nParameterCurrentIndex As Integer
     Dim aIDs(0) As String
     Dim aName(0) As String
     Dim aMin(0) As String
     Dim aMax(0) As String
     Dim aValue(0) As String
+    Dim aVisible(0) As Boolean
     Dim aDefault(0) As String
     Dim aComments(0) As String
     Dim aMultiplier(0) As String
@@ -47,6 +49,9 @@ Public Class frmMain
     Dim aChanged(0) As Boolean
     Dim aWPCommand(0) As Integer
     Dim aWPOther(0) As String
+    Dim aWPOther2(0) As String
+    Dim aWPOther3(0) As String
+    Dim aWPOther4(0) As String
 
     Dim nMavlinkHandshake As e_MavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
     Dim nMavlinkCurrentWaypointSend As Integer
@@ -97,6 +102,9 @@ Public Class frmMain
     Dim dLastHeartbeat4 As Long
     Dim dLastHeartbeat5 As Long
     Dim dLastHeartbeat6 As Long
+
+    Dim dLastNewDevice As Long
+    Dim eNewDeviceBootState As e_NewDevice_BootState
 
     Dim dLastAttoAileron As Long
     Dim dLastAttoElevator As Long
@@ -472,7 +480,7 @@ Public Class frmMain
             'End While
 
             If eMapSelection = e_MapSelection.e_MapSelection_GoogleMaps Then
-                webDocument.GetElementById("lockDragDrop").SetAttribute("value", "Locked")
+                'webDocument.GetElementById("lockDragDrop").SetAttribute("value", "Locked")
             End If
         End If
 
@@ -537,7 +545,7 @@ Public Class frmMain
     '    'WebBrowser1.Stop()
     'End Sub
 
-    Public Sub AddWaypoint(ByVal latitude As String, ByVal longitude As String, ByVal altitude As Single, Optional ByVal speed As Single = -1, Optional ByVal trigger As String = g_DefaultAttoTrigger, Optional ByVal commandValue As Integer = -1, Optional ByVal otherValue As String = "")
+    Public Sub AddWaypoint(ByVal latitude As String, ByVal longitude As String, ByVal altitude As String, Optional ByVal speed As Single = -1, Optional ByVal trigger As String = g_DefaultAttoTrigger, Optional ByVal commandValue As Integer = -1, Optional ByVal otherValue As String = "")
         Dim nIndex As Integer
         Dim sTemp As String
         Dim nCount As Integer
@@ -560,9 +568,15 @@ Public Class frmMain
         End If
 
         'If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Or nConfigDevice = e_ConfigDevice.e_ConfigDevice_Generic Then
-        aWPLat(nIndex) = Convert.ToDouble(latitude).ToString(sConfigFormatString)
-        aWPLon(nIndex) = Convert.ToDouble(longitude).ToString(sConfigFormatString)
-        aWPAlt(nIndex) = altitude.ToString
+        If latitude <> "" Then
+            aWPLat(nIndex) = Convert.ToDouble(latitude).ToString(sConfigFormatString)
+        End If
+        If longitude <> "" Then
+            aWPLon(nIndex) = Convert.ToDouble(longitude).ToString(sConfigFormatString)
+        End If
+        If altitude <> "" Then
+            aWPAlt(nIndex) = altitude.ToString
+        End If
         'ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
         'aWPLat(nIndex) = latitude
         'aWPLon(nIndex) = longitude
@@ -578,7 +592,7 @@ Public Class frmMain
         If commandValue <> -1 Then
             aWPCommand(nIndex) = commandValue
         Else
-            aWPCommand(nIndex) = 10
+            aWPCommand(nIndex) = 16
         End If
         aWPOther(nIndex) = otherValue
 
@@ -643,6 +657,10 @@ Public Class frmMain
         oActiveDevices.Initialize()
 
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
+
+        serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
+        'serialPortIn.Encoding = System.Text.Encoding.Default
+        'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(1252)
 
         Try
             'Call SaveRegSetting("TypeLib\{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}\1.1\0\win32", "", Environment.GetEnvironmentVariable("WINDIR") & "\system32\ieframe.dll", Microsoft.Win32.RegistryHive.ClassesRoot)
@@ -1125,6 +1143,9 @@ Public Class frmMain
                 'ElseIf InStr(sFileContents, Chr(&HA5) & Chr(&H5A)) <> 0 Then
                 '    eMissionFileType = e_MissionFileType.e_MissionFileType_FY21APII
                 '    rawData = Split(sFileContents, Chr(&HAA))
+            ElseIf InStr(sFileContents, "$A1,") <> 0 Then
+                eMissionFileType = e_MissionFileType.e_MissionFileType_Atto
+                rawData = Split(sFileContents, vbCrLf)
             End If
 
             If eMissionFileType <> e_MissionFileType.e_MissionFileType_None Then
@@ -1168,7 +1189,7 @@ Public Class frmMain
                 chkStepBack.Enabled = False
                 chkStepForward.Enabled = False
             End If
-        End If
+            End If
     End Function
 
     Private Sub cboOutputFiles_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboOutputFiles.LostFocus
@@ -1185,10 +1206,11 @@ Public Class frmMain
         cboOutputFiles.Text = sTemp
     End Sub
     Private Sub cboOutputFiles_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboOutputFiles.SelectedIndexChanged
-        'tmrPlayback.Enabled = False
-        'SetPlayerState(e_PlayerState.e_PlayerState_Pause)
-        'LoadDataFile(txtOutputFolder.Text & cboOutputFiles.Text)
-        'SetPlayerState(e_PlayerState.e_PlayerState_Loaded)
+        tmrPlayback.Enabled = False
+        SetPlayerState(e_PlayerState.e_PlayerState_Pause)
+        txtOutputFolder.Text = Replace(txtOutputFolder.Text, "\\", "\")
+        LoadDataFile(txtOutputFolder.Text & cboOutputFiles.Text)
+        SetPlayerState(e_PlayerState.e_PlayerState_Loaded)
     End Sub
     Private Sub SetServoSlider(ByVal inputControl As TrackBar, ByVal inputLabel As Label, ByVal value As Integer)
         With inputControl
@@ -1235,8 +1257,8 @@ Public Class frmMain
         End If
 
         lblWaypoint.Text = IIf(waypointNumber <> 0, "#" & waypointNumber, "")
-        lblDistance.Text = IIf(distance <> 0, distance.ToString("0.0") & GetShortDistanceUnits(), "")
-        lblTargetAlt.Text = IIf(nWaypoint <> 0, nWaypointAlt.ToString("0.0") & GetShortDistanceUnits(), "")
+        lblDistance.Text = IIf(distance <> 0, distance.ToString("###,##0.0") & GetShortDistanceUnits(), "")
+        lblTargetAlt.Text = IIf(nWaypoint <> 0, nWaypointAlt.ToString("###,##0.0") & GetShortDistanceUnits(), "")
         lblBattery.Text = battery.ToString("0.00") & IIf(battery <> 0, "v", "")
         lblAmperage.Text = nAmperage.ToString("0.00") & IIf(nAmperage <> 0, "A", "")
         If sMode <> "" Then
@@ -1263,6 +1285,15 @@ Public Class frmMain
             End If
             nLastSpeechWaypoint = nWaypoint
         End If
+        'If nLastSpeechAltitude < nLastSpeechAltitude Then
+        '    If nLastSpeechWaypoint <> -1 Then
+        '        If bAnnounceWaypoints = True Then
+        '            nLastSpeechInterval = Now.Ticks
+        '            PlayMessage(sSpeechWaypoint, sSpeechVoice)
+        '        End If
+        '    End If
+        '    nLastSpeechWaypoint = nWaypoint
+        'End If
         If bAnnounceRegularInterval = True And Now.Ticks - nLastSpeechInterval > (1000 * nSpeechInterval) * 10000 Then
             nLastSpeechInterval = Now.Ticks
             PlayMessage(sSpeechRegularInterval, sSpeechVoice)
@@ -1607,8 +1638,9 @@ Public Class frmMain
         End If
         TrackBar1.Value = nDataIndex
 
+        aBuffer = System.Text.UTF8Encoding.UTF8.GetBytes(sMessage)
         UpdateSerialDataWindow(sMessage, sMessage)
-        oMessage = GetNextSentence(sMessage)
+        oMessage = GetNextSentence(sMessage, aBuffer)
         UpdateVariables(oMessage)
 
         nDataIndex = nDataIndex + 1
@@ -1682,38 +1714,46 @@ Public Class frmMain
         Try
             If serialPortIn.IsOpen = True Then
                 If serialPortIn.BytesToRead > 0 Then
-                    nReadCount = serialPortIn.BytesToRead 'Number of Bytes to read
-                    Dim cData(nReadCount - 1) As Byte
+                    nReadCount = serialPortIn.BytesToRead - 0  'Number of Bytes to read
+                    If nReadCount > 0 Then
+                        Dim cData(nReadCount - 1) As Byte
 
-                    nInputStringLength = nInputStringLength + nReadCount
-                    serialPortIn.Encoding = System.Text.Encoding.UTF8 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
-                    nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
+                        nInputStringLength = nInputStringLength + nReadCount
+                        'serialPortIn.Encoding = System.Text.Encoding.UTF8 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
 
-                    sNewString = System.Text.Encoding.Default.GetString(cData)
-                    sBuffer = sBuffer & sNewString
-                    'For Each b As Byte In cData
+                        nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
 
-                    '    'AddCharacter(b)
-                    '    'If b >= 128 And b <= 159 Then     '&H80<=indata<=&H9F
-                    '    '    sBuffer = sBuffer & Chr(b)
-                    '    'Else
-                    '    '    sBuffer = sBuffer & ChrW(b)
-                    '    'End If
-                    '    'sBuffer = sBuffer & Chr(b)        'Ascii String
+                        sNewString = System.Text.Encoding.Default.GetString(cData, 0, cData.Length)
+                        'sNewString = System.Text.Encoding.ASCII.GetString(cData, 0, cData.Length)
+
+                        sBuffer = sBuffer & sNewString
+                        If Len(sNewString) > 0 Then
+                            aBuffer = ConCatArray(aBuffer, cData)
+                        End If
+                        'For Each b As Byte In cData
+
+                        '    'AddCharacter(b)
+                        '    'If b >= 128 And b <= 159 Then     '&H80<=indata<=&H9F
+                        '    '    sBuffer = sBuffer & Chr(b)
+                        '    'Else
+                        '    '    sBuffer = sBuffer & ChrW(b)
+                        '    'End If
+                        '    'sBuffer = sBuffer & Chr(b)        'Ascii String
+                    End If
+
+                    If tabInstrumentView.SelectedIndex = 2 And Not sNewString Is Nothing Then
+                        sCommandLineBuffer = sCommandLineBuffer & sNewString
+                    Else
+                        sCommandLineBuffer = ""
+                    End If
+
                 End If
 
-                If tabInstrumentView.SelectedIndex = 2 And Not sNewString Is Nothing Then
-                    sCommandLineBuffer = sCommandLineBuffer & sNewString
-                Else
-                    sCommandLineBuffer = ""
-                End If
-
+                Try
+                    NewDataReceived()
+                Catch
+                End Try
             End If
-
-            Try
-                NewDataReceived()
-            Catch
-            End Try
             Try
                 HeartbeatSend()
             Catch
@@ -1788,114 +1828,197 @@ Public Class frmMain
                 End If
             ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                 If bWaitingMavlinkUpdate = False Then
-                    If bNewDevice = True Then
-                        cmdMissionRead_Click(Nothing, Nothing)
+                    If eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_None And dLastNewDevice = 0 And bNewDevice = True Then
+                        dLastNewDevice = Now.Ticks
+                        eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_None
+                    ElseIf Now.Ticks - dLastNewDevice > 40000000 And eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_None Then
+                        eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_RequestingParameters
                         cmdConfigRead_Click(Nothing, Nothing)
-                        'cboControlMavlinkMessageSendRate_SelectedIndexChanged(Nothing, Nothing)
+                        bNewDevice = False
+                    ElseIf eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_ParametersComplete Then
+                        eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_RequestingMission
+                        cmdMissionRead_Click(Nothing, Nothing)
+                        bNewDevice = False
+                    ElseIf eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_MissionComplete Then
+                        eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_StartComplete
+                        UpdateMavlinkStatusRates()
                         bNewDevice = False
                     End If
                 End If
-                If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Or nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRespond Then
-                    If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Then
-                        nWPCount = 0
-                    Else
-                        nWPCount = nWPCount + 1
-                    End If
-                    nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest
-                    SendMavlinkWPDetailRequest()
-                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_DoneRequesting Then
-                    nWPCount = nWaypointTotal - 1
-                    nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
-                    LoadMissionGrid()
-                    SetMissionStatus("Mission commands successfully read")
-                    sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & Chr(0)
-                    SendMavLink(sOutput)
-                    If bNewDevice = False Or tabInstrumentView.SelectedIndex = 4 Then
-                        chkViewNoTracking.Checked = True
-                        chkViewNoTracking_CheckedChanged(Nothing, Nothing)
-                        UpdateMissionGE(0, , 0, True)
-                    Else
-                        UpdateMissionGE(0, , -1, True)
-                    End If
+            If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Or nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRespond Then
+                If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Then
+                    nWPCount = 0
+                Else
+                    nWPCount = nWPCount + 1
+                End If
+                nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest
+                SendMavlinkWPDetailRequest()
+            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_DoneRequesting Then
+                nWPCount = nWaypointTotal - 1
+                nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                LoadMissionGrid()
+                SetMissionStatus("Mission commands successfully read")
+                'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & Chr(0)
+                'FIX315
+                SendMavLink(New Byte() {85, 3, 0, 127, 0, 47, nConfigVehicle, 1, 0})
+                'SendMavLink(sOutput)
+                If bNewDevice = False And tabInstrumentView.SelectedIndex = 4 Then
+                    chkViewNoTracking.Checked = True
+                    chkViewNoTracking_CheckedChanged(Nothing, Nothing)
+                    UpdateMissionGE(0, , 0, True)
+                Else
+                    UpdateMissionGE(0, , -1, True)
+                End If
 
-                    If tabMapView.TabPages(tabMapView.SelectedIndex).Tag = "Google Earth" Then
-                        WebBrowser1.Focus()
+                If tabMapView.TabPages(tabMapView.SelectedIndex).Tag = "Google Earth" Then
+                    WebBrowser1.Focus()
+                End If
+                'FIX315
+            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRequest Then
+                If Now.Ticks > (dLastMavlinkCommandTime + (n2WayTimeout * 10000000)) Then
+                    dLastMavlinkCommandTime = Now.Ticks
+                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                    If nMavlinkRetryAttempts <= n2WayRetries Then
+                        SetMissionStatus("APM failed to respond to mission request...retrying...", True)
+                        Debug.Print("Retrying Request Count List (Try #" & n2WayRetries & ")")
+                        SendMavlinkWPCountRequest()
+                    Else
+                        SetMissionStatus("Misson request failed", True)
+                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
                     End If
-                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRequest Then
-                    If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
-                        dLastMavlinkCommandTime = Now.Ticks
-                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                        If nMavlinkRetryAttempts <= n2WayRetries Then
-                            SetMissionStatus("APM failed to respond to mission request...retrying...", True)
+                End If
+            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest Then
+                If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
+                    dLastMavlinkCommandTime = Now.Ticks
+                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                    If nMavlinkRetryAttempts <= n2WayRetries Then
+                        SetMissionStatus("APM failed to respond to command request...retrying...", True)
+                        If nWPCount = 0 Then
                             SendMavlinkWPCountRequest()
                         Else
-                            SetMissionStatus("Misson request failed", True)
-                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
-                        End If
-                    End If
-                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest Then
-                    If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
-                        dLastMavlinkCommandTime = Now.Ticks
-                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                        If nMavlinkRetryAttempts <= n2WayRetries Then
-                            SetMissionStatus("APM failed to respond to command request...retrying...", True)
                             SendMavlinkWPDetailRequest()
-                        Else
-                            SetMissionStatus("Command request failed", True)
-                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
                         End If
+                    Else
+                        SetMissionStatus("Command request failed", True)
+                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
                     End If
-                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet Then
-                    If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
-                        dLastMavlinkCommandTime = Now.Ticks
-                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                        If nMavlinkRetryAttempts <= n2WayRetries Then
-                            SetMissionStatus("APM failed to respond to write request...retrying...", True)
-                            SendMavlinkWPDetailSet(nMavlinkCurrentWaypointSend)
-                        Else
-                            SetMissionStatus("Mission write failed", True)
-                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
-                        End If
+                End If
+            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet Then
+                If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
+                    dLastMavlinkCommandTime = Now.Ticks
+                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                    If nMavlinkRetryAttempts <= n2WayRetries Then
+                        SetMissionStatus("APM failed to respond to write request...retrying...", True)
+                        SendMavlinkWPDetailSet(nMavlinkCurrentWaypointSend)
+                    Else
+                        SetMissionStatus("Mission write failed", True)
+                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
                     End If
                 End If
             End If
-        Catch
+            End If
+        Catch ex As Exception
         End Try
     End Sub
     Private Sub SendMavlinkWPDetailSet(ByVal waypointNumber As Integer)
-        Dim sOutput As String
+        'Dim sOutput As String
         Dim nCommandIndex As Integer
-        Dim sLatLocal As String = ""
-        Dim sLongLocal As String = ""
-        Dim sAltLocal As String = ""
-        Dim sOtherLocal As String = ""
+        'Dim sLatLocal As String = ""
+        'Dim sLongLocal As String = ""
+        'Dim sAltLocal As String = ""
+        'Dim sOtherLocal1 As String = ""
+        'Dim sOtherLocal2 As String = ""
+        'Dim sOtherLocal3 As String = ""
+        'Dim sOtherLocal4 As String = ""
 
-        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet
-        prgMissionMavlink.Value = waypointNumber
-        nCommandIndex = GetCommandIndex(aWPCommand(waypointNumber))
-        If aCommandArg3(nCommandIndex) <> "" Then
-            sLatLocal = ConvertSingleToMavlink(aWPLat(waypointNumber))
-        Else
-            sLatLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
-        End If
-        If aCommandArg4(nCommandIndex) <> "" Then
-            sLongLocal = ConvertSingleToMavlink(aWPLon(waypointNumber))
-        Else
-            sLongLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
-        End If
-        If aCommandArg1(nCommandIndex) <> "" Then
-            sAltLocal = ConvertSingleToMavlink(aWPAlt(waypointNumber))
-        Else
-            sAltLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
-        End If
-        If aCommandArg2(nCommandIndex) <> "" Then
-            sOtherLocal = ConvertSingleToMavlink(aWPOther(waypointNumber))
-        Else
-            sOtherLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
-        End If
+        Dim aOutput() As Byte
+        Dim aParam1() As Byte
+        Dim aParam2() As Byte
+        Dim aParam3() As Byte
+        Dim aParam4() As Byte
+        Dim aParam5() As Byte
+        Dim aParam6() As Byte
+        Dim aParam7() As Byte
 
-        sOutput = Chr(85) & Chr(37) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(39) & Chr(nConfigVehicle) & Chr(1) & ConvertIntegerToMavlink(waypointNumber) & Chr(0) & Chr(25) & Chr(0) & Chr(0) & Chr(0) & Chr(0) & Chr(0) & ConvertSingleToMavlink(CDec("&H" & aWPCommand(waypointNumber))) & Chr(0) & Chr(0) & Chr(0) & Chr(0) & Chr(0) & sLongLocal & sLatLocal & sAltLocal & sOtherLocal & Chr(0)
-        SendMavLink(sOutput)
+        Try
+            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet
+            prgMissionMavlink.Value = waypointNumber
+            nCommandIndex = GetCommandIndex(aWPCommand(waypointNumber))
+
+            If aCommandArg1(nCommandIndex) <> "" Then
+                aParam1 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPOther(waypointNumber), aCommandMult1(nCommandIndex), aCommandUnit1(nCommandIndex)))
+                'sOtherLocal1 = ConvertSingleToMavlink(CorrectWriteMissionData(aWPOther(waypointNumber), aCommandMult1(nCommandIndex), aCommandUnit1(nCommandIndex)))
+            Else
+                aParam1 = New Byte() {0, 0, 0, 0}
+                'sOtherLocal1 = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg2(nCommandIndex) <> "" Then
+                aParam2 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPOther2(waypointNumber), aCommandMult2(nCommandIndex), aCommandUnit2(nCommandIndex)))
+                'sOtherLocal2 = ConvertSingleToMavlink(CorrectWriteMissionData(aWPOther2(waypointNumber), aCommandMult2(nCommandIndex), aCommandUnit2(nCommandIndex)))
+            Else
+                aParam2 = New Byte() {0, 0, 0, 0}
+                'sOtherLocal2 = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg3(nCommandIndex) <> "" Then
+                aParam3 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPOther3(waypointNumber), aCommandMult3(nCommandIndex), aCommandUnit3(nCommandIndex)))
+                'sOtherLocal3 = ConvertSingleToMavlink(CorrectWriteMissionData(aWPOther3(waypointNumber), aCommandMult3(nCommandIndex), aCommandUnit3(nCommandIndex)))
+            Else
+                aParam3 = New Byte() {0, 0, 0, 0}
+                'sOtherLocal3 = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg4(nCommandIndex) <> "" Then
+                aParam4 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPOther4(waypointNumber), aCommandMult4(nCommandIndex), aCommandUnit4(nCommandIndex)))
+                'sOtherLocal4 = ConvertSingleToMavlink(CorrectWriteMissionData(aWPOther4(waypointNumber), aCommandMult4(nCommandIndex), aCommandUnit4(nCommandIndex)))
+            Else
+                aParam4 = New Byte() {0, 0, 0, 0}
+                'sOtherLocal4 = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg5(nCommandIndex) <> "" Then
+                aParam5 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPLat(waypointNumber), aCommandMult5(nCommandIndex), aCommandUnit5(nCommandIndex)))
+                'sLatLocal = ConvertSingleToMavlink(CorrectWriteMissionData(aWPLat(waypointNumber), aCommandMult5(nCommandIndex), aCommandUnit5(nCommandIndex)))
+            Else
+                aParam5 = New Byte() {0, 0, 0, 0}
+                'sLatLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg6(nCommandIndex) <> "" Then
+                aParam6 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPLon(waypointNumber), aCommandMult6(nCommandIndex), aCommandUnit6(nCommandIndex)))
+                'sLongLocal = ConvertSingleToMavlink(CorrectWriteMissionData(aWPLon(waypointNumber), aCommandMult6(nCommandIndex), aCommandUnit6(nCommandIndex)))
+            Else
+                aParam6 = New Byte() {0, 0, 0, 0}
+                'sLongLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            If aCommandArg7(nCommandIndex) <> "" Then
+                aParam7 = ConvertSingleToMavlinkByte(CorrectWriteMissionData(aWPAlt(waypointNumber), aCommandMult7(nCommandIndex), aCommandUnit7(nCommandIndex)))
+                'sAltLocal = ConvertSingleToMavlink(CorrectWriteMissionData(aWPAlt(waypointNumber), aCommandMult7(nCommandIndex), aCommandUnit7(nCommandIndex)))
+            Else
+                aParam7 = New Byte() {0, 0, 0, 0}
+                'sAltLocal = Chr(0) & Chr(0) & Chr(0) & Chr(0)
+            End If
+
+            aOutput = New Byte() {85, 36, 0, 127, 0, 39, nConfigVehicle, 1}
+            aOutput = ConCatArray(aOutput, ConvertIntegerToMavlinkByte(waypointNumber))
+            aOutput = ConCatArray(aOutput, New Byte() {0, aWPCommand(waypointNumber), 1, 1})
+            aOutput = ConCatArray(aOutput, aParam1)
+            aOutput = ConCatArray(aOutput, aParam2)
+            aOutput = ConCatArray(aOutput, aParam3)
+            aOutput = ConCatArray(aOutput, aParam4)
+            aOutput = ConCatArray(aOutput, aParam5) 'Lat
+            aOutput = ConCatArray(aOutput, aParam6) 'Long
+            aOutput = ConCatArray(aOutput, aParam7) 'Alt
+
+            'sOutput = Chr(85) & Chr(36) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(39) & Chr(nConfigVehicle) & Chr(1) & ConvertIntegerToMavlink(waypointNumber) & Chr(0) & Chr(aWPCommand(waypointNumber)) & Chr(1) & Chr(1) & sOtherLocal1 & sOtherLocal2 & sOtherLocal3 & sOtherLocal4 & sLatLocal & sLongLocal & sAltLocal
+            SendMavLink(aOutput)
+            Debug.Print("Sent Waypoint Set Command #" & waypointNumber)
+            'FIX 314
+
+        Catch ex As Exception
+        End Try
 
         'Debug.Print("Length=" & Len(.Packet))
         'Debug.Print("System=" & Asc(Mid(.Packet, 7, 1)))
@@ -1921,9 +2044,12 @@ Public Class frmMain
         'aWPLon(nWPCount) = ConvertMavlinkToSingle(Mid(.Packet, 27, 4))
     End Sub
     Private Sub SendMavlinkWPDetailRequest()
-        Dim sOutput As String
-        sOutput = Chr(85) & Chr(4) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(40) & Chr(nConfigVehicle) & Chr(1) & ConvertIntegerToMavlink(nWPCount)
-        SendMavLink(sOutput)
+        Dim arr() As Byte
+        'FIX314
+        arr = New Byte() {85, 4, 0, 127, 0, 40, nConfigVehicle, 1}
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(nWPCount))
+        SendMavLink(arr)
+        Debug.Print("Requested WP Detail #" & nWPCount)
     End Sub
 
     Private Sub HeartbeatSend()
@@ -2009,11 +2135,11 @@ Public Class frmMain
             nSentenceCount = 0
             If sBuffer <> "" Then
                 Try
-                    oMessage = GetNextSentence(sBuffer)
+                    oMessage = GetNextSentence(sBuffer, aBuffer)
                 Catch ex As Exception
                 End Try
                 'If Not oMessage.RawMessage Is Nothing Or Not oMessage.VisibleSentence Is Nothing Then
-                UpdateSerialDataWindow(oMessage.RawMessage, oMessage.VisibleSentence, oMessage.ValidMessage)
+                UpdateSerialDataWindow(oMessage.RawMessage, oMessage.VisibleSentence, , oMessage.ValidMessage)
                 'End If
                 Do While oMessage.ValidMessage = True
                     If dStartTime.Ticks = 0 Then
@@ -2026,9 +2152,9 @@ Public Class frmMain
 
                     Try
                         UpdateVariables(oMessage)
-                        oMessage = GetNextSentence(sBuffer)
-                        UpdateSerialDataWindow(oMessage.RawMessage, oMessage.VisibleSentence, oMessage.ValidMessage)
-                    Catch
+                        oMessage = GetNextSentence(sBuffer, aBuffer)
+                        UpdateSerialDataWindow(oMessage.RawMessage, oMessage.VisibleSentence, , oMessage.ValidMessage)
+                    Catch ex As Exception
                     End Try
                 Loop
             End If
@@ -2152,7 +2278,6 @@ Public Class frmMain
         Dim sTemp As String
         Dim nYawComponent1 As Single
         Dim nParameterMax As Integer
-        Dim nParameterCurrentIndex As Integer
 
         Dim bFireAttitude As Boolean = False
         Dim bFireGPS As Boolean = False
@@ -2340,8 +2465,8 @@ Public Class frmMain
                                     Next
                                 Case "A1"
                                     lblGPSMessage.Text = "A1 - " & GetResString(, "Attitude Data")
-                                    nRoll = ConvertPeriodToLocal(sSplit(2))
-                                    nPitch = ConvertPeriodToLocal(sSplit(3))
+                                    nRoll = -ConvertPeriodToLocal(sSplit(2))
+                                    nPitch = -ConvertPeriodToLocal(sSplit(3))
                                     bNewAttitude = True
                                 Case "A2"
                                     lblGPSMessage.Text = "A2 - " & GetResString(, "GPS_Data")
@@ -2588,7 +2713,7 @@ Public Class frmMain
                             Select Case .ID
                                 Case 241 'Telemetry data set1
                                     lblGPSMessage.Text = GetResString(, "Telemetry GPS")
-                                    nFix = Asc(Mid(.Packet, 3, 1)) And &HC0
+                                    nFix = IIf(Asc(Mid(.Packet, 3, 1)) And &H40 = 64, 1, 0)
                                     nSats = Asc(Mid(.Packet, 3, 1)) And &HF
                                     Select Case Asc(Mid(.Packet, 4, 1)) And &H3
                                         Case 0
@@ -2617,7 +2742,8 @@ Public Class frmMain
                                     'End If
                                     'nAltitude = ConvertDistance(nAltitude, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
 
-                                    nAltitude = ConvertHexToDecFY21AP(Mid(.Packet, 22, 2), False)
+                                    nAltitude = Asc(Mid(.Packet, 18, 1)) * 256 + Asc(Mid(.Packet, 19, 1))
+                                    'nAltitude = ConvertHexToDecFY21AP(Mid(.Packet, 18, 2), False)
                                     If nAltitude > 60000 Then
                                         nAltitude = (60000 - nAltitude) * 0.1
                                     Else
@@ -2639,7 +2765,7 @@ Public Class frmMain
 
                                 Case 243 'Telemetry data set3
                                     lblGPSMessage.Text = GetResString(, "Attitude Data")
-                                    nPitch = ConvertHexToDecFY21AP(Mid(.Packet, 3, 2)) / 10
+                                    nPitch = -ConvertHexToDecFY21AP(Mid(.Packet, 3, 2)) / 10
                                     nRoll = ConvertHexToDecFY21AP(Mid(.Packet, 5, 2)) / 10
                                     nServoInput(0) = ConvertHexToDecFY21AP(Mid(.Packet, 7, 2))
                                     nServoInput(1) = ConvertHexToDecFY21AP(Mid(.Packet, 9, 2))
@@ -2650,6 +2776,7 @@ Public Class frmMain
                                     'nServoInput(6) = ConvertHexToDecFY21AP(Mid(.Packet, 19, 2))
                                     'nServoInput(7) = ConvertHexToDecFY21AP(Mid(.Packet, 21, 2))
                                     bNewServo = True
+                                    bNewAttitude = True
                             End Select
 
                         Case cMessage.e_MessageType.e_MessageType_uBlox
@@ -3066,8 +3193,8 @@ Public Class frmMain
                                     bNewDateTime = True
                                 Case 4 'SYSTEM_TIME_UTC
                                     lblGPSMessage.Text = "UTC Date/Time"
-                                    dGPSDate = GetNMEADate(ConvertMavlinkToInteger32(ConvertMavlinkToInteger(Mid(.Packet, 7, 4)).ToString))
-                                    dGPSTime = GetNMEATime(ConvertMavlinkToInteger32(ConvertMavlinkToInteger(Mid(.Packet, 11, 4)).ToString))
+                                    dGPSDate = GetNMEADate(ConvertMavlinkToInteger32(Mid(.Packet, 7, 4).ToString))
+                                    dGPSTime = GetNMEATime(ConvertMavlinkToInteger32(Mid(.Packet, 11, 4).ToString))
                                     bNewDateTime = True
                                 Case 22 'PARAM_VALUE 
                                     'Async Parameters
@@ -3080,22 +3207,33 @@ Public Class frmMain
                                         ReDim aMin(0 To nParameterCount)
                                         ReDim aMax(0 To nParameterCount)
                                         ReDim aValue(0 To nParameterCount)
+                                        ReDim aVisible(0 To nParameterCount)
                                         ReDim aDefault(0 To nParameterCount)
                                         ReDim aComments(0 To nParameterCount)
                                         ReDim aChanged(0 To nParameterCount)
                                         ReDim aMultiplier(0 To nParameterCount)
                                     End If
-                                    nParameterCurrentIndex = ConvertMavlinkToInteger(Mid(.Packet, 28, 2), True)
-                                    aName(nParameterCurrentIndex) = Mid(.Packet, 7, 15)
-                                    prgConfig.Maximum = nParameterCount
-                                    prgConfig.Value = nParameterCurrentIndex
-                                    If InStr(aName(nParameterCurrentIndex), Chr(0)) <> 0 Then
-                                        aName(nParameterCurrentIndex) = Mid(aName(nParameterCurrentIndex), 1, InStr(aName(nParameterCurrentIndex), Chr(0)) - 1)
+                                    If ConvertMavlinkToInteger(Mid(.Packet, 28, 2), True) <> nParameterCurrentIndex + 1 And nParameterCurrentIndex <> 0 Then
+                                        Debug.Print("Missing Values!!!!")
                                     End If
-                                    SetConfigStatus("Reading " & aName(nParameterCurrentIndex))
-                                    aValue(nParameterCurrentIndex) = ConvertMavlinkToSingle(Mid(.Packet, 22, 4))
+                                    nParameterCurrentIndex = ConvertMavlinkToInteger(Mid(.Packet, 28, 2), True)
+                                    If nParameterCurrentIndex <> -1 Then
+                                        aName(nParameterCurrentIndex) = Mid(.Packet, 7, 15)
+                                        prgConfig.Maximum = nParameterCount
+                                        prgConfig.Value = nParameterCurrentIndex
+                                        If InStr(aName(nParameterCurrentIndex), Chr(0)) <> 0 Then
+                                            aName(nParameterCurrentIndex) = Mid(aName(nParameterCurrentIndex), 1, InStr(aName(nParameterCurrentIndex), Chr(0)) - 1)
+                                        End If
+                                        SetConfigStatus("Reading " & aName(nParameterCurrentIndex))
+                                        aValue(nParameterCurrentIndex) = ConvertMavlinkToSingle(Mid(.Packet, 22, 4))
+                                        '                                    Debug.Print("Parsing Parameter #" & nParameterCurrentIndex & ",Name=" & aName(nParameterCurrentIndex) & ",Value=" & aValue(nParameterCurrentIndex))
+                                    End If
+
                                     If nParameterCurrentIndex = nParameterCount Or bWaitingMavlinkWrite = False Then
                                         SetConfigStatus("Parameter read or write complete")
+                                        If eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_RequestingParameters Then
+                                            eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_ParametersComplete
+                                        End If
                                         If bWaitingMavlinkWrite = False Then
                                             LoadMavlinkParameterGrid(aName(nParameterCurrentIndex))
                                         Else
@@ -3143,10 +3281,10 @@ Public Class frmMain
                                     nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 16, 4))
                                     nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 20, 4))
                                     nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 24, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                    nHDOP = ConvertMavlinkToSingle(Mid(.Packet, 32, 4))
+                                    nHDOP = ConvertMavlinkToSingle(Mid(.Packet, 28, 4))
                                     nGroundSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 36, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                     nHeading = ConvertMavlinkToSingle(Mid(.Packet, 40, 4))
-                                    Debug.Print("Heading = " & nHeading)
+                                    'Debug.Print("Heading = " & nHeading)
                                     bNewGPS = True
                                     bNewDateTime = True
                                 Case 33 'GLOBAL_POSITION 
@@ -3163,8 +3301,12 @@ Public Class frmMain
                                 Case 34 'SYS_STATUS 
                                     lblGPSMessage.Text = GetResString(, "System Status")
                                     'sModeNumber = Mid(.Packet, 7, 2)
-                                    sMode = GetMavMode(Asc(Mid(.Packet, 7, 2)))
+                                    sMode = GetAPMMode(Asc(Mid(.Packet, 7, 1)), Asc(Mid(.Packet, 8, 1)))
+                                    'smode = GetMavMode(Asc(Mid(.Packet, 7, 1)))
+                                    'sMode = sMode & GetMavNav(Asc(Mid(.Packet, 8, 1)))
                                     nBattery = CInt("&h" & Hex(Asc(Mid(.Packet, 12, 1))) & Hex(Asc(Mid(.Packet, 13, 1)))) / 1000
+                                    nMAH = nMAHMax - ((CInt("&h" & Hex(Asc(Mid(.Packet, 14, 1))) & Hex(Asc(Mid(.Packet, 15, 1)))) / 1000) * nMAHMax)
+                                    bNewGPS = True
                                     bNewWaypoint = True
                                 Case 35 'RC_CHANNELS_RAW 
                                     lblGPSMessage.Text = GetResString(, "Channel Raw")
@@ -3200,6 +3342,7 @@ Public Class frmMain
                                     'End If
 
                                 Case 37 'SERVO_OUTPUT_RAW
+
                                     lblGPSMessage.Text = "Servo Output Raw"
                                     nServoOutput(0) = ConvertMavlinkToInteger(Mid(.Packet, 7, 2))
                                     nServoOutput(1) = ConvertMavlinkToInteger(Mid(.Packet, 9, 2))
@@ -3234,19 +3377,24 @@ Public Class frmMain
                                             End If
 
                                             'aWPCommand(nWPCount) = Asc(Mid(.Packet, 12,1))
-                                            aWPCommand(nWPCount) = Hex(ConvertMavlinkToSingle(Mid(.Packet, 18, 4)))
-                                            aWPAlt(nWPCount) = ConvertMavlinkToSingle(Mid(.Packet, 35, 4))
-                                            aWPOther(nWPCount) = ConvertMavlinkToSingle(Mid(.Packet, 39, 4))
-                                            Select Case aWPCommand(nWPCount)
-                                                Case 10, 11, 12, 13, 14, 15, 44
-                                                    aWPLat(nWPCount) = ConvertMavlinkToSingle(Mid(.Packet, 31, 4)).ToString(sConfigFormatString)
-                                                    aWPLon(nWPCount) = ConvertMavlinkToSingle(Mid(.Packet, 27, 4)).ToString(sConfigFormatString)
-                                            End Select
+                                            aWPCommand(nWPCount) = Asc(Mid(.Packet, 12, 1))
+                                            nCount = GetCommandIndex(aWPCommand(nWPCount))
+
+                                            aWPOther(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 15, 4)), aCommandMult1(nCount), aCommandUnit1(nCount), aCommandFormat1(nCount))
+                                            aWPOther2(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 19, 4)), aCommandMult2(nCount), aCommandUnit2(nCount), aCommandFormat2(nCount))
+                                            aWPOther3(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 23, 4)), aCommandMult3(nCount), aCommandUnit3(nCount), aCommandFormat3(nCount))
+                                            aWPOther4(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 27, 4)), aCommandMult4(nCount), aCommandUnit4(nCount), aCommandFormat4(nCount))
+                                            aWPLat(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 31, 4)), aCommandMult5(nCount), aCommandUnit5(nCount), sConfigFormatString)
+                                            aWPLon(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 35, 4)), aCommandMult6(nCount), aCommandUnit6(nCount), sConfigFormatString)
+                                            aWPAlt(nWPCount) = CorrectReadMissionData(ConvertMavlinkToSingle(Mid(.Packet, 39, 4)), aCommandMult7(nCount), aCommandUnit7(nCount), aCommandFormat7(nCount))
                                         End If
 
                                         If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest Then
-                                            If nWPCount = nWaypointTotal Then
+                                            If nWPCount = nWaypointTotal - 1 Then
                                                 nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_DoneRequesting
+                                                If eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_RequestingMission Then
+                                                    eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_MissionComplete
+                                                End If
                                             Else
                                                 nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRespond
                                             End If
@@ -3281,9 +3429,11 @@ Public Class frmMain
                                         nMavlinkCurrentWaypointSend = ConvertMavlinkToInteger(Mid(.Packet, 9, 2))
                                         SetMissionStatus("APM Requesting Mission Command #" & nMavlinkCurrentWaypointSend)
                                         nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSetRespond
+                                        Debug.Print("Requesting Waypoint Data #" & nMavlinkCurrentWaypointSend)
                                         SendMavlinkWPDetailSet(nMavlinkCurrentWaypointSend)
+                                        'Debug.Print("Sent Waypoint Set Command - B #" & nMavlinkCurrentWaypointSend)
                                     Else
-                                        Debug.Print("HERE")
+                                        'Debug.Print("HERE")
                                     End If
                                 Case 44 'WAYPOINT_COUNT 
                                     dLastMavlinkCommandTime = Now.Ticks
@@ -3307,20 +3457,41 @@ Public Class frmMain
                                         SetMissionStatus("Mission write complete")
                                     End If
                                 Case 62
+                                    'nRoll = -ConvertMavlinkToSingle(Mid(.Packet, 7, 4)) * 180 / Math.PI
+                                    'nPitch = -ConvertMavlinkToSingle(Mid(.Packet, 11, 4)) * 180 / Math.PI
+                                    nDistance = ConvertDistance(ConvertMavlinkToInteger(Mid(.Packet, 19, 2)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+
+                                Case 72 'AIRSPEED 
+                                    nAirSpeed = ConvertMavlinkToSingle(Mid(.Packet, 7, 4))
+                                    bNewGPS = True
+                                Case 73 'GLOBAL_POSITION_INT
+                                    '    nLatitude = ConvertMavlinkToLong(Mid(.Packet, 7, 4), True) / 10000000
+                                    '    nLongitude = ConvertMavlinkToLong(Mid(.Packet, 11, 4), True) / 10000000
+                                    '    nAltitude = ConvertDistance(ConvertMavlinkToLong(Mid(.Packet, 15, 4)) / 1000, e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    '    nGroundSpeed = Math.Sqrt(Math.Abs((ConvertMavlinkToInteger(Mid(.Packet, 19, 2))) ^ 2) + Math.Abs((ConvertMavlinkToInteger(Mid(.Packet, 21, 2))) ^ 2))
+                                    '    nGroundSpeed = ConvertSpeed(nGroundSpeed, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    '    nHeading = Math.Atan2(ConvertMavlinkToInteger(Mid(.Packet, 19, 2)), ConvertMavlinkToInteger(Mid(.Packet, 21, 2))) * 180 / Math.PI
+                                    '    bNewGPS = True
+                                Case 74 'VFR_HUD 
+                                    nAirSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 7, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    nGroundSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 11, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+                                    nHeading = ConvertMavlinkToInteger(Mid(.Packet, 15, 2)) / 100
+                                    nThrottle = ConvertMavlinkToInteger(Mid(.Packet, 17, 2), True)
+                                    nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 19, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                Case 76
                                     If Asc(Mid(.Packet, 8, 1)) = 1 Then
                                         lblControlMavlinkStatus.Text = "Status: Action accepted - " & cboControlMavlinkAction.Text
                                     Else
                                         lblControlMavlinkStatus.Text = "Status: Action denied - " & cboControlMavlinkAction.Text
                                     End If
                                     Debug.Print("Action=" & ConvertMavlinkToInteger(Mid(.Packet, 7, 2)) & ",Status =" & ConvertMavlinkToInteger(Mid(.Packet, 9, 2)))
-                                Case 72 'AIRSPEED 
-                                    nAirSpeed = ConvertMavlinkToSingle(Mid(.Packet, 7, 4))
-                                    bNewGPS = True
                                 Case 254 'STATUSTEXT 
                                     'If Asc(Mid(.Packet, 7, 1)) = 0 Then
                                     lblGPSMessage.Text = Mid(.Packet, 8)
+                                    lstEvents.Items.Insert(0, "Message=" & Mid(.Packet, 8))
                                     'End If
                                 Case Else
+                                    'Debug.Print(oMessage.RawBytes(0))
                                     Debug.Print("MAVlink ID=" & .ID)
                             End Select
 
@@ -3439,6 +3610,9 @@ Public Class frmMain
 
         ReDim Preserve aWPCommand(0 To upperBound)
         ReDim Preserve aWPOther(0 To upperBound)
+        ReDim Preserve aWPOther2(0 To upperBound)
+        ReDim Preserve aWPOther3(0 To upperBound)
+        ReDim Preserve aWPOther4(0 To upperBound)
     End Sub
     Private Sub UpdateGPSDateTime(Optional ByVal clearTime As Boolean = False)
         Dim dDateTime As Date
@@ -3623,13 +3797,16 @@ Public Class frmMain
             If setMax <> -1 Then
                 inputSlider.Maximum = setMax
             End If
-            If value > inputSlider.Maximum Then
-                inputSlider.Value = inputSlider.Maximum
-            ElseIf value < inputSlider.Minimum Then
-                inputSlider.Value = inputSlider.Minimum
-            Else
-                inputSlider.Value = value
-            End If
+            Try
+                If value > inputSlider.Maximum Then
+                    inputSlider.Value = inputSlider.Maximum
+                ElseIf value < inputSlider.Minimum Then
+                    inputSlider.Value = inputSlider.Minimum
+                Else
+                    inputSlider.Value = value
+                End If
+            Catch
+            End Try
             displayLabel.Text = value
         End If
     End Sub
@@ -3688,11 +3865,14 @@ Public Class frmMain
         cmdSetHome.Enabled = False
         oActiveDevices.Initialize()
         pnlLinkLost.Visible = False
+        dLastNewDevice = 0
+        eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_None
 
         tmrSearch.Enabled = False
         If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
             If Not SocketServer Is Nothing Then
                 cboConfigDevice.Enabled = True
+                cboConfigVehicle.Enabled = True
                 bConnected = False
                 cmdConnect.Text = GetResString(, "Connect")
                 tmrComPort.Enabled = False
@@ -3724,6 +3904,7 @@ Public Class frmMain
         Else
             If serialPortIn.IsOpen = True Then
                 cboConfigDevice.Enabled = True
+                cboConfigVehicle.Enabled = True
                 bConnected = False
                 cmdConnect.Text = GetResString(, "Connect")
                 tmrComPort.Enabled = False
@@ -3804,12 +3985,22 @@ Public Class frmMain
         cboControlAttoWPNumber.Enabled = Not enable
 
         cboControlMavlinkAction.Enabled = Not enable
-        cboControlMavlinkMode.Enabled = Not enable
+        cboControlMavlinkMode.Enabled = False 'Not enable
         cmdControlMavlinkAction.Enabled = Not enable
-        cmdControlMavlinkMode.Enabled = Not enable
-        cmdControlMavlinkSetAltitude.Enabled = Not enable
-        cmdControlMavlinkSetHome.enabled = Not enable
-        cboControlMavlinkMessageSendRate.Enabled = Not enable
+        cmdControlMavlinkRestartMission.Enabled = Not enable
+        cmdControlMavlinkGotoCommand.Enabled = Not enable
+
+        cmdControlMavlinkAltRTL.Enabled = Not enable
+        cmdControlMavlinkLoiterRadius.Enabled = Not enable
+        cmdControlMavlinkWPRadius.Enabled = Not enable
+
+        txtControlMavlinkAltRTL.Enabled = Not enable
+        txtControlMavlinkLoiterRadius.Enabled = Not enable
+        txtControlMavlinkWPRadius.Enabled = Not enable
+
+        'cmdControlMavlinkMode.Enabled = Not enable
+        'cmdControlMavlinkSetAltitude.Enabled = Not enable
+        'cmdControlMavlinkSetHome.enabled = Not enable
 
         nWPCount = -1
     End Sub
@@ -3833,14 +4024,26 @@ Public Class frmMain
 
     Private Sub cboAttitude_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboAttitude.SelectedIndexChanged
         Call SaveRegSetting(sRootRegistry & "\Settings", "Attitude Hz", cboAttitude.SelectedIndex)
+
+        If nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink And bConnected = True Then
+            UpdateMavlinkStatusRates()
+        End If
     End Sub
 
     Private Sub cboGPS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboGPS.SelectedIndexChanged
         Call SaveRegSetting(sRootRegistry & "\Settings", "GPS Hz", cboGPS.SelectedIndex)
+
+        If nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink And bConnected = True Then
+            UpdateMavlinkStatusRates()
+        End If
     End Sub
 
     Private Sub cboWaypoint_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboWaypoint.SelectedIndexChanged
         Call SaveRegSetting(sRootRegistry & "\Settings", "Waypoint Hz", cboWaypoint.SelectedIndex)
+
+        If nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink And bConnected = True Then
+            UpdateMavlinkStatusRates()
+        End If
     End Sub
 
     Private Sub cmdSearch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSearch.Click
@@ -4073,6 +4276,7 @@ Public Class frmMain
             If CType(cboConfigDevice.Items(nCount), cValueDesc).Value = deviceID Then
                 cboConfigDevice.SelectedIndex = nCount
                 cboConfigDevice.Enabled = Not lockDevice
+                cboConfigVehicle.Enabled = Not lockDevice
                 Exit For
             End If
         Next
@@ -4143,7 +4347,7 @@ Public Class frmMain
                         Else
                             aWPAlt(nWPCount) = txtMissionDefaultAlt.Text
                         End If
-                        If UBound(sSplit2) >= 5 Then
+                        If UBound(sSplit2) >= 5 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                             aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(4))
                             aWPOther(nWPCount) = sSplit2(5)
                         End If
@@ -4180,7 +4384,7 @@ Public Class frmMain
                         Else
                             aWPAlt(nWPCount) = txtMissionDefaultAlt.Text
                         End If
-                        If UBound(sSplit2) >= 5 Then
+                        If UBound(sSplit2) >= 5 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                             aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(4))
                             aWPOther(nWPCount) = sSplit2(5)
                         End If
@@ -4263,7 +4467,7 @@ Public Class frmMain
 
     Private Sub cmdCommandLineSend_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCommandLineSend.Click
         If serialPortIn.IsOpen = True Then
-            serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
+            'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
             serialPortIn.Write(cboCommandLineCommand.Text & vbCr)
             SaveComboEntries(cboCommandLineCommand)
 
@@ -5454,7 +5658,7 @@ Public Class frmMain
 
             'oMessage = GetNextSentence(sNewString & vbCrLf)
             'oMessage = GetNextSentence(Chr(&HA5) & Chr(&H5A) & sSplit(nCount))
-            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf)
+            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf, Nothing)
             UpdateVariables(oMessage)
             Application.DoEvents()
 
@@ -5687,8 +5891,11 @@ Public Class frmMain
                                 nLocalPan = ((nTrackingServoRight - nTrackingServoLeft) / (nTrackingAngleRight - nTrackingAngleLeft)) * nLocalHeading + nMiddlePan
                                 nLocalTilt = ((nTrackingServoUp - nTrackingServoDown) / (nTrackingAngleUp - nTrackingAngleDown)) * nLocalAngle + nMiddleTilt
 
-                                tbarPan.Value = nLocalPan
-                                tbarTilt.Value = nLocalTilt
+                                Try
+                                    tbarPan.Value = nLocalPan
+                                    tbarTilt.Value = nLocalTilt
+                                Catch
+                                End Try
                                 'SendTrackingServo(nLocalPan, nLocalTilt)
                             Case 1 'Heading
                                 SendTrackingAngle(nLocalHeading, nLocalAngle)
@@ -5726,7 +5933,7 @@ Public Class frmMain
         WriteTrackingSerialPort("!!!PAN:" & panValue & ",TLT:" & tiltValue & "***")
     End Sub
     Public Sub SendTrackingServoDriver(ByVal servoNumber As Integer, ByVal outputValue As Integer)
-        WriteTrackingSerialPort(servoNumber & outputValue & vbCr)
+        WriteTrackingSerialPort(servoNumber & outputValue.ToString("0000") & vbCr, False)
     End Sub
     Public Sub SendTrackingPololuDriver(ByVal servoNumber As Integer, ByVal outputValue As Integer)
         WriteTrackingSerialPort(Chr("&h80") & Chr("&h1") & Chr("&h4") & Chr(servoNumber) & GetPololuValue(outputValue), False)
@@ -5852,8 +6059,11 @@ Public Class frmMain
                 nTrackingServoNumberPan = GetRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Number Pan", nDefaultPan)
                 nTrackingServoNumberTilt = GetRegSetting(sRootRegistry & "\Settings\Tracking\" & nTrackingOutputType, "Servo Number Tilt", nDefaultTilt)
 
-                tbarPan.Value = (tbarPan.Maximum - tbarPan.Minimum) / 2 + tbarPan.Minimum
-                tbarTilt.Value = (tbarTilt.Maximum - tbarTilt.Minimum) / 2 + tbarTilt.Minimum
+                Try
+                    tbarPan.Value = (tbarPan.Maximum - tbarPan.Minimum) / 2 + tbarPan.Minimum
+                    tbarTilt.Value = (tbarTilt.Maximum - tbarTilt.Minimum) / 2 + tbarTilt.Minimum
+                Catch
+                End Try
         End Select
 
         If bStartup = True Then
@@ -5941,13 +6151,27 @@ Public Class frmMain
                 cboConfigVehicle.Visible = False
 
                 grpMissionControlAtto.Visible = False
-                grpMissionControlMavlink.Visible = False
+                grpMissionControlMavlink.Visible = True
                 cmdMissionOverride.Visible = False
+                cmdMissionMavlinkAdd.Visible = True
                 grpMissionControlGeneric.Visible = False
                 grpControlAtto.Visible = False
-                grpControlMavlink.Visible = False
+                grpControlMavlink.Visible = True
+
+                LoadAPMVariables()
                 LoadGluonVariables()
+
                 LoadAttoParameterGrid()
+
+                With cboMissionMavlinkCommand
+                    .Items.Clear()
+
+                    For nCount = 0 To UBound(aCommandName)
+                        .Items.Add(New cValueDesc(aCommandValue(nCount), aCommandName(nCount)))
+                    Next
+                End With
+                'LoadAttoSetFile()
+                nParameterCount = -1
 
             Case e_ConfigDevice.e_ConfigDevice_Generic
                 sConfigFormatString = "0.000000"
@@ -5957,6 +6181,7 @@ Public Class frmMain
                 grpMissionControlAtto.Visible = False
                 grpMissionControlMavlink.Visible = False
                 cmdMissionOverride.Visible = False
+                cmdMissionMavlinkAdd.Visible = False
                 grpMissionControlGeneric.Visible = True
                 grpControlAtto.Visible = False
                 grpControlMavlink.Visible = False
@@ -5983,6 +6208,7 @@ Public Class frmMain
                 grpMissionControlAtto.Visible = True
                 grpMissionControlMavlink.Visible = False
                 cmdMissionOverride.Visible = False
+                cmdMissionMavlinkAdd.Visible = False
                 grpControlAtto.Visible = True
                 grpControlMavlink.Visible = False
                 With cboMissionAttoLoiter
@@ -6020,6 +6246,7 @@ Public Class frmMain
 
                 With cboMissionAttoTriggerControl
                     .Items.Clear()
+                    .Items.Add("None")
                     .Items.Add("At Waypoint")
                     .Items.Add("Time $87")
                     .Items.Add("Time $88")
@@ -6050,7 +6277,7 @@ Public Class frmMain
 
                 With cboControlMavlinkMode
                     .Items.Clear()
-                    For nCount = 0 To UBound(aModeName)
+                    For nCount = 1 To UBound(aModeName)
                         .Items.Add(New cValueDesc(aModeValue(nCount), aModeName(nCount)))
                     Next
                     .SelectedIndex = 0
@@ -6058,27 +6285,19 @@ Public Class frmMain
 
                 With cboControlMavlinkAction
                     .Items.Clear()
-                    For nCount = 1 To 35
-                        .Items.Add(New cValueDesc(nCount, GetMavAction(nCount)))
-                    Next
+                    .Items.Add(New cValueDesc(11, GetMavAction(11)))
+                    .Items.Add(New cValueDesc(12, GetMavAction(12)))
+                    .Items.Add(New cValueDesc(13, GetMavAction(13)))
+                    .Items.Add(New cValueDesc(27, GetMavAction(27)))
+                    .Items.Add(New cValueDesc(3, GetMavAction(3)))
+                    '.Items.Add(New cValueDesc(25, GetMavAction(25)))
+                    'For nCount = 1 To 35
+                    '    .Items.Add(New cValueDesc(nCount, GetMavAction(nCount)))
+                    'Next
                     .SelectedIndex = 0
                 End With
 
-                With cboControlMavlinkMessageSendRate
-                    .Items.Clear()
-                    .Items.Add("None")
-                    For nCount = 1 To 10
-                        .Items.Add(nCount & " Hz")
-                    Next
-                    .SelectedIndex = nMavlinkTelemetryRate
-                End With
-
-                With cboControlMavlinkAction
-
-                End With
-
-
-                sConfigFormatString = "0.00000"
+                sConfigFormatString = "0.000000"
 
                 nConfigAltOffset = e_AltOffset.e_AltOffset_HomeALt
                 dgConfigVariable.Enabled = False
@@ -6092,6 +6311,7 @@ Public Class frmMain
                 grpMissionControlAtto.Visible = False
                 grpMissionControlMavlink.Visible = True
                 cmdMissionOverride.Visible = False
+                cmdMissionMavlinkAdd.Visible = True
                 grpControlAtto.Visible = False
                 grpControlMavlink.Visible = True
 
@@ -6131,6 +6351,7 @@ Public Class frmMain
         ReDim aMin(0)
         ReDim aMax(0)
         ReDim aValue(0)
+        ReDim aVisible(0)
         ReDim aMultiplier(0)
         ReDim aAdder(0)
         ReDim aBit(0)
@@ -6198,6 +6419,33 @@ Public Class frmMain
         ReDim aCommandArg2(0)
         ReDim aCommandArg3(0)
         ReDim aCommandArg4(0)
+        ReDim aCommandArg5(0)
+        ReDim aCommandArg6(0)
+        ReDim aCommandArg7(0)
+
+        ReDim aCommandUnit1(0)
+        ReDim aCommandUnit2(0)
+        ReDim aCommandUnit3(0)
+        ReDim aCommandUnit4(0)
+        ReDim aCommandUnit5(0)
+        ReDim aCommandUnit6(0)
+        ReDim aCommandUnit7(0)
+
+        ReDim aCommandMult1(0)
+        ReDim aCommandMult2(0)
+        ReDim aCommandMult3(0)
+        ReDim aCommandMult4(0)
+        ReDim aCommandMult5(0)
+        ReDim aCommandMult6(0)
+        ReDim aCommandMult7(0)
+
+        ReDim aCommandFormat1(0)
+        ReDim aCommandFormat2(0)
+        ReDim aCommandFormat3(0)
+        ReDim aCommandFormat4(0)
+        ReDim aCommandFormat5(0)
+        ReDim aCommandFormat6(0)
+        ReDim aCommandFormat7(0)
 
         Dim sFileContents As String
         Dim sSplit() As String
@@ -6209,7 +6457,13 @@ Public Class frmMain
         Dim sComment As String
         Dim sParamName As String
 
-        sFileContents = HK_GCS.My.Resources.TextFiles.APMCommands.ToString
+        Select Case nConfigDevice
+            Case e_ConfigDevice.e_ConfigDevice_MAVlink
+                sFileContents = HK_GCS.My.Resources.TextFiles.APMCommands.ToString
+            Case e_ConfigDevice.e_ConfigDevice_Gluonpilot
+                sFileContents = HK_GCS.My.Resources.TextFiles.GluonCommands.ToString
+        End Select
+
         nNext = -1
         If sFileContents <> "" Then
             sSplit = Split(sFileContents, vbCrLf)
@@ -6225,47 +6479,96 @@ Public Class frmMain
                     ReDim Preserve aCommandArg2(0 To nNext)
                     ReDim Preserve aCommandArg3(0 To nNext)
                     ReDim Preserve aCommandArg4(0 To nNext)
+                    ReDim Preserve aCommandArg5(0 To nNext)
+                    ReDim Preserve aCommandArg6(0 To nNext)
+                    ReDim Preserve aCommandArg7(0 To nNext)
+
+                    ReDim Preserve aCommandUnit1(0 To nNext)
+                    ReDim Preserve aCommandUnit2(0 To nNext)
+                    ReDim Preserve aCommandUnit3(0 To nNext)
+                    ReDim Preserve aCommandUnit4(0 To nNext)
+                    ReDim Preserve aCommandUnit5(0 To nNext)
+                    ReDim Preserve aCommandUnit6(0 To nNext)
+                    ReDim Preserve aCommandUnit7(0 To nNext)
+
+                    ReDim Preserve aCommandMult1(0 To nNext)
+                    ReDim Preserve aCommandMult2(0 To nNext)
+                    ReDim Preserve aCommandMult3(0 To nNext)
+                    ReDim Preserve aCommandMult4(0 To nNext)
+                    ReDim Preserve aCommandMult5(0 To nNext)
+                    ReDim Preserve aCommandMult6(0 To nNext)
+                    ReDim Preserve aCommandMult7(0 To nNext)
+
+                    ReDim Preserve aCommandFormat1(0 To nNext)
+                    ReDim Preserve aCommandFormat2(0 To nNext)
+                    ReDim Preserve aCommandFormat3(0 To nNext)
+                    ReDim Preserve aCommandFormat4(0 To nNext)
+                    ReDim Preserve aCommandFormat5(0 To nNext)
+                    ReDim Preserve aCommandFormat6(0 To nNext)
+                    ReDim Preserve aCommandFormat7(0 To nNext)
 
                     aCommandValue(nNext) = CDec(sSplit2(0))
                     aCommandName(nNext) = sSplit2(1)
 
                     If UBound(sSplit2) >= 2 Then
                         aCommandArg1(nNext) = sSplit2(2)
+                        ParseCommandMessage(aCommandArg1(nNext), aCommandUnit1(nNext), aCommandMult1(nNext), aCommandFormat1(nNext))
                     End If
                     If UBound(sSplit2) >= 3 Then
                         aCommandArg2(nNext) = sSplit2(3)
+                        ParseCommandMessage(aCommandArg2(nNext), aCommandUnit2(nNext), aCommandMult2(nNext), aCommandFormat2(nNext))
                     End If
                     If UBound(sSplit2) >= 4 Then
                         aCommandArg3(nNext) = sSplit2(4)
+                        ParseCommandMessage(aCommandArg3(nNext), aCommandUnit3(nNext), aCommandMult3(nNext), aCommandFormat3(nNext))
                     End If
                     If UBound(sSplit2) >= 5 Then
                         aCommandArg4(nNext) = sSplit2(5)
+                        ParseCommandMessage(aCommandArg4(nNext), aCommandUnit4(nNext), aCommandMult4(nNext), aCommandFormat4(nNext))
+                    End If
+                    If UBound(sSplit2) >= 6 Then
+                        aCommandArg5(nNext) = sSplit2(6)
+                        ParseCommandMessage(aCommandArg5(nNext), aCommandUnit5(nNext), aCommandMult5(nNext), aCommandFormat5(nNext))
+                    End If
+                    If UBound(sSplit2) >= 7 Then
+                        aCommandArg6(nNext) = sSplit2(7)
+                        ParseCommandMessage(aCommandArg6(nNext), aCommandUnit6(nNext), aCommandMult6(nNext), aCommandFormat6(nNext))
+                    End If
+                    If UBound(sSplit2) >= 8 Then
+                        aCommandArg7(nNext) = sSplit2(8)
+                        ParseCommandMessage(aCommandArg7(nNext), aCommandUnit7(nNext), aCommandMult7(nNext), aCommandFormat7(nNext))
                     End If
                 End If
             Next nCount
         End If
 
-        sFileContents = HK_GCS.My.Resources.TextFiles.APMModes.ToString
-        nNext = -1
-        If sFileContents <> "" Then
-            sSplit = Split(sFileContents, vbCrLf)
-            For nCount = 0 To UBound(sSplit)
-                sComment = ""
-                If Trim(sSplit(nCount)) <> "" And Microsoft.VisualBasic.Left(Trim(sSplit(nCount)), 2) <> "//" Then
-                    sSplit2 = Split(sSplit(nCount), " ")
+        Select Case nConfigDevice
+            Case e_ConfigDevice.e_ConfigDevice_MAVlink
+                sFileContents = HK_GCS.My.Resources.TextFiles.APMModes.ToString
+                nNext = -1
+                ReDim aModeName(0)
+                ReDim aModeValue(0)
+                If sFileContents <> "" Then
+                    sSplit = Split(sFileContents, vbCrLf)
+                    For nCount = 0 To UBound(sSplit)
+                        sComment = ""
+                        If Trim(sSplit(nCount)) <> "" And Microsoft.VisualBasic.Left(Trim(sSplit(nCount)), 2) <> "//" Then
+                            sSplit2 = Split(sSplit(nCount), ",")
 
-                    For nCount3 = 0 To UBound(aValue)
-                        nNext = nNext + 1
-                        ReDim Preserve aModeName(0 To nNext)
-                        ReDim Preserve aModeValue(0 To nNext)
+                            'For nCount3 = 0 To UBound(aValue)
+                            nNext = nNext + 1
+                            ReDim Preserve aModeName(0 To nNext)
+                            ReDim Preserve aModeValue(0 To nNext)
 
-                        aModeName(nNext) = sSplit2(0)
-                        aModeValue(nNext) = CDec(sSplit2(1))
-                    Next nCount3
+                            aModeName(nNext) = sSplit2(0)
+                            aModeValue(nNext) = CDec(sSplit2(1))
+                            'Next nCount3
+                        End If
+                    Next nCount
                 End If
-            Next nCount
-        End If
+        End Select
     End Sub
+
     Private Function GetCommandName(ByVal inputValue As Integer) As String
         Dim nCount As Integer
         GetCommandName = ""
@@ -6355,10 +6658,13 @@ Public Class frmMain
             ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                 dt.Columns.Add(AddDataColumn("#", False))
                 dt.Columns.Add(AddDataColumn("Command", False))
+                dt.Columns.Add(AddDataColumn("Var 1", False))
+                dt.Columns.Add(AddDataColumn("Var 2", False))
+                dt.Columns.Add(AddDataColumn("Var 3", False))
+                dt.Columns.Add(AddDataColumn("Var 4", False))
                 dt.Columns.Add(AddDataColumn("Latitude", False))
                 dt.Columns.Add(AddDataColumn("Longitude", False))
                 dt.Columns.Add(AddDataColumn("Altitude", False))
-                dt.Columns.Add(AddDataColumn("Data", False))
 
                 For nCount = 0 To nWPCount
                     drow = dt.NewRow
@@ -6368,17 +6674,26 @@ Public Class frmMain
                     nCommandIndex = GetCommandIndex(aWPCommand(nCount))
 
                     drow(1) = GetCommandName(aWPCommand(nCount))
-                    If aCommandArg3(nCommandIndex) <> "" Then
-                        drow(2) = aWPLat(nCount)
-                    End If
-                    If aCommandArg4(nCommandIndex) <> "" Then
-                        drow(3) = aWPLon(nCount)
-                    End If
                     If aCommandArg1(nCommandIndex) <> "" Then
-                        drow(4) = aWPAlt(nCount)
+                        drow(2) = aWPOther(nCount)
                     End If
                     If aCommandArg2(nCommandIndex) <> "" Then
-                        drow(5) = aWPOther(nCount)
+                        drow(3) = aWPOther2(nCount)
+                    End If
+                    If aCommandArg3(nCommandIndex) <> "" Then
+                        drow(4) = aWPOther3(nCount)
+                    End If
+                    If aCommandArg4(nCommandIndex) <> "" Then
+                        drow(5) = aWPOther4(nCount)
+                    End If
+                    If aCommandArg5(nCommandIndex) <> "" Then
+                        drow(6) = aWPLat(nCount)
+                    End If
+                    If aCommandArg6(nCommandIndex) <> "" Then
+                        drow(7) = aWPLon(nCount)
+                    End If
+                    If aCommandArg7(nCommandIndex) <> "" Then
+                        drow(8) = aWPAlt(nCount)
                     End If
                     dt.Rows.Add(drow)
                 Next
@@ -6416,26 +6731,48 @@ Public Class frmMain
         dgMission.ResumeLayout()
         'Catch
         'End Try
-        nLastSelected = cboControlAttoWPNumber.SelectedIndex
-        With cboControlAttoWPNumber
-            .Items.Clear()
-            For nCount = 0 To nWPCount
-                Select Case nCount
-                    Case 0
-                        .Items.Add(nCount & " (Home)")
-                    Case 1
-                        .Items.Add(nCount & " (Rally)")
-                    Case Else
-                        .Items.Add(nCount)
-                End Select
-                If .Items.Count - 1 = nLastSelected Then
-                    .SelectedIndex = .Items.Count - 1
-                End If
-            Next
-            If .SelectedIndex = -1 And nWPCount > 0 Then
-                .SelectedIndex = 0
-            End If
-        End With
+        Select Case nConfigDevice
+            Case e_ConfigDevice.e_ConfigDevice_AttoPilot
+                nLastSelected = cboControlAttoWPNumber.SelectedIndex
+                With cboControlAttoWPNumber
+                    .Items.Clear()
+                    For nCount = 0 To nWPCount
+                        Select Case nCount
+                            Case 0
+                                .Items.Add(nCount & " (Home)")
+                            Case 1
+                                .Items.Add(nCount & " (Rally)")
+                            Case Else
+                                .Items.Add(nCount)
+                        End Select
+                        If .Items.Count - 1 = nLastSelected Then
+                            .SelectedIndex = .Items.Count - 1
+                        End If
+                    Next
+                    If .SelectedIndex = -1 And nWPCount > 0 Then
+                        .SelectedIndex = 0
+                    End If
+                End With
+            Case e_ConfigDevice.e_ConfigDevice_MAVlink
+                nLastSelected = cboControlMavlinkWPNumber.SelectedIndex
+                With cboControlMavlinkWPNumber
+                    .Items.Clear()
+                    For nCount = 0 To nWPCount
+                        Select Case nCount
+                            Case 0
+                                .Items.Add(nCount & " (Home)")
+                            Case Else
+                                .Items.Add(nCount)
+                        End Select
+                        If .Items.Count - 1 = nLastSelected Then
+                            .SelectedIndex = .Items.Count - 1
+                        End If
+                    Next
+                    If .SelectedIndex = -1 And nWPCount > 0 Then
+                        .SelectedIndex = 0
+                    End If
+                End With
+        End Select
 
         If nWPCount >= 0 Then
             cmdMissionAttoWrite.Enabled = True
@@ -6481,57 +6818,59 @@ Public Class frmMain
                 For nCount = 0 To nParameterCount
 
                     If Not aName(nCount) Is Nothing Then
-                        drow = dt.NewRow
-                        'Debug.Print(aName(nCount))
-                        'drow(0) = Mid(aName(nCount), 1, InStr(aName(nCount), Chr(0)) - 1) 'aName(nCount)
-                        drow(0) = aName(nCount)
-                        drow(1) = aMin(nCount)
-                        drow(2) = aMax(nCount)
-                        If IsNumeric(aMultiplier(nCount)) = True Then
-                            If IsNumeric(aValue(nCount)) = True Then
-                                drow(3) = aValue(nCount) / aMultiplier(nCount)
+                        If aName(nCount) <> "" And aVisible(nCount) = True Then
+                            drow = dt.NewRow
+                            'Debug.Print(aName(nCount))
+                            'drow(0) = Mid(aName(nCount), 1, InStr(aName(nCount), Chr(0)) - 1) 'aName(nCount)
+                            drow(0) = aName(nCount)
+                            drow(1) = aMin(nCount)
+                            drow(2) = aMax(nCount)
+                            If IsNumeric(aMultiplier(nCount)) = True Then
+                                If IsNumeric(aValue(nCount)) = True Then
+                                    drow(3) = aValue(nCount) / aMultiplier(nCount)
+                                Else
+                                    drow(3) = ""
+                                End If
+                                If IsNumeric(aDefault(nCount)) = True Then
+                                    drow(4) = aDefault(nCount) / aMultiplier(nCount)
+                                Else
+                                    drow(4) = ""
+                                End If
                             Else
-                                drow(3) = ""
-                            End If
-                            If IsNumeric(aDefault(nCount)) = True Then
-                                drow(4) = aDefault(nCount) / aMultiplier(nCount)
-                            Else
-                                drow(4) = ""
-                            End If
-                        Else
-                            If Len(aName(nCount)) >= 12 Then
-                                If aName(nCount).Substring(0, 12) = "FLIGHT_MODE_" Then
-                                    If IsNumeric(aValue(nCount)) = True Then
-                                        drow(3) = GetControlModeByInteger(aValue(nCount))
-                                        drow(4) = GetControlModeByInteger(aDefault(nCount))
+                                If Len(aName(nCount)) >= 12 Then
+                                    If aName(nCount).Substring(0, 12) = "FLIGHT_MODE_" Then
+                                        If IsNumeric(aValue(nCount)) = True Then
+                                            drow(3) = GetControlModeByInteger(aValue(nCount))
+                                            drow(4) = GetControlModeByInteger(aDefault(nCount))
+                                        Else
+                                            drow(3) = ""
+                                            drow(4) = ""
+                                        End If
                                     Else
-                                        drow(3) = ""
-                                        drow(4) = ""
+                                        drow(3) = aValue(nCount)
+                                        drow(4) = aDefault(nCount)
                                     End If
                                 Else
                                     drow(3) = aValue(nCount)
                                     drow(4) = aDefault(nCount)
                                 End If
-                            Else
-                                drow(3) = aValue(nCount)
-                                drow(4) = aDefault(nCount)
                             End If
-                        End If
-                        drow(5) = aComments(nCount)
+                            drow(5) = aComments(nCount)
 
-                        dt.Rows.Add(drow)
+                            dt.Rows.Add(drow)
 
-                        If nLastSelected = -1 And selectedRowID <> "" Then
-                            If aName(nCount) = selectedRowID Then
-                                nLastSelected = nCount
+                            If nLastSelected = -1 And selectedRowID <> "" Then
+                                If aName(nCount) = selectedRowID Then
+                                    nLastSelected = nCount
+                                End If
                             End If
                         End If
                     End If
-
                 Next
 
             Catch
             End Try
+            SetConfigStatus(lblConfigStatus.Text & " (" & dt.Rows.Count & " parameters)")
             dgConfigVariable.DataSource = dt
         Else
             dgConfigVariable.Visible = False
@@ -6591,8 +6930,8 @@ Public Class frmMain
     End Function
     Private Function GetControlModeByInteger(ByVal inputNumber As Integer) As String
         Select Case inputNumber
-            Case 0
-                GetControlModeByInteger = "MANUAL"
+            'Case 0
+            '    GetControlModeByInteger = "MANUAL"
             Case 1
                 GetControlModeByInteger = "CIRCLE"
             Case 2
@@ -6607,18 +6946,20 @@ Public Class frmMain
                 GetControlModeByInteger = "RTL"
             Case 12
                 GetControlModeByInteger = "LOITER"
-            Case 13
-                GetControlModeByInteger = "TAKEOFF"
-            Case 14
-                GetControlModeByInteger = "LAND"
+                'Case 13
+                '    GetControlModeByInteger = "TAKEOFF"
+                'Case 14
+                '    GetControlModeByInteger = "LAND"
+                'Case 16
+                '    GetControlModeByInteger = "WAYPOINT"
             Case Else
                 GetControlModeByInteger = "UNKNOWN!"
         End Select
     End Function
     Private Function GetControlModeByString(ByVal inputString As String) As Integer
         Select Case UCase(inputString)
-            Case "MANUAL"
-                GetControlModeByString = 0
+            'Case "MANUAL"
+            '    GetControlModeByString = 0
             Case "CIRCLE"
                 GetControlModeByString = 1
             Case "STABILIZE"
@@ -6631,12 +6972,12 @@ Public Class frmMain
                 GetControlModeByString = 10
             Case "RTL"
                 GetControlModeByString = 11
-            Case "LOITER"
-                GetControlModeByString = 12
-            Case "TAKEOFF"
-                GetControlModeByString = 13
-            Case "LAND"
-                GetControlModeByString = 14
+                'Case "LOITER"
+                '    GetControlModeByString = 12
+                'Case "TAKEOFF"
+                '    GetControlModeByString = 13
+                'Case "LAND"
+                '    GetControlModeByString = 14
             Case Else
                 GetControlModeByString = -1
         End Select
@@ -6654,7 +6995,7 @@ Public Class frmMain
         Dim sParamName As String
 
         'sFileContents = GetFileContents(GetRootPath() & "\SetConfig.txt")
-        sFileContents = HK_GCS.My.Resources.TextFiles.MAVlinkSetConfig.ToString
+        sFileContents = HK_GCS.My.Resources.TextFiles.APMSetConfig.ToString
 
         If sFileContents <> "" Then
             sSplit = Split(sFileContents, vbCrLf)
@@ -6664,26 +7005,38 @@ Public Class frmMain
                     sSplit2 = Split(sSplit(nCount), ",")
 
                     For nCount3 = 0 To UBound(aValue)
-                        'If InStr(aName(nCount3), Chr(0)) <> 0 Then
-                        '    sParamName = UCase(Mid(aName(nCount3), 1, InStr(aName(nCount3), Chr(0)) - 1))
-                        'Else
-                        sParamName = UCase(aName(nCount3))
-                        'End If
-                        'If UCase(aName(nCount3)) = UCase(sSplit2(0)) Then
-                        If sParamName = UCase(sSplit2(0)) Then
-                            aMin(nCount3) = sSplit2(1)
-                            aMax(nCount3) = sSplit2(2)
-                            aDefault(nCount3) = sSplit2(3)
-                            aMultiplier(nCount3) = sSplit2(4)
-                            For ncount2 = 5 To UBound(sSplit2)
-                                If sComment <> "" Then
-                                    sComment = sComment & ","
-                                End If
-                                sComment = sComment & sSplit2(ncount2)
-                            Next ncount2
-                            aComments(nCount3) = sComment
+                        If Mid(aName(nCount3), 1, 2) <> "//" Then
+                            'If InStr(aName(nCount3), Chr(0)) <> 0 Then
+                            '    sParamName = UCase(Mid(aName(nCount3), 1, InStr(aName(nCount3), Chr(0)) - 1))
+                            'Else
+                            sParamName = UCase(aName(nCount3))
+                            'End If
+                            'If UCase(aName(nCount3)) = UCase(sSplit2(0)) Then
+                            If sParamName = UCase(sSplit2(0)) Then
+                                aMin(nCount3) = sSplit2(1)
+                                aMax(nCount3) = sSplit2(2)
+                                aDefault(nCount3) = sSplit2(3)
+                                aMultiplier(nCount3) = sSplit2(4)
+                                aVisible(nCount3) = IIf(sSplit2(5) = "1", True, False)
+                                For ncount2 = 6 To UBound(sSplit2)
+                                    If sComment <> "" Then
+                                        sComment = sComment & ","
+                                    End If
+                                    sComment = sComment & sSplit2(ncount2)
+                                Next ncount2
+                                aComments(nCount3) = sComment
 
-                            Exit For
+                                Select Case aName(nCount3)
+                                    Case "WP_RADIUS"
+                                        txtControlMavlinkWPRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    Case "LOITER_RADIUS"
+                                        txtControlMavlinkLoiterRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    Case "ALT_HOLD_RTL"
+                                        txtControlMavlinkAltRTL.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                End Select
+
+                                Exit For
+                            End If
                         End If
                     Next nCount3
                 End If
@@ -7002,9 +7355,11 @@ Public Class frmMain
                 Next
                 'LoadMavlinkParameterGrid()
 
+                nParameterCurrentIndex = 0
                 bWaitingMavlinkWrite = True
-                sOutput = Chr(85) & Chr(2) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(21) & Chr(nConfigVehicle) & Chr(1)
-                SendMavLink(sOutput)
+                'sOutput = Chr(85) & Chr(2) & Chr(0) & ConvertChrHex("7F") & Chr(0) & Chr(21) & ConvertChrDec(nConfigVehicle) & Chr(1)
+                'FIX314
+                SendMavLink(New Byte() {85, 2, 0, 127, 0, 21, nConfigVehicle, 1})
         End Select
 
         tmrComPort.Enabled = True
@@ -7043,8 +7398,10 @@ Public Class frmMain
             ReDim aWPSpeed(0)
             ReDim aWPCommand(0)
             ReDim aWPOther(0)
+            ReDim aWPOther2(0)
+            ReDim aWPOther3(0)
+            ReDim aWPOther4(0)
 
- 
             SetMissionStatus("Sending request to vehicle #" & nConfigVehicle & "...")
             Select Case nConfigDevice
                 Case e_ConfigDevice.e_ConfigDevice_AttoPilot
@@ -7150,6 +7507,8 @@ Public Class frmMain
                         .Maximum = 50
                     End With
 
+                    dLastMavlinkCommandTime = Now.Ticks
+                    nMavlinkRetryAttempts = 0
                     SendMavlinkWPCountRequest()
             End Select
 
@@ -7168,22 +7527,30 @@ Public Class frmMain
         End If
     End Sub
     Private Sub SendMavlinkWPCountSet()
-        Dim sOutput As String
+        Dim arr() As Byte
+
+        'FIX314
+        arr = New Byte() {85, 4, 0, 127, 0, 44, nConfigVehicle, 1}
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(nWPCount + 1))
 
         bWaitingMavlinkWrite = True
-        sOutput = Chr(85) & Chr(4) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & ConvertIntegerToMavlink(nWPCount + 1)
+        'sOutput = Chr(85) & Chr(4) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & ConvertIntegerToMavlink(nWPCount + 1)
         nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountSet
-        SendMavLink(sOutput)
+        SendMavLink(arr)
         'bWaitingMavlinkUpdate = False
     End Sub
     Private Sub SendMavlinkWPCountRequest()
-        Dim sOutput As String
+        Dim arr() As Byte
+
+        'FIX314
+        arr = New Byte() {85, 2, 0, 127, 0, 43, nConfigVehicle, 1}
 
         bWaitingMavlinkWrite = True
-        sOutput = Chr(85) & Chr(2) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(43) & Chr(nConfigVehicle) & Chr(1)
+        'sOutput = Chr(85) & Chr(2) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(43) & Chr(nConfigVehicle) & Chr(1)
         nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRequest
         nWPCount = -1
-        SendMavLink(sOutput)
+        SendMavLink(arr)
+        Debug.Print("Send Waypoint Count Request")
         'bWaitingMavlinkUpdate = False
     End Sub
     Private Sub SendAttoPilot(ByVal inputCommand As String)
@@ -7195,20 +7562,38 @@ Public Class frmMain
         Catch ex As Exception
         End Try
     End Sub
-    Private Sub SendMavLink(ByVal inputCommand As String)
-        Dim sOutput As String
+
+    Private Sub SendMavLink(ByVal inputCommand() As Byte)
+        Dim aChecksum() As Byte
+        Dim aOutputCommand() As Byte
         Dim nCount As Integer
         Dim sTemp As String
 
+        Dim sTest As String
+        Dim sTestCRC As String
+
+        'Dim encoding As New System.Text.UTF8Encoding()
+
         Try
-            sOutput = inputCommand & crc_calculate(inputCommand)
-            WriteSerialIn(sOutput, True)
+            'encoding.GetBytes(Str)
+            aChecksum = crc_calculate_byte(inputCommand)
+
+            aOutputCommand = ConCatArray(inputCommand, aChecksum)
+            WriteSerialInBinary(aOutputCommand, "MAVlink - ")
+
+            sTest = ""
+            For nCount = 0 To UBound(inputCommand)
+                sTest = sTest & Chr(inputCommand(nCount))
+            Next
+            sTest = crc_calculate(sTest)
+
 
             sTemp = ""
-            For nCount = 1 To Len(sOutput)
-                sTemp = sTemp & Hex(Asc(Mid(sOutput, nCount, 1))).PadLeft(2, "0") & " "
+            For nCount = 0 To UBound(aOutputCommand)
+                sTemp = sTemp & Hex(aOutputCommand(nCount)).PadLeft(2, "0") & " "
             Next
             Debug.Print(sTemp)
+            'Debug.Print("Old CRC=" & Hex(Asc(Mid(sTest, 1, 1))) & " " & Hex(Asc(Mid(sTest, 2, 1))))
         Catch ex As Exception
         End Try
     End Sub
@@ -7218,6 +7603,9 @@ Public Class frmMain
         Dim handler As Socket
 
         If sendAsBinary = True Then
+            'For nCount = 0 To UBound(binaryBytes)
+            '    sOutput = sOutput & Hex(binaryBytes(nCount)).PadLeft(2, "0") & " "
+            'Next
             For nCount = 1 To Len(inputCommand)
                 sOutput = sOutput & Hex(Asc(Mid(inputCommand, nCount, 1))).PadLeft(2, "0") & " "
             Next
@@ -7237,7 +7625,7 @@ Public Class frmMain
             If sendAsBinary = True Then
                 Dim outputBytes() As Byte
 
-                serialPortIn.Encoding = System.Text.Encoding.GetEncoding(1252)
+                'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(1252)
                 'Dim encoding As New System.Text.UTF8Encoding
                 'outputBytes = System.Text.Encoding.UTF8.GetBytes(inputCommand)
 
@@ -7248,12 +7636,13 @@ Public Class frmMain
                 'sNewString = System.Text.Encoding.Default.GetString(cData)
                 'sBuffer = sBuffer & sNewString
 
+                'serialPortIn.Write(binaryBytes, 0, UBound(binaryBytes))
                 serialPortIn.Write(inputCommand)
                 'serialPortIn.Write(outputBytes, 0, UBound(outputBytes))
             Else
                 If serialPortIn.IsOpen = True Then
                     Try
-                        serialPortIn.Encoding = System.Text.Encoding.ASCII
+                        'serialPortIn.Encoding = System.Text.Encoding.ASCII
                         serialPortIn.Write(inputCommand)
                         'UpdateSerialDataWindow(inputCommand, inputCommand, False)
                     Catch
@@ -7261,6 +7650,29 @@ Public Class frmMain
                     End Try
                 End If
             End If
+        End If
+    End Sub
+    Private Sub WriteSerialInBinary(ByVal inputCommand() As Byte, Optional ByVal additionalText As String = "")
+        Dim nCount As Integer
+        Dim sOutput As String
+        Dim handler As Socket
+
+        For nCount = 0 To UBound(inputCommand)
+            sOutput = sOutput & Hex(inputCommand(nCount)).PadLeft(2, "0") & " "
+        Next
+        UpdateSerialDataWindow(sOutput, additionalText & sOutput, False)
+
+        If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
+            If SocketServer.clients.Count > 0 Then
+                handler = SocketServer.clients(0).workSocket
+                If handler.Available > 0 Then
+                    SocketServer.Send(handler, System.Text.Encoding.Default.GetString(inputCommand))
+                    'FIX314 -a
+                End If
+            End If
+        Else
+            'serialPortIn.Encoding = System.Text.Encoding.UTF8
+            serialPortIn.Write(inputCommand, 0, UBound(inputCommand) + 1)
         End If
     End Sub
 
@@ -7276,6 +7688,8 @@ Public Class frmMain
         Dim bFoundOne As Boolean
         Dim sSplit() As String
         Dim sOutput As String
+        Dim aOutput() As Byte
+        Dim aTemp() As Byte
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -7397,14 +7811,23 @@ Public Class frmMain
 
                     bWaitingMavlinkWrite = False
                     For nCount = 0 To UBound(aValue)
-                        If aValue(nCount) <> "" And aChanged(nCount) = True Then
-                            sOutput = Chr(85) & Chr(21) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(23) & Chr(nConfigVehicle) & Chr(1) & aName(nCount).PadRight(15, Chr(0)) & ConvertSingleToMavlink(aValue(nCount))
-                            prgConfig.Value = prgConfig.Value + 1
-                            SendMavLink(sOutput)
-                            aChanged(nCount) = False
-                            System.Threading.Thread.Sleep(250)
-                            bFoundOne = True
-                        End If
+                    If aValue(nCount) <> "" And aChanged(nCount) = True Then
+                        'aOutput = New Byte() {85, 21, 0, 127, 0, 23, nConfigVehicle, 0}
+
+                        'FIX314 -b
+                        aOutput = New Byte() {85, 21, 0, 127, 0, 23, nConfigVehicle, 1}
+                        aTemp = StringToByte(aName(nCount), 15, 0)
+                        aOutput = ConCatArray(aOutput, aTemp)
+                        aTemp = ConvertSingleToMavlinkByte(aValue(nCount))
+                        aOutput = ConCatArray(aOutput, aTemp)
+
+                        'sOutput = ConvertChrDec(85) & ConvertChrDec(21) & ConvertChrDec(0) & ConvertChrDec("&H7F") & ConvertChrDec(0) & ConvertChrDec(23) & ConvertChrDec(nConfigVehicle) & ConvertChrDec(1) & aName(nCount).PadRight(15, Chr(0)) & ConvertSingleToMavlink(aValue(nCount))
+                        prgConfig.Value = prgConfig.Value + 1
+                        SendMavLink(aOutput)
+                        aChanged(nCount) = False
+                        System.Threading.Thread.Sleep(50)
+                        bFoundOne = True
+                    End If
                     Next nCount
             End If
         End If
@@ -7623,12 +8046,16 @@ Public Class frmMain
         prgConfig.Value = 0
     End Sub
 
-    Private Sub cboConfigVehicle_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboConfigVehicle.SelectedIndexChanged
+    Private Sub cboConfigVehicle_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboConfigVehicle.Click
         nConfigVehicle = cboConfigVehicle.SelectedIndex
         If nConfigVehicle >= 0 Then
             SaveRegSetting(sRootRegistry & "\Settings", "Config Vehicle", nConfigVehicle)
             cboConfigDevice_SelectedIndexChanged(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub cboConfigVehicle_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboConfigVehicle.SelectedIndexChanged
+
     End Sub
 
     Private Sub dgMission_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgMission.CellClick
@@ -7659,6 +8086,9 @@ Public Class frmMain
                         ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                             aWPCommand(nCount) = aWPCommand(nCount + 1)
                             aWPOther(nCount) = aWPOther(nCount + 1)
+                            aWPOther2(nCount) = aWPOther2(nCount + 1)
+                            aWPOther3(nCount) = aWPOther3(nCount + 1)
+                            aWPOther4(nCount) = aWPOther4(nCount + 1)
                         End If
                     End If
                 Next
@@ -7704,6 +8134,9 @@ Public Class frmMain
             SwapArrayValues(aWPSpeed(startingIndex), aWPSpeed(endingIndex))
         ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
             SwapArrayValues(aWPOther(startingIndex), aWPOther(endingIndex))
+            SwapArrayValues(aWPOther2(startingIndex), aWPOther2(endingIndex))
+            SwapArrayValues(aWPOther3(startingIndex), aWPOther3(endingIndex))
+            SwapArrayValues(aWPOther4(startingIndex), aWPOther4(endingIndex))
             SwapArrayValues(aWPCommand(startingIndex), aWPCommand(endingIndex))
         End If
     End Sub
@@ -7741,15 +8174,15 @@ Public Class frmMain
 
         nSelectedIndex = dgMission.SelectedRows(0).Index
 
-        If nSelectedIndex = 0 Then
-            sWP = "Home" ' aWPNum(nSelectedIndex)
+        'If nSelectedIndex = 0 Then
+        '    sWP = "Home" ' aWPNum(nSelectedIndex)
+        'Else
+        If nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
+            sWP = "Mission Command #" & nSelectedIndex ' aWPNum(nSelectedIndex)
         Else
-            If nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
-                sWP = "Mission Command #" & nSelectedIndex ' aWPNum(nSelectedIndex)
-            Else
-                sWP = "WP #" & nSelectedIndex ' aWPNum(nSelectedIndex)
-            End If
+            sWP = "WP #" & nSelectedIndex ' aWPNum(nSelectedIndex)
         End If
+        'End If
 
         Select Case nConfigDevice
             Case e_ConfigDevice.e_ConfigDevice_Generic
@@ -7775,17 +8208,17 @@ Public Class frmMain
                     Select Case nCount
                         Case 7
                             cboMissionAttoLoiter.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1))
-                        Case 4
+                        Case 6
                             If Convert.ToInt16(sTrigger.Substring(nCount, 1)) - 1 > 0 Then
                                 cboMissionAttoLoiterDuration.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1)) - 1
                             End If
-                        Case 3
-                            If Convert.ToInt16(sTrigger.Substring(nCount, 1)) - 1 > 0 Then
-                                cboMissionAttoTriggerControl.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1)) - 1
-                            End If
-                        Case 2
+                        Case 5
                             cboMissionAttoLoiterDirection.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1))
-                        Case 1
+                        Case 4
+                            'If Convert.ToInt16(sTrigger.Substring(nCount, 1))  > 0 Then
+                            cboMissionAttoTriggerControl.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1))
+                            'End If
+                        Case 3
                             cboMissionAttoAltitudeControl.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1))
                         Case 0
                             cboMissionAttoReversePath.SelectedIndex = Convert.ToInt16(sTrigger.Substring(nCount, 1))
@@ -7802,10 +8235,49 @@ Public Class frmMain
                     End If
                 Next
 
-                txtMissionMavlinkArg1.Text = aWPAlt(nSelectedIndex)
-                txtMissionMavlinkArg2.Text = aWPOther(nSelectedIndex)
-                txtMissionMavlinkArg3.Text = aWPLat(nSelectedIndex)
-                txtMissionMavlinkArg4.Text = aWPLon(nSelectedIndex)
+                If cboMissionMavlinkArg1.Visible = True Then
+                    For nCount = 0 To cboMissionMavlinkArg1.Items.Count - 1
+                        If CType(cboMissionMavlinkArg1.Items(nCount), cValueDesc).Value = aWPOther(nSelectedIndex) Then
+                            cboMissionMavlinkArg1.SelectedIndex = nCount
+                            Exit For
+                        End If
+                    Next
+                Else
+                    txtMissionMavlinkArg1.Text = aWPOther(nSelectedIndex)
+                End If
+                If cboMissionMavlinkArg2.Visible = True Then
+                    For nCount = 0 To cboMissionMavlinkArg2.Items.Count - 1
+                        If CType(cboMissionMavlinkArg2.Items(nCount), cValueDesc).Value = aWPOther2(nSelectedIndex) Then
+                            cboMissionMavlinkArg2.SelectedIndex = nCount
+                            Exit For
+                        End If
+                    Next
+                Else
+                    txtMissionMavlinkArg2.Text = aWPOther2(nSelectedIndex)
+                End If
+                If cboMissionMavlinkArg3.Visible = True Then
+                    For nCount = 0 To cboMissionMavlinkArg3.Items.Count - 1
+                        If CType(cboMissionMavlinkArg3.Items(nCount), cValueDesc).Value = aWPOther3(nSelectedIndex) Then
+                            cboMissionMavlinkArg3.SelectedIndex = nCount
+                            Exit For
+                        End If
+                    Next
+                Else
+                    txtMissionMavlinkArg3.Text = aWPOther3(nSelectedIndex)
+                End If
+                If cboMissionMavlinkArg4.Visible = True Then
+                    For nCount = 0 To cboMissionMavlinkArg4.Items.Count - 1
+                        If CType(cboMissionMavlinkArg4.Items(nCount), cValueDesc).Value = aWPOther4(nSelectedIndex) Then
+                            cboMissionMavlinkArg4.SelectedIndex = nCount
+                            Exit For
+                        End If
+                    Next
+                Else
+                    txtMissionMavlinkArg4.Text = aWPOther4(nSelectedIndex)
+                End If
+                txtMissionMavlinkArg5.Text = aWPLat(nSelectedIndex)
+                txtMissionMavlinkArg6.Text = aWPLon(nSelectedIndex)
+                txtMissionMavlinkArg7.Text = aWPAlt(nSelectedIndex)
         End Select
 
         If Not webDocument Is Nothing And bGoogleLoaded = True And bLockMissionCenter = False Then
@@ -7817,10 +8289,10 @@ Public Class frmMain
                     webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(nSelectedIndex)), ConvertPeriodToLocal(aWPLon(nSelectedIndex)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(nSelectedIndex), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), 0, False})
                 Case e_ConfigDevice.e_ConfigDevice_MAVlink
                     Select Case aWPCommand(nSelectedIndex)
-                        Case 10, 11, 12, 13, 14, 15
+                        Case 16, 17, 18, 19, 21, 22, 80, 81, 179
                             webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(nSelectedIndex)), ConvertPeriodToLocal(aWPLon(nSelectedIndex)), ConvertPeriodToLocal(aWPAlt(nSelectedIndex)), 0, False})
-                        Case 44
-                            webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(nSelectedIndex)), ConvertPeriodToLocal(aWPLon(nSelectedIndex)), 0, 0, False})
+                            'Case 44
+                            '    webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(nSelectedIndex)), ConvertPeriodToLocal(aWPLon(nSelectedIndex)), 0, 0, False})
                     End Select
             End Select
             'ElseIf bLockMissionCenter = False Then
@@ -7851,12 +8323,23 @@ Public Class frmMain
     'End Sub
 
     Private Sub cboMissionAttoLoiter_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboMissionAttoLoiter.SelectedIndexChanged
+        Dim nCount As Integer
         If cboMissionAttoLoiter.SelectedIndex = 0 Then
             cboMissionAttoLoiterDirection.Enabled = False
             cboMissionAttoLoiterDuration.Enabled = False
+            lblMissionAttoLoiterValue.Text = ""
+            lblMissionAttoControlValue.Text = ""
+            lblMissionAttoDurationValue.Text = ""
         Else
             cboMissionAttoLoiterDirection.Enabled = True
             cboMissionAttoLoiterDuration.Enabled = True
+            For nCount = 0 To UBound(aIDs)
+                If aIDs(nCount) = cboMissionAttoLoiter.SelectedIndex - 1 + 69 Then
+                    lblMissionAttoLoiterValue.Text = aValue(nCount)
+                    Exit For
+                End If
+            Next
+            cboMissionAttoLoiterDirection_SelectedIndexChanged(cboMissionAttoLoiterDuration, Nothing)
         End If
         UpdateTrigger()
     End Sub
@@ -7958,6 +8441,8 @@ Public Class frmMain
                 .Maximum = nWPCount
             End With
 
+            dLastMavlinkCommandTime = Now.Ticks
+            nMavlinkRetryAttempts = 0
             SendMavlinkWPCountSet()
             bFoundOne = True
             'bWaitingMavlinkUpdate = False
@@ -7968,12 +8453,12 @@ Public Class frmMain
         If bFoundOne = False Then
             SetConfigStatus("Failed to write all waypoints", True)
             MsgBox("AttoPilot vehicle #" & nConfigVehicle & " failed to respond to write request", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Write Failed")
-        Else
+        ElseIf nConfigDevice <> e_ConfigDevice.e_ConfigDevice_MAVlink Then
             SetMissionStatus("Waypoint write complete")
         End If
     End Sub
 
-    Private Sub txtMissionLatitude_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionAttoLatitude.TextChanged, txtMissionGenericLat.TextChanged, txtMissionMavlinkArg3.TextChanged
+    Private Sub txtMissionLatitude_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionAttoLatitude.TextChanged, txtMissionGenericLat.TextChanged, txtMissionMavlinkArg5.TextChanged
         Dim sLat As String
 
         VerifyAddButton()
@@ -7982,7 +8467,7 @@ Public Class frmMain
         End If
         If IsNumeric(sender.Text) = True Then
             Try
-                If sender.name <> "txtMissionMavlinkArg3" Then
+                If sender.name <> "txtMissionMavlinkArg5" Then
                     sLat = Convert.ToDouble(sender.Text).ToString("0.000000")
                 Else
                     sLat = sender.text
@@ -7994,7 +8479,7 @@ Public Class frmMain
             UpdateMissionGE(dgMission.SelectedRows(0).Index, , 0, False)
         End If
     End Sub
-    Private Sub txtMissionLongitude_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionAttoLongitude.TextChanged, txtMissionGenericLong.TextChanged, txtMissionMavlinkArg4.TextChanged
+    Private Sub txtMissionLongitude_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionAttoLongitude.TextChanged, txtMissionGenericLong.TextChanged, txtMissionMavlinkArg6.TextChanged
         Dim sLong As String
         VerifyAddButton()
         If bLockMissionReload = True Or dgMission.SelectedRows.Count = 0 Then
@@ -8002,7 +8487,7 @@ Public Class frmMain
         End If
         If IsNumeric(sender.Text) = True Then
             Try
-                If sender.name <> "txtMissionMavlinkArg4" Then
+                If sender.name <> "txtMissionMavlinkArg6" Then
                     sLong = Convert.ToDouble(sender.Text).ToString("0.000000")
                 Else
                     sLong = sender.text
@@ -8050,7 +8535,7 @@ Public Class frmMain
             End If
         End If
     End Sub
-    Private Sub txtMissionMavlinkArg1_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionMavlinkArg1.TextChanged
+    Private Sub txtMissionMavlinkArg7_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionMavlinkArg7.TextChanged
         Dim sAlt As String
         Dim nCommandIndex As Integer
 
@@ -8074,20 +8559,42 @@ Public Class frmMain
             End If
         End If
     End Sub
-    Private Sub txtMissionMavlinkArg2_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionMavlinkArg2.TextChanged
+    Private Sub txtMissionMavlinkArg1_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtMissionMavlinkArg1.TextChanged, txtMissionMavlinkArg2.TextChanged, txtMissionMavlinkArg3.TextChanged, txtMissionMavlinkArg4.TextChanged
         Dim nOther As String
+        Dim sColname As String
         VerifyAddButton()
         If bLockMissionReload = True Or dgMission.SelectedRows.Count = 0 Then
             Exit Sub
         End If
         If IsNumeric(sender.Text) = True Then
+            Select Case sender.name
+                Case "txtMissionMavlinkArg1"
+                    sColname = "Var 1"
+                Case "txtMissionMavlinkArg2"
+                    sColname = "Var 2"
+                Case "txtMissionMavlinkArg3"
+                    sColname = "Var 3"
+                Case "txtMissionMavlinkArg4"
+                    sColname = "Var 4"
+            End Select
+
             Try
                 nOther = sender.Text
             Catch ex As Exception
             End Try
             If dgMission.SelectedRows.Count > 0 Then
-                dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Data")).Value = nOther
-                aWPOther(dgMission.SelectedRows(0).Index) = nOther
+                dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, sColname)).Value = nOther
+
+                Select Case sender.name
+                    Case "txtMissionMavlinkArg1"
+                        aWPOther(dgMission.SelectedRows(0).Index) = nOther
+                    Case "txtMissionMavlinkArg2"
+                        aWPOther2(dgMission.SelectedRows(0).Index) = nOther
+                    Case "txtMissionMavlinkArg3"
+                        aWPOther3(dgMission.SelectedRows(0).Index) = nOther
+                    Case "txtMissionMavlinkArg4"
+                        aWPOther4(dgMission.SelectedRows(0).Index) = nOther
+                End Select
             End If
         End If
     End Sub
@@ -8102,7 +8609,7 @@ Public Class frmMain
         If bLockMissionReload = True Or bStartup = True Or dgMission.SelectedRows.Count = 0 Then
             Exit Sub
         End If
-        aWPTrigger(dgMission.SelectedRows(0).Index) = cboMissionAttoReversePath.SelectedIndex & "00" & cboMissionAttoAltitudeControl.SelectedIndex & cboMissionAttoTriggerControl.SelectedIndex + 1 & cboMissionAttoLoiterDirection.SelectedIndex & cboMissionAttoLoiterDuration.SelectedIndex + 1 & cboMissionAttoLoiter.SelectedIndex
+        aWPTrigger(dgMission.SelectedRows(0).Index) = cboMissionAttoReversePath.SelectedIndex & "00" & cboMissionAttoAltitudeControl.SelectedIndex & cboMissionAttoTriggerControl.SelectedIndex & cboMissionAttoLoiterDirection.SelectedIndex & cboMissionAttoLoiterDuration.SelectedIndex + 1 & cboMissionAttoLoiter.SelectedIndex
         dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Trigger")).Value = aWPTrigger(dgMission.SelectedRows(0).Index)
         UpdateMissionGE(dgMission.SelectedRows(0).Index)
     End Sub
@@ -8115,10 +8622,33 @@ Public Class frmMain
             End If
         Next
     End Function
-    Private Sub cboMissionAttoLoiterDirection_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboMissionAttoLoiterDirection.SelectedIndexChanged, cboMissionAttoAltitudeControl.SelectedIndexChanged, cboMissionAttoLoiterDuration.SelectedIndexChanged, cboMissionAttoReversePath.SelectedIndexChanged, cboMissionAttoTriggerControl.SelectedIndexChanged, cboMissionAttoLoiter.SelectedIndexChanged
+    Private Sub cboMissionAttoLoiterDirection_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboMissionAttoLoiterDirection.SelectedIndexChanged, cboMissionAttoAltitudeControl.SelectedIndexChanged, cboMissionAttoLoiterDuration.SelectedIndexChanged, cboMissionAttoReversePath.SelectedIndexChanged, cboMissionAttoTriggerControl.SelectedIndexChanged
+        Dim nCount As Integer
+
         If bLockMissionReload = True Then
             Exit Sub
         End If
+        Select Case sender.name
+            Case "cboMissionAttoLoiterDuration"
+                For nCount = 0 To UBound(aIDs)
+                    If aIDs(nCount) = cboMissionAttoLoiterDuration.SelectedIndex - 1 + 78 Then
+                        lblMissionAttoDurationValue.Text = aValue(nCount)
+                        Exit For
+                    End If
+                Next
+            Case "cboMissionAttoTriggerControl"
+                For nCount = 0 To UBound(aIDs)
+                    If cboMissionAttoTriggerControl.SelectedIndex > 1 Then
+                        If aIDs(nCount) = cboMissionAttoTriggerControl.SelectedIndex - 2 + 87 Then
+                            lblMissionAttoControlValue.Text = aValue(nCount)
+                            Exit For
+                        End If
+                    Else
+                        Exit For
+                    End If
+                Next
+
+        End Select
         UpdateTrigger()
     End Sub
     Private Sub CenterAndTilt(Optional ByVal centerPoint As Integer = -1, Optional ByVal updateTilt As Integer = -1)
@@ -8545,18 +9075,18 @@ Public Class frmMain
             UpdateTrigger()
         ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
             If txtMissionMavlinkArg1.Visible = True Then
-                sAltLocal = txtMissionMavlinkArg1.Text
+                sOtherLocal = txtMissionMavlinkArg1.Text
             End If
-            If txtMissionMavlinkArg2.Visible = True Then
-                sOtherLocal = txtMissionMavlinkArg2.Text
+            If txtMissionMavlinkArg5.Visible = True Then
+                sLatLocal = txtMissionMavlinkArg5.Text
             End If
-            If txtMissionMavlinkArg3.Visible = True Then
-                sLatLocal = txtMissionMavlinkArg3.Text
+            If txtMissionMavlinkArg6.Visible = True Then
+                sLongLocal = txtMissionMavlinkArg6.Text
             End If
-            If txtMissionMavlinkArg4.Visible = True Then
-                sLongLocal = txtMissionMavlinkArg4.Text
+            If txtMissionMavlinkArg7.Visible = True Then
+                sAltLocal = txtMissionMavlinkArg7.Text
             End If
-            AddWaypoint(sLatLocal, sLongLocal, sAltLocal, , "", CType(cboMissionMavlinkCommand.SelectedItem, cValueDesc).Value, sOtherLocal)
+            AddWaypoint(sLatLocal, sLongLocal, sAltLocal, -1, "", CType(cboMissionMavlinkCommand.SelectedItem, cValueDesc).Value, sOtherLocal)
             UpdateMissionGE(dgMission.SelectedRows(0).Index)
         End If
     End Sub
@@ -8731,12 +9261,106 @@ Public Class frmMain
             End If
         Next
     End Function
+    Private Sub SetMissionParameters(ByVal inputMessage As String, ByVal labelControl As Label, ByVal textControl As TextBox, ByVal comboControl As ComboBox, ByVal gridCell As DataGridViewCell)
+        Dim sLabel As String
+        Dim sToolTip As String
+        Dim sCombo As String
+        Dim sSplit() As String
+        Dim sSplit2() As String
+        Dim nCount As Integer
 
+        Try
+            If inputMessage = "" Then
+                labelControl.Visible = False
+                textControl.Visible = False
+                If Not comboControl Is Nothing Then
+                    comboControl.Visible = False
+                End If
+                gridCell.Value = ""
+            Else
+                sToolTip = ""
+                If InStr(inputMessage, "(") <> 0 Then
+                    sToolTip = Mid(inputMessage, InStr(inputMessage, "(") + 1)
+                    sToolTip = Mid(sToolTip, 1, InStrRev(sToolTip, ")") - 1)
+                    inputMessage = Replace(inputMessage, "(" & sToolTip & ")", "")
+
+                End If
+
+                sCombo = ""
+                If InStr(inputMessage, "{") <> 0 Then
+                    sCombo = Mid(inputMessage, InStr(inputMessage, "{") + 1)
+                    sCombo = Mid(sCombo, 1, InStrRev(sCombo, "}") - 1)
+                    inputMessage = Replace(inputMessage, "{" & sCombo & "}", "")
+
+                    If Not comboControl Is Nothing Then
+
+                        sSplit = Split(sCombo, ";")
+                        With comboControl
+                            .Items.Clear()
+                            For nCount = 0 To UBound(sSplit)
+                                sSplit2 = Split(sSplit(nCount), "=")
+                                .Items.Add(New cValueDesc(sSplit2(0), sSplit2(1)))
+                            Next
+                            .Visible = True
+                        End With
+                        ToolTip1.SetToolTip(comboControl, sToolTip)
+                    End If
+                    textControl.Visible = False
+                Else
+                    textControl.Visible = True
+                    If Not comboControl Is Nothing Then
+                        comboControl.Visible = False
+                    End If
+                    ToolTip1.SetToolTip(textControl, sToolTip)
+                End If
+
+                labelControl.Visible = True
+                labelControl.Text = Trim(inputMessage)
+            End If
+        Catch
+        End Try
+    End Sub
+    Private Sub ParseCommandMessage(ByRef inputMessage As String, ByRef unitVar As String, ByRef multVar As Single, ByRef formatValue As String)
+        Dim sUnit As String
+        Dim sMult As String
+
+        Try
+            unitVar = ""
+            If InStr(inputMessage, "[") <> 0 Then
+                sUnit = Mid(inputMessage, InStr(inputMessage, "[") + 1)
+                sUnit = Mid(sUnit, 1, InStrRev(sUnit, "]") - 1)
+                inputMessage = Replace(inputMessage, "[" & sUnit & "]", "")
+
+                unitVar = sUnit
+            End If
+
+            multVar = 1
+            If InStr(inputMessage, "<") <> 0 Then
+                sMult = Mid(inputMessage, InStr(inputMessage, "<") + 1)
+                sMult = Mid(sMult, 1, InStrRev(sMult, ">") - 1)
+                inputMessage = Replace(inputMessage, "<" & sMult & ">", "")
+                If IsNumeric(sMult) = True Then
+                    multVar = Convert.ToSingle(sMult)
+                End If
+            End If
+
+            formatValue = ""
+            If InStr(inputMessage, "~") <> 0 Then
+                formatValue = Mid(inputMessage, InStr(inputMessage, "~") + 1)
+                formatValue = Mid(formatValue, 1, InStrRev(formatValue, "~") - 1)
+                inputMessage = Replace(inputMessage, "~" & formatValue & "~", "")
+            End If
+        Catch
+        End Try
+    End Sub
     Private Sub cboMissionMavlinkCommand_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboMissionMavlinkCommand.SelectedIndexChanged
-        Dim sParam1 As String
-        Dim sParam2 As String
-        Dim sParam3 As String
-        Dim sParam4 As String
+        'Dim sParam1 As String
+        'Dim sParam2 As String
+        'Dim sParam3 As String
+        'Dim sParam4 As String
+        'Dim sParam5 As String
+        'Dim sParam6 As String
+        'Dim sParam7 As String
         Dim nIndex As Integer
 
         If dgMission.SelectedRows.Count = 0 Then
@@ -8745,54 +9369,107 @@ Public Class frmMain
 
         nIndex = FindCommandIndex(CType(cboMissionMavlinkCommand.SelectedItem, cValueDesc).Value)
 
-        sParam1 = aCommandArg1(nIndex)
-        sParam2 = aCommandArg2(nIndex)
-        sParam3 = aCommandArg3(nIndex)
-        sParam4 = aCommandArg4(nIndex)
+        SetMissionParameters(aCommandArg1(nIndex), lblMissionMavlinkArg1, txtMissionMavlinkArg1, cboMissionMavlinkArg1, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 1")))
+        SetMissionParameters(aCommandArg2(nIndex), lblMissionMavlinkArg2, txtMissionMavlinkArg2, cboMissionMavlinkArg2, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 2")))
+        SetMissionParameters(aCommandArg3(nIndex), lblMissionMavlinkArg3, txtMissionMavlinkArg3, cboMissionMavlinkArg3, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 3")))
+        SetMissionParameters(aCommandArg4(nIndex), lblMissionMavlinkArg4, txtMissionMavlinkArg4, cboMissionMavlinkArg4, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 4")))
+        SetMissionParameters(aCommandArg5(nIndex), lblMissionMavlinkArg5, txtMissionMavlinkArg5, Nothing, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Latitude")))
+        SetMissionParameters(aCommandArg6(nIndex), lblMissionMavlinkArg6, txtMissionMavlinkArg6, Nothing, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Longitude")))
+        SetMissionParameters(aCommandArg7(nIndex), lblMissionMavlinkArg7, txtMissionMavlinkArg7, Nothing, dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Altitude")))
 
-        If sParam1 = "" Then
-            lblMissionMavlinkArg1.Visible = False
-            txtMissionMavlinkArg1.Visible = False
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Altitude")).Value = ""
-        Else
-            lblMissionMavlinkArg1.Text = sParam1
-            lblMissionMavlinkArg1.Visible = True
-            txtMissionMavlinkArg1.Visible = True
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Altitude")).Value = aWPAlt(dgMission.SelectedRows(0).Index)
-        End If
+        lblMissionAddressSearchMavlink.Visible = txtMissionMavlinkArg5.Visible
+        txtMissionAddressSearchMavlink.Visible = txtMissionMavlinkArg5.Visible
+        cmdMissionMavlinkSearch.Visible = txtMissionMavlinkArg5.Visible
 
-        If sParam2 = "" Then
-            lblMissionMavlinkArg2.Visible = False
-            txtMissionMavlinkArg2.Visible = False
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Data")).Value = ""
-        Else
-            lblMissionMavlinkArg2.Text = sParam2
-            lblMissionMavlinkArg2.Visible = True
-            txtMissionMavlinkArg2.Visible = True
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Data")).Value = aWPOther(dgMission.SelectedRows(0).Index)
-        End If
+        'sParam1 = aCommandArg1(nIndex)
+        'sParam2 = aCommandArg2(nIndex)
+        'sParam3 = aCommandArg3(nIndex)
+        'sParam4 = aCommandArg4(nIndex)
+        'sParam5 = aCommandArg5(nIndex)
+        'sParam6 = aCommandArg6(nIndex)
+        'sParam7 = aCommandArg7(nIndex)
 
-        If sParam3 = "" Then
-            lblMissionMavlinkArg3.Visible = False
-            txtMissionMavlinkArg3.Visible = False
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Latitude")).Value = ""
-        Else
-            lblMissionMavlinkArg3.Text = sParam3
-            lblMissionMavlinkArg3.Visible = True
-            txtMissionMavlinkArg3.Visible = True
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Latitude")).Value = aWPLat(dgMission.SelectedRows(0).Index)
-        End If
 
-        If sParam4 = "" Then
-            lblMissionMavlinkArg4.Visible = False
-            txtMissionMavlinkArg4.Visible = False
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Longitude")).Value = ""
-        Else
-            lblMissionMavlinkArg4.Text = sParam4
-            lblMissionMavlinkArg4.Visible = True
-            txtMissionMavlinkArg4.Visible = True
-            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Longitude")).Value = aWPLon(dgMission.SelectedRows(0).Index)
-        End If
+        'If sParam1 = "" Then
+        '    lblMissionMavlinkArg1.Visible = False
+        '    txtMissionMavlinkArg1.Visible = False
+        '    cboMissionMavlinkArg1.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 1")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg1.Text = sParam1
+        '    lblMissionMavlinkArg1.Visible = True
+        '    txtMissionMavlinkArg1.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 1")).Value = aWPOther(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam2 = "" Then
+        '    lblMissionMavlinkArg2.Visible = False
+        '    txtMissionMavlinkArg2.Visible = False
+        '    cboMissionMavlinkArg2.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 2")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg2.Text = sParam2
+        '    lblMissionMavlinkArg2.Visible = True
+        '    txtMissionMavlinkArg2.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 2")).Value = aWPOther2(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam3 = "" Then
+        '    lblMissionMavlinkArg3.Visible = False
+        '    txtMissionMavlinkArg3.Visible = False
+        '    cboMissionMavlinkArg3.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 3")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg3.Text = sParam3
+        '    lblMissionMavlinkArg3.Visible = True
+        '    txtMissionMavlinkArg3.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 3")).Value = aWPOther3(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam4 = "" Then
+        '    lblMissionMavlinkArg4.Visible = False
+        '    txtMissionMavlinkArg4.Visible = False
+        '    cboMissionMavlinkArg4.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 4")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg4.Text = sParam4
+        '    lblMissionMavlinkArg4.Visible = True
+        '    txtMissionMavlinkArg4.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Var 4")).Value = aWPOther4(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam5 = "" Then
+        '    lblMissionMavlinkArg5.Visible = False
+        '    txtMissionMavlinkArg5.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Latitude")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg5.Text = sParam5
+        '    lblMissionMavlinkArg5.Visible = True
+        '    txtMissionMavlinkArg5.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Latitude")).Value = aWPLat(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam6 = "" Then
+        '    lblMissionMavlinkArg6.Visible = False
+        '    txtMissionMavlinkArg6.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Longitude")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg6.Text = sParam6
+        '    lblMissionMavlinkArg6.Visible = True
+        '    txtMissionMavlinkArg6.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Longitude")).Value = aWPLat(dgMission.SelectedRows(0).Index)
+        'End If
+
+        'If sParam7 = "" Then
+        '    lblMissionMavlinkArg7.Visible = False
+        '    txtMissionMavlinkArg7.Visible = False
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Altitude")).Value = ""
+        'Else
+        '    lblMissionMavlinkArg7.Text = sParam7
+        '    lblMissionMavlinkArg7.Visible = True
+        '    txtMissionMavlinkArg7.Visible = True
+        '    dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Altitude")).Value = aWPLon(dgMission.SelectedRows(0).Index)
+        'End If
 
         If dgMission.SelectedRows.Count > 0 Then
             dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, "Command")).Value = GetCommandName(CType(cboMissionMavlinkCommand.SelectedItem, cValueDesc).Value)
@@ -8802,52 +9479,236 @@ Public Class frmMain
     End Sub
 
     Private Sub cmdControlMavlinkMode_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkMode.Click
-        Dim sOutput As String
-        sOutput = Chr(85) & Chr(2) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(11) & Chr(nConfigVehicle) & Chr(CType(cboControlMavlinkMode.SelectedItem, cValueDesc).Value)
-        SendMavLink(sOutput)
+        Dim aOutput() As Byte
+        'FIX314
+        aOutput = New Byte() {85, 2, 0, 127, 0, 11, nConfigVehicle, 1, CType(cboControlMavlinkMode.SelectedItem, cValueDesc).Value}
+        'sOutput = Chr(85) & Chr(2) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(11) & Chr(nConfigVehicle) & Chr(CType(cboControlMavlinkMode.SelectedItem, cValueDesc).Value)
+        SendMavLink(aOutput)
         lblControlMavlinkStatus.Text = "Status: Mode change request sent - " & cboControlMavlinkMode.Text
     End Sub
     Private Sub cmdControlMavlinkAction_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkAction.Click
-        Dim sOutput As String
-        sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(10) & Chr(nConfigVehicle) & Chr(1) & Chr(CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value)
-        SendMavLink(sOutput)
+        Dim aOutput() As Byte
+        'FIX314
+        If CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value = 11 Then
+            If MsgBox("Are you sure you want to reboot the APM?" & vbCrLf & "Be VERY careful doing this in-flight as it will" & vbCrLf & "take about 12 seconds for the system to re-initialize", MsgBoxStyle.YesNo + MsgBoxStyle.Exclamation, "Warning") = MsgBoxResult.No Then
+                Exit Sub
+            End If
+        End If
+        aOutput = New Byte() {85, 3, 0, 127, 0, 10, nConfigVehicle, 1, CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value}
+        'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(10) & Chr(nConfigVehicle) & Chr(1) & Chr(CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value)
+        SendMavLink(aOutput)
         lblControlMavlinkStatus.Text = "Status: Action request sent - " & cboControlMavlinkAction.Text
     End Sub
     Private Sub cmdControlMavlinkSetAltitude_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkSetAltitude.Click
-        Dim sOutput As String
+        Dim aOutput() As Byte
+        'FIX314
+
         If IsNumeric(txtControlMavlinkSetAltitude.Text) = True Then
-            sOutput = Chr(85) & Chr(5) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(65) & Chr(nConfigVehicle) & ConvertInteger32ToMavlink(txtControlMavlinkSetAltitude.Text)
-            SendMavLink(sOutput)
+            aOutput = New Byte() {85, 5, 0, 127, 0, 65, nConfigVehicle, CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value}
+            aOutput = ConCatArray(aOutput, ConvertInteger32ToMavlinkByte(txtControlMavlinkSetAltitude.Text))
+            'sOutput = Chr(85) & Chr(5) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(65) & Chr(nConfigVehicle) & ConvertInteger32ToMavlink(txtControlMavlinkSetAltitude.Text)
+            SendMavLink(aOutput)
             lblControlMavlinkStatus.Text = "Status: Altitude set to " & txtControlMavlinkSetAltitude.Text
         Else
             lblControlMavlinkStatus.Text = "Status: Invalid altitude value"
         End If
     End Sub
     Private Sub cmdControlMavlinkSetHome_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkSetHome.Click
-        Dim sOutput As String
-        sOutput = Chr(85) & Chr(18) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(50) & Chr(nConfigVehicle) & Chr(1) & ConvertSingleToMavlink(nLongitude) & ConvertSingleToMavlink(nLatitude) & ConvertSingleToMavlink(nAltitude) & Chr(0)
-        SendMavLink(sOutput)
+        Dim aOutput() As Byte
+        'FIX314
+        aOutput = New Byte() {85, 18, 0, 127, 0, 50, nConfigVehicle, 1}
+        aOutput = ConCatArray(aOutput, ConvertSingleToMavlinkByte(nLongitude))
+        aOutput = ConCatArray(aOutput, ConvertSingleToMavlinkByte(nLatitude))
+        aOutput = ConCatArray(aOutput, ConvertSingleToMavlinkByte(nAltitude))
+        aOutput = ConCatArray(aOutput, New Byte() {0})
+        'sOutput = Chr(85) & Chr(18) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(50) & Chr(nConfigVehicle) & Chr(1) & ConvertSingleToMavlink(nLongitude) & ConvertSingleToMavlink(nLatitude) & ConvertSingleToMavlink(nAltitude) & Chr(0)
+        SendMavLink(aOutput)
         lblControlMavlinkStatus.Text = "Status: Home set"
     End Sub
 
-    Private Sub cboControlMavlinkMessageSendRate_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboControlMavlinkMessageSendRate.SelectedIndexChanged
-        Dim sOutput As String
+    Private Sub UpdateMavlinkStatusRates()
+        Dim aOutput() As Byte
+        Dim aGPSVariable() As Byte
+        Dim aAttitudeVariable() As Byte
+        Dim aWaypointVariable() As Byte
+
+        If cboGPS.SelectedIndex = 0 Then
+            aGPSVariable = New Byte() {0, 0, 0}
+        Else
+            aGPSVariable = ConvertIntegerToMavlinkByte(cboGPS.SelectedIndex)
+            aGPSVariable = ConCatArray(aGPSVariable, New Byte() {1})
+        End If
+
+        If cboAttitude.SelectedIndex = 0 Then
+            aAttitudeVariable = New Byte() {0, 0, 0}
+        Else
+            aAttitudeVariable = ConvertIntegerToMavlinkByte(cboAttitude.SelectedIndex)
+            aAttitudeVariable = ConCatArray(aAttitudeVariable, New Byte() {1})
+        End If
+
+        If cboWaypoint.SelectedIndex = 0 Then
+            aWaypointVariable = New Byte() {0, 0, 0}
+        Else
+            aWaypointVariable = ConvertIntegerToMavlinkByte(cboWaypoint.SelectedIndex)
+            aWaypointVariable = ConCatArray(aWaypointVariable, New Byte() {1})
+        End If
+
         If bStartup = True Then
             Exit Sub
         End If
         Try
-            SaveRegSetting(sRootRegistry & "\Settings", "Mavlink Telemetry Rate", cboControlMavlinkMessageSendRate.SelectedIndex)
-
-            If cboControlMavlinkMessageSendRate.SelectedIndex = 0 Then
-                sOutput = Chr(85) & Chr(6) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(66) & Chr(nConfigVehicle) & Chr(1) & Chr(0) & Chr(0) & Chr(0) & Chr(0)
-            Else
-                'Debug.Print("rate=" & Convert.ToInt32(1000 / cboControlMavlinkMessageSendRate.SelectedIndex))
-                sOutput = Chr(85) & Chr(6) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(66) & Chr(nConfigVehicle) & Chr(1) & Chr(0) & ConvertIntegerToMavlink(Convert.ToInt32(1000 / cboControlMavlinkMessageSendRate.SelectedIndex)) & Chr(1)
-            End If
+            'sOutput = Chr(85) & Chr(6) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(66) & Chr(nConfigVehicle) & Chr(1) & Chr(1) & sWaypointVariable
             'SendMavLink(sOutput)
-            lblControlMavlinkStatus.Text = "Status: Telemetry rate change disabled for the moment"
-            'lblControlMavlinkStatus.Text = "Status: Telemetry rate set to " & cboControlMavlinkMessageSendRate.Text
+
+            'MAV_DATA_STREAM_RAW_SENSORS
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 1}
+            aOutput = ConCatArray(aOutput, aWaypointVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_EXTENDED_STATUS
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 2}
+            aOutput = ConCatArray(aOutput, aGPSVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_RC_CHANNELS
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 3}
+            aOutput = ConCatArray(aOutput, aWaypointVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_RAW_CONTROLLER
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 4}
+            aOutput = ConCatArray(aOutput, aWaypointVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_POSITION
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 6}
+            aOutput = ConCatArray(aOutput, aGPSVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_EXTRA1
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 10}
+            aOutput = ConCatArray(aOutput, aAttitudeVariable)
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_EXTRA2
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 11}
+            aOutput = ConCatArray(aOutput, New Byte() {0, 0, 0})
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'MAV_DATA_STREAM_EXTRA3
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 12}
+            aOutput = ConCatArray(aOutput, New Byte() {0, 0, 0})
+            SendMavLink(aOutput)
+            'System.Threading.Thread.Sleep(200)
+
+            'lblControlMavlinkStatus.Text = "Status: Telemetry rate change disabled for the moment"
+            lblControlMavlinkStatus.Text = "Status: MAVlink Telemetry rate set"
         Catch ex As Exception
         End Try
+    End Sub
+
+    Private Sub cboMissionMavlinkArg1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboMissionMavlinkArg1.SelectedIndexChanged, cboMissionMavlinkArg2.SelectedIndexChanged, cboMissionMavlinkArg3.SelectedIndexChanged, cboMissionMavlinkArg4.SelectedIndexChanged
+        Dim nOther As String
+        Dim sColname As String
+        VerifyAddButton()
+        If bLockMissionReload = True Or dgMission.SelectedRows.Count = 0 Then
+            Exit Sub
+        End If
+        Select Case sender.name
+            Case "cboMissionMavlinkArg1"
+                sColname = "Var 1"
+            Case "cboMissionMavlinkArg2"
+                sColname = "Var 2"
+            Case "cboMissionMavlinkArg3"
+                sColname = "Var 3"
+            Case "cboMissionMavlinkArg4"
+                sColname = "Var 4"
+        End Select
+
+        Try
+            nOther = CType(sender.SelectedItem, cValueDesc).Value
+        Catch ex As Exception
+        End Try
+        If dgMission.SelectedRows.Count > 0 Then
+            dgMission.Rows(dgMission.SelectedRows(0).Index).Cells(GetDataGridViewColumn(dgMission, sColname)).Value = nOther
+
+            Select Case sender.name
+                Case "txtMissionMavlinkArg1", "cboMissionMavlinkArg1"
+                    aWPOther(dgMission.SelectedRows(0).Index) = nOther
+                Case "txtMissionMavlinkArg2", "cboMissionMavlinkArg2"
+                    aWPOther2(dgMission.SelectedRows(0).Index) = nOther
+                Case "txtMissionMavlinkArg3", "cboMissionMavlinkArg3"
+                    aWPOther3(dgMission.SelectedRows(0).Index) = nOther
+                Case "txtMissionMavlinkArg4", "cboMissionMavlinkArg1"
+                    aWPOther4(dgMission.SelectedRows(0).Index) = nOther
+            End Select
+        End If
+    End Sub
+
+    Private Sub cmdControlMavlinkRestartMission_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkRestartMission.Click
+        Dim aOutput() As Byte
+        'FIX314
+        aOutput = New Byte() {85, 4, 0, 127, 0, 41, nConfigVehicle, 1, 0, 0}
+        'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(10) & Chr(nConfigVehicle) & Chr(1) & Chr(CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value)
+        SendMavLink(aOutput)
+        lblControlMavlinkStatus.Text = "Status: Restart Mission Sent"
+    End Sub
+
+    Private Sub cmdControlMavlinkGotoCommand_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkGotoCommand.Click
+        Dim aOutput() As Byte
+        'FIX314
+        aOutput = New Byte() {85, 4, 0, 127, 0, 41, nConfigVehicle, 1}
+        aOutput = ConCatArray(aOutput, ConvertIntegerToMavlinkByte(cboControlMavlinkWPNumber.SelectedIndex, False))
+        'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(10) & Chr(nConfigVehicle) & Chr(1) & Chr(CType(cboControlMavlinkAction.SelectedItem, cValueDesc).Value)
+        SendMavLink(aOutput)
+        lblControlMavlinkStatus.Text = "Status: Goto Command " & cboControlMavlinkWPNumber.SelectedIndex & " Sent"
+    End Sub
+
+    Private Sub cmdControlMavlinkLoiterRadius_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdControlMavlinkLoiterRadius.Click, cmdControlMavlinkAltRTL.Click, cmdControlMavlinkWPRadius.Click
+        Dim aOutput() As Byte
+        Dim aTemp() As Byte
+        Dim sValue As String
+        Dim sVariable As String
+        Dim nFoundIndex As Integer
+        Dim nCount As Integer
+
+        Select Case sender.name
+            Case "cmdControlMavlinkLoiterRadius"
+                sVariable = "LOITER_RADIUS"
+                sValue = txtControlMavlinkLoiterRadius.Text
+            Case "cmdControlMavlinkAltRTL"
+                sVariable = "ALT_HOLD_RTL"
+                sValue = txtControlMavlinkAltRTL.Text
+            Case "cmdControlMavlinkWPRadius"
+                sVariable = "WP_RADIUS"
+                sValue = txtControlMavlinkWPRadius.Text
+        End Select
+
+        For nCount = 0 To UBound(aName)
+            If aName(nCount) = sVariable Then
+                nFoundIndex = nCount
+                Exit For
+            End If
+        Next
+
+        If sValue = "" Or IsNumeric(sValue) = False Then
+            Exit Sub
+        End If
+
+        'FIX314
+        aOutput = New Byte() {85, 21, 0, 127, 0, 23, nConfigVehicle, 1}
+        aTemp = StringToByte(sVariable, 15, 0)
+        aOutput = ConCatArray(aOutput, aTemp)
+        aTemp = ConvertSingleToMavlinkByte(ConvertDistance(Convert.ToSingle(sValue) * aMultiplier(nFoundIndex), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters), True)
+        aOutput = ConCatArray(aOutput, aTemp)
+        SendMavLink(aOutput)
+        lblControlMavlinkStatus.Text = "Status: Value Updated"
     End Sub
 End Class

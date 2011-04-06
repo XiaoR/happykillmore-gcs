@@ -83,6 +83,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AvionicsInstrumentsControls\3DMesh.Designer.vb">
       <DependentUpon>3DMesh.vb</DependentUpon>
     </Compile>
@@ -327,12 +328,13 @@
     <Content Include="Resources\TurnCoordinatorMarks.bmp" />
     <Content Include="Resources\TurnCoordinator_Background.bmp" />
     <None Include="Resources\up.gif" />
+    <None Include="TextFiles\APMSetConfig.csv" />
     <Content Include="Resources\VerticalSpeedIndicator_Background.bmp" />
     <Content Include="Resources\VerticalSpeedNeedle.bmp" />
     <Content Include="TextFiles\APMCommands.txt" />
     <Content Include="TextFiles\APMModes.txt" />
+    <Content Include="TextFiles\GluonCommands.txt" />
     <Content Include="TextFiles\GluonSetConfig.txt" />
-    <Content Include="TextFiles\MAVlinkSetConfig.txt" />
     <Content Include="TextFiles\AttoSetConfig.txt" />
   </ItemGroup>
   <ItemGroup>

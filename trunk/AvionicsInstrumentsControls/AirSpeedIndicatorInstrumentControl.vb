@@ -85,7 +85,7 @@ Namespace AvionicsInstrumentControlDemo
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
 
-            ScrollCounter(pe, bmpScroll, 3, Convert.ToInt16(groundSpeed), ptCounter, scale)
+            ScrollCounter(pe, bmpScroll, 3, Convert.ToInt64(groundSpeed), ptCounter, scale)
 
             ' diplay mask
             Dim maskPen As New Pen(Me.BackColor, 30 * scale)

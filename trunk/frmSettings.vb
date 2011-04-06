@@ -285,6 +285,10 @@ Public Class frmSettings
         chkAnnounceLinkAlarm.Checked = bAnnounceLinkAlarm
         txtAnnounceAlarm.Text = sSpeechAlarm
         chkAnnounceLinkAlarm_CheckedChanged(Nothing, Nothing)
+        chkAnnounceAltitudeAlarm.Checked = bAnnouceAltitude
+        txtAltitudeAlarm.Text = sSpeechAltitude
+        txtAltitudeMin.Text = nSpeechAltitudeMin
+        chkAnnounceAltitudeAlarm_CheckedChanged(Nothing, Nothing)
 
     End Sub
     Private Sub LoadLanguages(ByVal inputCombo As ComboBox)
@@ -404,6 +408,9 @@ Public Class frmSettings
         sSpeechWarning = txtAnnounceWarning.Text
         bAnnounceLinkAlarm = chkAnnounceLinkAlarm.Checked
         sSpeechAlarm = txtAnnounceAlarm.Text
+        bAnnouceAltitude = chkAnnounceAltitudeAlarm.Checked
+        sSpeechAltitude = txtAltitudeAlarm.Text
+        nSpeechAltitudeMin = txtAltitudeMin.Text
 
         bGEBorders = chkGEBorders.Checked
         bGEBuildings = chkGEBuildings.Checked
@@ -479,7 +486,7 @@ Public Class frmSettings
         End If
     End Sub
 
-    Private Sub Play_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegularIntervalPlay.Click, cmdWaypointPlay.Click, cmdModeChangePlay.Click, cmdAlarmPlay.Click, cmdWarningPlay.Click
+    Private Sub Play_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegularIntervalPlay.Click, cmdWaypointPlay.Click, cmdModeChangePlay.Click, cmdAlarmPlay.Click, cmdWarningPlay.Click, cmdAltitudeAlarm.Click
         Select Case sender.name
             Case "cmdRegularIntervalPlay"
                 PlayMessage(txtAnnounceRegularInterval.Text, cboVoice.Text)
@@ -491,6 +498,8 @@ Public Class frmSettings
                 PlayMessage(txtAnnounceAlarm.Text, cboVoice.Text)
             Case "cmdWarningPlay"
                 PlayMessage(txtAnnounceWarning.Text, cboVoice.Text)
+            Case "cmdAltitudeAlarm"
+                PlayMessage(txtAltitudeAlarm.Text, cboVoice.Text)
         End Select
     End Sub
 
@@ -502,5 +511,12 @@ Public Class frmSettings
     Private Sub chkAnnounceLinkAlarm_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceLinkAlarm.CheckedChanged
         txtAnnounceAlarm.Enabled = chkAnnounceLinkAlarm.Checked
         cmdAlarmPlay.Enabled = chkAnnounceLinkAlarm.Checked
+    End Sub
+
+    Private Sub chkAnnounceAltitudeAlarm_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkAnnounceAltitudeAlarm.CheckedChanged
+        txtAltitudeAlarm.Enabled = chkAnnounceAltitudeAlarm.Checked
+        cmdAltitudeAlarm.Enabled = chkAnnounceAltitudeAlarm.Checked
+        txtAltitudeMin.Enabled = chkAnnounceAltitudeAlarm.Checked
+        lblAltitudeMinValue.Enabled = chkAnnounceAltitudeAlarm.Checked
     End Sub
 End Class

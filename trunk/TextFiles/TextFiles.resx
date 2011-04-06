@@ -124,13 +124,16 @@
   <data name="APMModes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>apmmodes.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="APMSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>apmsetconfig.csv;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="AttoSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>attosetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="GluonCommands" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>gluoncommands.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="GluonSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>gluonsetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="MAVlinkSetConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mavlinksetconfig.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

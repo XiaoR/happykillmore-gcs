@@ -29,6 +29,10 @@ Partial Class frmSettings
         Me.tabSettings = New System.Windows.Forms.TabControl
         Me.tabGeneral = New System.Windows.Forms.TabPage
         Me.grpGeneral = New System.Windows.Forms.GroupBox
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.cbo2wayTimeout = New System.Windows.Forms.ComboBox
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.cbo2wayRetries = New System.Windows.Forms.ComboBox
         Me.Label3 = New System.Windows.Forms.Label
         Me.cboWarningTimeout = New System.Windows.Forms.ComboBox
         Me.Label2 = New System.Windows.Forms.Label
@@ -153,10 +157,11 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.cbo2wayRetries = New System.Windows.Forms.ComboBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.cbo2wayTimeout = New System.Windows.Forms.ComboBox
+        Me.cmdAltitudeAlarm = New System.Windows.Forms.Button
+        Me.txtAltitudeAlarm = New System.Windows.Forms.TextBox
+        Me.chkAnnounceAltitudeAlarm = New System.Windows.Forms.CheckBox
+        Me.lblAltitudeMinValue = New System.Windows.Forms.Label
+        Me.txtAltitudeMin = New System.Windows.Forms.TextBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -241,6 +246,30 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpGeneral, "grpGeneral")
         Me.grpGeneral.Name = "grpGeneral"
         Me.grpGeneral.TabStop = False
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        '
+        'cbo2wayTimeout
+        '
+        Me.cbo2wayTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbo2wayTimeout.FormattingEnabled = True
+        resources.ApplyResources(Me.cbo2wayTimeout, "cbo2wayTimeout")
+        Me.cbo2wayTimeout.Name = "cbo2wayTimeout"
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
+        'cbo2wayRetries
+        '
+        Me.cbo2wayRetries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbo2wayRetries.FormattingEnabled = True
+        resources.ApplyResources(Me.cbo2wayRetries, "cbo2wayRetries")
+        Me.cbo2wayRetries.Name = "cbo2wayRetries"
         '
         'Label3
         '
@@ -865,6 +894,11 @@ Partial Class frmSettings
         '
         'tabSpeech
         '
+        Me.tabSpeech.Controls.Add(Me.txtAltitudeMin)
+        Me.tabSpeech.Controls.Add(Me.lblAltitudeMinValue)
+        Me.tabSpeech.Controls.Add(Me.cmdAltitudeAlarm)
+        Me.tabSpeech.Controls.Add(Me.txtAltitudeAlarm)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceAltitudeAlarm)
         Me.tabSpeech.Controls.Add(Me.cmdAlarmPlay)
         Me.tabSpeech.Controls.Add(Me.txtAnnounceAlarm)
         Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkAlarm)
@@ -1077,29 +1111,33 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'Label4
+        'cmdAltitudeAlarm
         '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
+        resources.ApplyResources(Me.cmdAltitudeAlarm, "cmdAltitudeAlarm")
+        Me.cmdAltitudeAlarm.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdAltitudeAlarm.Name = "cmdAltitudeAlarm"
+        Me.cmdAltitudeAlarm.UseVisualStyleBackColor = True
         '
-        'cbo2wayRetries
+        'txtAltitudeAlarm
         '
-        Me.cbo2wayRetries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo2wayRetries.FormattingEnabled = True
-        resources.ApplyResources(Me.cbo2wayRetries, "cbo2wayRetries")
-        Me.cbo2wayRetries.Name = "cbo2wayRetries"
+        resources.ApplyResources(Me.txtAltitudeAlarm, "txtAltitudeAlarm")
+        Me.txtAltitudeAlarm.Name = "txtAltitudeAlarm"
         '
-        'Label5
+        'chkAnnounceAltitudeAlarm
         '
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Name = "Label5"
+        resources.ApplyResources(Me.chkAnnounceAltitudeAlarm, "chkAnnounceAltitudeAlarm")
+        Me.chkAnnounceAltitudeAlarm.Name = "chkAnnounceAltitudeAlarm"
+        Me.chkAnnounceAltitudeAlarm.UseVisualStyleBackColor = True
         '
-        'cbo2wayTimeout
+        'lblAltitudeMinValue
         '
-        Me.cbo2wayTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo2wayTimeout.FormattingEnabled = True
-        resources.ApplyResources(Me.cbo2wayTimeout, "cbo2wayTimeout")
-        Me.cbo2wayTimeout.Name = "cbo2wayTimeout"
+        resources.ApplyResources(Me.lblAltitudeMinValue, "lblAltitudeMinValue")
+        Me.lblAltitudeMinValue.Name = "lblAltitudeMinValue"
+        '
+        'txtAltitudeMin
+        '
+        resources.ApplyResources(Me.txtAltitudeMin, "txtAltitudeMin")
+        Me.txtAltitudeMin.Name = "txtAltitudeMin"
         '
         'frmSettings
         '
@@ -1271,4 +1309,9 @@ Partial Class frmSettings
     Friend WithEvents cbo2wayTimeout As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents cbo2wayRetries As System.Windows.Forms.ComboBox
+    Friend WithEvents txtAltitudeMin As System.Windows.Forms.TextBox
+    Friend WithEvents lblAltitudeMinValue As System.Windows.Forms.Label
+    Friend WithEvents cmdAltitudeAlarm As System.Windows.Forms.Button
+    Friend WithEvents txtAltitudeAlarm As System.Windows.Forms.TextBox
+    Friend WithEvents chkAnnounceAltitudeAlarm As System.Windows.Forms.CheckBox
 End Class
