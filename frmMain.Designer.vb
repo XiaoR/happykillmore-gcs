@@ -24,12 +24,12 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.tmrSearch = New System.Windows.Forms.Timer(Me.components)
         Me.tmrPlayback = New System.Windows.Forms.Timer(Me.components)
         Me.serialPortIn = New System.IO.Ports.SerialPort(Me.components)
@@ -107,6 +107,15 @@ Partial Class frmMain
         Me.DirectShowControl2 = New HK_GCS.DirectShowControl.DirectShowControl
         Me.tabMissionPlanning = New System.Windows.Forms.TabPage
         Me.grpMissionControlMavlink = New System.Windows.Forms.GroupBox
+        Me.txtMissionAddressSearchMavlink = New System.Windows.Forms.TextBox
+        Me.cboMissionMavlinkArg4 = New System.Windows.Forms.ComboBox
+        Me.cboMissionMavlinkArg3 = New System.Windows.Forms.ComboBox
+        Me.cboMissionMavlinkArg2 = New System.Windows.Forms.ComboBox
+        Me.cboMissionMavlinkArg1 = New System.Windows.Forms.ComboBox
+        Me.txtMissionMavlinkArg7 = New System.Windows.Forms.TextBox
+        Me.txtMissionMavlinkArg6 = New System.Windows.Forms.TextBox
+        Me.txtMissionMavlinkArg5 = New System.Windows.Forms.TextBox
+        Me.lblMissionMavlinkArg5 = New System.Windows.Forms.Label
         Me.Label19 = New System.Windows.Forms.Label
         Me.cboMissionMavlinkCommand = New System.Windows.Forms.ComboBox
         Me.lblMissionStatusMavlink = New System.Windows.Forms.Label
@@ -116,14 +125,15 @@ Partial Class frmMain
         Me.txtMissionMavlinkArg1 = New System.Windows.Forms.TextBox
         Me.lblMissionMavlinkArg1 = New System.Windows.Forms.Label
         Me.cmdMissionMavlinkSearch = New System.Windows.Forms.Button
-        Me.txtMissionAddressSearchMavlink = New System.Windows.Forms.TextBox
-        Me.Label33 = New System.Windows.Forms.Label
+        Me.lblMissionAddressSearchMavlink = New System.Windows.Forms.Label
         Me.txtMissionMavlinkArg2 = New System.Windows.Forms.TextBox
         Me.lblMissionMavlinkArg2 = New System.Windows.Forms.Label
         Me.txtMissionMavlinkArg4 = New System.Windows.Forms.TextBox
         Me.lblMissionMavlinkArg4 = New System.Windows.Forms.Label
         Me.txtMissionMavlinkArg3 = New System.Windows.Forms.TextBox
         Me.lblMissionMavlinkArg3 = New System.Windows.Forms.Label
+        Me.lblMissionMavlinkArg6 = New System.Windows.Forms.Label
+        Me.lblMissionMavlinkArg7 = New System.Windows.Forms.Label
         Me.grpMissionControlAtto = New System.Windows.Forms.GroupBox
         Me.txtMissionAttoDefaultSpeed = New System.Windows.Forms.TextBox
         Me.Label12 = New System.Windows.Forms.Label
@@ -154,6 +164,9 @@ Partial Class frmMain
         Me.Label2 = New System.Windows.Forms.Label
         Me.txtMissionAttoLatitude = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
+        Me.lblMissionAttoControlValue = New System.Windows.Forms.Label
+        Me.lblMissionAttoDurationValue = New System.Windows.Forms.Label
+        Me.lblMissionAttoLoiterValue = New System.Windows.Forms.Label
         Me.lblMissionHomeAlt = New System.Windows.Forms.Label
         Me.grpMissionControlGeneric = New System.Windows.Forms.GroupBox
         Me.Label13 = New System.Windows.Forms.Label
@@ -178,8 +191,15 @@ Partial Class frmMain
         Me.dgMission = New System.Windows.Forms.DataGridView
         Me.tabMissionControl = New System.Windows.Forms.TabPage
         Me.grpControlMavlink = New System.Windows.Forms.GroupBox
-        Me.Label26 = New System.Windows.Forms.Label
-        Me.cboControlMavlinkMessageSendRate = New System.Windows.Forms.ComboBox
+        Me.txtControlMavlinkAltRTL = New System.Windows.Forms.TextBox
+        Me.cmdControlMavlinkAltRTL = New System.Windows.Forms.Button
+        Me.txtControlMavlinkWPRadius = New System.Windows.Forms.TextBox
+        Me.cmdControlMavlinkWPRadius = New System.Windows.Forms.Button
+        Me.txtControlMavlinkLoiterRadius = New System.Windows.Forms.TextBox
+        Me.cmdControlMavlinkLoiterRadius = New System.Windows.Forms.Button
+        Me.cmdControlMavlinkGotoCommand = New System.Windows.Forms.Button
+        Me.cboControlMavlinkWPNumber = New System.Windows.Forms.ComboBox
+        Me.cmdControlMavlinkRestartMission = New System.Windows.Forms.Button
         Me.cmdControlMavlinkSetHome = New System.Windows.Forms.Button
         Me.txtControlMavlinkSetAltitude = New System.Windows.Forms.TextBox
         Me.cboControlMavlinkAction = New System.Windows.Forms.ComboBox
@@ -970,6 +990,7 @@ Partial Class frmMain
         Me.tabMissionPlanning.Controls.Add(Me.txtMissionDefaultAlt)
         Me.tabMissionPlanning.Controls.Add(Me.lblMissionDefaultAlt)
         Me.tabMissionPlanning.Controls.Add(Me.cmdReloadMissionDirectory)
+        Me.tabMissionPlanning.Controls.Add(Me.cmdMissionMavlinkAdd)
         Me.tabMissionPlanning.Controls.Add(Me.cmdReloadMissions)
         Me.tabMissionPlanning.Controls.Add(Me.lblMissionLabel)
         Me.tabMissionPlanning.Controls.Add(Me.cboMission)
@@ -982,9 +1003,17 @@ Partial Class frmMain
         '
         'grpMissionControlMavlink
         '
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionAddressSearchMavlink)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkArg4)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkArg3)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkArg2)
+        Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkArg1)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg7)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg6)
+        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg5)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg5)
         Me.grpMissionControlMavlink.Controls.Add(Me.Label19)
         Me.grpMissionControlMavlink.Controls.Add(Me.cboMissionMavlinkCommand)
-        Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkAdd)
         Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionStatusMavlink)
         Me.grpMissionControlMavlink.Controls.Add(Me.prgMissionMavlink)
         Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkWrite)
@@ -992,17 +1021,75 @@ Partial Class frmMain
         Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg1)
         Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg1)
         Me.grpMissionControlMavlink.Controls.Add(Me.cmdMissionMavlinkSearch)
-        Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionAddressSearchMavlink)
-        Me.grpMissionControlMavlink.Controls.Add(Me.Label33)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionAddressSearchMavlink)
         Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg2)
         Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg2)
         Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg4)
         Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg4)
         Me.grpMissionControlMavlink.Controls.Add(Me.txtMissionMavlinkArg3)
         Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg3)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg6)
+        Me.grpMissionControlMavlink.Controls.Add(Me.lblMissionMavlinkArg7)
         resources.ApplyResources(Me.grpMissionControlMavlink, "grpMissionControlMavlink")
         Me.grpMissionControlMavlink.Name = "grpMissionControlMavlink"
         Me.grpMissionControlMavlink.TabStop = False
+        '
+        'txtMissionAddressSearchMavlink
+        '
+        resources.ApplyResources(Me.txtMissionAddressSearchMavlink, "txtMissionAddressSearchMavlink")
+        Me.txtMissionAddressSearchMavlink.Name = "txtMissionAddressSearchMavlink"
+        '
+        'cboMissionMavlinkArg4
+        '
+        Me.cboMissionMavlinkArg4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionMavlinkArg4.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionMavlinkArg4, "cboMissionMavlinkArg4")
+        Me.cboMissionMavlinkArg4.Name = "cboMissionMavlinkArg4"
+        Me.cboMissionMavlinkArg4.Sorted = True
+        '
+        'cboMissionMavlinkArg3
+        '
+        Me.cboMissionMavlinkArg3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionMavlinkArg3.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionMavlinkArg3, "cboMissionMavlinkArg3")
+        Me.cboMissionMavlinkArg3.Name = "cboMissionMavlinkArg3"
+        Me.cboMissionMavlinkArg3.Sorted = True
+        '
+        'cboMissionMavlinkArg2
+        '
+        Me.cboMissionMavlinkArg2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionMavlinkArg2.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionMavlinkArg2, "cboMissionMavlinkArg2")
+        Me.cboMissionMavlinkArg2.Name = "cboMissionMavlinkArg2"
+        Me.cboMissionMavlinkArg2.Sorted = True
+        '
+        'cboMissionMavlinkArg1
+        '
+        Me.cboMissionMavlinkArg1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMissionMavlinkArg1.FormattingEnabled = True
+        resources.ApplyResources(Me.cboMissionMavlinkArg1, "cboMissionMavlinkArg1")
+        Me.cboMissionMavlinkArg1.Name = "cboMissionMavlinkArg1"
+        Me.cboMissionMavlinkArg1.Sorted = True
+        '
+        'txtMissionMavlinkArg7
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg7, "txtMissionMavlinkArg7")
+        Me.txtMissionMavlinkArg7.Name = "txtMissionMavlinkArg7"
+        '
+        'txtMissionMavlinkArg6
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg6, "txtMissionMavlinkArg6")
+        Me.txtMissionMavlinkArg6.Name = "txtMissionMavlinkArg6"
+        '
+        'txtMissionMavlinkArg5
+        '
+        resources.ApplyResources(Me.txtMissionMavlinkArg5, "txtMissionMavlinkArg5")
+        Me.txtMissionMavlinkArg5.Name = "txtMissionMavlinkArg5"
+        '
+        'lblMissionMavlinkArg5
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg5, "lblMissionMavlinkArg5")
+        Me.lblMissionMavlinkArg5.Name = "lblMissionMavlinkArg5"
         '
         'Label19
         '
@@ -1055,15 +1142,10 @@ Partial Class frmMain
         Me.cmdMissionMavlinkSearch.Name = "cmdMissionMavlinkSearch"
         Me.cmdMissionMavlinkSearch.UseVisualStyleBackColor = True
         '
-        'txtMissionAddressSearchMavlink
+        'lblMissionAddressSearchMavlink
         '
-        resources.ApplyResources(Me.txtMissionAddressSearchMavlink, "txtMissionAddressSearchMavlink")
-        Me.txtMissionAddressSearchMavlink.Name = "txtMissionAddressSearchMavlink"
-        '
-        'Label33
-        '
-        resources.ApplyResources(Me.Label33, "Label33")
-        Me.Label33.Name = "Label33"
+        resources.ApplyResources(Me.lblMissionAddressSearchMavlink, "lblMissionAddressSearchMavlink")
+        Me.lblMissionAddressSearchMavlink.Name = "lblMissionAddressSearchMavlink"
         '
         'txtMissionMavlinkArg2
         '
@@ -1094,6 +1176,16 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.lblMissionMavlinkArg3, "lblMissionMavlinkArg3")
         Me.lblMissionMavlinkArg3.Name = "lblMissionMavlinkArg3"
+        '
+        'lblMissionMavlinkArg6
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg6, "lblMissionMavlinkArg6")
+        Me.lblMissionMavlinkArg6.Name = "lblMissionMavlinkArg6"
+        '
+        'lblMissionMavlinkArg7
+        '
+        resources.ApplyResources(Me.lblMissionMavlinkArg7, "lblMissionMavlinkArg7")
+        Me.lblMissionMavlinkArg7.Name = "lblMissionMavlinkArg7"
         '
         'grpMissionControlAtto
         '
@@ -1127,6 +1219,9 @@ Partial Class frmMain
         Me.grpMissionControlAtto.Controls.Add(Me.Label2)
         Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoLatitude)
         Me.grpMissionControlAtto.Controls.Add(Me.Label1)
+        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoControlValue)
+        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoDurationValue)
+        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoLoiterValue)
         resources.ApplyResources(Me.grpMissionControlAtto, "grpMissionControlAtto")
         Me.grpMissionControlAtto.Name = "grpMissionControlAtto"
         Me.grpMissionControlAtto.TabStop = False
@@ -1297,6 +1392,21 @@ Partial Class frmMain
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
         '
+        'lblMissionAttoControlValue
+        '
+        resources.ApplyResources(Me.lblMissionAttoControlValue, "lblMissionAttoControlValue")
+        Me.lblMissionAttoControlValue.Name = "lblMissionAttoControlValue"
+        '
+        'lblMissionAttoDurationValue
+        '
+        resources.ApplyResources(Me.lblMissionAttoDurationValue, "lblMissionAttoDurationValue")
+        Me.lblMissionAttoDurationValue.Name = "lblMissionAttoDurationValue"
+        '
+        'lblMissionAttoLoiterValue
+        '
+        resources.ApplyResources(Me.lblMissionAttoLoiterValue, "lblMissionAttoLoiterValue")
+        Me.lblMissionAttoLoiterValue.Name = "lblMissionAttoLoiterValue"
+        '
         'lblMissionHomeAlt
         '
         resources.ApplyResources(Me.lblMissionHomeAlt, "lblMissionHomeAlt")
@@ -1432,34 +1542,34 @@ Partial Class frmMain
         Me.dgMission.AllowUserToResizeRows = False
         Me.dgMission.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgMission.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgMission.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgMission.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.dgMission.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgMission.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgMission.DefaultCellStyle = DataGridViewCellStyle8
         resources.ApplyResources(Me.dgMission, "dgMission")
         Me.dgMission.MultiSelect = False
         Me.dgMission.Name = "dgMission"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgMission.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgMission.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.dgMission.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         '
         'tabMissionControl
@@ -1472,8 +1582,15 @@ Partial Class frmMain
         '
         'grpControlMavlink
         '
-        Me.grpControlMavlink.Controls.Add(Me.Label26)
-        Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkMessageSendRate)
+        Me.grpControlMavlink.Controls.Add(Me.txtControlMavlinkAltRTL)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkAltRTL)
+        Me.grpControlMavlink.Controls.Add(Me.txtControlMavlinkWPRadius)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkWPRadius)
+        Me.grpControlMavlink.Controls.Add(Me.txtControlMavlinkLoiterRadius)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkLoiterRadius)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkGotoCommand)
+        Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkWPNumber)
+        Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkRestartMission)
         Me.grpControlMavlink.Controls.Add(Me.cmdControlMavlinkSetHome)
         Me.grpControlMavlink.Controls.Add(Me.txtControlMavlinkSetAltitude)
         Me.grpControlMavlink.Controls.Add(Me.cboControlMavlinkAction)
@@ -1486,18 +1603,57 @@ Partial Class frmMain
         Me.grpControlMavlink.Name = "grpControlMavlink"
         Me.grpControlMavlink.TabStop = False
         '
-        'Label26
+        'txtControlMavlinkAltRTL
         '
-        resources.ApplyResources(Me.Label26, "Label26")
-        Me.Label26.Name = "Label26"
+        resources.ApplyResources(Me.txtControlMavlinkAltRTL, "txtControlMavlinkAltRTL")
+        Me.txtControlMavlinkAltRTL.Name = "txtControlMavlinkAltRTL"
         '
-        'cboControlMavlinkMessageSendRate
+        'cmdControlMavlinkAltRTL
         '
-        Me.cboControlMavlinkMessageSendRate.DropDownHeight = 300
-        Me.cboControlMavlinkMessageSendRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboControlMavlinkMessageSendRate.FormattingEnabled = True
-        resources.ApplyResources(Me.cboControlMavlinkMessageSendRate, "cboControlMavlinkMessageSendRate")
-        Me.cboControlMavlinkMessageSendRate.Name = "cboControlMavlinkMessageSendRate"
+        resources.ApplyResources(Me.cmdControlMavlinkAltRTL, "cmdControlMavlinkAltRTL")
+        Me.cmdControlMavlinkAltRTL.Name = "cmdControlMavlinkAltRTL"
+        Me.cmdControlMavlinkAltRTL.UseVisualStyleBackColor = True
+        '
+        'txtControlMavlinkWPRadius
+        '
+        resources.ApplyResources(Me.txtControlMavlinkWPRadius, "txtControlMavlinkWPRadius")
+        Me.txtControlMavlinkWPRadius.Name = "txtControlMavlinkWPRadius"
+        '
+        'cmdControlMavlinkWPRadius
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkWPRadius, "cmdControlMavlinkWPRadius")
+        Me.cmdControlMavlinkWPRadius.Name = "cmdControlMavlinkWPRadius"
+        Me.cmdControlMavlinkWPRadius.UseVisualStyleBackColor = True
+        '
+        'txtControlMavlinkLoiterRadius
+        '
+        resources.ApplyResources(Me.txtControlMavlinkLoiterRadius, "txtControlMavlinkLoiterRadius")
+        Me.txtControlMavlinkLoiterRadius.Name = "txtControlMavlinkLoiterRadius"
+        '
+        'cmdControlMavlinkLoiterRadius
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkLoiterRadius, "cmdControlMavlinkLoiterRadius")
+        Me.cmdControlMavlinkLoiterRadius.Name = "cmdControlMavlinkLoiterRadius"
+        Me.cmdControlMavlinkLoiterRadius.UseVisualStyleBackColor = True
+        '
+        'cmdControlMavlinkGotoCommand
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkGotoCommand, "cmdControlMavlinkGotoCommand")
+        Me.cmdControlMavlinkGotoCommand.Name = "cmdControlMavlinkGotoCommand"
+        Me.cmdControlMavlinkGotoCommand.UseVisualStyleBackColor = True
+        '
+        'cboControlMavlinkWPNumber
+        '
+        Me.cboControlMavlinkWPNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboControlMavlinkWPNumber.FormattingEnabled = True
+        resources.ApplyResources(Me.cboControlMavlinkWPNumber, "cboControlMavlinkWPNumber")
+        Me.cboControlMavlinkWPNumber.Name = "cboControlMavlinkWPNumber"
+        '
+        'cmdControlMavlinkRestartMission
+        '
+        resources.ApplyResources(Me.cmdControlMavlinkRestartMission, "cmdControlMavlinkRestartMission")
+        Me.cmdControlMavlinkRestartMission.Name = "cmdControlMavlinkRestartMission"
+        Me.cmdControlMavlinkRestartMission.UseVisualStyleBackColor = True
         '
         'cmdControlMavlinkSetHome
         '
@@ -1693,34 +1849,34 @@ Partial Class frmMain
         Me.dgConfigVariable.AllowUserToResizeRows = False
         Me.dgConfigVariable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgConfigVariable.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgConfigVariable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgConfigVariable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.dgConfigVariable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgConfigVariable.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgConfigVariable.DefaultCellStyle = DataGridViewCellStyle11
         resources.ApplyResources(Me.dgConfigVariable, "dgConfigVariable")
         Me.dgConfigVariable.MultiSelect = False
         Me.dgConfigVariable.Name = "dgConfigVariable"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgConfigVariable.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgConfigVariable.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.dgConfigVariable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'grpGPSTime
@@ -3397,7 +3553,7 @@ Partial Class frmMain
     Friend WithEvents lblMissionMavlinkArg1 As System.Windows.Forms.Label
     Friend WithEvents cmdMissionMavlinkSearch As System.Windows.Forms.Button
     Friend WithEvents txtMissionAddressSearchMavlink As System.Windows.Forms.TextBox
-    Friend WithEvents Label33 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionAddressSearchMavlink As System.Windows.Forms.Label
     Friend WithEvents txtMissionMavlinkArg2 As System.Windows.Forms.TextBox
     Friend WithEvents lblMissionMavlinkArg2 As System.Windows.Forms.Label
     Friend WithEvents txtMissionMavlinkArg4 As System.Windows.Forms.TextBox
@@ -3414,7 +3570,27 @@ Partial Class frmMain
     Friend WithEvents cmdControlMavlinkMode As System.Windows.Forms.Button
     Friend WithEvents txtControlMavlinkSetAltitude As System.Windows.Forms.TextBox
     Friend WithEvents cmdControlMavlinkSetAltitude As System.Windows.Forms.Button
-    Friend WithEvents Label26 As System.Windows.Forms.Label
-    Friend WithEvents cboControlMavlinkMessageSendRate As System.Windows.Forms.ComboBox
     Friend WithEvents cmdControlMavlinkSetHome As System.Windows.Forms.Button
+    Friend WithEvents lblMissionAttoControlValue As System.Windows.Forms.Label
+    Friend WithEvents lblMissionAttoDurationValue As System.Windows.Forms.Label
+    Friend WithEvents lblMissionAttoLoiterValue As System.Windows.Forms.Label
+    Friend WithEvents txtMissionMavlinkArg7 As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionMavlinkArg6 As System.Windows.Forms.TextBox
+    Friend WithEvents txtMissionMavlinkArg5 As System.Windows.Forms.TextBox
+    Friend WithEvents lblMissionMavlinkArg5 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionMavlinkArg6 As System.Windows.Forms.Label
+    Friend WithEvents lblMissionMavlinkArg7 As System.Windows.Forms.Label
+    Friend WithEvents cboMissionMavlinkArg4 As System.Windows.Forms.ComboBox
+    Friend WithEvents cboMissionMavlinkArg3 As System.Windows.Forms.ComboBox
+    Friend WithEvents cboMissionMavlinkArg2 As System.Windows.Forms.ComboBox
+    Friend WithEvents cboMissionMavlinkArg1 As System.Windows.Forms.ComboBox
+    Friend WithEvents cmdControlMavlinkRestartMission As System.Windows.Forms.Button
+    Friend WithEvents cmdControlMavlinkGotoCommand As System.Windows.Forms.Button
+    Friend WithEvents cboControlMavlinkWPNumber As System.Windows.Forms.ComboBox
+    Friend WithEvents txtControlMavlinkAltRTL As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlMavlinkAltRTL As System.Windows.Forms.Button
+    Friend WithEvents txtControlMavlinkWPRadius As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlMavlinkWPRadius As System.Windows.Forms.Button
+    Friend WithEvents txtControlMavlinkLoiterRadius As System.Windows.Forms.TextBox
+    Friend WithEvents cmdControlMavlinkLoiterRadius As System.Windows.Forms.Button
 End Class

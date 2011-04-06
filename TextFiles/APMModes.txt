@@ -1,15 +1,13 @@
 // Auto Pilot modes
 // ----------------
-MANUAL 0
-CIRCLE 1 // When flying sans GPS, and we loose the radio, just circle
-STABILIZE 2
-
-FLY_BY_WIRE_A 5 // Fly By Wire A has left stick horizontal => desired roll angle, left stick vertical => desired pitch angle, right stick vertical = manual throttle
-FLY_BY_WIRE_B 6 // Fly By Wire B has left stick horizontal => desired roll angle, left stick vertical => desired pitch angle, right stick vertical => desired airspeed
-// Fly By Wire B = Fly By Wire A if you have AIRSPEED_SENSOR 0
-
-AUTO 10
-RTL 11
-LOITER 12
-TAKEOFF 13
-LAND 14
+//Manual 0
+//Circle,1
+Stabilize,2
+Fly By Wire A,5 
+Fly By Wire B,6 
+Auto,10
+Return to Launch,11
+Loiter,12
+//Takeoff 13
+//Land 14
+//Waypoint 16

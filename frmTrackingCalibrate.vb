@@ -159,8 +159,13 @@ Public Class frmTrackingCalibrate
         nTrackingServoUp = tbarUp.Value
         nTrackingServoDown = tbarDown.Value
 
-        nTrackingServoNumberPan = cboPanServo.Text
-        nTrackingServoNumberTilt = cboTiltServo.Text
+        If cboPanServo.Visible = True Then
+            nTrackingServoNumberPan = cboPanServo.Text
+        End If
+
+        If cboTiltServo.Visible = True Then
+            nTrackingServoNumberTilt = cboTiltServo.Text
+        End If
 
         bBackLobeTracker = chkBackLobe.Checked
 

@@ -271,6 +271,9 @@ Module modSettings
         sSpeechWarning = GetRegSetting(sRootRegistry & "\Settings\Speech", "Warning", GetResString(, "Announce_Warning_Default"))
         bAnnounceLinkAlarm = GetRegSetting(sRootRegistry & "\Settings\Speech", "Alarm Enabled", True)
         sSpeechAlarm = GetRegSetting(sRootRegistry & "\Settings\Speech", "Alarm", GetResString(, "Announce_Alarm_Default"))
+        bAnnouceAltitude = GetRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Enabled", False)
+        sSpeechAltitude = GetRegSetting(sRootRegistry & "\Settings\Speech", "Altitude", "Warning, your altitude is {alt} {distance_units}")
+        nSpeechAltitudeMin = GetRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Min", 100)
 
         nWarningTimeout = GetRegSetting(sRootRegistry & "\Settings", "Warning Timeout", 3)
         nAlarmTimeout = GetRegSetting(sRootRegistry & "\Settings", "Alarm Timeout", 10)
@@ -355,10 +358,10 @@ Module modSettings
         sHeartbeat6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Output", "$PMTK330,220*2E<CR><LF>$PMTK313,1*2E<CR><LF>$PMTK301,2*2E<CR><LF>$PMTK220,200*2C<CR><LF>$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28<CR><LF>")
 
         If frmMain.bStartup = False Then
-            frmMain.SetMapMode()
+            'frmMain.SetMapMode()
             'If webDocument Is Nothing Then
             If eMapSelection = e_MapSelection.e_MapSelection_GoogleEarth Then
-                frmMain.SetupWebBroswer()
+                'frmMain.SetupWebBroswer()
             End If
             'End If
         End If
@@ -435,6 +438,9 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval Enabled", bAnnounceRegularInterval)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Regular Interval", sSpeechRegularInterval)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Interval", nSpeechInterval)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Enabled", bAnnounceLinkAlarm)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Altitude", sSpeechAltitude)
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Min", nSpeechAltitudeMin)
 
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning Enabled", bAnnounceLinkWarning)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning", sSpeechWarning)

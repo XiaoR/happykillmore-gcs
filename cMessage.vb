@@ -32,6 +32,7 @@ Public Class cMessage
 
     Public ValidMessage As Boolean
     Public RawMessage As String
+    Public RawBytes() As Byte
     Public MessageType As e_MessageType
     Public Checksum As String
     Public Header As String
@@ -42,4 +43,9 @@ Public Class cMessage
     Public GPSDateTime As Date
     Public ValidDateTime As Boolean
     Public VehicleID As Integer
+    Public ValidCrop As Integer
+
+    Public Sub New()
+        RawBytes = New Byte() {}
+    End Sub
 End Class

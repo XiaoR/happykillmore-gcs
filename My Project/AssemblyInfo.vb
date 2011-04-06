@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("HappyKillmore's Ground Control Station")> 
 <Assembly: AssemblyDescription("GPS and ArduPilot gound based display")> 
 <Assembly: AssemblyCompany("HappyKillmore")> 
-<Assembly: AssemblyProduct("HP_GCS")> 
+<Assembly: AssemblyProduct("HK_GCS")> 
 <Assembly: AssemblyCopyright("Copyright ©  2010")> 
 <Assembly: AssemblyTrademark("")> 
 
@@ -32,5 +32,5 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 '<Assembly: AssemblyVersion("1.0.0.5")> 
-<Assembly: AssemblyFileVersion("1.2.37")> 
-<Assembly: AssemblyVersion("1.2.37")> 
+<Assembly: AssemblyFileVersion("1.2.50")> 
+<Assembly: AssemblyVersion("1.2.50")> 

@@ -1,45 +1,29 @@
-// Command IDs - Must
-0,BLANK
-10,WAYPOINT,Altitude,,Latitude,Longitude
-11,LOITER,Altitude,,Latitude,Longitude
-12,LOITER_N_TURNS,Altitude,Turns,Latitude,Longitude
-13,LOITER_TIME,Altitude,Time,Latitude,Longitude
-14,RTL,Altitude,,Latitude,Longitude
-15,LAND,Altitude,,Latitude,Longitude
-16,TAKEOFF,Altitude,Angle
+// Command IDs
+// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},<Multiplier>,~Format~
+16,Waypoint,Hold Time ~0.0~,Radius [m] ~0.00~ (Acceptance radius - if the sphere with this radius is hit the waypoint counts as reached),,,Latitude,Longitude,Altitude [m] ~0.00~
+//17,Loiter,,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
+//18,Loiter Turns,Turns ~0~,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
+//19,Loiter Time,Hold Time ~0~ (Seconds),,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
+17,Loiter,,,,,Latitude,Longitude,Altitude [m] ~0.00~
+18,Loiter Turns,Turns ~0~,,,,Latitude,Longitude,Altitude [m] ~0.00~
+19,Loiter Time,Hold Time ~0~ (Seconds),,,,Latitude,Longitude,Altitude [m] ~0.00~
+20,Return to Launch,,,,,,,
+21,Land,,,,,Latitude,Longitude,Altitude [m] ~0.00~
+22,Take-Off,Pitch,,,,Latitude,Longitude,Altitude [m] ~0.00~
 
-// Command IDs - May
-20,DELAY,,Time
-//CLIMB // NOT IMPLEMENTED
-22,LAND_OPTIONS,AirSpeed,Dist to WP,Throttle,Pitch Deg.
-// pitch in deg, airspeed  m/s, throttle %, track WP 1 or 0
+//80,ORIENT_TARGET,,,,,Yaw,Latitude,Longitude,Altitude [m] ~0.00~
+//81,PATH_PLANNING,Enable,Enable_Full_Path,,Yaw,Latitude,Longitude,Altitude [m] ~0.00~
+112,Delay,Time (Delay in seconds)
+113,Alt Change,Rate (Descent / Ascend rate) [m/s] ~0.0~,,,,,,Altitude [m] ~0.00~
+114,Distance,Distance [m] ~0.00~
+//115,YAW,Angle,Speed,Direction,Offset
 
-// Command IDs - Now
-//30,AP_MODE
-31,RESET_INDEX
-//32,GOTO_INDEX // NOT IMPLEMENTED
-33,GETVAR_INDEX,,Var ID
-34,SENDVAR_INDEX,,0=Off;1=On
-35,TELEMETRY,,0=Off;1=On
-
-40,THROTTLE_CRUISE,,Speed
-41,AIRSPEED_CRUISE,,Speed
-44,RESET_HOME,,,Latitude,Longitude
-
-60,KP_GAIN,Value*t7,Array Index
-61,KI_GAIN,Value,Array Index
-62,KD_GAIN,Value,Array Index
-63,KI_MAX,Value,Array Index
-64,KFF_GAIN,Value,Array Index
-
-70,RADIO_TRIM,Value,Array Index
-71,RADIO_MAX,Value,Array Index
-72,RADIO_MIN,Value,Array Index
-73,ELEVON_TRIM,Value,Array Index
-
-75,INDEX,,Index 
-// sets the current Must index
-80,REPEAT,Value,Type,Delay,Repeat Times
-81,RELAY,,0=Off;1=On
-82,SERVO,Value,Servo Number 
-// move servo N to PWM value
+177,Cmd Jump,Cmd No (Sequence number),Repeat (Repeat count)
+178,Speed Change,Type {0=Airspeed;1=Ground Speed},Speed [m/s] (-1 indicates no change),Throttle (Percent; -1 indicates no change)
+179,Home Set,Home Type {1=Use current location;0=Use specified location},,,,Latitude,Longitude,Altitude [m] ~0.00~
+//180,Parameter Set,Number,Value
+181,Relay Set,Number,Relay Type {1=On;0=Off}
+182,Relay Repeat,Number,Count,Cycle Time
+183,Servo Set,Number,PWM (microseconds; 1000 to 2000 typical)
+184,Servo Repeat,Number,PWM (microseconds; 1000 to 2000 typical),Count,Cycle Time
+//200,Video Control,ID (-1 for all),Type {0=Disabled;1=Enabled compressed;2=Enabled raw},Mode (0: video stream; >0: single images every n seconds),Recording {0=Disabled;1=Enabled compressed;2=Enabled raw}

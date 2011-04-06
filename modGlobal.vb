@@ -29,6 +29,14 @@ Module modGlobal
         e_MavlinkHandshake_WaypointSet
         e_MavlinkHandshake_WaypointSetRespond
     End Enum
+    Public Enum e_NewDevice_BootState
+        e_NewDevice_BootState_None = 0
+        e_NewDevice_BootState_RequestingParameters
+        e_NewDevice_BootState_ParametersComplete
+        e_NewDevice_BootState_RequestingMission
+        e_NewDevice_BootState_MissionComplete
+        e_NewDevice_BootState_StartComplete
+    End Enum
     Public Enum e_DeviceTypes
         e_DeviceTypes_None = 0
         e_DeviceTypes_NMEA
@@ -86,6 +94,7 @@ Module modGlobal
         e_MissionFileType_GCS
         e_MissionFileType_UDB
         e_MissionFileType_FY21APII
+        e_MissionFileType_Atto
     End Enum
     Public Enum e_InstrumentLayout
         e_InstrumentLayout_Horizontal = 0
@@ -127,6 +136,7 @@ Module modGlobal
     Public bIsAdmin As Boolean
     Public bShutdown As Boolean = False
     Public sBuffer As String
+    Public aBuffer() As Byte
     Public bConnected As Boolean = False
     Public bConnectedTracking As Boolean = False
 
@@ -152,6 +162,33 @@ Module modGlobal
     Public aCommandArg2() As String
     Public aCommandArg3() As String
     Public aCommandArg4() As String
+    Public aCommandArg5() As String
+    Public aCommandArg6() As String
+    Public aCommandArg7() As String
+
+    Public aCommandUnit1() As String
+    Public aCommandUnit2() As String
+    Public aCommandUnit3() As String
+    Public aCommandUnit4() As String
+    Public aCommandUnit5() As String
+    Public aCommandUnit6() As String
+    Public aCommandUnit7() As String
+
+    Public aCommandMult1() As Single
+    Public aCommandMult2() As Single
+    Public aCommandMult3() As Single
+    Public aCommandMult4() As Single
+    Public aCommandMult5() As Single
+    Public aCommandMult6() As Single
+    Public aCommandMult7() As Single
+
+    Public aCommandFormat1() As String
+    Public aCommandFormat2() As String
+    Public aCommandFormat3() As String
+    Public aCommandFormat4() As String
+    Public aCommandFormat5() As String
+    Public aCommandFormat6() As String
+    Public aCommandFormat7() As String
 
     Public nHomeAlt As Single
     Public nHomeAltIndicator As Single
@@ -190,6 +227,9 @@ Module modGlobal
     Public sSpeechWarning As String
     Public bAnnounceLinkAlarm As Boolean
     Public sSpeechAlarm As String
+    Public sSpeechAltitude As String
+    Public bAnnouceAltitude As Boolean
+    Public nSpeechAltitudeMin As Single
 
     Public n2WayRetries As Integer
     Public n2WayTimeout As Integer
@@ -258,7 +298,26 @@ Module modGlobal
     Public nServoInput(0 To 7) As Integer
     Public nServoOutput(0 To 7) As Integer
     Public nSensor(0 To 13) As Long
+
+    Public nInvalidCount As Long
+
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
+    Public Function StringToByte(ByVal inputString As String, Optional ByVal byteArrayLength As Integer = -1, Optional ByVal bytePadding As Byte = 0) As Byte()
+        Dim arr() As Byte
+        Dim encoding As New System.Text.UTF8Encoding()
+        Dim nCount As Integer
+
+        arr = encoding.GetBytes(inputString)
+
+        If byteArrayLength <> -1 Then
+            ReDim Preserve arr(0 To byteArrayLength - 1)
+            For nCount = Len(inputString) To byteArrayLength - 1
+                arr(nCount) = bytePadding
+            Next
+        End If
+        Return arr
+    End Function
+
     Public Function GetServoValue(ByVal inputString As String) As Double
         If IsNumeric(inputString) = True Then
             GetServoValue = Convert.ToDouble(inputString)
@@ -285,6 +344,38 @@ Module modGlobal
             Case e_SpeedFormat.e_SpeedFormat_MPH
                 GetSpeedUnitsText = GetResString(, "MPH")
         End Select
+    End Function
+
+    Public Function ConCatArray(ByVal arrayOne() As Byte, ByVal arrayTwo() As Byte) As Byte()
+        Dim nArrayOneLength As Long
+        Dim nArrayTwoLength As Long
+        Dim bArrayOneValid As Boolean
+        Dim bArrayTwoValid As Boolean
+
+        Try
+            If IsNothing(arrayOne) = True Then
+                nArrayOneLength = 0
+                bArrayOneValid = False
+            Else
+                nArrayOneLength = UBound(arrayOne) + 1
+                bArrayOneValid = True
+            End If
+            If IsNothing(arrayTwo) = True Then
+                nArrayTwoLength = 0
+                bArrayTwoValid = False
+            Else
+                nArrayTwoLength = UBound(arrayTwo) + 1
+                bArrayTwoValid = True
+            End If
+            ReDim ConCatArray(0 To nArrayOneLength + nArrayTwoLength - 1)
+            If bArrayOneValid = True Then
+                arrayOne.CopyTo(ConCatArray, 0)
+            End If
+            If bArrayTwoValid = True Then
+                arrayTwo.CopyTo(ConCatArray, nArrayOneLength)
+            End If
+        Catch ex As Exception
+        End Try
     End Function
 
     Public Function ParseServerAndPort(ByVal inputString As String, ByRef ipaddress As String, ByRef portNumber As Long) As Boolean
@@ -339,7 +430,9 @@ Module modGlobal
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
             inputString = inputString.PadLeft(6, "0")
-            GetNMEADate = GetNMEADate.Parse(inputString.Substring(2, 2) & "/" & inputString.Substring(0, 2) & "/" & inputString.Substring(4, 2), cf).Date
+            If inputString <> "000000" Then
+                GetNMEADate = GetNMEADate.Parse(inputString.Substring(2, 2) & "/" & inputString.Substring(0, 2) & "/" & inputString.Substring(4, 2), cf).Date
+            End If
         Catch
         End Try
     End Function
@@ -351,7 +444,9 @@ Module modGlobal
                 inputString = inputString.Substring(0, InStr(inputString, ".") - 1)
             End If
             inputString = inputString.PadLeft(6, "0")
-            GetNMEATime = GetNMEATime.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
+            If inputString <> "000000" Then
+                GetNMEATime = GetNMEATime.Parse(inputString.Substring(0, 2) & ":" & inputString.Substring(2, 2) & ":" & inputString.Substring(4, 2), cf).ToLongTimeString
+            End If
         Catch
         End Try
     End Function
@@ -618,20 +713,28 @@ Module modGlobal
     Public Function ConvertLatLongFY21AP(ByVal inputValue As String) As String
         Dim nTemp As Double
 
-        nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputValue, 2, 1))).PadLeft(2, "0")) And &H7FFF
+        nTemp = (((Asc(Mid(inputValue, 1, 1)) * 256 + Asc(Mid(inputValue, 2, 1))) And &H7FFF) + ((Asc(Mid(inputValue, 3, 1)) * 256 + Asc(Mid(inputValue, 4, 1))) * 0.0001))
+        nTemp = nTemp / 60
 
-        'nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H7FFF
-        nTemp = (nTemp + CDec("&h" & Hex(Asc(Mid(inputValue, 3, 1))) & Hex(Asc(Mid(inputValue, 4, 1)))) * 0.00001) / 60
-        If nTemp > 32768 Then
-            nTemp = nTemp - 32768
-        End If
-
-        If CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H8000 Then
+        If ((Asc(Mid(inputValue, 1, 1)) * 256 + Asc(Mid(inputValue, 2, 1))) And &H8000) = &H8000 Then
             nTemp = -nTemp
         End If
+        'asdasdasdasd()
+
+        'nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(inputValue, 2, 1))).PadLeft(2, "0")) And &H7FFF
+
+        ''nTemp = CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H7FFF
+        'nTemp = (nTemp + CDec("&h" & Hex(Asc(Mid(inputValue, 3, 1))) & Hex(Asc(Mid(inputValue, 4, 1)))) * 0.00001) / 60
+        'If nTemp > 32768 Then
+        '    nTemp = nTemp - 32768
+        'End If
+
+        'If CDec("&h" & Hex(Asc(Mid(inputValue, 1, 1))) & Hex(Asc(Mid(inputValue, 2, 1)))) And &H8000 Then
+        '    nTemp = -nTemp
+        'End If
         ConvertLatLongFY21AP = nTemp.ToString("0.0000000")
     End Function
-    Public Function GetNextSentence(ByRef sBuffer As String) As cMessage
+    Public Function GetNextSentence(ByRef sBuffer As String, ByRef aBuffer() As Byte) As cMessage
         Dim sTemp As String = ""
         Dim nLastStart As Integer
         Dim nCount As Integer
@@ -645,6 +748,8 @@ Module modGlobal
         Dim sValues() As String
         Dim nXBeeAPIStart As Integer
         Dim nXBeeAPIDataLength As Integer
+        Dim dLocalDate As Date
+        Dim dLocalTime As Date
 
         nLastStart = 999
         GetNextSentence = New cMessage
@@ -877,6 +982,10 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
+                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    If Not aBuffer Is Nothing Then
+                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "Test Msg"
@@ -896,6 +1005,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .ValidMessage = True
@@ -919,6 +1032,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Paparazzi) = Now.Ticks
@@ -943,6 +1060,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
@@ -968,6 +1089,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
@@ -994,6 +1119,10 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
+                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    If Not aBuffer Is Nothing Then
+                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "ArduIMU"
@@ -1020,6 +1149,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1039,6 +1172,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1058,6 +1195,10 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1096,6 +1237,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 6)
@@ -1141,6 +1286,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 2)
@@ -1169,6 +1318,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 3)
@@ -1211,6 +1364,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1233,6 +1390,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1255,6 +1416,10 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
+                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                If Not aBuffer Is Nothing Then
+                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1284,6 +1449,10 @@ Module modGlobal
                                 End If
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
+                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    If Not aBuffer Is Nothing Then
+                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "SiRF"
@@ -1327,6 +1496,10 @@ Module modGlobal
                                 End If
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
+                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    If Not aBuffer Is Nothing Then
+                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "FY21AP"
@@ -1340,8 +1513,14 @@ Module modGlobal
                                         oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_FY21AP) = Now.Ticks
                                         Try
                                             If .ID = 242 Then
-                                                .GPSDateTime = CDate(GetNMEADate(Asc(Mid(.Packet, 33, 1)).ToString("00") & Asc(Mid(.Packet, 32, 1)).ToString("00") & Asc(Mid(.Packet, 34, 1)).ToString("00")) & " " & GetNMEATime(Asc(Mid(.Packet, 29, 1)).ToString("00") & Asc(Mid(.Packet, 30, 1)).ToString("00") & Asc(Mid(.Packet, 31, 1)).ToString("00")))
-                                                .ValidDateTime = True
+                                                dLocalDate = GetNMEADate(Asc(Mid(.Packet, 33, 1)).ToString("00") & Asc(Mid(.Packet, 32, 1)).ToString("00") & Asc(Mid(.Packet, 34, 1)).ToString("00"))
+                                                dLocalTime = GetNMEATime(Asc(Mid(.Packet, 29, 1)).ToString("00") & Asc(Mid(.Packet, 30, 1)).ToString("00") & Asc(Mid(.Packet, 31, 1)).ToString("00"))
+                                                If dLocalDate <> "12:00 AM" And dLocalTime <> "12:00 AM" Then
+                                                    .GPSDateTime = CDate(dLocalDate & " " & dLocalTime)
+                                                    .ValidDateTime = True
+                                                Else
+                                                    .ValidDateTime = False
+                                                End If
                                             End If
                                         Catch
                                         End Try
@@ -1372,6 +1551,10 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
+                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    If Not aBuffer Is Nothing Then
+                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    End If
                                     .RawMessage = sTemp
                                     .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
                                     .PacketLength = Len(.Packet)
@@ -1420,6 +1603,10 @@ Module modGlobal
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
+                                        ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                        If Not aBuffer Is Nothing Then
+                                            Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                        End If
                                         .RawMessage = sTemp
                                         .ID = Asc(Mid(sTemp, 4, 1))
                                         .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
@@ -1475,6 +1662,10 @@ Module modGlobal
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
+                                        ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                        If Not aBuffer Is Nothing Then
+                                            Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                        End If
                                         .RawMessage = sTemp
                                         .ID = Asc(Mid(sTemp, 4, 1))
                                         .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
@@ -1503,31 +1694,64 @@ Module modGlobal
                                 .MessageType = nMessageType
                                 .Header = "MAVlink"
                                 nSizeOffset = 6
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > nPacketSize + nSizeOffset Then
                                     nLastStart = InStr(sBuffer, sHeaderCharacters)
                                     sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                     sOutput = ""
                                     If bShowBinary = True Then
-                                        For nCount = 1 To Len(sTemp)
-                                            sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount, 1))).PadLeft(2, "0") & " "
+                                        For nCount = 0 To Len(sTemp) - 1
+                                            'If Not aBuffer Is Nothing Then
+                                            sOutput = sOutput & Hex(aBuffer(nCount)).PadLeft(2, "0") & " "
+                                            '    Else
+                                            '    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount + 1, 1))).PadLeft(2, "0") & " "
+                                            '    End If
                                         Next
-                                        If Asc(Mid(sTemp, 6, 1)) = 39 Then
+                                        If Asc(Mid(sTemp, 6, 1)) = 0 Then
                                             Debug.Print(sOutput)
                                         End If
                                     Else
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
+
+                                        If Not aBuffer Is Nothing Then
+                                            If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
+                                                ReDim .RawBytes(0 To UBound(aBuffer))
+                                                Array.ConstrainedCopy(aBuffer, 0, .RawBytes, 0, UBound(aBuffer))
+                                            Else
+                                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                                Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, .RawBytes, 0, Len(sTemp))
+                                            End If
+                                        End If
+
+                                        'Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                         .RawMessage = sTemp
                                         .VehicleID = Asc(Mid(sTemp, 4, 1))
+                                        '.ID = .RawBytes(5)
+                                        'Debug.Print("Index = " & Hex(.RawBytes(2)))
                                         .ID = Asc(Mid(sTemp, 6, 1))
                                         .Packet = Mid(sTemp, 1, Len(sTemp) - 2)
                                         .PacketLength = Len(.Packet)
                                         .Checksum = Strings.Right(sTemp, 2)
                                         .VisibleSentence = .Header & " - " & Trim(sOutput)
 
+                                        Dim nChecksumLong As Long
+                                        Dim nChecksumLong2 As Long
+                                        Dim aChecksumBytes() As Byte
+                                        Dim sChecksumString As String
+
+                                        nChecksumLong = (((Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 7))) << 8) + Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 6)))
+                                        'If .RawBytes(2) = 209 Then
+                                        '    aChecksumBytes = crc_calculate_byte(.RawBytes, True)
+                                        'Else
+                                        aChecksumBytes = crc_calculate_byte(.RawBytes)
+                                        'End If
+                                        sChecksumString = crc_calculate(.Packet)
+                                        nChecksumLong2 = crc_calculate_long(.RawBytes)
+
                                         'Debug.Print(".checksum=" & Hex(Asc(Mid(.Checksum, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(.Checksum, 2, 1))).PadLeft(2, "0"))
-                                        If .Checksum = crc_calculate(.Packet) Then
+                                        If nChecksumLong = nChecksumLong2 Or .Checksum = sChecksumString Then
+                                            'If .Checksum = crc_calculate(.Packet) Then
                                             .ValidMessage = True
                                             oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_MavLink) = Now.Ticks
                                             Try
@@ -1540,6 +1764,8 @@ Module modGlobal
                                             Catch
                                             End Try
                                         Else
+                                            Debug.Print("Invalid Count = " & nInvalidCount)
+                                            nInvalidCount = nInvalidCount + 1
                                             .ValidMessage = False
                                         End If
                                     End With
@@ -1556,32 +1782,79 @@ Module modGlobal
             System.Diagnostics.Debug.Print("GetNextSentence - " & e2.Message)
         End Try
 
-        If GetNextSentence.Packet <> "" Then
-            Do While Asc(Mid(sBuffer, 1, 1)) = 10 Or Asc(Mid(sBuffer, 1, 1)) = 13
-                sBuffer = Mid(sBuffer, 2)
-                nLastStart = nLastStart - 1
-            Loop
-            If nLastStart <> 1 Then
-                'If InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0 Then
-                '    Do While InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0
-                '        frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, InStr(Mid(sBuffer, 1, nLastStart), vbCr) - 1))
-                '        sBuffer = Mid(sBuffer, InStr(Mid(sBuffer, 1, nLastStart), vbCr))
-                '    Loop
-                'Else
-                frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, nLastStart - 1))
-                'End If
+        Try
+            Dim aNewArray() As Byte
+            If GetNextSentence.Packet <> "" Then
+                'Do While Asc(Mid(sBuffer, 1, 1)) = 10 Or Asc(Mid(sBuffer, 1, 1)) = 13
+                '    sBuffer = Mid(sBuffer, 2)
+                '    nLastStart = nLastStart - 1
+                'Loop
+                If nLastStart <> 1 Then
+                    'If InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0 Then
+                    '    Do While InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0
+                    '        frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, InStr(Mid(sBuffer, 1, nLastStart), vbCr) - 1))
+                    '        sBuffer = Mid(sBuffer, InStr(Mid(sBuffer, 1, nLastStart), vbCr))
+                    '    Loop
+                    'Else
+                    frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, nLastStart - 1))
+                    'End If
+                End If
+                sBuffer = Mid(sBuffer, nLastStart + Len(sTemp))
+
+                ReDim aNewArray(0 To Len(sBuffer) - 1)
+                If Len(sBuffer) > 0 Then
+                    'If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
+                    '    Array.ConstrainedCopy(aBuffer, UBound(aBuffer) - Len(sBuffer) + 1, aNewArray, 0, Len(sBuffer))
+                    'Else
+                    If Not aBuffer Is Nothing Then
+                        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+                        'End If
+                        ReDim aBuffer(0 To UBound(aNewArray))
+                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                    End If
+                Else
+                    aBuffer = Nothing
+                End If
+
+                Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
+                    sBuffer = Mid(sBuffer, 2)
+                    If Len(sBuffer) > 0 And Not aBuffer Is Nothing Then
+                        ReDim aNewArray(0 To Len(sBuffer) - 1)
+                        Array.ConstrainedCopy(aBuffer, 1, aNewArray, 0, Len(sBuffer))
+                        ReDim aBuffer(0 To UBound(aNewArray))
+                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                    Else
+                        aBuffer = Nothing
+                    End If
+                Loop
             End If
-            sBuffer = Mid(sBuffer, nLastStart + Len(sTemp))
-            Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
-                sBuffer = Mid(sBuffer, 2)
-            Loop
-        End If
-        If Len(sBuffer) > 1000 Then
-            frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, 500))
-            sBuffer = Mid(sBuffer, 501)
-            'System.Diagnostics.Debug.Assert(False)
-            'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
-        End If
+            If Len(sBuffer) > 5000 Then
+                frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, 500))
+                sBuffer = Mid(sBuffer, 501)
+                If Len(sBuffer) > 0 Then
+                    ReDim aNewArray(0 To Len(sBuffer) - 1)
+                    'If 500 + Len(sBuffer) > UBound(aBuffer) Then
+                    If Not aBuffer Is Nothing Then
+                        Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+                        'Else
+                        '    Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+                        'End If
+
+                        'Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+                        ReDim aBuffer(0 To UBound(aNewArray))
+                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                    End If
+                Else
+                    aBuffer = Nothing
+                End If
+                'System.Diagnostics.Debug.Assert(False)
+                'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
+            End If
+            If Len(sBuffer) > 0 Then
+                'Debug.Print("First String = " & Asc(Mid(sBuffer, 1, 1)) & ", First Byte = " & aBuffer(0))
+            End If
+        Catch ex As Exception
+        End Try
 
     End Function
     Public Function AddCharacter(ByVal inputIndex As Int32) As String
@@ -1729,6 +2002,7 @@ Module modGlobal
     End Function
     Public Function ConvertSpeech(ByVal inputString As String) As String
         Dim nNewAlt As Single
+        Dim sUnits As String
 
         nNewAlt = nAltitude - nHomeAltIndicator
         If nNewAlt < 0 Then
@@ -1747,6 +2021,9 @@ Module modGlobal
         ConvertSpeech = Replace(ConvertSpeech, "{wpa}", Convert.ToSingle(nWaypointAlt).ToString("0"))
         ConvertSpeech = Replace(ConvertSpeech, "{alarm}", Convert.ToInt32(nAlarmTimeout).ToString("0"))
         ConvertSpeech = Replace(ConvertSpeech, "{warning}", Convert.ToInt32(nWarningTimeout).ToString("0"))
+        ConvertSpeech = Replace(ConvertSpeech, "{speed_units}", GetSpeedUnitsText)
+        ConvertSpeech = Replace(ConvertSpeech, "{distance_units}", GetDistanceUnitsText)
+
     End Function
     Public Function LoadLanguageFile()
         If sLanguageFile = "Default" Then

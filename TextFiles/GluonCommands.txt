@@ -1,0 +1,19 @@
+// Command IDs
+// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},<Multiplier>,~Format~
+0,Empty
+1,Climb,Climb To [m] ~0.00~
+2,From to Relative,Circle Center (North) [m] ~0.00~,Circle Center (East) [m] ~0.00~,Circle Radius [m] ~0.00~,Height [m] ~0.00~
+3,From to Absolute,Latitude,Longitude,Altitude
+4,Fly to Relative,Distance (North) [m] ~0.00~,Distance (East) [m] ~0.00~,Altitude [m] ~0.00~
+5,Fly to Absolute,Latitude,Longitude,Altitude [m] ~0.00~
+6,Goto Line,Line Number
+7,Circle Absolute,Latitude,Longitude,Circle Radius [m] ~0.00~,Altitude [m] ~0.00~
+8,Circle Relative,Circle Center (North) [m] ~0.00~,Circle Center (East) [m] ~0.00~,Circle Radius [m] ~0.00~,Altitude [m] ~0.00~
+9,If Var Equals X,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+10,If Var Smaller Than X,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+11,If Var Greater Than X,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+12,If Var Not Equal to X,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+13,If Until Var Equals,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+14,If Until Var Not Equal,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+15,If Until Var Greater Than,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
+16,If Until Var Smaller Than,Variable Name {1=Height (m);2=Speed (m/s);3=Heading (deg);4=Flight time (s);5=Satellites in view;6=Home distance (m);7=PPM link alive;8=Channel 1;9=Channel 2;10=Channel 3;11=Channel 4;12=Channel 5;13=Channel 6;14=Channel 7;15=Channel 8;16=Battery voltage (V)},Value
