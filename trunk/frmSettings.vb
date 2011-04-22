@@ -269,6 +269,7 @@ Public Class frmSettings
         chkInstVertical.Checked = bInstruments(e_Instruments.e_Instruments_Vertical)
         chkInstTurn.Checked = bInstruments(e_Instruments.e_Instruments_Turn)
         chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
+        chkManuelMode.Checked = bManuelMode
 
         chkAnnounceWaypoints.Checked = bAnnounceWaypoints
         txtAnnounceWaypoints.Text = sSpeechWaypoint
@@ -411,6 +412,8 @@ Public Class frmSettings
         bAnnouceAltitude = chkAnnounceAltitudeAlarm.Checked
         sSpeechAltitude = txtAltitudeAlarm.Text
         nSpeechAltitudeMin = txtAltitudeMin.Text
+
+        bManuelMode = chkManuelMode.Checked
 
         bGEBorders = chkGEBorders.Checked
         bGEBuildings = chkGEBuildings.Checked

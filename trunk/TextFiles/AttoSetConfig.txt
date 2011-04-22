@@ -12,8 +12,9 @@ $11,Servo 1 direction Sign,-1,1,1,Aileron, or for Elevons it is the aileron comp
 $12,Servo 2 dirdction Sign,-1,1,1,Elevator, or for Elevons it is the elevator component of the mix
 $13,Servo 3 direction Sign,-1,1,1,Throttle. 1 would be standard for electronic speed controls.
 $14,Servo 4 direction Sign,-1,1,1,Rudder
-$15,Servo 5 direction Sign,-1,1,1,Pan Servo
-$16,Servo 6 direction Sign,-1,1,1,Tilt Servo
+$15,Servo 5 direction Sign,-1,1,1,Trigger Servo
+$16,Servo 6 direction Sign,-1,1,1,Pan Servo
+$17,Servo 7 direction Sign,-1,1,1,Tilt Servo
 $18,Servo 1 Upper Limit,900,2100,2000,Pulse width in microseconds. Aileron, or Elevon1
 $19,Servo 2 Upper Limit,900,2100,2000,Pulse width in microseconds. Elevator, or Elevon2
 $20,Servo 3 Upper Limit,900,2100,2000,Pulse width in microseconds. Throttle
@@ -30,72 +31,77 @@ $30,Servo 6 Lower Limit,900,2100,1000,Pulse width in microseconds. Pan servo
 $31,Servo 7 Lower Limit,900,2100,1000,Pulse width in microseconds. Tilt servo
 $32,Path Angle Max,0,90,30,In degrees
 $33,Path Merge Line distance,5,300,60,In meters. This is the half width of "highway" that we merge onto the line over
-$34,Roll Angle Limit,5,60,30,Max allowed roll in degrees, from 5 to 60 allowed for IMU system
-$35,Pitch Angle Limit,4,45,20,Max allowed pitch in degrees, from 5 to 45 allowed
-$37,Alt Proportional Band Width,50,300,150,Altitude window (in meters) to spread proportional pitch response.
-$38,Steer_D,0,0100,5,Gain factor for "D" dampening term of heading control. 10 is a good start
+$34,Roll Angle Limit,5,45,30,Max allowed roll in degrees, from 5 to 45 allowed for IMU system
+$35,Pitch Angle Limit,5,45,20,Max allowed pitch in degrees, from 5 to 45 allowed
+$37,Alt Proportional Band Width,50,,150,Altitude window (in meters) to spread proportional pitch response. Rule of Thumb: 75 per 10 degrees MaxPitch
+$38,Steer_D,0,100,5,Gain factor for "D" dampening term of heading control. 10 is a good start
 $39,Alt_D,0,100,3,Gain factor for "D" dampening term of altitude control. 10 is a good start
-$40,MaxRate,25,300,150,Max allowed pitch and roll rate of change in deg/second.
-$42,Hold radius,50,,200,Radius (in meters) of holding pattern at end of flight.
+$40,MaxRate,25,1200,150,Max allowed pitch and roll rate of change in deg/second.
+$42,Hold radius,100,,200,Radius (in meters) of holding pattern at end of flight.
 $43,Hold Direction,0,1,0,1 is CCW flight direction, 0 is CW rotation for end of flight hold pattern
 $44,Hold Alt,25,,125,User-specified altitude for the default RTL hold pattern.
 $45,Thermopile Orientation,0,7,0,0 through 7 value facing forward flight direction per sticker on XY thermopile
 $46,ThrottMid,900,2100,1500,Mid-range PWM value for Throttle, TYPICALLY 1500 is a good start.
+$48,Num_Pulses,1,,20,Number of good of Rx Mode channel pulses in a row required to switch modes
+$49,VoltScale,0,,51800,Number of milliVolts at sensor full scale 3.3V analog
+$50,CurrentScale,0,,90160,Number of milliAmps at sensor full scale 3.3V analog
 $51,Plane mass in grams,,,0,Flying mass in grams
 $52,Motor Efficiency Percentage,0,100,80,Estimated efficiency percentage of electric motor + speed control. 80 is a good value for brushless outrunner, perhaps 40 for brushed motor.
 $53,mAh usage upper limit abort,0,,0,0 = don't use this function, 1 to infinity means YES and tells the used mAh RTL trigger 
 $54,Pitot Present,0,2,1,0 = lock throttle, 1 = use pitot airspeed control per WP.txt, 2 = use Wattage airspeed hold method
 $55,Test Mode,0,1,0,0 = NO, 1 is YES. Causes AttoPilot to start Rx/Servo object, start 50Hz IMU object, and then hold. No GPS startup, no WP loading 
 $56,Ground Launch,0,,0,0 = NO, 1 to infinity means YES and hold roll angle to zero until specified AGL altitude in meters is reached after launch in AutoMode
-$57,Servo 1 D_Term,0,100,0,Is 10x format.  Aileron, or with elevons it is the aileron component of the mix
-$58,Servo 2 D_Term,0,100,0,Is 10x format.  Elevator, or with elevons it is the elevator component of the mix
+$57,Aileron Kd,0,100,0,Aileron Kd, or if Elevon Mixing enabled Roll Kd
+$58,Elevator Kd,0,100,0,Elevator Kd, or if Elevon Mixing enabled Pitch Kd
+$60,Rudder Kd,0,100,0,Rudder/Yaw Kd, only for V3 IMU Autopilot
 $64,Hold Speed,5,255,65,Hold pattern airspeed target in km/h for when PitotPresent = 1
 $65,Min Speed,5,255,50,Min allowed aispeed target for when PitotPresent = 1
 $66,Max Speed,5,255,110,Max allowed aispeed target for when PitotPresent = 1
 $67,Telem Baud,4800,230400,38400,User can set this to ANY integer from 4800 to 230400. If unspecified, it defaults to 38400 baud
 $68,MaxDistance,0,,300000,User-defined max distance (meters) from home to force abort and go to home. Default is 300km, but user can make less
-$69,LoiterRadius(1),50,32767,50,User-defined loiter radius, in meters.
-$70,LoiterRadius(2),50,32767,100, 
-$71,LoiterRadius(3),50,32767,150,To specify this at a waypoint, make last trigger digit (the 8th one from left)             
-$72,LoiterRadius(4),50,32767,200,set to 1 through 9. To disable, set this trigger to zero (0)              
-$73,LoiterRadius(5),50,32767,300,MUST be used in conjunction with non-zero 7th trigger value, otherwise loiter has LIMITED affect              
-$74,LoiterRadius(6),50,32767,500,and the result would be plane will circle ONLY UNTIL it is line up with next waypoint.               
-$75,LoiterRadius(7),50,32767,1000,T2 field sets the loiter direction. 0 (default) is clockwise, 1 is counter clockwise                
-$76,LoiterRadius(8),50,32767,2000,
-$77,LoiterRadius(9),50,32767,10000,
+$69,LoiterRadius(1),50,32767,50,User defined loiter radius, in meters
+$70,LoiterRadius(2),50,32767,100,User-defined loiter radius in meters
+$71,LoiterRadius(3),50,32767,150,User-defined loiter radius in meters            
+$72,LoiterRadius(4),50,32767,200,User-defined loiter radius in meters            
+$73,LoiterRadius(5),50,32767,300,User-defined loiter radius in meters            
+$74,LoiterRadius(6),50,32767,500,User-defined loiter radius in meters           
+$75,LoiterRadius(7),50,32767,1000,User-defined loiter radius in meters               
+$76,LoiterRadius(8),50,32767,2000,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$77,LoiterRadius(9),50,32767,10000,User-defined loiter time, in seconds. 0 to 32767 is allowed
 $78,LoiterTime(1),0,32767,10,User-defined loiter time, in seconds. 0 to 32767 is allowed
-$79,LoiterTime(2),0,32767,20,
-$80,LoiterTime(3),0,32767,40,To specify this at a waypoint, make 2nd last trigger digit (the 7th one from left)
-$81,LoiterTime(4),0,32767,60,set to 1 through 9. To disable, set this trigger to zero (0)
-$82,LoiterTime(5),0,32767,120,MUST be used in conjunction with a non-zero 8th trigger value, otherwise time has no effect
-$83,LoiterTime(6),0,32767,240,
-$84,LoiterTime(7),0,32767,600,
-$85,LoiterTime(8),0,32767,1200,
-$86,LoiterTime(9),0,32767,3600,
-$87,Trigger time interval (2),0,32767,5,Specify value between parenthesis for Trigger field 3 (4th from right)
-$88,Trigger time interval (3),0,32767,10,0 is no trigger for that waypoint
-$89,Trigger time interval (4),0,32767,20,1 is trigger at waypoint only
-$90,Trigger time interval (5),0,32767,60,2-5 are time interval triggers, in seconds
-$91,Trigger Distance interval (6),0,32767,100,6-9 are ground distance interval triggers, in meters
-$92,Trigger Distance interval (7),0,32767,150,Time interval allowed from 0 to 32767 seconds
-$93,Trigger Distance interval (8),0,32767,200,Distance interval allowed from 0 to 32767 meters
-$94,Trigger Distance interval (9),0,32767,500,
-$95,Trigger Type,0,1,0,0 is logic controller from servo7 signal line, 1 is PWM servo controller from servo7
+$79,LoiterTime(2),0,32767,20,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$80,LoiterTime(3),0,32767,40,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$81,LoiterTime(4),0,32767,60,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$82,LoiterTime(5),0,32767,120,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$83,LoiterTime(6),0,32767,240,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$84,LoiterTime(7),0,32767,600,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$85,LoiterTime(8),0,32767,1200,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$86,LoiterTime(9),0,32767,3600,User-defined loiter time, in seconds. 0 to 32767 is allowed
+$87,Trigg repeat time index 2,0,32767,5,In seconds. 0 to 32767 is allowed
+$88,Trigg repeat time index 3,0,32767,10,In seconds. 0 to 32767 is allowed
+$89,Trigg repeat time index 4,0,32767,20,In seconds. 0 to 32767 is allowed
+$90,Trigg repeat time index 5,0,32767,60,In seconds. 0 to 32767 is allowed
+$91,Trigg dist interval index 6,0,32767,100,In meters. 0 to 32767 is allowed
+$92,Trigg dist interval index 7,0,32767,150,In meters. 0 to 32767 is allowed
+$93,Trigg dist interval index 8,0,32767,200,In meters. 0 to 32767 is allowed
+$94,Trigg dist interval index 9,0,32767,500,In meters. 0 to 32767 is allowed
+$95,Trigger Type,0,1,0,Servo 5 trigger. 0 is logic (high/low) driver, 1 is PWM (servo) driver
 $96,Trigger Active,0,2100,0,If trigger is logic, enter a 1 or 0 here. If PWM servo driver, enter servo position in microseconds
 $97,Trigger Rest,0,2100,1,If trigger is logic, enter a 0 or 1 here. If PWM servo driver, enter servo position in microseconds
-$98,Trigger Duration,0,32767,1,Number of 0.2 second time intervals to hold trigger in active state for each episode of the trigger, 0 to 32767 allowed
+$98,Trigger Duration,0,32767,1,# of 0.25 second intervals for Trigger active state
 $99,Roll Expo,0,100,20,0 is no Expo, otherwise 10X units amount to add per 90 degrees attitude. 
 $100,Pitch Expo,0,100,20,0 is no Expo, otherwise 10X units amount to add per 90 degrees attitude.
 $101,AutoLock Distance,0,,0,Meters from home. Exceed this and mode is forced into Auto. 0 means disable the feature.
 $102,RTL mAh autoLock,0,1,0,0 is DISABLE, 1 is ENABLE. If mAh cutoff happens lock out other modes and go Auto for RTL
-$103,PhotoDeadPre,0,50,0,Is number of 0.2 sec intervals (0 to 10 seconds) pre trigger to lock attitude at level and idle throttle
-$104,PhotoDeadPost,0,50,0,Is number of 0.2 sec intervals (0 to 10 seconds) post trigger start to lock attitude at level and idle throttle
+$103,PhotoDeadPre,0,50,0,# of 0.25 second intervals pre-trigger of motor off
+$104,PhotoDeadPost,0,50,0,# of 0.25 second intervals post-trigger of motor off
 $105,StopNav,0,1,0,0 is continue nav during motor off period of photo, 1 is stop nav and hold flat attitude during photo
 $106,Pitot Offset,13000,16000,14867,Value derived from indoor session of Test Mode (line 55 in this SET). Corrects hardware bias for accurate low airpseed range
-$109,Roll Bias,0,90,0,1X degrees. Put in non-zero value to seed the bias at start
-$110,Pitch Bias,0,90,0,1X degrees. Put in non-zero value to seed the bias at start
+$109,Roll Bias,-15,15,0,Degrees
+$110,Pitch Bias,-15,15,0,Degrees
 $111,RC Roll Dampen,0,100,0,RC mode rate dampening in roll axis.
 $112,RC Pitch Dampen,0,100,0,RC mode rate dampening in pitch axis.
+$113,RC Yaw Dampen,0,100,0,RC mode rate dampening in yaw axis
 $114,MinRollRate Percent,0,100,25,MaxRate in roll axis reduces to this percentage of itself at zero roll error
 $115,MinPitchRate Percent,0,100,25,MaxRate in pitch axis reduces to this percentage of itself at zero pitch error
 $116,Throttle Altitude,0,1,0,0 is disabled 1 is enabled. If active, uses values from lines 117 through 122 to control airspeed via pitch

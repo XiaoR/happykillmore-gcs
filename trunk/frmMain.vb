@@ -33,26 +33,6 @@ Public Class frmMain
     Dim dt As DataTable = New DataTable
     Dim drow As DataRow
 
-    Dim nParameterCount As Integer
-    Dim nParameterCurrentIndex As Integer
-    Dim aIDs(0) As String
-    Dim aName(0) As String
-    Dim aMin(0) As String
-    Dim aMax(0) As String
-    Dim aValue(0) As String
-    Dim aVisible(0) As Boolean
-    Dim aDefault(0) As String
-    Dim aComments(0) As String
-    Dim aMultiplier(0) As String
-    Dim aAdder(0) As String
-    Dim aBit(0) As String
-    Dim aChanged(0) As Boolean
-    Dim aWPCommand(0) As Integer
-    Dim aWPOther(0) As String
-    Dim aWPOther2(0) As String
-    Dim aWPOther3(0) As String
-    Dim aWPOther4(0) As String
-
     Dim nMavlinkHandshake As e_MavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
     Dim nMavlinkCurrentWaypointSend As Integer
     Dim dLastMavlinkCommandTime As Long
@@ -94,7 +74,6 @@ Public Class frmMain
     Dim bNewDateTime As Boolean
     Dim dStartTime As Date
     Dim dLastAtto As Long
-    Dim dLastJoystick As Long
 
     Dim dLastHeartbeat1 As Long
     Dim dLastHeartbeat2 As Long
@@ -105,15 +84,6 @@ Public Class frmMain
 
     Dim dLastNewDevice As Long
     Dim eNewDeviceBootState As e_NewDevice_BootState
-
-    Dim dLastAttoAileron As Long
-    Dim dLastAttoElevator As Long
-    Dim dLastAttoThrottle As Long
-
-    Dim nMaxPitchAngle As Integer = -1
-    Dim nMaxRollAngle As Integer = -1
-    Dim nMinThrottle As Integer = -1
-    Dim nMAxThrottle As Integer = -1
 
     Dim nAttitudeInterval As Integer
     Dim nWaypointInterval As Integer
@@ -154,8 +124,6 @@ Public Class frmMain
 
     Dim bExpandInstruments As Boolean = False
     Dim bUltraSmall As Boolean = False
-
-    Dim jst As JoystickInterface.Joystick = Nothing
 
 
     'Private GraphBuilder2 As ICaptureGraphBuilder2 = New CaptureGraphBuilder2
@@ -596,7 +564,7 @@ Public Class frmMain
         End If
         aWPOther(nIndex) = otherValue
 
-        nWaypoint = nIndex
+        nNewWaypoint = nIndex
         LoadMissionGrid(nIndex)
         UpdateMissionGE(nIndex)
         bLockMissionCenter = bPrevValue
@@ -608,8 +576,8 @@ Public Class frmMain
         chkViewNoTracking.Checked = True
         chkViewNoTracking_CheckedChanged(Nothing, Nothing)
         bLockMissionCenter = False
-        If nWPCount >= nWaypoint Then
-            CenterAndTilt(nWaypoint, 0)
+        If nWPCount >= nNewWaypoint Then
+            'CenterAndTilt(nWaypoint, 0)
             '    'UpdateMissionGE(nWaypoint, , 0)
         End If
     End Sub
@@ -817,7 +785,9 @@ Public Class frmMain
             .Items.Add("None")
             .Items.Add("AttoPilot")
             .Items.Add("UavDevBoard")
-            .Items.Add("Millswood")
+            .Items.Add("Millswood Eng.")
+            .Items.Add("ArduPilot Mega")
+            '.Items.Add("Pololu")
 
             .SelectedIndex = nJoystickOutput
         End With
@@ -936,7 +906,7 @@ Public Class frmMain
         ResizeForm()
         Application.DoEvents()
 
-        cmdTest.Visible = bIsAdmin
+        cmdTest.Visible = False ' bIsAdmin
 
         frmAbout.UpdateStatus("", 100)
         frmAbout.Dispose()
@@ -950,30 +920,38 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "", Optional ByVal defaultTrackingPort As String = "")
+    Private Sub LoadComPorts(Optional ByVal defaultComPort As String = "", Optional ByVal defaultTrackingPort As String = "", Optional ByVal loadType As Integer = 0)
         Dim i As Integer
         Dim sSavedComPort As String
         Dim sSavedTrackingPort As String
 
-        cboComPort.Items.Clear()
-        cboComPort.Items.Add("TCP")
-        cboComPort.Items.Add("UDP")
-        cboComPortTracking.Items.Clear()
+        If loadType = 0 Or loadType = 1 Then
+            cboComPort.Items.Clear()
+            cboComPort.Items.Add("TCP")
+            cboComPort.Items.Add("UDP")
+        End If
+        If loadType = 0 Or loadType = 2 Then
+            cboComPortTracking.Items.Clear()
+        End If
         Try
             For i = 0 To My.Computer.Ports.SerialPortNames.Count - 1
                 If Strings.Left(My.Computer.Ports.SerialPortNames(i), 3) = "COM" Then
-                    cboComPort.Items.Add(My.Computer.Ports.SerialPortNames(i))
-                    cboComPortTracking.Items.Add(My.Computer.Ports.SerialPortNames(i))
+                    If loadType = 0 Or loadType = 1 Then
+                        cboComPort.Items.Add(My.Computer.Ports.SerialPortNames(i))
+                    End If
+                    If loadType = 0 Or loadType = 2 Then
+                        cboComPortTracking.Items.Add(My.Computer.Ports.SerialPortNames(i))
+                    End If
                 End If
             Next
             sSavedComPort = GetRegSetting(sRootRegistry & "\Settings", "COM Port", "")
             sSavedTrackingPort = GetRegSetting(sRootRegistry & "\Settings\Tracking", "Port", "")
             For i = 0 To cboComPort.Items.Count - 3
-                If defaultComPort = "" Then
+                If defaultComPort = "" And (loadType = 0 Or loadType = 1) Then
                     If cboComPort.Items(i) = sSavedComPort Then
                         cboComPort.Text = sSavedComPort
                     End If
-                Else
+                ElseIf (loadType = 0 Or loadType = 1) Then
                     If My.Computer.Ports.SerialPortNames(i) = defaultComPort Then
                         cboComPort.Text = defaultComPort
                         Exit For
@@ -981,24 +959,24 @@ Public Class frmMain
                 End If
 
                 If i < cboComPortTracking.Items.Count Then
-                    If defaultTrackingPort = "" Then
+                    If defaultTrackingPort = "" And (loadType = 0 Or loadType = 2) Then
                         If cboComPortTracking.Items(i) = sSavedTrackingPort Then
                             cboComPortTracking.Text = sSavedTrackingPort
                         End If
-                    Else
+                    ElseIf (loadType = 0 Or loadType = 2) Then
                         If My.Computer.Ports.SerialPortNames(i) = defaultComPort Then
-                            cboComPortTracking.Text = defaultComPort
+                            cboComPortTracking.Text = defaultTrackingPort
                             Exit For
                         End If
                     End If
                 End If
             Next
-            If cboComPort.Items.Count > 0 And cboComPort.SelectedIndex = -1 Then
+            If cboComPort.Items.Count > 0 And cboComPort.SelectedIndex = -1 And (loadType = 0 Or loadType = 1) Then
                 cboComPort.SelectedIndex = 0
                 'Else
                 '    cmdSearch_Click(sender, e)
             End If
-            If cboComPortTracking.Items.Count > 0 And cboComPortTracking.SelectedIndex = -1 Then
+            If cboComPortTracking.Items.Count > 0 And cboComPortTracking.SelectedIndex = -1 And (loadType = 0 Or loadType = 2) Then
                 cboComPortTracking.SelectedIndex = 0
                 'Else
                 '    cmdSearch_Click(sender, e)
@@ -1010,25 +988,30 @@ Public Class frmMain
     End Sub
     Private Sub LoadMissions(Optional ByVal selectMission As String = "")
         Dim sMission As String
+        Dim nCount As Integer
+
         With cboMission
             .Items.Clear()
             .Items.Add("{" & GetResString(, "None") & "}")
             sMission = Dir(GetRootPath() & "Missions\*.txt", FileAttribute.Normal)
             Do While sMission <> ""
                 .Items.Add(sMission)
-                If selectMission <> "" And sMission = selectMission Then
-                    .SelectedIndex = .Items.Count - 1
-                End If
                 sMission = Dir()
             Loop
             sMission = Dir(GetRootPath() & "Missions\*.h", FileAttribute.Normal)
             Do While sMission <> ""
                 .Items.Add(sMission)
-                If selectMission <> "" And sMission = selectMission Then
-                    .SelectedIndex = .Items.Count - 1
-                End If
                 sMission = Dir()
             Loop
+            If selectMission <> "" Then
+                For nCount = 0 To .Items.Count - 1
+                    If UCase(.Items(nCount)) = UCase(selectMission) Then
+                        .SelectedIndex = nCount
+                        Exit For
+                    End If
+                Next
+            End If
+
             If .SelectedIndex < 0 Then
                 .SelectedIndex = 0
             End If
@@ -1233,6 +1216,8 @@ Public Class frmMain
     End Sub
 
     Private Sub GpS_Parser1_AttitudeChange1(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single)
+        Dim nCount As Integer
+
         Try
             nSensor(9) = pitch
             nSensor(10) = roll
@@ -1247,16 +1232,31 @@ Public Class frmMain
             If bInstruments(e_Instruments.e_Instruments_Turn) Then
                 TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(GetRoll(-nRoll), 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
             End If
+
+            'If chkJoystickEnable.Checked = True Then ' And nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Then
+            '    jst.InitializeForce(pitch, roll, 10000, 250000)
+            'End If
         Catch
         End Try
     End Sub
     Private Sub GPS_Parser1_Waypoints(ByVal waypointNumber As Integer, ByVal distance As Single, ByVal battery As Single, ByVal mode As String, ByVal throttle As Single)
+        Dim bWasPlayed As Boolean
+
         If bInstruments(e_Instruments.e_Instruments_Battery) Then
             BatteryIndicatorInstrumentControl1.SetBatteryIndicatorParameters(Replace(GetResString(, "Battery_Throttle"), "&&", "&"), nBattery, nBatteryMin, nBatteryMax, oBatteryColor, nAmperage, 0, nAmperageMax, oAmperageColor, nMAH, nMAHMin, nMAHMax, oMAHColor, throttle, oThrottleColor)
             'Debug.Print(Now)
         End If
 
-        lblWaypoint.Text = IIf(waypointNumber <> 0, "#" & waypointNumber, "")
+        If waypointNumber = -1 Then
+            lblWaypoint.Text = ""
+        Else
+            If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Then
+                lblWaypoint.Text = "#" & waypointNumber
+            Else
+                lblWaypoint.Text = IIf(waypointNumber <> 0, "#" & waypointNumber, "Home")
+            End If
+        End If
+
         lblDistance.Text = IIf(distance <> 0, distance.ToString("###,##0.0") & GetShortDistanceUnits(), "")
         lblTargetAlt.Text = IIf(nWaypoint <> 0, nWaypointAlt.ToString("###,##0.0") & GetShortDistanceUnits(), "")
         lblBattery.Text = battery.ToString("0.00") & IIf(battery <> 0, "v", "")
@@ -1271,18 +1271,54 @@ Public Class frmMain
         If sLastSpeechMode <> lblMode.Text Then
             If sLastSpeechMode <> "" Then
                 If bAnnounceModeChange = True Then
-                    PlayMessage(sSpeechModeChange, sSpeechVoice)
+                    bWasPlayed = False
+                    If bManuelMode = True Then
+                        If InStr(UCase(lblMode.Text), "MANUAL") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Manual")
+                            If bWasPlayed = True Then
+                                dManuelMode = Now.Ticks
+                                imgManuel.Left = tabMapView.Left + 12
+                                imgManuel.Top = tabMapView.Top + 34
+                                If tabMapView.SelectedIndex = 0 Then
+                                    imgManuel.Visible = True
+                                End If
+                            End If
+                        ElseIf InStr(UCase(lblMode.Text), "LOITER") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Loiter")
+                        ElseIf InStr(UCase(lblMode.Text), "STABILIZE") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Stabilize")
+                        ElseIf InStr(UCase(lblMode.Text), "WIRE") <> 0 And InStr(UCase(lblMode.Text), " A") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Flybywirea")
+                        ElseIf InStr(UCase(lblMode.Text), "WIRE") <> 0 And InStr(UCase(lblMode.Text), " B") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Flybywireb")
+                        ElseIf InStr(UCase(lblMode.Text), "RETURN") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Return")
+                        ElseIf InStr(UCase(lblMode.Text), "HIGHLY") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Highly")
+                        ElseIf InStr(UCase(lblMode.Text), "ASSISTED") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Assisted")
+                        ElseIf InStr(UCase(lblMode.Text), "AUTO") <> 0 Then
+                            bWasPlayed = PlaySoundFile("Auto")
+                        End If
+                    End If
+                    If bWasPlayed = False Then
+                        imgManuel.Visible = False
+                        PlayMessage(sSpeechModeChange, sSpeechVoice)
+                    End If
                 End If
             End If
             sLastSpeechMode = lblMode.Text
         End If
-        If nLastSpeechWaypoint <> nWaypoint Then
+        'Debug.Print("nLastSpeechWaypoint=" & nLastSpeechWaypoint)
+        If nLastSpeechWaypoint <> nWaypoint And nLastSpeechWaypoint <> -1 Then
+            nLastSpeechWaypoint = nWaypoint
             If nLastSpeechWaypoint <> -1 Then
                 If bAnnounceWaypoints = True Then
                     nLastSpeechInterval = Now.Ticks
                     PlayMessage(sSpeechWaypoint, sSpeechVoice)
                 End If
             End If
+        ElseIf nLastSpeechWaypoint = -1 Then
             nLastSpeechWaypoint = nWaypoint
         End If
         'If nLastSpeechAltitude < nLastSpeechAltitude Then
@@ -1294,7 +1330,7 @@ Public Class frmMain
         '    End If
         '    nLastSpeechWaypoint = nWaypoint
         'End If
-        If bAnnounceRegularInterval = True And Now.Ticks - nLastSpeechInterval > (1000 * nSpeechInterval) * 10000 Then
+        If bAnnounceRegularInterval = True And Now.Ticks - nLastSpeechInterval > (1000 * nSpeechInterval) * 10000 And nWPCount <> -1 Then
             nLastSpeechInterval = Now.Ticks
             PlayMessage(sSpeechRegularInterval, sSpeechVoice)
         End If
@@ -1475,8 +1511,9 @@ Public Class frmMain
         If webDocument Is Nothing Or bGoogleLoaded = False Then
             Exit Sub
         End If
+
         Try
-            webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset, True})
+            webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset, True, sHomeIcon})
             'lblHomeAltitude.Text = webDocument.GetElementById("homeGroundAltitude").ToString
         Catch e2 As Exception
         End Try
@@ -1515,7 +1552,7 @@ Public Class frmMain
             Exit Sub
         End If
         Try
-            webDocument.InvokeScript("addWaypoint", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), nWaypoint.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, eAltOffset, bMissionClampToGround})
+            webDocument.InvokeScript("addWaypoint", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(ConvertDistance(nAltitude, eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), nNewWaypoint.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, eAltOffset, bMissionClampToGround})
         Catch e2 As Exception
         End Try
     End Sub
@@ -1638,9 +1675,9 @@ Public Class frmMain
         End If
         TrackBar1.Value = nDataIndex
 
-        aBuffer = System.Text.UTF8Encoding.UTF8.GetBytes(sMessage)
+        'aBuffer = System.Text.UTF8Encoding.UTF8.GetBytes(sMessage)
         UpdateSerialDataWindow(sMessage, sMessage)
-        oMessage = GetNextSentence(sMessage, aBuffer)
+        oMessage = GetNextSentence(sMessage) ', aBuffer)
         UpdateVariables(oMessage)
 
         nDataIndex = nDataIndex + 1
@@ -1697,6 +1734,8 @@ Public Class frmMain
         Dim sNewString As String
         Dim ar As IAsyncResult
         Dim sOutput As String
+        Dim nCount As Integer
+        Dim sTempByte As Byte
 
         If bShutdown = True Then
             Exit Sub
@@ -1716,20 +1755,39 @@ Public Class frmMain
                 If serialPortIn.BytesToRead > 0 Then
                     nReadCount = serialPortIn.BytesToRead - 0  'Number of Bytes to read
                     If nReadCount > 0 Then
-                        Dim cData(nReadCount - 1) As Byte
+                        'Dim cData(nReadCount - 1) As Byte
 
-                        nInputStringLength = nInputStringLength + nReadCount
-                        'serialPortIn.Encoding = System.Text.Encoding.UTF8 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
+                        serialPortIn.Encoding = System.Text.Encoding.GetEncoding(1252)
+                        sNewString = serialPortIn.ReadExisting
 
-                        nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
+                        'Do While serialPortIn.BytesToRead > 0
+                        '    sTempByte = serialPortIn.ReadByte
+                        '    sNewString = sNewString & Chr(sTempByte)
+                        '    'ReDim Preserve aBuffer(0 To UBound(aBuffer) + 1)
+                        '    'aBuffer(UBound(aBuffer)) = sTempByte
+                        'Loop
 
-                        sNewString = System.Text.Encoding.Default.GetString(cData, 0, cData.Length)
-                        'sNewString = System.Text.Encoding.ASCII.GetString(cData, 0, cData.Length)
+                        'Dim encoding As New System.Text.UTF8Encoding
+                        'cData = encoding.GetBytes(sNewString)
+
+                        nInputStringLength = nInputStringLength + Len(sNewString)
+                        'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591) 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
+
+                        'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
+
+                        'nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
+
+                        'sNewString = ""
+                        'For nCount = 0 To cData.Length - 1
+                        '    sNewString = sNewString & Chr(cData(nCount))
+                        'Next nCount
+                        ''sNewString = System.Text.Encoding.Default.GetString(cData, 0, cData.Length)
+                        ''sNewString = System.Text.Encoding.ASCII.GetString(cData, 0, cData.Length)
 
                         sBuffer = sBuffer & sNewString
-                        If Len(sNewString) > 0 Then
-                            aBuffer = ConCatArray(aBuffer, cData)
-                        End If
+                        'If Len(sNewString) > 0 Then
+                        '    aBuffer = ConCatArray(aBuffer, cData)
+                        'End If
                         'For Each b As Byte In cData
 
                         '    'AddCharacter(b)
@@ -1740,20 +1798,19 @@ Public Class frmMain
                         '    'End If
                         '    'sBuffer = sBuffer & Chr(b)        'Ascii String
                     End If
-
-                    If tabInstrumentView.SelectedIndex = 2 And Not sNewString Is Nothing Then
-                        sCommandLineBuffer = sCommandLineBuffer & sNewString
-                    Else
-                        sCommandLineBuffer = ""
-                    End If
-
                 End If
 
-                Try
-                    NewDataReceived()
-                Catch
-                End Try
+                If tabInstrumentView.SelectedIndex = 2 And Not sNewString Is Nothing Then
+                    sCommandLineBuffer = sCommandLineBuffer & sNewString
+                Else
+                    sCommandLineBuffer = ""
+                End If
             End If
+
+            Try
+                NewDataReceived()
+            Catch
+            End Try
             Try
                 HeartbeatSend()
             Catch
@@ -1797,6 +1854,10 @@ Public Class frmMain
                 tmrSearch.Enabled = True
             End If
 
+            If (Now.Ticks - 10000000) > dManuelMode And imgManuel.Visible = True Then
+                imgManuel.Visible = False
+            End If
+
             If bNewConnect = True Then
                 SendAttoPilot("Q,0,0")
                 bNewConnect = False
@@ -1807,8 +1868,8 @@ Public Class frmMain
             If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Then
                 If bWaitingAttoUpdate = False Then
                     If bNewDevice = True Then
-                        cmdMissionRead_Click(Nothing, Nothing)
                         cmdConfigRead_Click(Nothing, Nothing)
+                        cmdMissionRead_Click(Nothing, Nothing)
                         bNewDevice = False
                     End If
                 End If
@@ -1841,83 +1902,88 @@ Public Class frmMain
                         bNewDevice = False
                     ElseIf eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_MissionComplete Then
                         eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_StartComplete
-                        UpdateMavlinkStatusRates()
+                        'UpdateMavlinkStatusRates()
                         bNewDevice = False
                     End If
                 End If
-            If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Or nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRespond Then
-                If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Then
-                    nWPCount = 0
-                Else
-                    nWPCount = nWPCount + 1
-                End If
-                nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest
-                SendMavlinkWPDetailRequest()
-            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_DoneRequesting Then
-                nWPCount = nWaypointTotal - 1
-                nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
-                LoadMissionGrid()
-                SetMissionStatus("Mission commands successfully read")
-                'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & Chr(0)
-                'FIX315
-                SendMavLink(New Byte() {85, 3, 0, 127, 0, 47, nConfigVehicle, 1, 0})
-                'SendMavLink(sOutput)
-                If bNewDevice = False And tabInstrumentView.SelectedIndex = 4 Then
-                    chkViewNoTracking.Checked = True
-                    chkViewNoTracking_CheckedChanged(Nothing, Nothing)
-                    UpdateMissionGE(0, , 0, True)
-                Else
-                    UpdateMissionGE(0, , -1, True)
-                End If
-
-                If tabMapView.TabPages(tabMapView.SelectedIndex).Tag = "Google Earth" Then
-                    WebBrowser1.Focus()
-                End If
-                'FIX315
-            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRequest Then
-                If Now.Ticks > (dLastMavlinkCommandTime + (n2WayTimeout * 10000000)) Then
-                    dLastMavlinkCommandTime = Now.Ticks
-                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                    If nMavlinkRetryAttempts <= n2WayRetries Then
-                        SetMissionStatus("APM failed to respond to mission request...retrying...", True)
-                        Debug.Print("Retrying Request Count List (Try #" & n2WayRetries & ")")
-                        SendMavlinkWPCountRequest()
+                If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Or nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRespond Then
+                    If nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRespond Then
+                        nWPCount = 0
                     Else
-                        SetMissionStatus("Misson request failed", True)
-                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                        nWPCount = nWPCount + 1
                     End If
-                End If
-            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest Then
-                If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
-                    dLastMavlinkCommandTime = Now.Ticks
-                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                    If nMavlinkRetryAttempts <= n2WayRetries Then
-                        SetMissionStatus("APM failed to respond to command request...retrying...", True)
-                        If nWPCount = 0 Then
+                    nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest
+                    SendMavlinkWPDetailRequest()
+                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_DoneRequesting Then
+                    nWPCount = nWaypointTotal - 1
+                    nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                    LoadMissionGrid()
+                    SetMissionStatus("Mission commands successfully read")
+                    'sOutput = Chr(85) & Chr(3) & Chr(0) & Chr("&H7F") & Chr(0) & Chr(44) & Chr(nConfigVehicle) & Chr(1) & Chr(0)
+                    'FIX315
+                    SendMavLink(New Byte() {85, 3, 0, 127, 0, 47, nConfigVehicle, 1, 0})
+                    'SendMavLink(sOutput)
+                    If bNewDevice = False And tabInstrumentView.SelectedIndex = 4 Then
+                        chkViewNoTracking.Checked = True
+                        chkViewNoTracking_CheckedChanged(Nothing, Nothing)
+                        UpdateMissionGE(0, , 0, True)
+                    Else
+                        UpdateMissionGE(0, , -1, False)
+                    End If
+
+                    UpdateMavlinkStatusRates()
+
+                    If tabMapView.TabPages(tabMapView.SelectedIndex).Tag = "Google Earth" Then
+                        WebBrowser1.Focus()
+                    End If
+                    'FIX315
+                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_TotalCountRequest Then
+                    If Now.Ticks > (dLastMavlinkCommandTime + (n2WayTimeout * 20000000)) Then
+                        dLastMavlinkCommandTime = Now.Ticks
+                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                        If nMavlinkRetryAttempts <= n2WayRetries Then
+                            SetMissionStatus("APM failed to respond to mission request...retrying...", True)
+                            Debug.Print("Retrying Request Count List (Try #" & n2WayRetries & ")")
                             SendMavlinkWPCountRequest()
                         Else
-                            SendMavlinkWPDetailRequest()
+                            SetMissionStatus("Misson request failed", True)
+                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
                         End If
-                    Else
-                        SetMissionStatus("Command request failed", True)
-                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                    End If
+                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointRequest Then
+                    If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 20000000) Then
+                        dLastMavlinkCommandTime = Now.Ticks
+                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                        If nMavlinkRetryAttempts <= n2WayRetries Then
+                            SetMissionStatus("APM failed to respond to command request...retrying...", True)
+                            If nWPCount = 0 Then
+                                SendMavlinkWPCountRequest()
+                            Else
+                                SendMavlinkWPDetailRequest()
+                            End If
+                        Else
+                            nWPCount = -1
+                            SetMissionStatus("Command request failed", True)
+                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                            UpdateMavlinkStatusRates()
+                        End If
+                    End If
+                ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet Then
+                    If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 20000000) Then
+                        dLastMavlinkCommandTime = Now.Ticks
+                        nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
+                        If nMavlinkRetryAttempts <= n2WayRetries Then
+                            SetMissionStatus("APM failed to respond to write request...retrying...", True)
+                            SendMavlinkWPDetailSet(nMavlinkCurrentWaypointSend)
+                        Else
+                            SetMissionStatus("Mission write failed", True)
+                            nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
+                        End If
                     End If
                 End If
-            ElseIf nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_WaypointSet Then
-                If Now.Ticks > dLastMavlinkCommandTime + (n2WayTimeout * 10000000) Then
-                    dLastMavlinkCommandTime = Now.Ticks
-                    nMavlinkRetryAttempts = nMavlinkRetryAttempts + 1
-                    If nMavlinkRetryAttempts <= n2WayRetries Then
-                        SetMissionStatus("APM failed to respond to write request...retrying...", True)
-                        SendMavlinkWPDetailSet(nMavlinkCurrentWaypointSend)
-                    Else
-                        SetMissionStatus("Mission write failed", True)
-                        nMavlinkHandshake = e_MavlinkHandshake.e_MavlinkHandshake_None
-                    End If
-                End If
-            End If
             End If
         Catch ex As Exception
+            Debug.Print(ex.Message)
         End Try
     End Sub
     Private Sub SendMavlinkWPDetailSet(ByVal waypointNumber As Integer)
@@ -2135,7 +2201,7 @@ Public Class frmMain
             nSentenceCount = 0
             If sBuffer <> "" Then
                 Try
-                    oMessage = GetNextSentence(sBuffer, aBuffer)
+                    oMessage = GetNextSentence(sBuffer) ', aBuffer)
                 Catch ex As Exception
                 End Try
                 'If Not oMessage.RawMessage Is Nothing Or Not oMessage.VisibleSentence Is Nothing Then
@@ -2152,7 +2218,7 @@ Public Class frmMain
 
                     Try
                         UpdateVariables(oMessage)
-                        oMessage = GetNextSentence(sBuffer, aBuffer)
+                        oMessage = GetNextSentence(sBuffer) ', aBuffer)
                         UpdateSerialDataWindow(oMessage.RawMessage, oMessage.VisibleSentence, , oMessage.ValidMessage)
                     Catch ex As Exception
                     End Try
@@ -2942,7 +3008,6 @@ Public Class frmMain
                             Catch
                             End Try
 
-
                         Case cMessage.e_MessageType.e_MessageType_UDB
                             lblGPSType.Text = "Type F2"
                             sSplit = Split(.Packet, ":")
@@ -3053,6 +3118,7 @@ Public Class frmMain
                                                 Else
                                                     nSats = 0
                                                 End If
+                                            ElseIf Microsoft.VisualBasic.Left(sSplit(nCount), 3) = "stk" Then
                                             Else
                                                 sTemp = Mid(sSplit(nCount), 2)
                                                 nGroundSpeed = ConvertSpeed(Convert.ToSingle(sTemp) / 100, e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
@@ -3226,10 +3292,40 @@ Public Class frmMain
                                         End If
                                         SetConfigStatus("Reading " & aName(nParameterCurrentIndex))
                                         aValue(nParameterCurrentIndex) = ConvertMavlinkToSingle(Mid(.Packet, 22, 4))
+
+                                        Select Case aName(nParameterCurrentIndex)
+                                            Case "THROTTLE_MAX"
+                                                cJoystick(1).UpperEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "THROTTLE_MIN"
+                                                cJoystick(1).LowerEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "THROTTLE_TRIM"
+                                                cJoystick(1).SubTrim = (aValue(nParameterCurrentIndex) * 32767 / 1500) - 32767
+
+                                            Case "PITCH_MAX"
+                                                cJoystick(2).UpperEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "PITCH_MIN"
+                                                cJoystick(2).LowerEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "PITCH_TRIM"
+                                                cJoystick(2).SubTrim = (aValue(nParameterCurrentIndex) * 32767 / 1500) - 32767
+
+                                            Case "ROLL_MAX"
+                                                cJoystick(3).UpperEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "ROLL_MIN"
+                                                cJoystick(3).LowerEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "ROLL_TRIM"
+                                                cJoystick(3).SubTrim = (aValue(nParameterCurrentIndex) * 32767 / 1500) - 32767
+
+                                            Case "YAW_MAX"
+                                                cJoystick(4).UpperEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "YAW_MIN"
+                                                cJoystick(4).LowerEndPoint = 100 * (aValue(nParameterCurrentIndex) - 1500) / 600
+                                            Case "YAW_TRIM"
+                                                cJoystick(4).SubTrim = (aValue(nParameterCurrentIndex) * 32767 / 1500) - 32767
+                                        End Select
                                         '                                    Debug.Print("Parsing Parameter #" & nParameterCurrentIndex & ",Name=" & aName(nParameterCurrentIndex) & ",Value=" & aValue(nParameterCurrentIndex))
                                     End If
 
-                                    If nParameterCurrentIndex = nParameterCount Or bWaitingMavlinkWrite = False Then
+                                    If nParameterCurrentIndex = nParameterCount Or (bWaitingMavlinkWrite = False And nParameterCurrentIndex <> -1) Then
                                         SetConfigStatus("Parameter read or write complete")
                                         If eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_RequestingParameters Then
                                             eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_ParametersComplete
@@ -3281,7 +3377,7 @@ Public Class frmMain
                                     nLatitude = ConvertMavlinkToSingle(Mid(.Packet, 16, 4))
                                     nLongitude = ConvertMavlinkToSingle(Mid(.Packet, 20, 4))
                                     nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 24, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                    nHDOP = ConvertMavlinkToSingle(Mid(.Packet, 28, 4))
+                                    nHDOP = ConvertMavlinkToSingle(Mid(.Packet, 28, 4)) / 100
                                     nGroundSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 36, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                     nHeading = ConvertMavlinkToSingle(Mid(.Packet, 40, 4))
                                     'Debug.Print("Heading = " & nHeading)
@@ -3456,6 +3552,7 @@ Public Class frmMain
                                     Else
                                         SetMissionStatus("Mission write complete")
                                     End If
+                                    UpdateMavlinkStatusRates()
                                 Case 62
                                     'nRoll = -ConvertMavlinkToSingle(Mid(.Packet, 7, 4)) * 180 / Math.PI
                                     'nPitch = -ConvertMavlinkToSingle(Mid(.Packet, 11, 4)) * 180 / Math.PI
@@ -3475,9 +3572,9 @@ Public Class frmMain
                                 Case 74 'VFR_HUD 
                                     nAirSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 7, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
                                     nGroundSpeed = ConvertSpeed(ConvertMavlinkToSingle(Mid(.Packet, 11, 4)), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
-                                    nHeading = ConvertMavlinkToInteger(Mid(.Packet, 15, 2)) / 100
-                                    nThrottle = ConvertMavlinkToInteger(Mid(.Packet, 17, 2), True)
-                                    nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 19, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                    'nHeading = ConvertMavlinkToInteger(Mid(.Packet, 15, 2)) '/ 100
+                                    'nThrottle = ConvertMavlinkToInteger(Mid(.Packet, 17, 2), True)
+                                    'nAltitude = ConvertDistance(ConvertMavlinkToSingle(Mid(.Packet, 19, 4)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
                                 Case 76
                                     If Asc(Mid(.Packet, 8, 1)) = 1 Then
                                         lblControlMavlinkStatus.Text = "Status: Action accepted - " & cboControlMavlinkAction.Text
@@ -3535,7 +3632,8 @@ Public Class frmMain
                     End Select
                 End If
             End With
-        Catch
+        Catch ex As Exception
+            Debug.Print(ex.Message)
         End Try
 
         If bNewAttitude = True And chkFullDataFile.Checked = False Then
@@ -3866,6 +3964,8 @@ Public Class frmMain
         oActiveDevices.Initialize()
         pnlLinkLost.Visible = False
         dLastNewDevice = 0
+        nLastSpeechWaypoint = -1
+        nWaypoint = -1
         eNewDeviceBootState = e_NewDevice_BootState.e_NewDevice_BootState_None
 
         tmrSearch.Enabled = False
@@ -4347,9 +4447,9 @@ Public Class frmMain
                         Else
                             aWPAlt(nWPCount) = txtMissionDefaultAlt.Text
                         End If
-                        If UBound(sSplit2) >= 5 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
-                            aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(4))
-                            aWPOther(nWPCount) = sSplit2(5)
+                        If UBound(sSplit2) >= 6 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
+                            aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(5))
+                            aWPOther(nWPCount) = sSplit2(6)
                         End If
 
                     ElseIf Mid(sSplit(nCount), 1, 5) = "OPTIO" Then
@@ -4384,9 +4484,9 @@ Public Class frmMain
                         Else
                             aWPAlt(nWPCount) = txtMissionDefaultAlt.Text
                         End If
-                        If UBound(sSplit2) >= 5 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
-                            aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(4))
-                            aWPOther(nWPCount) = sSplit2(5)
+                        If UBound(sSplit2) >= 6 And nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
+                            aWPCommand(nWPCount) = Convert.ToInt32(sSplit2(5))
+                            aWPOther(nWPCount) = sSplit2(6)
                         End If
                     End If
                 End If
@@ -4525,7 +4625,11 @@ Public Class frmMain
     End Sub
 
     Private Sub cmdReloadComPorts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReloadComPorts.Click, cmdReloadTrackingPorts.Click
-        LoadComPorts(cboComPort.Text, cboComPortTracking.Text)
+        If sender.name = "cmdReloadComPorts" Then
+            LoadComPorts(cboComPort.Text, cboComPortTracking.Text, 1)
+        Else
+            LoadComPorts(cboComPort.Text, cboComPortTracking.Text, 2)
+        End If
     End Sub
 
     Private Sub cmdResetRuntime_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdResetRuntime.Click
@@ -4633,8 +4737,8 @@ Public Class frmMain
             chkViewNoTracking.Checked = True
             chkViewNoTracking_CheckedChanged(Nothing, Nothing)
             bLockMissionCenter = False
-            If nWPCount >= nWaypoint Then
-                CenterAndTilt(nWaypoint, 0)
+            If nWPCount >= nNewWaypoint Then
+                CenterAndTilt(nNewWaypoint, 0)
                 '    'UpdateMissionGE(nWaypoint, , 0)
             End If
         ElseIf tabInstrumentView.SelectedIndex = 5 Then
@@ -5119,6 +5223,19 @@ Public Class frmMain
                 tbarSensor6.Width = tbarSensor1.Width
                 tbarSensor7.Width = tbarSensor1.Width
                 tbarSensor8.Width = tbarSensor1.Width
+            Case 5
+                lblJoystickOutput1.Left = tabPortControl.Width - lblJoystickOutput1.Width - 6
+                lblJoystickOutput2.Left = lblJoystickOutput1.Left
+                lblJoystickOutput3.Left = lblJoystickOutput1.Left
+                lblJoystickOutput4.Left = lblJoystickOutput1.Left
+                'lblJoystickOutput5.Left = lblJoystickOutput1.Left
+
+                tbarJoystickOutput1.Width = lblJoystickOutput1.Left - tbarJoystickOutput1.Left
+                tbarJoystickOutput2.Width = tbarJoystickOutput1.Width
+                tbarJoystickOutput3.Width = tbarJoystickOutput1.Width
+                tbarJoystickOutput4.Width = tbarJoystickOutput1.Width
+                'tbarJoystickOutput5.Width = tbarJoystickOutput1.Width
+
         End Select
         If bUltraSmall = True And bExpandInstruments = False Then
             Select Case tabPortControl.SelectedIndex
@@ -5162,7 +5279,7 @@ Public Class frmMain
 
                 lblJoystickDevice.Text = sJoystickDevice
 
-                If bFoundOne = True And sJoystickDevice <> "" And nJoystickElevatorMin <> 32767 And nJoystickElevatorMax <> 32767 And nJoystickAileronMin <> 32767 And nJoystickAileronMax <> 32767 Then
+                If bFoundOne = True And sJoystickDevice <> "" Then 'And nJoystickElevatorMin <> 32767 And nJoystickElevatorMax <> 32767 And nJoystickAileronMin <> 32767 And nJoystickAileronMax <> 32767 Then
                     chkJoystickEnable.Enabled = True
                 Else
                     chkJoystickEnable.Enabled = False
@@ -5200,11 +5317,16 @@ Public Class frmMain
                 nWPCount = 0
             End If
             LoadMissionGrid()
-            UpdateMissionGE(0, , 0, True)
+            If tabInstrumentView.SelectedIndex = 4 Then
+                UpdateMissionGE(0, , 0, True)
+            Else
+                UpdateMissionGE(0, , 0, False)
+            End If
             If Not webDocument Is Nothing And bGoogleLoaded = True And cboConfigDevice.Enabled = True Then
-                webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(nAltitude), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset, True})
+                webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(nLatitude), ConvertPeriodToLocal(nLongitude), ConvertPeriodToLocal(nAltitude), sModelURL, tbarModelScale.Value, GetPitch(nPitch * nDaePitchRollOffset), GetRoll(nRoll * nDaePitchRollOffset), nCameraTracking, eAltOffset, True, sHomeIcon})
             End If
             nDataPoints = 1
+            lblStatusTracking.Text = "Home Set"
         Catch
         End Try
     End Sub
@@ -5658,7 +5780,7 @@ Public Class frmMain
 
             'oMessage = GetNextSentence(sNewString & vbCrLf)
             'oMessage = GetNextSentence(Chr(&HA5) & Chr(&H5A) & sSplit(nCount))
-            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf, Nothing)
+            oMessage = GetNextSentence(sSplit(nCount) & vbCrLf) ', Nothing)
             UpdateVariables(oMessage)
             Application.DoEvents()
 
@@ -6136,7 +6258,12 @@ Public Class frmMain
         nConfigDevice = CType(cboConfigDevice.Items(cboConfigDevice.SelectedIndex), cValueDesc).Value
         SaveRegSetting(sRootRegistry & "\Settings", "Config Device", nConfigDevice)
 
-
+        Select Case nConfigDevice
+            Case e_ConfigDevice.e_ConfigDevice_AttoPilot
+                sHomeIcon = "red00"
+            Case Else
+                sHomeIcon = "blackH"
+        End Select
 
         'nWPCount = -1
         'ReDim aWPLat(0)
@@ -6211,57 +6338,13 @@ Public Class frmMain
                 cmdMissionMavlinkAdd.Visible = False
                 grpControlAtto.Visible = True
                 grpControlMavlink.Visible = False
-                With cboMissionAttoLoiter
-                    .Items.Clear()
-                    .Items.Add("No Loiter")
-                    .Items.Add("Radius $69")
-                    .Items.Add("Radius $70")
-                    .Items.Add("Radius $71")
-                    .Items.Add("Radius $72")
-                    .Items.Add("Radius $73")
-                    .Items.Add("Radius $74")
-                    .Items.Add("Radius $75")
-                    .Items.Add("Radius $76")
-                    .Items.Add("Radius $77")
-                End With
 
-                With cboMissionAttoLoiterDuration
-                    .Items.Clear()
-                    .Items.Add("Duration $78")
-                    .Items.Add("Duration $79")
-                    .Items.Add("Duration $80")
-                    .Items.Add("Duration $81")
-                    .Items.Add("Duration $82")
-                    .Items.Add("Duration $83")
-                    .Items.Add("Duration $84")
-                    .Items.Add("Duration $85")
-                    .Items.Add("Duration $86")
-                End With
+                LoadAttoCombos()
 
                 With cboMissionAttoLoiterDirection
                     .Items.Clear()
                     .Items.Add("Clockwise")
                     .Items.Add("Counter Clockwise")
-                End With
-
-                With cboMissionAttoTriggerControl
-                    .Items.Clear()
-                    .Items.Add("None")
-                    .Items.Add("At Waypoint")
-                    .Items.Add("Time $87")
-                    .Items.Add("Time $88")
-                    .Items.Add("Time $89")
-                    .Items.Add("Time $90")
-                    .Items.Add("Distance $91")
-                    .Items.Add("Distance $92")
-                    .Items.Add("Distance $93")
-                    .Items.Add("Distance $94")
-                End With
-
-                With cboMissionAttoAltitudeControl
-                    .Items.Clear()
-                    .Items.Add("No Control")
-                    .Items.Add("Loiter $42,$43")
                 End With
 
                 With cboMissionAttoReversePath
@@ -6336,6 +6419,110 @@ Public Class frmMain
         End If
         LoadMissionGrid()
         UpdateMissionGE()
+    End Sub
+    Public Function CintX(ByVal inputValue As VariantType) As Integer
+        Try
+            If IsNumeric(inputValue) = True Then
+                CintX = Convert.ToInt32(inputValue)
+            Else
+                CintX = 0
+            End If
+        Catch
+            CintX = 0
+        End Try
+    End Function
+    Public Sub LoadAttoCombos()
+        Dim nCount As Integer
+        Dim sPartOne As String
+
+        Try
+            cboMissionAttoLoiter.Items.Clear()
+            cboMissionAttoLoiter.Items.Add("No Loiter")
+
+            cboMissionAttoLoiterDuration.Items.Clear()
+
+            cboMissionAttoTriggerControl.Items.Clear()
+            cboMissionAttoTriggerControl.Items.Add("None")
+            cboMissionAttoTriggerControl.Items.Add("At Waypoint")
+
+            cboMissionAttoAltitudeControl.Items.Clear()
+            cboMissionAttoAltitudeControl.Items.Add("No Control")
+
+            For nCount = 0 To UBound(aIDs)
+                Select Case aIDs(nCount)
+                    Case "$42"
+                        sPartOne = aValue(nCount)
+                    Case "$43"
+                        cboMissionAttoAltitudeControl.Items.Add("Loiter " & sPartOne & "," & CintX(aValue(nCount)) & " ($42,$43)")
+
+                    Case "$69"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$70"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$71"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$72"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$73"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$74"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$75"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$76"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$77"
+                        cboMissionAttoLoiter.Items.Add("Radius " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+
+                    Case "$78"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$79"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$80"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$81"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$82"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$83"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$84"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$85"
+                        cboMissionAttoLoiterDuration.Items.Add("Duration " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+
+                    Case "$87"
+                        cboMissionAttoTriggerControl.Items.Add("Time " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$88"
+                        cboMissionAttoTriggerControl.Items.Add("Time " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$89"
+                        cboMissionAttoTriggerControl.Items.Add("Time " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+                    Case "$90"
+                        cboMissionAttoTriggerControl.Items.Add("Time " & CintX(aValue(nCount)) & " " & GetResString(, "secs") & " (" & aIDs(nCount) & ")")
+
+                    Case "$91"
+                        cboMissionAttoTriggerControl.Items.Add("Distance " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$92"
+                        cboMissionAttoTriggerControl.Items.Add("Distance " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$93"
+                        cboMissionAttoTriggerControl.Items.Add("Distance " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+                    Case "$94"
+                        cboMissionAttoTriggerControl.Items.Add("Distance " & CintX(aValue(nCount)) & GetShortDistanceUnits() & " (" & aIDs(nCount) & ")")
+
+                End Select
+            Next
+
+
+
+            With cboMissionAttoAltitudeControl
+                .Items.Clear()
+                .Items.Add("No Control")
+                .Items.Add("Loiter $42,$43")
+            End With
+        Catch ex As Exception
+            Debug.Print(ex.Message)
+        End Try
+
     End Sub
     Private Sub LoadGluonVariables()
         Dim sFileContents As String
@@ -6737,14 +6924,14 @@ Public Class frmMain
                 With cboControlAttoWPNumber
                     .Items.Clear()
                     For nCount = 0 To nWPCount
-                        Select Case nCount
-                            Case 0
-                                .Items.Add(nCount & " (Home)")
-                            Case 1
-                                .Items.Add(nCount & " (Rally)")
-                            Case Else
-                                .Items.Add(nCount)
-                        End Select
+                        'Select Case nCount
+                        'Case 0
+                        '    .Items.Add(nCount) '& " (Home)")
+                        'Case 1
+                        '    .Items.Add(nCount) '& " (Rally)")
+                        'Case Else
+                        .Items.Add("WP #" & nCount)
+                        'End Select
                         If .Items.Count - 1 = nLastSelected Then
                             .SelectedIndex = .Items.Count - 1
                         End If
@@ -6780,7 +6967,7 @@ Public Class frmMain
             cmdMissionOverride.Enabled = True
             cmdMissionSaveAs.Enabled = True
         Else
-            cmdMissionAttoWrite.Enabled = False
+            cmdMissionAttoWrite.Enabled = True
             cmdMissionMavlinkWrite.Enabled = False
             cmdMissionOverride.Enabled = False
             cmdMissionSaveAs.Enabled = False
@@ -6788,106 +6975,109 @@ Public Class frmMain
         VerifyAddButton()
         bLockMissionCenter = bPrevValue
     End Sub
-    Private Sub LoadMavlinkParameterGrid(Optional ByVal selectedRowID As String = "")
+    Public Sub LoadMavlinkParameterGrid(Optional ByVal selectedRowID As String = "")
         Dim nCount As Integer
         Dim nCount2 As Integer
         Dim nLastSelected As Integer = -1
 
-        If selectedRowID = "" Then
-            If dgConfigVariable.SelectedCells.Count > 0 Then
-                nLastSelected = dgConfigVariable.SelectedCells(0).RowIndex
+        Try
+            If selectedRowID = "" Then
+                If dgConfigVariable.SelectedCells.Count > 0 Then
+                    nLastSelected = dgConfigVariable.SelectedCells(0).RowIndex
+                End If
             End If
-        End If
 
-        If nParameterCount > 0 Then
-            Try
-                dt = New DataTable
+            If nParameterCount > 0 Then
+                Try
+                    dt = New DataTable
 
-                dt.Columns.Add(AddDataColumn("Name"))
-                dt.Columns.Add(AddDataColumn("Min"))
-                dt.Columns.Add(AddDataColumn("Max"))
-                dt.Columns.Add(AddDataColumn("Value", False))
-                dt.Columns.Add(AddDataColumn("Default"))
-                dt.Columns.Add(AddDataColumn("Comment"))
-            Catch
-            End Try
+                    dt.Columns.Add(AddDataColumn("Name"))
+                    dt.Columns.Add(AddDataColumn("Min"))
+                    dt.Columns.Add(AddDataColumn("Max"))
+                    dt.Columns.Add(AddDataColumn("Value", False))
+                    dt.Columns.Add(AddDataColumn("Default"))
+                    dt.Columns.Add(AddDataColumn("Comment"))
+                Catch
+                End Try
 
-            LoadMavlinkSetFile()
+                LoadMavlinkSetFile()
 
-            Try
-                For nCount = 0 To nParameterCount
+                Try
+                    For nCount = 0 To nParameterCount
 
-                    If Not aName(nCount) Is Nothing Then
-                        If aName(nCount) <> "" And aVisible(nCount) = True Then
-                            drow = dt.NewRow
-                            'Debug.Print(aName(nCount))
-                            'drow(0) = Mid(aName(nCount), 1, InStr(aName(nCount), Chr(0)) - 1) 'aName(nCount)
-                            drow(0) = aName(nCount)
-                            drow(1) = aMin(nCount)
-                            drow(2) = aMax(nCount)
-                            If IsNumeric(aMultiplier(nCount)) = True Then
-                                If IsNumeric(aValue(nCount)) = True Then
-                                    drow(3) = aValue(nCount) / aMultiplier(nCount)
+                        If Not aName(nCount) Is Nothing Then
+                            If aName(nCount) <> "" And aVisible(nCount) = True Then
+                                drow = dt.NewRow
+                                'Debug.Print(aName(nCount))
+                                'drow(0) = Mid(aName(nCount), 1, InStr(aName(nCount), Chr(0)) - 1) 'aName(nCount)
+                                drow(0) = aName(nCount)
+                                drow(1) = aMin(nCount)
+                                drow(2) = aMax(nCount)
+                                If IsNumeric(aMultiplier(nCount)) = True Then
+                                    If IsNumeric(aValue(nCount)) = True Then
+                                        drow(3) = aValue(nCount) / aMultiplier(nCount)
+                                    Else
+                                        drow(3) = ""
+                                    End If
+                                    If IsNumeric(aDefault(nCount)) = True Then
+                                        drow(4) = aDefault(nCount) / aMultiplier(nCount)
+                                    Else
+                                        drow(4) = ""
+                                    End If
                                 Else
-                                    drow(3) = ""
-                                End If
-                                If IsNumeric(aDefault(nCount)) = True Then
-                                    drow(4) = aDefault(nCount) / aMultiplier(nCount)
-                                Else
-                                    drow(4) = ""
-                                End If
-                            Else
-                                If Len(aName(nCount)) >= 12 Then
-                                    If aName(nCount).Substring(0, 12) = "FLIGHT_MODE_" Then
-                                        If IsNumeric(aValue(nCount)) = True Then
-                                            drow(3) = GetControlModeByInteger(aValue(nCount))
-                                            drow(4) = GetControlModeByInteger(aDefault(nCount))
+                                    If Len(aName(nCount)) >= 12 Then
+                                        If aName(nCount).Substring(0, 12) = "FLIGHT_MODE_" Then
+                                            If IsNumeric(aValue(nCount)) = True Then
+                                                drow(3) = GetControlModeByInteger(aValue(nCount))
+                                                drow(4) = GetControlModeByInteger(aDefault(nCount))
+                                            Else
+                                                drow(3) = ""
+                                                drow(4) = ""
+                                            End If
                                         Else
-                                            drow(3) = ""
-                                            drow(4) = ""
+                                            drow(3) = aValue(nCount)
+                                            drow(4) = aDefault(nCount)
                                         End If
                                     Else
                                         drow(3) = aValue(nCount)
                                         drow(4) = aDefault(nCount)
                                     End If
-                                Else
-                                    drow(3) = aValue(nCount)
-                                    drow(4) = aDefault(nCount)
                                 End If
-                            End If
-                            drow(5) = aComments(nCount)
+                                drow(5) = aComments(nCount)
 
-                            dt.Rows.Add(drow)
+                                dt.Rows.Add(drow)
 
-                            If nLastSelected = -1 And selectedRowID <> "" Then
-                                If aName(nCount) = selectedRowID Then
-                                    nLastSelected = nCount
+                                If nLastSelected = -1 And selectedRowID <> "" Then
+                                    If aName(nCount) = selectedRowID Then
+                                        nLastSelected = nCount
+                                    End If
                                 End If
                             End If
                         End If
-                    End If
-                Next
+                    Next
 
-            Catch
-            End Try
-            SetConfigStatus(lblConfigStatus.Text & " (" & dt.Rows.Count & " parameters)")
-            dgConfigVariable.DataSource = dt
-        Else
-            dgConfigVariable.Visible = False
-            dt.Rows.Clear()
-            dgConfigVariable.DataSource = Nothing
-        End If
-        If nLastSelected = -1 Then
-            SetConfigSelectedRowCol(0, 3)
-        Else
-            SetConfigSelectedRowCol(nLastSelected, 3)
-        End If
-        dgConfigVariable.Refresh()
-        'dgConfigVariable.Columns("Comment").DisplayIndex = 6
-        dgConfigVariable.Enabled = True
-        dgConfigVariable.Visible = True
+                Catch
+                End Try
+                SetConfigStatus(lblConfigStatus.Text & " (" & dt.Rows.Count & " parameters)")
+                dgConfigVariable.DataSource = dt
+            Else
+                dgConfigVariable.Visible = False
+                dt.Rows.Clear()
+                dgConfigVariable.DataSource = Nothing
+            End If
+            If nLastSelected = -1 Then
+                SetConfigSelectedRowCol(0, 3)
+            Else
+                SetConfigSelectedRowCol(nLastSelected, 3)
+            End If
+            dgConfigVariable.Refresh()
+            'dgConfigVariable.Columns("Comment").DisplayIndex = 6
+            dgConfigVariable.Enabled = True
+            dgConfigVariable.Visible = True
 
-        dgConfigVariable.Focus()
+            dgConfigVariable.Focus()
+        Catch ex As Exception
+        End Try
     End Sub
     Private Function SetConfigSelectedRowCol(Optional ByVal row As Integer = -1, Optional ByVal col As Integer = -1)
         Dim nSelectedRow As Integer
@@ -6994,6 +7184,7 @@ Public Class frmMain
         Dim sComment As String
         Dim sParamName As String
 
+
         'sFileContents = GetFileContents(GetRootPath() & "\SetConfig.txt")
         sFileContents = HK_GCS.My.Resources.TextFiles.APMSetConfig.ToString
 
@@ -7028,11 +7219,17 @@ Public Class frmMain
 
                                 Select Case aName(nCount3)
                                     Case "WP_RADIUS"
-                                        txtControlMavlinkWPRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        If IsNumeric(aValue(nCount3)) = True Then
+                                            txtControlMavlinkWPRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        End If
                                     Case "LOITER_RADIUS"
-                                        txtControlMavlinkLoiterRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        If IsNumeric(aValue(nCount3)) = True Then
+                                            txtControlMavlinkLoiterRadius.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        End If
                                     Case "ALT_HOLD_RTL"
-                                        txtControlMavlinkAltRTL.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        If IsNumeric(aValue(nCount3)) = True Then
+                                            txtControlMavlinkAltRTL.Text = ConvertDistance(aValue(nCount3) / aMultiplier(nCount3), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        End If
                                 End Select
 
                                 Exit For
@@ -7318,6 +7515,7 @@ Public Class frmMain
                                 sOutput = "D," & nConfigVehicle & "," & aIDs(nCount).Substring(1) & "," & aIDs(nCount).Substring(1)
                                 If SendToMessageAndWait(sOutput, sErrorMessage, sResponse) = True Then
                                     aValue(nCount) = sResponse
+                                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
                                 Else
                                     nStillFailed = nStillFailed + 1
                                 End If
@@ -7332,6 +7530,8 @@ Public Class frmMain
                     SetConfigStatus("Parameter read complete")
                 End If
 
+                LoadAttoCombos()
+                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
                 LoadAttoParameterGrid()
                 bWaitingAttoUpdate = False
 
@@ -7387,7 +7587,7 @@ Public Class frmMain
 
         If bConnected = True Then
             cmdMissionAttoRead.Enabled = False
-            cmdMissionAttoWrite.Enabled = False
+            'cmdMissionAttoWrite.Enabled = False
 
             Me.Cursor = Cursors.WaitCursor
 
@@ -7478,11 +7678,11 @@ Public Class frmMain
                                         'aWPNum(nWPCount) = sSplit(2)
                                         aWPLat(nWPCount) = ConvertPeriodToLocal(sSplit(3))
                                         aWPLon(nWPCount) = ConvertPeriodToLocal(sSplit(4))
-                                        If nWPCount = 0 Then
-                                            aWPAlt(nWPCount) = 0
-                                        Else
-                                            aWPAlt(nWPCount) = ConvertDistance(ConvertPeriodToLocal(sSplit(5)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
-                                        End If
+                                        'If nWPCount = 0 Then
+                                        '    aWPAlt(nWPCount) = 0
+                                        'Else
+                                        aWPAlt(nWPCount) = ConvertDistance(ConvertPeriodToLocal(sSplit(5)), e_DistanceFormat.e_DistanceFormat_Meters, eDistanceUnits)
+                                        'End If
                                         aWPTrigger(nWPCount) = sSplit(6).PadLeft(8, "0")
                                         aWPSpeed(nWPCount) = ConvertSpeed(ConvertPeriodToLocal(sSplit(7).Substring(0, InStr(sSplit(7), "*") - 1)), e_SpeedFormat.e_SpeedFormat_KPH, eSpeedUnits)
                                         'Else
@@ -7497,6 +7697,7 @@ Public Class frmMain
                         End If
                     Loop
 
+                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
                     LoadMissionGrid()
                     bWaitingAttoUpdate = False
                 Case e_ConfigDevice.e_ConfigDevice_MAVlink
@@ -7519,12 +7720,31 @@ Public Class frmMain
             If bFoundOne = False Then
                 'nRet = MsgBox("AttoPilot vehicle #" & nConfigVehicle & " failed to respond to mission read request", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Read Failed")
             Else
-                UpdateMissionGE(0, , 0, True)
+                UpdateMissionGE(0, , 0) ', True)
                 If tabMapView.TabPages(tabMapView.SelectedIndex).Tag = "Google Earth" Then
                     WebBrowser1.Focus()
                 End If
             End If
         End If
+    End Sub
+    Public Sub SendMavlinkRawServo(ByVal channel1 As Integer, ByVal channel2 As Integer, ByVal channel3 As Integer, ByVal channel4 As Integer, ByVal channel5 As Integer, ByVal channel6 As Integer, ByVal channel7 As Integer, ByVal channel8 As Integer)
+        Dim arr() As Byte
+
+        'FIX314
+        arr = New Byte() {85, 17, 0, 127, 0, 35}
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel1))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel2))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel3))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel4))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel5))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel6))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel7))
+        arr = ConCatArray(arr, ConvertIntegerToMavlinkByte(channel8))
+        arr = ConCatArray(arr, New Byte() {0})
+
+        bWaitingMavlinkWrite = True
+        SendMavLink(arr)
+
     End Sub
     Private Sub SendMavlinkWPCountSet()
         Dim arr() As Byte
@@ -7542,6 +7762,8 @@ Public Class frmMain
     Private Sub SendMavlinkWPCountRequest()
         Dim arr() As Byte
 
+        DisableMavlinkStatusRates()
+
         'FIX314
         arr = New Byte() {85, 2, 0, 127, 0, 43, nConfigVehicle, 1}
 
@@ -7553,13 +7775,15 @@ Public Class frmMain
         Debug.Print("Send Waypoint Count Request")
         'bWaitingMavlinkUpdate = False
     End Sub
-    Private Sub SendAttoPilot(ByVal inputCommand As String)
+    Public Sub SendAttoPilot(ByVal inputCommand As String)
         Dim sOutput As String
         Try
-            'Debug.Print("$" & inputCommand & "*" & GetChecksum(inputCommand) & vbCr)
+            'Debug.Print("$" & inputCommand & "*" & GetChecksum(inputCommand))
             sOutput = "$" & inputCommand & "*" & GetChecksum(inputCommand)
+            'sOutput = "$" & inputCommand & "*FF"
             WriteSerialIn(sOutput & vbCr)
         Catch ex As Exception
+            Debug.Print(ex.Message)
         End Try
     End Sub
 
@@ -7592,12 +7816,13 @@ Public Class frmMain
             For nCount = 0 To UBound(aOutputCommand)
                 sTemp = sTemp & Hex(aOutputCommand(nCount)).PadLeft(2, "0") & " "
             Next
-            Debug.Print(sTemp)
+            Debug.Print(Now & ":OUT=" & sTemp)
             'Debug.Print("Old CRC=" & Hex(Asc(Mid(sTest, 1, 1))) & " " & Hex(Asc(Mid(sTest, 2, 1))))
         Catch ex As Exception
+            Debug.Print(ex.Message)
         End Try
     End Sub
-    Private Sub WriteSerialIn(ByVal inputCommand As String, Optional ByVal sendAsBinary As Boolean = False, Optional ByVal additionalText As String = "")
+    Public Sub WriteSerialIn(ByVal inputCommand As String, Optional ByVal sendAsBinary As Boolean = False, Optional ByVal additionalText As String = "")
         Dim nCount As Integer
         Dim sOutput As String
         Dim handler As Socket
@@ -7614,16 +7839,35 @@ Public Class frmMain
             UpdateSerialDataWindow(inputCommand, additionalText & inputCommand, False)
         End If
 
-        If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
+        If cboComPort.Text = "TCP" Then
             If SocketServer.clients.Count > 0 Then
                 handler = SocketServer.clients(0).workSocket
-                If handler.Available > 0 Then
+                If SocketServer.clients(0).workSocket.Connected = True Then
                     SocketServer.Send(handler, inputCommand)
                 End If
             End If
+        ElseIf cboComPort.Text = "UDP" Then
+            lblComPortStatus.Text = "Cannot send output message via UDP"
         Else
             If sendAsBinary = True Then
-                Dim outputBytes() As Byte
+                'Dim outputBytes() As Byte
+
+                Dim outputBytes(0 To Len(inputCommand) - 1) As Byte
+                For nCount = 0 To Len(inputCommand) - 1
+                    outputBytes(nCount) = Asc(inputCommand.Substring(nCount, 1))
+                Next nCount
+
+                'Dim encoding As New System.Text.UTF8Encoding()
+                'outputBytes = encoding.GetBytes(inputString & IIf(sendCrLf = True, vbCrLf, ""))
+
+                'nInputStringLength = nInputStringLength + nReadCount
+                'serialPortIn.Encoding = System.Text.Encoding.UTF8 'System.Text.Encoding.GetEncoding(28591) '65001) '28591
+                'nReadResult = serialPortIn.Read(cData, 0, nReadCount)  'Reading the Data
+
+                'sNewString = System.Text.Encoding.Default.GetString(cData)
+                'sBuffer = sBuffer & sNewString
+
+                serialPortIn.Write(outputBytes, 0, UBound(outputBytes) + 1)
 
                 'serialPortIn.Encoding = System.Text.Encoding.GetEncoding(1252)
                 'Dim encoding As New System.Text.UTF8Encoding
@@ -7637,7 +7881,7 @@ Public Class frmMain
                 'sBuffer = sBuffer & sNewString
 
                 'serialPortIn.Write(binaryBytes, 0, UBound(binaryBytes))
-                serialPortIn.Write(inputCommand)
+                'serialPortIn.Write(inputCommand)
                 'serialPortIn.Write(outputBytes, 0, UBound(outputBytes))
             Else
                 If serialPortIn.IsOpen = True Then
@@ -7652,7 +7896,7 @@ Public Class frmMain
             End If
         End If
     End Sub
-    Private Sub WriteSerialInBinary(ByVal inputCommand() As Byte, Optional ByVal additionalText As String = "")
+    Public Sub WriteSerialInBinary(ByVal inputCommand() As Byte, Optional ByVal additionalText As String = "")
         Dim nCount As Integer
         Dim sOutput As String
         Dim handler As Socket
@@ -7662,7 +7906,7 @@ Public Class frmMain
         Next
         UpdateSerialDataWindow(sOutput, additionalText & sOutput, False)
 
-        If cboComPort.Text = "TCP" Or cboComPort.Text = "UDP" Then
+        If cboComPort.Text = "TCP" Then
             If SocketServer.clients.Count > 0 Then
                 handler = SocketServer.clients(0).workSocket
                 If handler.Available > 0 Then
@@ -7670,13 +7914,16 @@ Public Class frmMain
                     'FIX314 -a
                 End If
             End If
+        ElseIf cboComPort.Text = "UDP" Then
+            lblComPortStatus.Text = "Cannot send output message via UDP"
         Else
             'serialPortIn.Encoding = System.Text.Encoding.UTF8
+            serialPortIn.Encoding = System.Text.Encoding.GetEncoding(28591)
             serialPortIn.Write(inputCommand, 0, UBound(inputCommand) + 1)
         End If
     End Sub
 
-    Private Sub cmdConfigWrite_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdConfigWrite.Click
+    Public Sub cmdConfigWrite_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdConfigWrite.Click
         'Const RetryMax As Integer = 5
         'Const WaitForReplyTime As Long = 2000
 
@@ -7768,6 +8015,7 @@ Public Class frmMain
                             aChanged(nCount) = False
                         End If
                     Next
+                    LoadAttoCombos()
                 End If
                 bWaitingAttoUpdate = False
             ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_Gluonpilot Then
@@ -7801,16 +8049,16 @@ Public Class frmMain
                 End Try
 
             ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
-                    SetConfigStatus("Looking for changes...")
+                SetConfigStatus("Looking for changes...")
 
-                    With prgConfig
-                        .Minimum = 0
-                        .Value = 0
-                        .Maximum = nChangeCount
-                    End With
+                With prgConfig
+                    .Minimum = 0
+                    .Value = 0
+                    .Maximum = nChangeCount
+                End With
 
-                    bWaitingMavlinkWrite = False
-                    For nCount = 0 To UBound(aValue)
+                bWaitingMavlinkWrite = False
+                For nCount = 0 To UBound(aValue)
                     If aValue(nCount) <> "" And aChanged(nCount) = True Then
                         'aOutput = New Byte() {85, 21, 0, 127, 0, 23, nConfigVehicle, 0}
 
@@ -7828,7 +8076,7 @@ Public Class frmMain
                         System.Threading.Thread.Sleep(50)
                         bFoundOne = True
                     End If
-                    Next nCount
+                Next nCount
             End If
         End If
 
@@ -7938,9 +8186,26 @@ Public Class frmMain
         Dim nMin As Long
         Dim nMax As Long
         Dim bValid As Boolean = False
+        Dim nRowIndex As Integer
+        Dim nCount As Integer
 
-        sNewValue = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value.ToString)
-        If sNewValue <> aValue(e.RowIndex) Then
+        If nConfigDevice <> e_ConfigDevice.e_ConfigDevice_MAVlink Then
+            sNewValue = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value.ToString)
+            nRowIndex = e.RowIndex
+        Else
+            nRowIndex = -1
+            For nCount = 0 To UBound(aName)
+                If UCase(aName(nCount)) = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Name").Value.ToString) Then
+                    nRowIndex = nCount
+                    Exit For
+                End If
+            Next
+            If nRowIndex = -1 Then
+                Exit Sub
+            End If
+            sNewValue = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value.ToString)
+        End If
+        If sNewValue <> aValue(nRowIndex) Then
             Try
                 sMin = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Min").Value.ToString)
                 sMax = Trim(dgConfigVariable.Rows(e.RowIndex).Cells("Max").Value.ToString)
@@ -7975,32 +8240,32 @@ Public Class frmMain
 
             If bValid = True Then
                 If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Then
-                    aValue(e.RowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value.ToString)
-                    Select Case aIDs(e.RowIndex)
+                    aValue(nRowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value.ToString)
+                    Select Case aIDs(nRowIndex)
                         Case "$34"
-                            nMaxRollAngle = aValue(e.RowIndex)
+                            nMaxRollAngle = aValue(nRowIndex)
                         Case "$35"
-                            nMaxPitchAngle = aValue(e.RowIndex)
+                            nMaxPitchAngle = aValue(nRowIndex)
                         Case "$65"
-                            nMinThrottle = aValue(e.RowIndex)
+                            nMinThrottle = aValue(nRowIndex)
                         Case "$66"
-                            nMAxThrottle = aValue(e.RowIndex)
+                            nMAxThrottle = aValue(nRowIndex)
                     End Select
-                    aChanged(e.RowIndex) = True
+                    aChanged(nRowIndex) = True
                 ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_Gluonpilot Then
-                    If IsNumeric(aMultiplier(e.RowIndex)) = True Then
-                        aValue(e.RowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value) * Convert.ToSingle(aMultiplier(e.RowIndex))
+                    If IsNumeric(aMultiplier(nRowIndex)) = True Then
+                        aValue(nRowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value) * Convert.ToSingle(aMultiplier(nRowIndex))
                     Else
-                        aValue(e.RowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value)
+                        aValue(nRowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value)
                     End If
-                    aChanged(e.RowIndex) = True
+                    aChanged(nRowIndex) = True
                 ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
-                    If IsNumeric(aMultiplier(e.RowIndex)) = True Then
-                        aValue(e.RowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value) * Convert.ToSingle(aMultiplier(e.RowIndex))
+                    If IsNumeric(aMultiplier(nRowIndex)) = True Then
+                        aValue(nRowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value) * Convert.ToSingle(aMultiplier(nRowIndex))
                     Else
-                        aValue(e.RowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value)
+                        aValue(nRowIndex) = Convert.ToSingle(dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value)
                     End If
-                    aChanged(e.RowIndex) = True
+                    aChanged(nRowIndex) = True
                 End If
             Else
                 If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Or nConfigDevice = e_ConfigDevice.e_ConfigDevice_Gluonpilot Then
@@ -8008,10 +8273,10 @@ Public Class frmMain
                 ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
                     Call MsgBox("Your value for " & dgConfigVariable.Rows(e.RowIndex).Cells("Name").Value.ToString & " is not valid." & vbCrLf & GetMinMaxString(sNewValue, sMin, sMax, sDefault), MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly, "Invalid Entry")
                 End If
-                dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value = aValue(e.RowIndex)
+                dgConfigVariable.Rows(e.RowIndex).Cells("Value").Value = aValue(nRowIndex)
             End If
-                aChanged(e.RowIndex) = True
-            End If
+            aChanged(nRowIndex) = True
+        End If
         If nParameterCount >= 0 And cmdConfigRead.Enabled = True Then
             cmdConfigWrite.Enabled = True
         End If
@@ -8281,8 +8546,10 @@ Public Class frmMain
         End Select
 
         If Not webDocument Is Nothing And bGoogleLoaded = True And bLockMissionCenter = False Then
-            chkViewNoTracking.Checked = True
-            chkViewNoTracking_CheckedChanged(Nothing, Nothing)
+            If chkViewNoTracking.Checked <> True Then
+                chkViewNoTracking.Checked = True
+                chkViewNoTracking_CheckedChanged(Nothing, Nothing)
+            End If
             'If bLockMissionCenter = False And nConfigDevice = e_ConfigDevice.e_ConfigDevice_Generic Then
             Select Case nConfigDevice
                 Case e_ConfigDevice.e_ConfigDevice_Generic, e_ConfigDevice.e_ConfigDevice_AttoPilot
@@ -8327,18 +8594,18 @@ Public Class frmMain
         If cboMissionAttoLoiter.SelectedIndex = 0 Then
             cboMissionAttoLoiterDirection.Enabled = False
             cboMissionAttoLoiterDuration.Enabled = False
-            lblMissionAttoLoiterValue.Text = ""
-            lblMissionAttoControlValue.Text = ""
-            lblMissionAttoDurationValue.Text = ""
+            'lblMissionAttoLoiterValue.Text = ""
+            'lblMissionAttoControlValue.Text = ""
+            'lblMissionAttoDurationValue.Text = ""
         Else
             cboMissionAttoLoiterDirection.Enabled = True
             cboMissionAttoLoiterDuration.Enabled = True
-            For nCount = 0 To UBound(aIDs)
-                If aIDs(nCount) = cboMissionAttoLoiter.SelectedIndex - 1 + 69 Then
-                    lblMissionAttoLoiterValue.Text = aValue(nCount)
-                    Exit For
-                End If
-            Next
+            'For nCount = 0 To UBound(aIDs)
+            '    If aIDs(nCount) = "$" & cboMissionAttoLoiter.SelectedIndex - 1 + 69 Then
+            '        lblMissionAttoLoiterValue.Text = aValue(nCount)
+            '        Exit For
+            '    End If
+            'Next
             cboMissionAttoLoiterDirection_SelectedIndexChanged(cboMissionAttoLoiterDuration, Nothing)
         End If
         UpdateTrigger()
@@ -8368,7 +8635,6 @@ Public Class frmMain
 
         Me.Cursor = Cursors.WaitCursor
 
-
         If nConfigDevice = e_ConfigDevice.e_ConfigDevice_AttoPilot Then
             SetMissionStatus("Clearing input buffer...")
             If ClearSerialInBuffer() = False Then
@@ -8380,59 +8646,67 @@ Public Class frmMain
                 Exit Sub
             End If
 
-            With prgMissionAtto
-                .Minimum = 0
-                .Value = 0
-                .Maximum = nWPCount
-            End With
+            If nWPCount = -1 Then
+                bFoundOne = True
+                sOutput = "N," & nConfigVehicle & ",0,0"
+                SendAttoPilot(sOutput)
+                bWaitingAttoUpdate = False
+            Else
 
-            SetMissionStatus("Writing waypoints...")
+                With prgMissionAtto
+                    .Minimum = 0
+                    .Value = 0
+                    .Maximum = nWPCount
+                End With
 
-            For nCount = 0 To nWPCount
-                For nCount3 = 1 To n2WayRetries
-                    sInput = ""
-                    SetMissionStatus("Writing waypoint #" & nCount & "..." & IIf(nCount3 > 1, "(Attempt #" & nCount3 & ")", ""))
-                    sOutput = "M," & nConfigVehicle & "," & nCount & "," & LimitLatLong(aWPLat(nCount), 5) & "," & LimitLatLong(aWPLon(nCount), 5) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters).ToString("0")) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eSpeedUnits, e_SpeedFormat.e_SpeedFormat_KPH).ToString("0"))
-                    SendAttoPilot(sOutput)
-                    'UpdateSerialDataWindow(sOutput, sOutput, False)
-                    'Debug.Print("Output: " & sOutput)
+                SetMissionStatus("Writing waypoints...")
 
-                    bFoundOne = False
-                    For nCount2 = 0 To (n2WayTimeout * 1000) / 100
-                        If serialPortIn.BytesToRead > 0 Then
-                            sInput = serialPortIn.ReadLine
-                            UpdateSerialDataWindow(sInput, sInput)
-                            'Debug.Print("Input: " & sInput)
-                        Else
-                            System.Threading.Thread.Sleep(100)
-                        End If
-                        sSplit = Split(sInput, ",")
-                        If UBound(sSplit) >= 2 Then
-                            If sSplit(0) = "$OK" And Microsoft.VisualBasic.Left(sSplit(2), 2) = "M*" And ((nConfigVehicle <> 0 And sSplit(1) = nConfigVehicle) Or nConfigVehicle = 0) Then
-                                bFoundOne = True
-                                oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
-                                System.Threading.Thread.Sleep(250)
-                                Exit For
+                For nCount = 0 To nWPCount
+                    For nCount3 = 1 To n2WayRetries
+                        sInput = ""
+                        SetMissionStatus("Writing waypoint #" & nCount & "..." & IIf(nCount3 > 1, "(Attempt #" & nCount3 & ")", ""))
+                        sOutput = "M," & nConfigVehicle & "," & nCount & "," & LimitLatLong(aWPLat(nCount), 5) & "," & LimitLatLong(aWPLon(nCount), 5) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters).ToString("0")) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eSpeedUnits, e_SpeedFormat.e_SpeedFormat_KPH).ToString("0"))
+                        SendAttoPilot(sOutput)
+                        'UpdateSerialDataWindow(sOutput, sOutput, False)
+                        'Debug.Print("Output: " & sOutput)
+
+                        bFoundOne = False
+                        For nCount2 = 0 To (n2WayTimeout * 1000) / 100
+                            If serialPortIn.BytesToRead > 0 Then
+                                sInput = serialPortIn.ReadLine
+                                UpdateSerialDataWindow(sInput, sInput)
+                                'Debug.Print("Input: " & sInput)
+                            Else
+                                System.Threading.Thread.Sleep(100)
                             End If
+                            sSplit = Split(sInput, ",")
+                            If UBound(sSplit) >= 2 Then
+                                If sSplit(0) = "$OK" And Microsoft.VisualBasic.Left(sSplit(2), 2) = "M*" And ((nConfigVehicle <> 0 And sSplit(1) = nConfigVehicle) Or nConfigVehicle = 0) Then
+                                    bFoundOne = True
+                                    oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_AttoPilot) = Now.Ticks
+                                    System.Threading.Thread.Sleep(250)
+                                    Exit For
+                                End If
+                            End If
+                        Next
+                        If bFoundOne = True Then
+                            Exit For
                         End If
                     Next
                     If bFoundOne = True Then
-                        Exit For
+                        prgMissionAtto.Value = nCount
+                    Else
+                        Exit For 'Bomb out - failed to respond after RetryMax attempts
                     End If
                 Next
                 If bFoundOne = True Then
-                    prgMissionAtto.Value = nCount
-                Else
-                    Exit For 'Bomb out - failed to respond after RetryMax attempts
+                    sOutput = "M," & nConfigVehicle & "," & nCount & ",0.00000,0.00000,0,0,0"
+                    SendAttoPilot(sOutput)
+                    'UpdateSerialDataWindow(sOutput, sOutput, False)
+                    'Debug.Print("Output: " & sOutput)
                 End If
-            Next
-            If bFoundOne = True Then
-                sOutput = "M," & nConfigVehicle & "," & nCount & ",0.00000,0.00000,0,0,0"
-                SendAttoPilot(sOutput)
-                'UpdateSerialDataWindow(sOutput, sOutput, False)
-                'Debug.Print("Output: " & sOutput)
+                bWaitingAttoUpdate = False
             End If
-            bWaitingAttoUpdate = False
         ElseIf nConfigDevice = e_ConfigDevice.e_ConfigDevice_MAVlink Then
 
             With prgMissionMavlink
@@ -8454,7 +8728,11 @@ Public Class frmMain
             SetConfigStatus("Failed to write all waypoints", True)
             MsgBox("AttoPilot vehicle #" & nConfigVehicle & " failed to respond to write request", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Write Failed")
         ElseIf nConfigDevice <> e_ConfigDevice.e_ConfigDevice_MAVlink Then
-            SetMissionStatus("Waypoint write complete")
+            If nWPCount = -1 Then
+                SetMissionStatus("Waypoints Cleared")
+            Else
+                SetMissionStatus("Waypoint write complete")
+            End If
         End If
     End Sub
 
@@ -8630,23 +8908,23 @@ Public Class frmMain
         End If
         Select Case sender.name
             Case "cboMissionAttoLoiterDuration"
-                For nCount = 0 To UBound(aIDs)
-                    If aIDs(nCount) = cboMissionAttoLoiterDuration.SelectedIndex - 1 + 78 Then
-                        lblMissionAttoDurationValue.Text = aValue(nCount)
-                        Exit For
-                    End If
-                Next
+                'For nCount = 0 To UBound(aIDs)
+                '    If aIDs(nCount) = "$" & cboMissionAttoLoiterDuration.SelectedIndex - 1 + 78 Then
+                '        lblMissionAttoDurationValue.Text = aValue(nCount)
+                '        Exit For
+                '    End If
+                'Next
             Case "cboMissionAttoTriggerControl"
-                For nCount = 0 To UBound(aIDs)
-                    If cboMissionAttoTriggerControl.SelectedIndex > 1 Then
-                        If aIDs(nCount) = cboMissionAttoTriggerControl.SelectedIndex - 2 + 87 Then
-                            lblMissionAttoControlValue.Text = aValue(nCount)
-                            Exit For
-                        End If
-                    Else
-                        Exit For
-                    End If
-                Next
+                'For nCount = 0 To UBound(aIDs)
+                '    If cboMissionAttoTriggerControl.SelectedIndex > 1 Then
+                '        If aIDs(nCount) = "$" & cboMissionAttoTriggerControl.SelectedIndex - 2 + 87 Then
+                '            lblMissionAttoControlValue.Text = aValue(nCount)
+                '            Exit For
+                '        End If
+                '    Else
+                '        Exit For
+                '    End If
+                'Next
 
         End Select
         UpdateTrigger()
@@ -8655,8 +8933,10 @@ Public Class frmMain
         If centerPoint = -1 And dgMission.SelectedRows.Count > 0 Then
             centerPoint = dgMission.SelectedRows(0).Index
         End If
-        If centerPoint <> -1 And bLockMissionCenter = False And bNewDevice = False And bGoogleLoaded = True And Not webDocument Is Nothing Then
-            webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, False})
+        If centerPoint <= UBound(aWPAlt) Then
+            If centerPoint <> -1 And bLockMissionCenter = False And bNewDevice = False And bGoogleLoaded = True And Not webDocument Is Nothing Then
+                webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, False})
+            End If
         End If
     End Sub
     Public Sub UpdateMissionGE(Optional ByVal centerPoint As Integer = -1, Optional ByVal singleWaypoint As Integer = -1, Optional ByVal updateTilt As Integer = -1, Optional ByVal forceCamera As Boolean = False)
@@ -8677,16 +8957,18 @@ Public Class frmMain
                     '    Application.DoEvents()
                     '    System.Threading.Thread.Sleep(100)
                     'Loop
-                    webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(aWPLat(0)), ConvertPeriodToLocal(aWPLon(0)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(0), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)), sModelURL, tbarModelScale.Value, ConvertPeriodToLocal(GetPitch(nPitch * nDaePitchRollOffset)), ConvertPeriodToLocal(GetRoll(nRoll * nDaePitchRollOffset)), nCameraTracking, nConfigAltOffset, forceCamera})
+                    webDocument.InvokeScript("setHomeLatLng", New Object() {ConvertPeriodToLocal(aWPLat(0)), ConvertPeriodToLocal(aWPLon(0)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(0), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), sModelURL, tbarModelScale.Value, ConvertPeriodToLocal(GetPitch(nPitch * nDaePitchRollOffset)), ConvertPeriodToLocal(GetRoll(nRoll * nDaePitchRollOffset)), nCameraTracking, nConfigAltOffset, forceCamera, sHomeIcon})
                     If centerPoint = 0 And bLockMissionCenter = False Then ' And bNewDevice = False Then
-                        webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, True})
+                        If forceCamera = True Then
+                            webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, forceCamera})
+                        End If
                     End If
                     For nCount = 1 To nWPCount
                         If aWPLat(nCount) <> 0 And aWPLon(nCount) <> 0 Then
                             'nRunningWPCount = nRunningWPCount + 1
                             webDocument.InvokeScript("addWaypoint", New Object() {ConvertPeriodToLocal(aWPLat(nCount)), ConvertPeriodToLocal(aWPLon(nCount)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), nCount.ToString.PadLeft(2, "0"), bMissionExtrude, sMissionColor, nMissionWidth, nConfigAltOffset, bMissionClampToGround})
                             If nCount = centerPoint And bLockMissionCenter = False Then ' And bNewDevice = False Then
-                                webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, True})
+                                webDocument.InvokeScript("centerOnLocation", New Object() {ConvertPeriodToLocal(aWPLat(centerPoint)), ConvertPeriodToLocal(aWPLon(centerPoint)), ConvertPeriodToLocal(ConvertDistance(aWPAlt(centerPoint), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Meters)), updateTilt, forceCamera})
                             End If
                         End If
                     Next
@@ -8787,6 +9069,7 @@ Public Class frmMain
         objSaveFileDialog.Dispose()
         objSaveFileDialog = Nothing
 
+
     End Sub
     Private Sub SaveMission(ByVal inputFilename As String)
         Dim sFileContents As String
@@ -8794,9 +9077,9 @@ Public Class frmMain
 
         For nCount = 0 To nWPCount
             If nCount = 0 Then
-                sFileContents = "HOME:" & ConvertLocalToPeriod(aWPLat(nCount)) & "," & ConvertLocalToPeriod(aWPLon(nCount)) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eDistanceUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)) & Convert.ToInt32(aWPCommand(nCount)) & "," & aWPOther(nCount) & vbCrLf
+                sFileContents = "HOME:" & ConvertLocalToPeriod(aWPLat(nCount)) & "," & ConvertLocalToPeriod(aWPLon(nCount)) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eDistanceUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)) & "," & Convert.ToInt32(aWPCommand(nCount)) & "," & aWPOther(nCount) & vbCrLf
             Else
-                sFileContents = sFileContents & ConvertLocalToPeriod(aWPLat(nCount)) & "," & ConvertLocalToPeriod(aWPLon(nCount)) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)) & Convert.ToInt32(aWPCommand(nCount)) & "," & aWPOther(nCount) & vbCrLf
+                sFileContents = sFileContents & ConvertLocalToPeriod(aWPLat(nCount)) & "," & ConvertLocalToPeriod(aWPLon(nCount)) & "," & ConvertLocalToPeriod(ConvertDistance(aWPAlt(nCount), eDistanceUnits, e_DistanceFormat.e_DistanceFormat_Feet)) & "," & aWPTrigger(nCount) & "," & ConvertLocalToPeriod(ConvertSpeed(aWPSpeed(nCount), eSpeedUnits, e_SpeedFormat.e_SpeedFormat_MPerSec)) & "," & Convert.ToInt32(aWPCommand(nCount)) & "," & aWPOther(nCount) & vbCrLf
             End If
         Next
         Dim fs As New FileStream(inputFilename, FileMode.Create, FileAccess.Write)
@@ -9100,146 +9383,97 @@ Public Class frmMain
     End Sub
 
     Private Sub chkJoystickEnable_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkJoystickEnable.CheckedChanged
-        nJoystickOutput = cboJoystickOutput.SelectedIndex
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Output", nJoystickOutput)
-
-        tmrJoystick.Enabled = True
+        If chkJoystickEnable.Checked = False Then
+            tmrJoystick.Enabled = False
+            ReleaseJoystick()
+        Else
+            tmrJoystick.Enabled = True
+        End If
     End Sub
 
     Private Sub tmrJoystick_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmrJoystick.Tick
         Dim nFoundIndex As Integer
         Dim nCount As Integer
-        Dim sThrottle As String
-        Dim sElevator As String
-        Dim sAileron As String
-        Dim sRudder As String
-        Dim sMode As String
-        Dim nTimerWait As Long
 
-        Dim nMinSlider As Long
-        Dim nMaxSlider As Long
+        'Dim nMinSlider As Long
+        'Dim nMaxSlider As Long
 
-        nMinSlider = tbarJoystickThrottle.Minimum
-        nMaxSlider = tbarJoystickThrottle.Maximum
+        'nMinSlider = tbarJoystickThrottle.Minimum
+        'nMaxSlider = tbarJoystickThrottle.Maximum
+
+        Dim bSuccess As Boolean
+        Dim nJoystickCurrent As Long
+        Dim nSliderValue As Long
+        Dim nOutputValue As Long
 
         ' get status
-        jst.UpdateStatus()
+        If jst.UpdateStatus = True Then
+            For nCount = 1 To 5
+                With cJoystick(nCount)
+                    bSuccess = GetJoystickValue(jst, nCount, .Axis, -1000, 1000, .SubTrim, .Reversed, nJoystickCurrent, nSliderValue, nOutputValue)
 
-        If nJoystickThrottle > -1 Then
-            tbarJoystickThrottle.Value = GetJoystickValue(jst.Axis(nJoystickThrottle), nJoystickThrottleMin, nJoystickThrottleMax, nMinSlider, nMaxSlider, bJoystickThrottleReverse)
-        End If
-        If nJoystickElevator > -1 Then
-            tbarJoystickElevator.Value = GetJoystickValue(jst.Axis(nJoystickElevator), nJoystickElevatorMin, nJoystickElevatorMax, nMinSlider, nMaxSlider, bJoystickElevatorReverse)
-        End If
-        If nJoystickAileron > -1 Then
-            tbarJoystickAileron.Value = GetJoystickValue(jst.Axis(nJoystickAileron), nJoystickElevatorMin, nJoystickElevatorMax, nMinSlider, nMaxSlider, bJoystickAileronReverse)
-        End If
-        If nJoystickRudder > -1 Then
-            tbarJoystickRudder.Value = GetJoystickValue(jst.Axis(nJoystickRudder), nJoystickElevatorMin, nJoystickElevatorMax, nMinSlider, nMaxSlider, bJoystickRudderReverse)
-        End If
-        If nJoystickMode > -1 Then
-            tbarJoystickMode.Value = GetJoystickValue(jst.Axis(nJoystickMode), nJoystickModeMin, nJoystickModeMax, nMinSlider, nMaxSlider, bJoystickModeReverse)
-        End If
+                    Select Case nCount
+                        Case 1
+                            tbarJoystickOutput1.Enabled = bSuccess
+                            lblJoystickOutput1.Enabled = bSuccess
+                            If bSuccess = True Then
+                                tbarJoystickOutput1.Value = nSliderValue
+                                cJoystick(1).CurrentValue = nJoystickCurrent
+                                cJoystick(1).SliderValue = nSliderValue
+                            Else
+                                tbarJoystickOutput1.Value = 0
+                            End If
+                        Case 2
+                            tbarJoystickOutput2.Enabled = bSuccess
+                            lblJoystickOutput2.Enabled = bSuccess
+                            If bSuccess = True Then
+                                tbarJoystickOutput2.Value = nSliderValue
+                                cJoystick(2).CurrentValue = nJoystickCurrent
+                                cJoystick(2).SliderValue = nSliderValue
+                            Else
+                                tbarJoystickOutput2.Value = 0
+                            End If
+                        Case 3
+                            tbarJoystickOutput3.Enabled = bSuccess
+                            lblJoystickOutput3.Enabled = bSuccess
+                            If bSuccess = True Then
+                                tbarJoystickOutput3.Value = nSliderValue
+                                cJoystick(3).CurrentValue = nJoystickCurrent
+                                cJoystick(3).SliderValue = nSliderValue
+                            Else
+                                tbarJoystickOutput3.Value = 0
+                            End If
+                        Case 4
+                            tbarJoystickOutput4.Enabled = bSuccess
+                            lblJoystickOutput4.Enabled = bSuccess
+                            If bSuccess = True Then
+                                tbarJoystickOutput4.Value = nSliderValue
+                                cJoystick(4).CurrentValue = nJoystickCurrent
+                                cJoystick(4).SliderValue = nSliderValue
+                            Else
+                                tbarJoystickOutput4.Value = 0
+                            End If
+                            'Case 5
+                            '    tbarJoystickOutput5.Enabled = bSuccess
+                            '    lblJoystickOutput5.Enabled = bSuccess
+                            '    If bSuccess = True Then
+                            '        tbarJoystickOutput5.Value = nSliderValue
+                            '        cJoystick(5).CurrentValue = nJoystickCurrent
+                            '        cJoystick(5).SliderValue = nSliderValue
+                            '    Else
+                            '        tbarJoystickOutput5.Value = 0
+                            '    End If
 
-        lblJoystickThrottle.Text = tbarJoystickThrottle.Value
-        lblJoystickElevator.Text = tbarJoystickElevator.Value
-        lblJoystickAileron.Text = tbarJoystickAileron.Value
-        lblJoystickRudder.Text = tbarJoystickRudder.Value
-        lblJoystickMode.Text = tbarJoystickMode.Value
+                    End Select
+                End With
+            Next nCount
 
-        Select Case nJoystickOutput
-            Case e_JoystickOutput.e_JoystickOutput_Atto
-                nTimerWait = 2500000
-            Case e_JoystickOutput.e_JoystickOutput_UDB
-                nTimerWait = 200000
-            Case e_JoystickOutput.e_JoystickOutput_Millswood
-                nTimerWait = 1000000
-        End Select
+            SendJoystickMessages(nJoystickOutput)
 
-        If bConnected = True And Now.Ticks > dLastJoystick + nTimerWait Then
-            dLastJoystick = Now.Ticks
-            Select Case nJoystickOutput
-                Case e_JoystickOutput.e_JoystickOutput_Atto
-                    If (nJoystickAileronPosition <> tbarJoystickAileron.Value Or (dLastAttoAileron + 50000000) < Now.Ticks) And nMaxRollAngle > -1 Then
-                        dLastAttoAileron = Now.Ticks
-                        nJoystickAileronPosition = tbarJoystickAileron.Value
-                        SendAttoPilot("E," & nConfigVehicle & "," & GetJoystickValue(tbarJoystickAileron.Value, nMinSlider, nMaxSlider, -nMaxRollAngle * 100, nMaxRollAngle * 100))
-                    End If
-                    If (nJoystickElevatorPosition <> tbarJoystickElevator.Value Or (dLastAttoElevator + 50000000) < Now.Ticks) And nMaxPitchAngle > -1 Then
-                        dLastAttoElevator = Now.Ticks
-                        nJoystickElevatorPosition = tbarJoystickElevator.Value
-                        SendAttoPilot("F," & nConfigVehicle & "," & GetJoystickValue(tbarJoystickElevator.Value, nMinSlider, nMaxSlider, -nMaxPitchAngle * 100, nMaxPitchAngle * 100))
-                    End If
-                    If (nJoystickThrottlePosition <> tbarJoystickThrottle.Value Or (dLastAttoThrottle + 50000000) < Now.Ticks) And nMinThrottle > -1 And nMAxThrottle > -1 Then
-                        dLastAttoThrottle = Now.Ticks
-                        nJoystickThrottlePosition = tbarJoystickThrottle.Value
-                        SendAttoPilot("H," & nConfigVehicle & "," & GetJoystickValue(tbarJoystickThrottle.Value, nMinSlider, nMaxSlider, nMinThrottle * 100, nMAxThrottle * 100))
-                    End If
-                Case e_JoystickOutput.e_JoystickOutput_UDB
-                    sThrottle = Hex(GetJoystickValue(tbarJoystickThrottle.Value, nMinSlider, nMaxSlider, 2200, 3800)).PadLeft(4, "0")
-                    sThrottle = Chr("&H" & sThrottle.Substring(0, 2)) & Chr("&H" & sThrottle.Substring(2, 2))
-                    sElevator = Hex(GetJoystickValue(tbarJoystickElevator.Value, nMinSlider, nMaxSlider, 2200, 3800)).PadLeft(4, "0")
-                    sElevator = Chr("&H" & sElevator.Substring(0, 2)) & Chr("&H" & sElevator.Substring(2, 2))
-                    sAileron = Hex(GetJoystickValue(tbarJoystickAileron.Value, nMinSlider, nMaxSlider, 2200, 3800)).PadLeft(4, "0")
-                    sAileron = Chr("&H" & sAileron.Substring(0, 2)) & Chr("&H" & sAileron.Substring(2, 2))
-                    sRudder = Hex(GetJoystickValue(tbarJoystickRudder.Value, nMinSlider, nMaxSlider, 2200, 3800)).PadLeft(4, "0")
-                    sRudder = Chr("&H" & sRudder.Substring(0, 2)) & Chr("&H" & sRudder.Substring(2, 2))
-                    sMode = Hex(GetJoystickValue(tbarJoystickMode.Value, nMinSlider, nMaxSlider, 2200, 3800)).PadLeft(4, "0")
-                    sMode = Chr("&H" & sMode.Substring(0, 2)) & Chr("&H" & sMode.Substring(2, 2))
-                    WriteSerialIn("Joy" & sAileron & sElevator & sMode & sThrottle & sRudder & vbCrLf, True)
-                Case e_JoystickOutput.e_JoystickOutput_Millswood
-                    If nJoystickThrottleServo <> 0 Then
-                        If nJoystickThrottlePosition <> tbarJoystickThrottle.Value Then
-                            nJoystickThrottlePosition = tbarJoystickThrottle.Value
-                            SendAttoPilot("E,FF," & Hex(nJoystickThrottleServo - 1).PadLeft(2, "0") & "," & Hex(GetJoystickValue(tbarJoystickThrottle.Value, nMinSlider, nMaxSlider, 0, 254)).PadLeft(2, "0"))
-                        End If
-                    End If
-                    If nJoystickElevatorServo <> 0 Then
-                        If nJoystickElevatorPosition <> tbarJoystickElevator.Value Then
-                            nJoystickElevatorPosition = tbarJoystickElevator.Value
-                            SendAttoPilot("E,FF," & Hex(nJoystickElevatorServo - 1).PadLeft(2, "0") & "," & Hex(GetJoystickValue(tbarJoystickElevator.Value, nMinSlider, nMaxSlider, 0, 254)).PadLeft(2, "0"))
-                        End If
-                    End If
-                    If nJoystickAileronServo <> 0 Then
-                        If nJoystickAileronPosition <> tbarJoystickAileron.Value Then
-                            nJoystickAileronPosition = tbarJoystickAileron.Value
-                            SendAttoPilot("E,FF," & Hex(nJoystickAileronServo - 1).PadLeft(2, "0") & "," & Hex(GetJoystickValue(tbarJoystickAileron.Value, nMinSlider, nMaxSlider, 0, 254)).PadLeft(2, "0"))
-                        End If
-                    End If
-                    If nJoystickRudderServo <> 0 Then
-                        If nJoystickRudderPosition <> tbarJoystickRudder.Value Then
-                            nJoystickRudderPosition = tbarJoystickRudder.Value
-                            SendAttoPilot("E,FF," & Hex(nJoystickRudderServo - 1).PadLeft(2, "0") & "," & Hex(GetJoystickValue(tbarJoystickRudder.Value, nMinSlider, nMaxSlider, 0, 254)).PadLeft(2, "0"))
-                        End If
-                    End If
-                    If nJoystickModeServo <> 0 Then
-                        If nJoystickModePosition <> tbarJoystickMode.Value Then
-                            nJoystickModePosition = tbarJoystickMode.Value
-                            SendAttoPilot("E,FF," & Hex(nJoystickModeServo - 1).PadLeft(2, "0") & "," & Hex(GetJoystickValue(tbarJoystickMode.Value, nMinSlider, nMaxSlider, 0, 254)).PadLeft(2, "0"))
-                        End If
-                    End If
-            End Select
+        Else
+            tabPortControl_SelectedIndexChanged(Nothing, Nothing)
         End If
-
     End Sub
-    Private Function GetJoystickValue(ByVal inputValus As Integer, ByVal minValue As Integer, ByVal maxValue As Integer, ByVal absMin As Integer, ByVal absMax As Integer, Optional ByVal reversedValue As Boolean = False) As Integer
-        Dim nTemp As Integer
-        Dim nPct As Single
-
-        nTemp = inputValus
-        If nTemp < minValue Then
-            nTemp = minValue
-        ElseIf nTemp > maxValue Then
-            nTemp = maxValue
-        End If
-        If reversedValue = True Then
-            nTemp = minValue + (maxValue - nTemp)
-        End If
-        nPct = (nTemp - minValue) / (maxValue - minValue)
-        If Convert.ToDouble(nPct).IsNaN(nPct) = False Then
-            GetJoystickValue = (absMax - absMin) * nPct + absMin
-        End If
-    End Function
 
     Private Sub ToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem3.Click
         frmHeartbeat.ShowDialog()
@@ -9526,6 +9760,15 @@ Public Class frmMain
         lblControlMavlinkStatus.Text = "Status: Home set"
     End Sub
 
+    Private Sub DisableMavlinkStatusRates()
+        Dim aOutput() As Byte
+        Dim nCount As Integer
+
+        For nCount = 1 To 12
+            aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, nCount, 0, 0, 0}
+            SendMavLink(aOutput)
+        Next nCount
+    End Sub
     Private Sub UpdateMavlinkStatusRates()
         Dim aOutput() As Byte
         Dim aGPSVariable() As Byte
@@ -9598,7 +9841,8 @@ Public Class frmMain
 
             'MAV_DATA_STREAM_EXTRA2
             aOutput = New Byte() {85, 6, 0, 127, 0, 66, nConfigVehicle, 1, 11}
-            aOutput = ConCatArray(aOutput, New Byte() {0, 0, 0})
+            aOutput = ConCatArray(aOutput, aGPSVariable)
+            'aOutput = ConCatArray(aOutput, New Byte() {0, 0, 0})
             SendMavLink(aOutput)
             'System.Threading.Thread.Sleep(200)
 
@@ -9710,5 +9954,25 @@ Public Class frmMain
         aOutput = ConCatArray(aOutput, aTemp)
         SendMavLink(aOutput)
         lblControlMavlinkStatus.Text = "Status: Value Updated"
+    End Sub
+
+    Private Sub cboJoystickOutput_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboJoystickOutput.SelectedIndexChanged
+        nJoystickOutput = cboJoystickOutput.SelectedIndex
+        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Output", nJoystickOutput)
+    End Sub
+
+    Private Sub tbarJoystickOutput1_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tbarJoystickOutput1.ValueChanged, tbarJoystickOutput2.ValueChanged, tbarJoystickOutput3.ValueChanged, tbarJoystickOutput4.ValueChanged
+        Select Case sender.name
+            Case "tbarJoystickOutput1"
+                lblJoystickOutput1.Text = Convert.ToInt32(sender.value / 10)
+            Case "tbarJoystickOutput2"
+                lblJoystickOutput2.Text = Convert.ToInt32(sender.value / 10)
+            Case "tbarJoystickOutput3"
+                lblJoystickOutput3.Text = Convert.ToInt32(sender.value / 10)
+            Case "tbarJoystickOutput4"
+                lblJoystickOutput4.Text = Convert.ToInt32(sender.value / 10)
+                'Case "tbarJoystickOutput5"
+                '    lblJoystickOutput5.Text = Convert.ToInt32(sender.value / 10)
+        End Select
     End Sub
 End Class

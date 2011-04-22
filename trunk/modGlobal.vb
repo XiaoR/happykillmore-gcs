@@ -64,6 +64,8 @@ Module modGlobal
         e_JoystickOutput_Atto
         e_JoystickOutput_UDB
         e_JoystickOutput_Millswood
+        e_JoystickOutput_APM
+        'e_JoystickOutput_Pololu
     End Enum
     Public Enum e_Instruments
         e_Instruments_None = -1
@@ -87,6 +89,17 @@ Module modGlobal
         e_PlayerState_Reverse
         e_PlayerState_StepForward
         e_PlayerState_StepBack
+    End Enum
+
+    Public Enum e_ChannelType
+        e_ChannelType_Throttle = 0
+        e_ChannelType_Elevator
+        e_ChannelType_Aileron
+        e_ChannelType_Rudder
+        e_ChannelType_Channel5
+        e_ChannelType_Channel6
+        e_ChannelType_Channel7
+        e_ChannelType_Channel8
     End Enum
 
     Public Enum e_MissionFileType
@@ -128,6 +141,18 @@ Module modGlobal
     Public oActiveDevices As cActiveDevices
 
     Public resourceMgr As ResourceManager
+    Public jst As JoystickInterface.Joystick = Nothing
+    Public dLastJoystick As Long
+    Public dLastAttoAileron As Long
+    Public dLastAttoElevator As Long
+    Public dLastAttoThrottle As Long
+    Public nMaxPitchAngle As Integer = -1
+    Public nMaxRollAngle As Integer = -1
+    Public nMinThrottle As Integer = -1
+    Public nMAxThrottle As Integer = -1
+
+    Public bManuelMode As Boolean = False
+    Public dManuelMode As Long
 
     Public Delegate Sub MyDelegate()
     'Public Delegate Sub NewDataArrived()
@@ -136,7 +161,7 @@ Module modGlobal
     Public bIsAdmin As Boolean
     Public bShutdown As Boolean = False
     Public sBuffer As String
-    Public aBuffer() As Byte
+    'Public aBuffer() As Byte
     Public bConnected As Boolean = False
     Public bConnectedTracking As Boolean = False
 
@@ -152,7 +177,7 @@ Module modGlobal
     Public aWPAlt(0) As String
     Public aWPTrigger(0) As String
     Public aWPSpeed(0) As String
-    Public aWPCommand(0) As String
+    'Public aWPCommand(0) As String
 
     Public aCommandName() As String
     Public aCommandValue() As Integer
@@ -215,6 +240,8 @@ Module modGlobal
     Public sLoadedLanguageFile As String
     Public oCulture As CultureInfo
 
+    Public sHomeIcon As String
+
     Public sSpeechVoice As String
     Public bAnnounceWaypoints As Boolean
     Public sSpeechWaypoint As String
@@ -234,6 +261,7 @@ Module modGlobal
     Public n2WayRetries As Integer
     Public n2WayTimeout As Integer
 
+    Public nNewWaypoint As Integer = 0
     Public nWaypoint As Integer = 0
     Public nWaypointAlt As Single
     Public nDistance As Single
@@ -299,7 +327,30 @@ Module modGlobal
     Public nServoOutput(0 To 7) As Integer
     Public nSensor(0 To 13) As Long
 
+    Public cJoystick As cJoystickChannels
+
     Public nInvalidCount As Long
+
+    Public nParameterCount As Integer
+    Public nParameterCurrentIndex As Integer
+    Public aIDs(0) As String
+    Public aName(0) As String
+    Public aMin(0) As String
+    Public aMax(0) As String
+    Public aValue(0) As String
+    Public aVisible(0) As Boolean
+    Public aDefault(0) As String
+    Public aComments(0) As String
+    Public aMultiplier(0) As String
+    Public aAdder(0) As String
+    Public aBit(0) As String
+    Public aChanged(0) As Boolean
+    Public aWPCommand(0) As Integer
+    Public aWPOther(0) As String
+    Public aWPOther2(0) As String
+    Public aWPOther3(0) As String
+    Public aWPOther4(0) As String
+
 
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
     Public Function StringToByte(ByVal inputString As String, Optional ByVal byteArrayLength As Integer = -1, Optional ByVal bytePadding As Byte = 0) As Byte()
@@ -734,7 +785,7 @@ Module modGlobal
         'End If
         ConvertLatLongFY21AP = nTemp.ToString("0.0000000")
     End Function
-    Public Function GetNextSentence(ByRef sBuffer As String, ByRef aBuffer() As Byte) As cMessage
+    Public Function GetNextSentence(ByRef sBuffer As String) As cMessage ', ByRef aBuffer() As Byte
         Dim sTemp As String = ""
         Dim nLastStart As Integer
         Dim nCount As Integer
@@ -764,9 +815,15 @@ Module modGlobal
                 nMessageType = cMessage.e_MessageType.e_MessageType_Test
             End If
 
+            sHeaderCharacters = "DIYd"
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+                nMessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
+            End If
+
             sHeaderCharacters = Chr(85)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_MAV
             End If
 
@@ -885,39 +942,33 @@ Module modGlobal
             End If
 
             sHeaderCharacters = Chr(&HB5) & Chr(&H62)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
             End If
 
-            sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            sHeaderCharacters = Chr("&HD0") & Chr("&HDD")
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
             End If
 
             sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_FY21AP
             End If
 
             sHeaderCharacters = "4D"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
             End If
 
             sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
+            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                 nMessageType = cMessage.e_MessageType.e_MessageType_SiRF
-            End If
-
-            sHeaderCharacters = "DIYd"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
             End If
 
             sHeaderCharacters = " "
@@ -983,9 +1034,9 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                    If Not aBuffer Is Nothing Then
-                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                    End If
+                                    'If Not aBuffer Is Nothing Then
+                                    '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    'End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "Test Msg"
@@ -1006,9 +1057,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .ValidMessage = True
@@ -1033,9 +1084,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Paparazzi) = Now.Ticks
@@ -1061,9 +1112,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
@@ -1090,9 +1141,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_UDB) = Now.Ticks
@@ -1106,10 +1157,10 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
                         sHeaderCharacters = "DIYd"
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
-                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 4, 1))
-                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
-                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 5 Then
+                            nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 4, 1))
+                            If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
+                                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                 sTemp = Mid(sBuffer, nLastStart, nPacketSize + 8)
                                 If bShowBinary = True Then
                                     For nCount = 1 To Len(sTemp)
@@ -1120,9 +1171,9 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                    If Not aBuffer Is Nothing Then
-                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                    End If
+                                    'If Not aBuffer Is Nothing Then
+                                    '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    'End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "ArduIMU"
@@ -1150,9 +1201,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1173,9 +1224,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1196,9 +1247,9 @@ Module modGlobal
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1238,9 +1289,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 6)
@@ -1287,9 +1338,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 2)
@@ -1319,9 +1370,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 .Header = Mid(sTemp, 1, 3)
@@ -1365,9 +1416,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1391,9 +1442,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1417,9 +1468,9 @@ Module modGlobal
                             End If
                             With GetNextSentence
                                 ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                If Not aBuffer Is Nothing Then
-                                    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                End If
+                                'If Not aBuffer Is Nothing Then
+                                '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                'End If
                                 .RawMessage = sTemp
                                 .MessageType = nMessageType
                                 oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_ArduPilotLegacy) = Now.Ticks
@@ -1434,10 +1485,10 @@ Module modGlobal
                     Case cMessage.e_MessageType.e_MessageType_SiRF
                         sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
                         sFooterCharacters = Chr(&HB0) & Chr(&HB3)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 5 Then
-                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 3, 1))
-                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
-                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 5 Then
+                            nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 3, 1))
+                            If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
+                                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                 sTemp = Mid(sBuffer, nLastStart, nPacketSize + 8)
                                 sOutput = ""
                                 If bShowBinary = True Then
@@ -1450,9 +1501,9 @@ Module modGlobal
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
                                     ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                    If Not aBuffer Is Nothing Then
-                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                    End If
+                                    'If Not aBuffer Is Nothing Then
+                                    '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    'End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "SiRF"
@@ -1481,10 +1532,10 @@ Module modGlobal
                     Case cMessage.e_MessageType.e_MessageType_FY21AP
                         sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
                         sFooterCharacters = Chr(&HAA)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 3 Then
-                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1))
-                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + 2 Then
-                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 3 Then
+                            nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 2, 1))
+                            If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + 2 And nPacketSize <> 0 Then
+                                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                 sTemp = Mid(sBuffer, nLastStart, nPacketSize + 2)
                                 sOutput = ""
                                 If bShowBinary = True Then
@@ -1497,9 +1548,9 @@ Module modGlobal
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
                                     ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                    If Not aBuffer Is Nothing Then
-                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                    End If
+                                    'If Not aBuffer Is Nothing Then
+                                    '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    'End If
                                     .RawMessage = sTemp
                                     .MessageType = nMessageType
                                     .Header = "FY21AP"
@@ -1533,14 +1584,14 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_MediaTekv16
                         sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= 37 Then
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 37 Then
                             With GetNextSentence
                                 nPacketSize = 32
                                 .MessageType = nMessageType
                                 .Header = "MTK v1.6"
                                 nSizeOffset = 5
 
-                                nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                 sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                 sOutput = ""
                                 If bShowBinary = True Then
@@ -1552,15 +1603,20 @@ Module modGlobal
                                 End If
                                 With GetNextSentence
                                     ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                    If Not aBuffer Is Nothing Then
-                                        Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                    End If
+                                    Dim aChecksumBytes() As Byte
+                                    'If Not aBuffer Is Nothing Then
+                                    '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                    'End If
                                     .RawMessage = sTemp
                                     .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
                                     .PacketLength = Len(.Packet)
                                     .Checksum = Strings.Right(sTemp, 2)
                                     .VisibleSentence = .Header & " - " & sOutput
-                                    If .Checksum = GetuBloxChecksum(.Packet) Then
+
+                                    aChecksumBytes = GetuBloxChecksumByte(.Packet)
+                                    'If .Checksum = GetuBloxChecksum(.Packet) Then
+                                    If aChecksumBytes(0) = Asc(Mid(GetNextSentence.Checksum, 1, 1)) And aChecksumBytes(1) = Asc(Mid(GetNextSentence.Checksum, 2, 1)) Then
+
                                         .ValidMessage = True
                                         oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_Mediatek) = Now.Ticks
                                         Try
@@ -1578,10 +1634,10 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_uBlox
                         sHeaderCharacters = Chr(&HB5) & Chr(&H62)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 4 Then
                             With GetNextSentence
-                                If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 2) <> Chr("&H1") & Chr("&H5") Then
-                                    nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 4, 1))
+                                If Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 2, 2) <> Chr("&H1") & Chr("&H5") Then
+                                    nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 4, 1))
                                     .MessageType = cMessage.e_MessageType.e_MessageType_uBlox
                                     .Header = "uBlox"
                                     nSizeOffset = 8
@@ -1591,8 +1647,8 @@ Module modGlobal
                                     .Header = "MTK"
                                     nSizeOffset = 4
                                 End If
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                     sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                     sOutput = ""
                                     If bShowBinary = True Then
@@ -1604,9 +1660,9 @@ Module modGlobal
                                     End If
                                     With GetNextSentence
                                         ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                        If Not aBuffer Is Nothing Then
-                                            Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                        End If
+                                        'If Not aBuffer Is Nothing Then
+                                        '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                        'End If
                                         .RawMessage = sTemp
                                         .ID = Asc(Mid(sTemp, 4, 1))
                                         .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
@@ -1644,14 +1700,14 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
                         sHeaderCharacters = "4D"
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 4 Then
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 4 Then
                             With GetNextSentence
-                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
+                                nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 2, 1)) + 2
                                 .MessageType = nMessageType
                                 .Header = "AP Mega"
                                 nSizeOffset = 5
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + nSizeOffset Then
+                                    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                     sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                     sOutput = ""
                                     If bShowBinary = True Then
@@ -1663,9 +1719,9 @@ Module modGlobal
                                     End If
                                     With GetNextSentence
                                         ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                        If Not aBuffer Is Nothing Then
-                                            Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
-                                        End If
+                                        'If Not aBuffer Is Nothing Then
+                                        '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
+                                        'End If
                                         .RawMessage = sTemp
                                         .ID = Asc(Mid(sTemp, 4, 1))
                                         .Packet = Mid(sTemp, 3, Len(sTemp) - 4)
@@ -1688,41 +1744,41 @@ Module modGlobal
 
                     Case cMessage.e_MessageType.e_MessageType_MAV
                         sHeaderCharacters = Chr(85)
-                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > 1 Then
+                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 1 Then
                             With GetNextSentence
-                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
+                                nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
                                 .MessageType = nMessageType
                                 .Header = "MAVlink"
                                 nSizeOffset = 6
-                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters))) > nPacketSize + nSizeOffset Then
-                                    nLastStart = InStr(sBuffer, sHeaderCharacters)
+                                If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > nPacketSize + nSizeOffset Then
+                                    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
                                     sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                     sOutput = ""
                                     If bShowBinary = True Then
                                         For nCount = 0 To Len(sTemp) - 1
                                             'If Not aBuffer Is Nothing Then
-                                            sOutput = sOutput & Hex(aBuffer(nCount)).PadLeft(2, "0") & " "
+                                            'sOutput = sOutput & Hex(aBuffer(nCount)).PadLeft(2, "0") & " "
                                             '    Else
-                                            '    sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount + 1, 1))).PadLeft(2, "0") & " "
+                                            sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount + 1, 1))).PadLeft(2, "0") & " "
                                             '    End If
                                         Next
-                                        If Asc(Mid(sTemp, 6, 1)) = 0 Then
-                                            Debug.Print(sOutput)
+                                        If Asc(Mid(sTemp, 6, 1)) = 39 Or Asc(Mid(sTemp, 6, 1)) = 44 Or Asc(Mid(sTemp, 6, 1)) = 40 Or Asc(Mid(sTemp, 6, 1)) = 43 Or Asc(Mid(sTemp, 6, 1)) = 47 Then
+                                            Debug.Print(Now & ":IN =" & sOutput)
                                         End If
                                     Else
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
 
-                                        If Not aBuffer Is Nothing Then
-                                            If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
-                                                ReDim .RawBytes(0 To UBound(aBuffer))
-                                                Array.ConstrainedCopy(aBuffer, 0, .RawBytes, 0, UBound(aBuffer))
-                                            Else
-                                                ReDim .RawBytes(0 To Len(sTemp) - 1)
-                                                Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, .RawBytes, 0, Len(sTemp))
-                                            End If
-                                        End If
+                                        'If Not aBuffer Is Nothing Then
+                                        '    If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
+                                        '        ReDim .RawBytes(0 To UBound(aBuffer))
+                                        '        Array.ConstrainedCopy(aBuffer, 0, .RawBytes, 0, UBound(aBuffer))
+                                        '    Else
+                                        '        ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                        '        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, .RawBytes, 0, Len(sTemp))
+                                        '    End If
+                                        'End If
 
                                         'Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                         .RawMessage = sTemp
@@ -1732,7 +1788,7 @@ Module modGlobal
                                         .ID = Asc(Mid(sTemp, 6, 1))
                                         .Packet = Mid(sTemp, 1, Len(sTemp) - 2)
                                         .PacketLength = Len(.Packet)
-                                        .Checksum = Strings.Right(sTemp, 2)
+                                        .Checksum = sTemp.Substring(Len(sTemp) - 2) 'Strings.Right(sTemp, 2)
                                         .VisibleSentence = .Header & " - " & Trim(sOutput)
 
                                         Dim nChecksumLong As Long
@@ -1740,20 +1796,25 @@ Module modGlobal
                                         Dim aChecksumBytes() As Byte
                                         Dim sChecksumString As String
 
-                                        nChecksumLong = (((Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 7))) << 8) + Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 6)))
-                                        'If .RawBytes(2) = 209 Then
-                                        '    aChecksumBytes = crc_calculate_byte(.RawBytes, True)
-                                        'Else
-                                        aChecksumBytes = crc_calculate_byte(.RawBytes)
-                                        'End If
-                                        sChecksumString = crc_calculate(.Packet)
-                                        nChecksumLong2 = crc_calculate_long(.RawBytes)
+                                        'nChecksumLong = (((Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 7))) << 8) + Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 6)))
+                                        ''If .RawBytes(2) = 209 Then
+                                        ''    aChecksumBytes = crc_calculate_byte(.RawBytes, True)
+                                        ''Else
+                                        aChecksumBytes = crc_calculate_byte2(.Packet)
+                                        ''End If
+                                        'sChecksumString = crc_calculate(.Packet)
+                                        'nChecksumLong2 = crc_calculate_long(.RawBytes)
 
                                         'Debug.Print(".checksum=" & Hex(Asc(Mid(.Checksum, 1, 1))).PadLeft(2, "0") & Hex(Asc(Mid(.Checksum, 2, 1))).PadLeft(2, "0"))
-                                        If nChecksumLong = nChecksumLong2 Or .Checksum = sChecksumString Then
-                                            'If .Checksum = crc_calculate(.Packet) Then
+                                        'If nChecksumLong = nChecksumLong2 Then 'Or .Checksum = sChecksumString Then
+                                        'If .Checksum = crc_calculate(.Packet) Then
+                                        'If Asc(Mid(sChecksumString, 2, 1)) = Asc(Mid(.Checksum, 2, 1)) Or Asc(Mid(sChecksumString, 1, 1)) = Asc(Mid(.Checksum, 1, 1)) Then
+                                        'If sChecksumString = .Checksum Then
+                                        If aChecksumBytes(0) = Asc(Mid(GetNextSentence.Checksum, 2, 1)) And aChecksumBytes(1) = Asc(Mid(GetNextSentence.Checksum, 1, 1)) Then
+                                            'If .RawBytes(nLastStart + Len(sTemp) - 3) = aChecksumBytes(0) Then 'And .RawBytes(nLastStart + Len(sTemp) - 2) = aChecksumBytes(1) Then
                                             .ValidMessage = True
                                             oActiveDevices.dLastDeviceTime(e_DeviceTypes.e_DeviceTypes_MavLink) = Now.Ticks
+                                            'Debug.Print("Valid: Calc Checksum=" & Hex(aChecksumBytes(0)) & " " & Hex(aChecksumBytes(1)) & ", MAV=" & sOutput)
                                             Try
                                                 Select Case .ID
                                                     Case 2, 28, 30, 32, 33
@@ -1764,7 +1825,7 @@ Module modGlobal
                                             Catch
                                             End Try
                                         Else
-                                            Debug.Print("Invalid Count = " & nInvalidCount)
+                                            Debug.Print("Invalid Count = " & nInvalidCount & ", MAV=" & sOutput)
                                             nInvalidCount = nInvalidCount + 1
                                             .ValidMessage = False
                                         End If
@@ -1801,52 +1862,52 @@ Module modGlobal
                 End If
                 sBuffer = Mid(sBuffer, nLastStart + Len(sTemp))
 
-                ReDim aNewArray(0 To Len(sBuffer) - 1)
-                If Len(sBuffer) > 0 Then
-                    'If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
-                    '    Array.ConstrainedCopy(aBuffer, UBound(aBuffer) - Len(sBuffer) + 1, aNewArray, 0, Len(sBuffer))
-                    'Else
-                    If Not aBuffer Is Nothing Then
-                        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
-                        'End If
-                        ReDim aBuffer(0 To UBound(aNewArray))
-                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
-                    End If
-                Else
-                    aBuffer = Nothing
-                End If
+                'ReDim aNewArray(0 To Len(sBuffer) - 1)
+                'If Len(sBuffer) > 0 Then
+                '    'If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
+                '    '    Array.ConstrainedCopy(aBuffer, UBound(aBuffer) - Len(sBuffer) + 1, aNewArray, 0, Len(sBuffer))
+                '    'Else
+                '    If Not aBuffer Is Nothing Then
+                '        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+                '        'End If
+                '        ReDim aBuffer(0 To UBound(aNewArray))
+                '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                '    End If
+                'Else
+                '    aBuffer = Nothing
+                'End If
 
                 Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
                     sBuffer = Mid(sBuffer, 2)
-                    If Len(sBuffer) > 0 And Not aBuffer Is Nothing Then
-                        ReDim aNewArray(0 To Len(sBuffer) - 1)
-                        Array.ConstrainedCopy(aBuffer, 1, aNewArray, 0, Len(sBuffer))
-                        ReDim aBuffer(0 To UBound(aNewArray))
-                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
-                    Else
-                        aBuffer = Nothing
-                    End If
+                    'If Len(sBuffer) > 0 And Not aBuffer Is Nothing Then
+                    '    ReDim aNewArray(0 To Len(sBuffer) - 1)
+                    '    Array.ConstrainedCopy(aBuffer, 1, aNewArray, 0, Len(sBuffer))
+                    '    ReDim aBuffer(0 To UBound(aNewArray))
+                    '    Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                    'Else
+                    '    aBuffer = Nothing
+                    'End If
                 Loop
             End If
-            If Len(sBuffer) > 5000 Then
+            If Len(sBuffer) > 2000 Then
                 frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, 500))
                 sBuffer = Mid(sBuffer, 501)
-                If Len(sBuffer) > 0 Then
-                    ReDim aNewArray(0 To Len(sBuffer) - 1)
-                    'If 500 + Len(sBuffer) > UBound(aBuffer) Then
-                    If Not aBuffer Is Nothing Then
-                        Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
-                        'Else
-                        '    Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
-                        'End If
+                'If Len(sBuffer) > 0 Then
+                '    ReDim aNewArray(0 To Len(sBuffer) - 1)
+                '    'If 500 + Len(sBuffer) > UBound(aBuffer) Then
+                '    If Not aBuffer Is Nothing Then
+                '        Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+                '        'Else
+                '        '    Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+                '        'End If
 
-                        'Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
-                        ReDim aBuffer(0 To UBound(aNewArray))
-                        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
-                    End If
-                Else
-                    aBuffer = Nothing
-                End If
+                '        'Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+                '        ReDim aBuffer(0 To UBound(aNewArray))
+                '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+                '    End If
+                'Else
+                '    aBuffer = Nothing
+                'End If
                 'System.Diagnostics.Debug.Assert(False)
                 'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
             End If
@@ -1857,6 +1918,38 @@ Module modGlobal
         End Try
 
     End Function
+    Public Function NewInstr(ByVal strSearch As String, ByVal strWhat As String) As Integer
+        '
+        ' This function searches for the character strWhat in the string
+        ' strSearch. It uses the ASCII value of strWhat, and therefore is
+        ' not subject to Microsoft Access translation of special characters
+        ' and ligatures. It returns the integer position of the strWhat in
+        ' strSearch. It returns 0 if either strSearch or strWhat is empty,
+        ' or if strWhat cannot be found.
+        '
+        ' Note: If strWhat contains more than one character, only the first
+        ' character is searched for.
+
+        Dim iLen As Integer, i As Integer
+        Dim iRetVal As Integer
+
+        If Trim(strSearch) = "" Or Trim(strWhat) = "" Then
+            iRetVal = 0
+        Else
+            iRetVal = 0
+            iLen = Len(strSearch)
+            i = 1
+            Do
+                If Asc(Mid(strSearch, i, 1)) = Asc(strWhat) Then
+                    iRetVal = i
+                End If
+                i = i + 1
+            Loop While iRetVal = 0 And i <= iLen
+        End If
+        NewInstr = iRetVal
+
+    End Function
+
     Public Function AddCharacter(ByVal inputIndex As Int32) As String
         'If inputIndex = 156 Then
         '    AddCharacter = System.Convert.ToChar(347)
@@ -2009,7 +2102,7 @@ Module modGlobal
             nNewAlt = 0
         End If
         ConvertSpeech = inputString
-        If nWaypoint = 0 Then
+        If nWaypoint = 0 And nConfigDevice <> e_ConfigDevice.e_ConfigDevice_AttoPilot Then
             ConvertSpeech = Replace(ConvertSpeech, "{wpn}", "home")
         Else
             ConvertSpeech = Replace(ConvertSpeech, "{wpn}", nWaypoint)
@@ -2110,4 +2203,340 @@ Module modGlobal
 
         GetPololuValue = sUpper & sLower
     End Function
+    Public Function ConstrainJoystick(ByVal inputValue As Integer, ByVal outputLowerContraint As Long, ByVal outputUpperContraint As Long) As Integer
+        Dim nPct As Single
+        Dim nMidPoint As Single
+        Dim nHalfRange As Single
+
+        nHalfRange = (outputUpperContraint - outputLowerContraint) / 2
+        nMidPoint = nHalfRange + outputLowerContraint
+
+        If inputValue > 0 Then
+            nPct = inputValue / 1000
+            ConstrainJoystick = nMidPoint + (nHalfRange * nPct)
+        ElseIf inputValue < 0 Then
+            nPct = inputValue / -1000
+            ConstrainJoystick = nMidPoint - (nHalfRange * nPct)
+        Else
+            ConstrainJoystick = nMidPoint
+        End If
+
+        'nPct = (inputValue - lowerBound) / (upperBound - lowerBound)
+
+        'nPct = inputValue / 65535
+        'ConstrainJoystick = (maxValue - minValue) * nPct + minValue
+    End Function
+    Public Function GetJoystickValue(ByVal jstInput As JoystickInterface.Joystick, ByVal channelIndex As Integer, ByVal channelAxis As Integer, ByVal lowerBound As Long, ByVal upperBound As Long, ByVal subTrim As Long, ByVal reversed As Boolean, ByRef joystickCurrent As Long, ByRef sliderValue As Long, ByRef outputValue As Long) As Boolean
+
+        Dim bEnabled As Boolean
+        Dim nAxis As Integer
+        Dim nValue As Integer
+        'Dim nMin As Integer
+        'Dim nMax As Integer
+        'Dim nLower As Integer
+        'Dim nUpper As Integer
+        'Dim bReversed As Boolean
+        'Dim nSubTrim As Integer
+
+        Dim nReadValue As Long
+        Dim nTemp As Long
+        Dim nPct As Single
+
+        'Dim nLowerBound As Integer
+        'Dim nUpperBound As Integer
+
+        bEnabled = IIf(channelAxis = -1, False, True)
+
+        If bEnabled = True Then
+            'If jstInput.UpdateStatus = True Then
+            nReadValue = jstInput.Axis(channelAxis)
+            joystickCurrent = nReadValue
+
+            nTemp = nReadValue
+
+            If reversed = True Then
+                nTemp = nTemp - subTrim
+            Else
+                nTemp = nTemp + subTrim
+            End If
+
+            If nTemp > 32768 Then
+                nTemp = 32768
+            ElseIf nTemp < -32767 Then
+                nTemp = -32767
+            End If
+
+            If nTemp > 0 Then
+                nPct = nTemp / 32768
+                sliderValue = IIf(reversed = True, -lowerBound, upperBound) * nPct
+            ElseIf nTemp < 0 Then
+                nPct = nTemp / -32767
+                sliderValue = IIf(reversed = True, -upperBound, lowerBound) * nPct
+            Else
+                sliderValue = 0
+            End If
+
+            If reversed = True Then
+                sliderValue = -sliderValue
+            End If
+
+            'If nTemp > channelMax Then
+            '    nTemp = channelMax
+            'ElseIf nTemp < channelMin Then
+            '    nTemp = channelMin
+            'End If
+
+            'sliderValue = nTemp
+
+            'If nTemp > 0 Then
+            '    nPct = nTemp / (channelMax - 32767)
+            '    sliderValue = (nTemp * nPct)
+            '    nPct = nTemp / (channelUpper - 32767)
+            '    outputValue = 32767 + (nTemp * nPct)
+            'ElseIf nTemp < 0 Then
+            '    nPct = nTemp / (channelMin - 32767)
+            '    sliderValue = nTemp
+            '    nPct = nTemp / (channelLower - 32767)
+            '    outputValue = 32767 - (32767 * nPct)
+            'Else
+            '    sliderValue = nTemp
+            '    outputValue = (nTemp / (channelUpper - channelLower)) * (channelMin - channelMax)
+            'End If
+
+            'If Convert.ToDouble(nPct).IsNaN(nPct) = False Then
+            '    sliderValue = 32767 - (nTemp * nPct)
+            'Else
+            '    sliderValue = 65535 / 2
+            'End If
+
+            'If Convert.ToDouble(nPct).IsNaN(nPct) = False Then
+            '    outputValue = ((nUpperBound - nLowerBound) * nPct + nLowerBound) + 32767
+            'Else
+            '    outputValue = (((nUpperBound - nLowerBound) / 2) + nLowerBound) + 32767
+            'End If
+
+            'cJoystick(channelIndex).CurrentValue = outputValue
+
+            'Select Case channelType
+            '    Case e_ChannelType.e_ChannelType_Throttle
+            '        nJoystickThrottleNew = outputValue
+            '    Case e_ChannelType.e_ChannelType_Elevator
+            '        nJoystickElevatorNew = outputValue
+            '        'Debug.Print(nJoystickElevatorNew & ",slider=" & sliderValue)
+            '    Case e_ChannelType.e_ChannelType_Aileron
+            '        nJoystickAileronNew = outputValue
+            '    Case e_ChannelType.e_ChannelType_Rudder
+            '        nJoystickRudderNew = outputValue
+            '    Case e_ChannelType.e_ChannelType_Channel5
+            '        nJoystickModeNew = outputValue
+            'End Select
+
+            GetJoystickValue = True
+        Else
+            GetJoystickValue = False
+        End If
+    End Function
+    Public Function SendJoystickMessages(ByVal joystickOutputType As e_JoystickOutput)
+        Dim nTimerWait As Long
+        Dim sThrottle As String
+        Dim sElevator As String
+        Dim sAileron As String
+        Dim sRudder As String
+        Dim sMode As String
+
+        Dim nCount As Integer
+        Dim nCount2 As Integer
+
+        Dim nChannels(0 To 7) As Integer
+
+        Select Case joystickOutputType
+            Case e_JoystickOutput.e_JoystickOutput_Atto
+                nTimerWait = 2500000
+            Case e_JoystickOutput.e_JoystickOutput_UDB, e_JoystickOutput.e_JoystickOutput_APM
+                nTimerWait = 200000
+            Case e_JoystickOutput.e_JoystickOutput_APM ' e_JoystickOutput.e_JoystickOutput_Pololu
+                nTimerWait = 50000
+            Case e_JoystickOutput.e_JoystickOutput_Millswood
+                nTimerWait = 1000000
+        End Select
+
+        If bConnected = True And Now.Ticks > dLastJoystick + nTimerWait Then
+            dLastJoystick = Now.Ticks
+            Select Case joystickOutputType
+                Case e_JoystickOutput.e_JoystickOutput_Atto
+                    cJoystick(3).CurrentValue = ConstrainJoystick(cJoystick(3).SliderValue, -nMaxRollAngle * 100, nMaxRollAngle * 100)
+                    If (cJoystick(3).LastPosition <> cJoystick(3).CurrentValue Or (dLastAttoAileron + 50000000) < Now.Ticks) And nMaxRollAngle > -1 Then
+                        dLastAttoAileron = Now.Ticks
+                        cJoystick(3).LastPosition = cJoystick(3).CurrentValue
+                        frmMain.SendAttoPilot("E," & nConfigVehicle & "," & ConstrainJoystick(cJoystick(3).SliderValue, -nMaxRollAngle * 100, nMaxRollAngle * 100))
+                    End If
+                    cJoystick(2).CurrentValue = ConstrainJoystick(cJoystick(2).SliderValue, -nMaxPitchAngle * 100, nMaxPitchAngle * 100)
+                    If (cJoystick(2).LastPosition <> cJoystick(2).CurrentValue Or (dLastAttoElevator + 50000000) < Now.Ticks) And nMaxPitchAngle > -1 Then
+                        dLastAttoElevator = Now.Ticks
+                        cJoystick(2).LastPosition = cJoystick(2).CurrentValue
+                        frmMain.SendAttoPilot("F," & nConfigVehicle & "," & ConstrainJoystick(cJoystick(2).SliderValue, -nMaxPitchAngle * 100, nMaxPitchAngle * 100))
+                    End If
+                    cJoystick(1).CurrentValue = ConstrainJoystick(cJoystick(1).SliderValue, nMinThrottle, nMAxThrottle)
+                    If (cJoystick(1).LastPosition <> cJoystick(1).CurrentValue Or (dLastAttoThrottle + 50000000) < Now.Ticks) And nMinThrottle > -1 And nMAxThrottle > -1 Then
+                        dLastAttoThrottle = Now.Ticks
+                        cJoystick(1).LastPosition = cJoystick(1).CurrentValue
+                        frmMain.SendAttoPilot("H," & nConfigVehicle & "," & ConstrainJoystick(cJoystick(1).SliderValue, nMinThrottle, nMAxThrottle))
+                    End If
+                Case e_JoystickOutput.e_JoystickOutput_UDB
+                    sThrottle = Hex(ConstrainJoystick(cJoystick(1).SliderValue, 2200, 3800)).PadLeft(4, "0")
+                    sThrottle = Chr("&H" & sThrottle.Substring(0, 2)) & Chr("&H" & sThrottle.Substring(2, 2))
+                    sElevator = Hex(ConstrainJoystick(cJoystick(2).SliderValue, 2200, 3800)).PadLeft(4, "0")
+                    sElevator = Chr("&H" & sElevator.Substring(0, 2)) & Chr("&H" & sElevator.Substring(2, 2))
+                    sAileron = Hex(ConstrainJoystick(cJoystick(3).SliderValue, 2200, 3800)).PadLeft(4, "0")
+                    sAileron = Chr("&H" & sAileron.Substring(0, 2)) & Chr("&H" & sAileron.Substring(2, 2))
+                    sRudder = Hex(ConstrainJoystick(cJoystick(4).SliderValue, 2200, 3800)).PadLeft(4, "0")
+                    sRudder = Chr("&H" & sRudder.Substring(0, 2)) & Chr("&H" & sRudder.Substring(2, 2))
+                    sMode = Hex(ConstrainJoystick(cJoystick(5).SliderValue, 2200, 3800)).PadLeft(4, "0")
+                    sMode = Chr("&H" & sMode.Substring(0, 2)) & Chr("&H" & sMode.Substring(2, 2))
+                    frmMain.WriteSerialIn("Joy" & sAileron & sElevator & sMode & sThrottle & sRudder & vbCrLf, True)
+                Case e_JoystickOutput.e_JoystickOutput_Millswood
+                    If cJoystick(1).Servo <> 0 Then
+                        cJoystick(1).CurrentValue = ConstrainJoystick(cJoystick(1).SliderValue, 0, 254)
+                        If cJoystick(1).LastPosition <> cJoystick(1).CurrentValue Then
+                            cJoystick(1).LastPosition = cJoystick(1).CurrentValue
+                            frmMain.SendAttoPilot("E,FF," & Hex(cJoystick(1).Servo - 1).PadLeft(2, "0") & "," & Hex(ConstrainJoystick(cJoystick(1).SliderValue, 0, 254)).PadLeft(2, "0"))
+                        End If
+                    End If
+                    If cJoystick(2).Servo <> 0 Then
+                        cJoystick(2).CurrentValue = ConstrainJoystick(cJoystick(2).SliderValue, 0, 254)
+                        If cJoystick(2).LastPosition <> cJoystick(2).CurrentValue Then
+                            cJoystick(2).LastPosition = cJoystick(2).CurrentValue
+                            frmMain.SendAttoPilot("E,FF," & Hex(cJoystick(2).Servo - 1).PadLeft(2, "0") & "," & Hex(ConstrainJoystick(cJoystick(2).SliderValue, 0, 254)).PadLeft(2, "0"))
+                        End If
+                    End If
+                    If cJoystick(3).Servo <> 0 Then
+                        cJoystick(3).CurrentValue = ConstrainJoystick(cJoystick(3).SliderValue, 0, 254)
+                        If cJoystick(3).LastPosition <> cJoystick(3).CurrentValue Then
+                            cJoystick(3).LastPosition = cJoystick(3).CurrentValue
+                            frmMain.SendAttoPilot("E,FF," & Hex(cJoystick(3).Servo - 1).PadLeft(2, "0") & "," & Hex(ConstrainJoystick(cJoystick(3).SliderValue, 0, 254)).PadLeft(2, "0"))
+                        End If
+                    End If
+                    If cJoystick(4).Servo <> 0 Then
+                        cJoystick(4).CurrentValue = ConstrainJoystick(cJoystick(4).SliderValue, 0, 254)
+                        If cJoystick(4).LastPosition <> cJoystick(4).CurrentValue Then
+                            cJoystick(4).LastPosition = cJoystick(4).CurrentValue
+                            frmMain.SendAttoPilot("E,FF," & Hex(cJoystick(4).Servo - 1).PadLeft(2, "0") & "," & Hex(ConstrainJoystick(cJoystick(4).SliderValue, 0, 254)).PadLeft(2, "0"))
+                        End If
+                    End If
+                    If cJoystick(5).Servo <> 0 Then
+                        cJoystick(5).CurrentValue = ConstrainJoystick(cJoystick(5).SliderValue, 0, 254)
+                        If cJoystick(5).LastPosition <> cJoystick(5).CurrentValue Then
+                            cJoystick(5).LastPosition = cJoystick(5).CurrentValue
+                            frmMain.SendAttoPilot("E,FF," & Hex(cJoystick(5).Servo - 1).PadLeft(2, "0") & "," & Hex(ConstrainJoystick(cJoystick(5).SliderValue, 0, 254)).PadLeft(2, "0"))
+                        End If
+                    End If
+                Case e_JoystickOutput.e_JoystickOutput_APM
+                    Dim nLocalThrottle As Integer
+                    Dim nLocalElevator As Integer
+                    Dim nLocalAileron As Integer
+                    Dim nLocalRudder As Integer
+                    Dim bLocalChanged As Boolean = False
+
+                    nLocalThrottle = 65535
+                    nLocalElevator = 65535
+                    nLocalAileron = 65535
+                    nLocalRudder = 65535
+
+                    If cJoystick(1).Servo <> 0 Then
+                        cJoystick(1).CurrentValue = ConstrainJoystick(cJoystick(1).SliderValue, 900, 2100)
+                        If cJoystick(1).LastPosition <> cJoystick(1).CurrentValue Then
+                            cJoystick(1).LastPosition = cJoystick(1).CurrentValue
+                            bLocalChanged = True
+                        End If
+                    End If
+                    If cJoystick(2).Servo <> 0 Then
+                        cJoystick(2).CurrentValue = ConstrainJoystick(cJoystick(2).SliderValue, 900, 2100)
+                        If cJoystick(2).LastPosition <> cJoystick(2).CurrentValue Then
+                            cJoystick(2).LastPosition = cJoystick(2).CurrentValue
+                            bLocalChanged = True
+                        End If
+                    End If
+                    If cJoystick(3).Servo <> 0 Then
+                        cJoystick(3).CurrentValue = ConstrainJoystick(cJoystick(3).SliderValue, 900, 2100)
+                        If cJoystick(3).LastPosition <> cJoystick(3).CurrentValue Then
+                            cJoystick(3).LastPosition = cJoystick(3).CurrentValue
+                            bLocalChanged = True
+                        End If
+                    End If
+                    If cJoystick(4).Servo <> 0 Then
+                        cJoystick(4).CurrentValue = ConstrainJoystick(cJoystick(4).SliderValue, 900, 2100)
+                        If cJoystick(4).LastPosition <> cJoystick(4).CurrentValue Then
+                            cJoystick(4).LastPosition = cJoystick(4).CurrentValue
+                            bLocalChanged = True
+                        End If
+                    End If
+
+                    If bLocalChanged = True Then
+                        For nCount = 0 To 7
+                            nChannels(nCount) = 65535
+                            For nCount2 = 1 To 8
+                                If cJoystick(nCount2).Servo = nCount + 1 Then
+                                    nChannels(nCount) = cJoystick(nCount2).CurrentValue
+                                    Exit For
+                                End If
+                            Next
+                        Next
+                        frmMain.SendMavlinkRawServo(nChannels(0), nChannels(1), nChannels(2), nChannels(3), nChannels(4), nChannels(5), nChannels(6), nChannels(7))
+                    End If
+
+                    'Case e_JoystickOutput.e_JoystickOutput_Pololu
+                    '    If nJoystickThrottleServo <> 0 Then
+                    '        If nJoystickThrottlePosition <> nJoystickThrottleNew Then
+                    '            nJoystickThrottlePosition = nJoystickThrottleNew
+                    '            frmMain.WriteTrackingSerialPort(Chr("&h80") & Chr("&h1") & Chr("&h4") & Chr(nJoystickThrottleServo - 1) & GetPololuValue(ConstrainJoystick(nJoystickThrottlePosition, 500, 5500)), True)
+                    '        End If
+                    '    End If
+                    '    If nJoystickElevatorServo <> 0 Then
+                    '        If nJoystickElevatorPosition <> nJoystickElevatorNew Then
+                    '            nJoystickElevatorPosition = nJoystickElevatorNew
+                    '            frmMain.WriteTrackingSerialPort(Chr("&h80") & Chr("&h1") & Chr("&h4") & Chr(nJoystickElevatorServo - 1) & GetPololuValue(ConstrainJoystick(nJoystickElevatorPosition, 500, 5500)), True)
+                    '        End If
+                    '    End If
+                    '    If nJoystickAileronServo <> 0 Then
+                    '        If nJoystickAileronPosition <> nJoystickAileronNew Then
+                    '            nJoystickAileronPosition = nJoystickAileronNew
+                    '            frmMain.WriteTrackingSerialPort(Chr("&h80") & Chr("&h1") & Chr("&h4") & Chr(nJoystickAileronServo - 1) & GetPololuValue(ConstrainJoystick(nJoystickAileronPosition, 500, 5500)), True)
+                    '        End If
+                    '    End If
+                    '    If nJoystickRudderServo <> 0 Then
+                    '        If nJoystickRudderPosition <> nJoystickRudderNew Then
+                    '            nJoystickRudderPosition = nJoystickRudderNew
+                    '            frmMain.WriteTrackingSerialPort(Chr("&h80") & Chr("&h1") & Chr("&h4") & Chr(nJoystickRudderServo - 1) & GetPololuValue(ConstrainJoystick(nJoystickRudderPosition, 500, 5500)), True)
+                    '        End If
+                    '    End If
+            End Select
+        End If
+    End Function
+    Public Function ReleaseJoystick()
+        Select Case nConfigDevice
+            Case e_ConfigDevice.e_ConfigDevice_MAVlink
+                frmMain.SendMavlinkRawServo(0, 0, 0, 0, 0, 0, 0, 0)
+        End Select
+    End Function
+    'Public Function GetJoystickValue(ByVal inputValus As Integer, ByVal minValue As Integer, ByVal maxValue As Integer, ByVal absMin As Integer, ByVal absMax As Integer, ByVal subTrim As Integer, Optional ByVal reversedValue As Boolean = False) As Integer
+    '    Dim nTemp As Integer
+    '    Dim nPct As Single
+
+    '    nTemp = inputValus + subTrim
+
+    '    If nTemp < minValue Then
+    '        nTemp = minValue
+    '    ElseIf nTemp > maxValue Then
+    '        nTemp = maxValue
+    '    End If
+    '    If reversedValue = True Then
+    '        nTemp = minValue + (maxValue - nTemp)
+    '    End If
+    '    nPct = (nTemp - minValue) / (maxValue - minValue)
+    '    If Convert.ToDouble(nPct).IsNaN(nPct) = False Then
+    '        GetJoystickValue = (absMax - absMin) * nPct + absMin
+    '    Else
+    '        GetJoystickValue = ((maxValue - minValue) / 2) + minValue
+    '    End If
+    'End Function
 End Module

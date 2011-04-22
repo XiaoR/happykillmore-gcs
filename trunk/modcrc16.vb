@@ -34,6 +34,33 @@ Module modcrc16
         Catch ex As Exception
         End Try
     End Function
+    Public Function crc_calculate_byte2(ByVal InputString As String) As Byte()
+        Dim crcTmp As UShort
+        Dim i As Integer
+        Dim sTemp As String
+        Dim arr(0 To 1) As Byte
+
+        Try
+            crcTmp = X25_INIT_CRC
+
+            For i = 2 To Len(InputString)
+                crcTmp = crc_accumulate(Convert.ToByte(Asc(InputString.Substring(i - 1, 1))), crcTmp)
+                'Debug.Print("Byte #" & i & " = " & Convert.ToByte(Asc(InputString.Substring(i - 1, 1))) & " crcTmp=" & crcTmp)
+            Next
+
+            'crc_calculate = Hex(crcTmp And &HFFFF).PadLeft(2, "0")
+
+            'crc_calculate = crcTmp
+            sTemp = Hex(crcTmp).PadLeft(4, "0")
+            arr(0) = CInt("&H" & sTemp.Substring(0, 2))
+            arr(1) = CInt("&H" & sTemp.Substring(2, 2))
+            Return arr
+            'crc_calculate = AddCharacter("&h" & Mid(crc_calculate, 3, 2)) & AddCharacter("&h" & Mid(crc_calculate, 1, 2))
+            'crc_calculate = Chr("&h" & Mid(crc_calculate, 3, 2)) & Chr("&h" & Mid(crc_calculate, 1, 2))
+            'crc_calculate = Chr(Mid(crc_calculate, 3, 2)) & Chr(Mid(crc_calculate, 1, 2))
+        Catch ex As Exception
+        End Try
+    End Function
     Public Function crc_calculate_byte(ByVal inputBytes() As Byte, Optional ByVal showDetails As Boolean = False) As Byte()
         Dim crcTmp As UShort
         Dim nCount As Integer

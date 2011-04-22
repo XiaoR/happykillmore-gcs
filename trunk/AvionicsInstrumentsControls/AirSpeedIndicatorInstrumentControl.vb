@@ -121,7 +121,7 @@ Namespace AvionicsInstrumentControlDemo
                 pe.Graphics.DrawString(sUnitLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.54 * scale, bmpCadran.Width * 0.75 * scale)
             End Using
 
-            If airSpeed > -1 Then
+            If airSpeed > 0 Then
                 alphaNeedle = InterpolPhyToAngle(airSpeed, 0, nMaxSpeed, 180.0, 468.0)
                 RotateImage(pe, bmpAirNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
             End If

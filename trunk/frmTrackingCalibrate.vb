@@ -175,10 +175,23 @@ Public Class frmTrackingCalibrate
     End Sub
 
     Private Sub cmdCenterPan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCenterPan.Click
-        frmMain.SendTrackerMessage(Convert.ToInt16(cboPanServo.Text), (tbarLeft.Value + tbarRight.Value) / 2, )
+        Dim nPanServoLocal As Integer
+        If cboPanServo.Visible = True Then
+            nPanServoLocal = Convert.ToInt32(cboPanServo.Text)
+        Else
+            nPanServoLocal = -1
+        End If
+
+        frmMain.SendTrackerMessage(nPanServoLocal, (tbarLeft.Value + tbarRight.Value) / 2, )
     End Sub
 
     Private Sub cmdCenterTilt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCenterTilt.Click
-        frmMain.SendTrackerMessage(Convert.ToInt16(cboTiltServo.Text), , (tbarUp.Value + tbarDown.Value) / 2)
+        Dim nTiltServoLocal As Integer
+        If cboTiltServo.Visible = True Then
+            nTiltServoLocal = Convert.ToInt32(cboTiltServo.Text)
+        Else
+            nTiltServoLocal = -1
+        End If
+        frmMain.SendTrackerMessage(nTiltServoLocal, , (tbarUp.Value + tbarDown.Value) / 2)
     End Sub
 End Class

@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 439</value>
+    <value>12, 418</value>
   </data>
   <data name="cmdSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 23</value>
@@ -144,7 +144,7 @@
     <value>2</value>
   </data>
   <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 439</value>
+    <value>429, 418</value>
   </data>
   <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 23</value>
@@ -170,1279 +170,7 @@
   <metadata name="ColorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="&gt;&gt;grpGeneral.Name" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.Parent" xml:space="preserve">
-    <value>tabGeneral</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tabGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 373</value>
-  </data>
-  <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabGeneral.Text" xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data name="&gt;&gt;tabGeneral.Name" xml:space="preserve">
-    <value>tabGeneral</value>
-  </data>
-  <data name="&gt;&gt;tabGeneral.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabGeneral.Parent" xml:space="preserve">
-    <value>tabSettings</value>
-  </data>
-  <data name="&gt;&gt;tabGeneral.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthKey.Name" xml:space="preserve">
-    <value>grpGoogleEarthKey</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthKey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthKey.Parent" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthKey.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Name" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Parent" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.Name" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.Parent" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Name" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Parent" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tabGoogleEarth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabGoogleEarth.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabGoogleEarth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 373</value>
-  </data>
-  <data name="tabGoogleEarth.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabGoogleEarth.Text" xml:space="preserve">
-    <value>Google Earth</value>
-  </data>
-  <data name="&gt;&gt;tabGoogleEarth.Name" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;tabGoogleEarth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabGoogleEarth.Parent" xml:space="preserve">
-    <value>tabSettings</value>
-  </data>
-  <data name="&gt;&gt;tabGoogleEarth.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Name" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Parent" xml:space="preserve">
-    <value>tabInstruments</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Name" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Parent" xml:space="preserve">
-    <value>tabInstruments</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabInstruments.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabInstruments.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 396</value>
-  </data>
-  <data name="tabInstruments.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tabInstruments.Text" xml:space="preserve">
-    <value>Instruments</value>
-  </data>
-  <data name="&gt;&gt;tabInstruments.Name" xml:space="preserve">
-    <value>tabInstruments</value>
-  </data>
-  <data name="&gt;&gt;tabInstruments.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabInstruments.Parent" xml:space="preserve">
-    <value>tabSettings</value>
-  </data>
-  <data name="&gt;&gt;tabInstruments.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="txtAltitudeMin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>309, 332</value>
-  </data>
-  <data name="txtAltitudeMin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 20</value>
-  </data>
-  <data name="txtAltitudeMin.TabIndex" type="System.Int32, mscorlib">
-    <value>85</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeMin.Name" xml:space="preserve">
-    <value>txtAltitudeMin</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeMin.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeMin.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblAltitudeMinValue.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lblAltitudeMinValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblAltitudeMinValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 335</value>
-  </data>
-  <data name="lblAltitudeMinValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 13</value>
-  </data>
-  <data name="lblAltitudeMinValue.TabIndex" type="System.Int32, mscorlib">
-    <value>84</value>
-  </data>
-  <data name="lblAltitudeMinValue.Text" xml:space="preserve">
-    <value>Min Altitude:</value>
-  </data>
-  <data name="lblAltitudeMinValue.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeMinValue.Name" xml:space="preserve">
-    <value>lblAltitudeMinValue</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeMinValue.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeMinValue.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeMinValue.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="cmdAltitudeAlarm.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdAltitudeAlarm.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdAltitudeAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 356</value>
-  </data>
-  <data name="cmdAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
-    <value>83</value>
-  </data>
-  <data name="&gt;&gt;cmdAltitudeAlarm.Name" xml:space="preserve">
-    <value>cmdAltitudeAlarm</value>
-  </data>
-  <data name="&gt;&gt;cmdAltitudeAlarm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdAltitudeAlarm.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdAltitudeAlarm.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="txtAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 357</value>
-  </data>
-  <data name="txtAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
-    <value>82</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeAlarm.Name" xml:space="preserve">
-    <value>txtAltitudeAlarm</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeAlarm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeAlarm.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAltitudeAlarm.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 334</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 17</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
-    <value>81</value>
-  </data>
-  <data name="chkAnnounceAltitudeAlarm.Text" xml:space="preserve">
-    <value>Announce Altitude Alarm</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Name" xml:space="preserve">
-    <value>chkAnnounceAltitudeAlarm</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="cmdAlarmPlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdAlarmPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdAlarmPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdAlarmPlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 303</value>
-  </data>
-  <data name="cmdAlarmPlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdAlarmPlay.TabIndex" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="&gt;&gt;cmdAlarmPlay.Name" xml:space="preserve">
-    <value>cmdAlarmPlay</value>
-  </data>
-  <data name="&gt;&gt;cmdAlarmPlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdAlarmPlay.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdAlarmPlay.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="txtAnnounceAlarm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 304</value>
-  </data>
-  <data name="txtAnnounceAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAnnounceAlarm.TabIndex" type="System.Int32, mscorlib">
-    <value>79</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceAlarm.Name" xml:space="preserve">
-    <value>txtAnnounceAlarm</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceAlarm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceAlarm.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceAlarm.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 281</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 17</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.TabIndex" type="System.Int32, mscorlib">
-    <value>78</value>
-  </data>
-  <data name="chkAnnounceLinkAlarm.Text" xml:space="preserve">
-    <value>Announce Link Alarm</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkAlarm.Name" xml:space="preserve">
-    <value>chkAnnounceLinkAlarm</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkAlarm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkAlarm.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkAlarm.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="cmdWarningPlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdWarningPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdWarningPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdWarningPlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 248</value>
-  </data>
-  <data name="cmdWarningPlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdWarningPlay.TabIndex" type="System.Int32, mscorlib">
-    <value>77</value>
-  </data>
-  <data name="&gt;&gt;cmdWarningPlay.Name" xml:space="preserve">
-    <value>cmdWarningPlay</value>
-  </data>
-  <data name="&gt;&gt;cmdWarningPlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdWarningPlay.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdWarningPlay.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="txtAnnounceWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 249</value>
-  </data>
-  <data name="txtAnnounceWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAnnounceWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>76</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWarning.Name" xml:space="preserve">
-    <value>txtAnnounceWarning</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWarning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWarning.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWarning.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 226</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 17</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>75</value>
-  </data>
-  <data name="chkAnnounceLinkWarning.Text" xml:space="preserve">
-    <value>Announce Link Warning</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkWarning.Name" xml:space="preserve">
-    <value>chkAnnounceLinkWarning</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkWarning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkWarning.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceLinkWarning.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="lblSpeechInterval.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lblSpeechInterval.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblSpeechInterval.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 174</value>
-  </data>
-  <data name="lblSpeechInterval.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 13</value>
-  </data>
-  <data name="lblSpeechInterval.TabIndex" type="System.Int32, mscorlib">
-    <value>74</value>
-  </data>
-  <data name="lblSpeechInterval.Text" xml:space="preserve">
-    <value>Interval:</value>
-  </data>
-  <data name="lblSpeechInterval.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblSpeechInterval.Name" xml:space="preserve">
-    <value>lblSpeechInterval</value>
-  </data>
-  <data name="&gt;&gt;lblSpeechInterval.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblSpeechInterval.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;lblSpeechInterval.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="cboSpeechInterval.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="cboSpeechInterval.IntegralHeight" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="cboSpeechInterval.Location" type="System.Drawing.Point, System.Drawing">
-    <value>309, 170</value>
-  </data>
-  <data name="cboSpeechInterval.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 21</value>
-  </data>
-  <data name="cboSpeechInterval.TabIndex" type="System.Int32, mscorlib">
-    <value>73</value>
-  </data>
-  <data name="&gt;&gt;cboSpeechInterval.Name" xml:space="preserve">
-    <value>cboSpeechInterval</value>
-  </data>
-  <data name="&gt;&gt;cboSpeechInterval.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboSpeechInterval.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cboSpeechInterval.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 194</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdRegularIntervalPlay.TabIndex" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="&gt;&gt;cmdRegularIntervalPlay.Name" xml:space="preserve">
-    <value>cmdRegularIntervalPlay</value>
-  </data>
-  <data name="&gt;&gt;cmdRegularIntervalPlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdRegularIntervalPlay.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdRegularIntervalPlay.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="txtAnnounceRegularInterval.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 195</value>
-  </data>
-  <data name="txtAnnounceRegularInterval.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAnnounceRegularInterval.TabIndex" type="System.Int32, mscorlib">
-    <value>71</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceRegularInterval.Name" xml:space="preserve">
-    <value>txtAnnounceRegularInterval</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceRegularInterval.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceRegularInterval.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceRegularInterval.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 172</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.TabIndex" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="chkAnnounceRegularInterval.Text" xml:space="preserve">
-    <value>Announce Regular Interval</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceRegularInterval.Name" xml:space="preserve">
-    <value>chkAnnounceRegularInterval</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceRegularInterval.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceRegularInterval.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceRegularInterval.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="lblHelp.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Underline</value>
-  </data>
-  <data name="lblHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 20</value>
-  </data>
-  <data name="lblHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 19</value>
-  </data>
-  <data name="lblHelp.TabIndex" type="System.Int32, mscorlib">
-    <value>69</value>
-  </data>
-  <data name="lblHelp.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="lblHelp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblHelp.Name" xml:space="preserve">
-    <value>lblHelp</value>
-  </data>
-  <data name="&gt;&gt;lblHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblHelp.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;lblHelp.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="cmdModeChangePlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdModeChangePlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdModeChangePlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdModeChangePlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 134</value>
-  </data>
-  <data name="cmdModeChangePlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdModeChangePlay.TabIndex" type="System.Int32, mscorlib">
-    <value>68</value>
-  </data>
-  <data name="&gt;&gt;cmdModeChangePlay.Name" xml:space="preserve">
-    <value>cmdModeChangePlay</value>
-  </data>
-  <data name="&gt;&gt;cmdModeChangePlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdModeChangePlay.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdModeChangePlay.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="txtAnnounceModeChange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 134</value>
-  </data>
-  <data name="txtAnnounceModeChange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAnnounceModeChange.TabIndex" type="System.Int32, mscorlib">
-    <value>67</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceModeChange.Name" xml:space="preserve">
-    <value>txtAnnounceModeChange</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceModeChange.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceModeChange.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceModeChange.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="chkAnnounceModeChange.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceModeChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceModeChange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 111</value>
-  </data>
-  <data name="chkAnnounceModeChange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 17</value>
-  </data>
-  <data name="chkAnnounceModeChange.TabIndex" type="System.Int32, mscorlib">
-    <value>66</value>
-  </data>
-  <data name="chkAnnounceModeChange.Text" xml:space="preserve">
-    <value>Announce Mode Change</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceModeChange.Name" xml:space="preserve">
-    <value>chkAnnounceModeChange</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceModeChange.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceModeChange.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceModeChange.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="cmdWaypointPlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cmdWaypointPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmdWaypointPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmdWaypointPlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 74</value>
-  </data>
-  <data name="cmdWaypointPlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
-  </data>
-  <data name="cmdWaypointPlay.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
-  </data>
-  <data name="&gt;&gt;cmdWaypointPlay.Name" xml:space="preserve">
-    <value>cmdWaypointPlay</value>
-  </data>
-  <data name="&gt;&gt;cmdWaypointPlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdWaypointPlay.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cmdWaypointPlay.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="txtAnnounceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 75</value>
-  </data>
-  <data name="txtAnnounceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 20</value>
-  </data>
-  <data name="txtAnnounceWaypoints.TabIndex" type="System.Int32, mscorlib">
-    <value>64</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWaypoints.Name" xml:space="preserve">
-    <value>txtAnnounceWaypoints</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWaypoints.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWaypoints.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;txtAnnounceWaypoints.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="chkAnnounceWaypoints.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkAnnounceWaypoints.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkAnnounceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 52</value>
-  </data>
-  <data name="chkAnnounceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 17</value>
-  </data>
-  <data name="chkAnnounceWaypoints.TabIndex" type="System.Int32, mscorlib">
-    <value>63</value>
-  </data>
-  <data name="chkAnnounceWaypoints.Text" xml:space="preserve">
-    <value>Announce Waypoints</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceWaypoints.Name" xml:space="preserve">
-    <value>chkAnnounceWaypoints</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceWaypoints.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceWaypoints.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;chkAnnounceWaypoints.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="cboVoice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 18</value>
-  </data>
-  <data name="cboVoice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 21</value>
-  </data>
-  <data name="cboVoice.TabIndex" type="System.Int32, mscorlib">
-    <value>62</value>
-  </data>
-  <data name="&gt;&gt;cboVoice.Name" xml:space="preserve">
-    <value>cboVoice</value>
-  </data>
-  <data name="&gt;&gt;cboVoice.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboVoice.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;cboVoice.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="lblVoice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblVoice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 20</value>
-  </data>
-  <data name="lblVoice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 19</value>
-  </data>
-  <data name="lblVoice.TabIndex" type="System.Int32, mscorlib">
-    <value>63</value>
-  </data>
-  <data name="lblVoice.Text" xml:space="preserve">
-    <value>Voice:</value>
-  </data>
-  <data name="lblVoice.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblVoice.Name" xml:space="preserve">
-    <value>lblVoice</value>
-  </data>
-  <data name="&gt;&gt;lblVoice.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblVoice.Parent" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;lblVoice.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="tabSpeech.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabSpeech.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 396</value>
-  </data>
-  <data name="tabSpeech.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="tabSpeech.Text" xml:space="preserve">
-    <value>Speech</value>
-  </data>
-  <data name="&gt;&gt;tabSpeech.Name" xml:space="preserve">
-    <value>tabSpeech</value>
-  </data>
-  <data name="&gt;&gt;tabSpeech.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabSpeech.Parent" xml:space="preserve">
-    <value>tabSettings</value>
-  </data>
-  <data name="&gt;&gt;tabSpeech.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tabSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 11</value>
-  </data>
-  <data name="tabSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 422</value>
-  </data>
-  <data name="tabSettings.TabIndex" type="System.Int32, mscorlib">
-    <value>55</value>
-  </data>
-  <data name="&gt;&gt;tabSettings.Name" xml:space="preserve">
-    <value>tabSettings</value>
-  </data>
-  <data name="&gt;&gt;tabSettings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabSettings.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabSettings.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
-    <value>Label5</value>
-  </data>
-  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayTimeout.Name" xml:space="preserve">
-    <value>cbo2wayTimeout</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayTimeout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayTimeout.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayTimeout.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
-    <value>Label4</value>
-  </data>
-  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayRetries.Name" xml:space="preserve">
-    <value>cbo2wayRetries</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayRetries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayRetries.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cbo2wayRetries.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
-    <value>Label3</value>
-  </data>
-  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;cboWarningTimeout.Name" xml:space="preserve">
-    <value>cboWarningTimeout</value>
-  </data>
-  <data name="&gt;&gt;cboWarningTimeout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboWarningTimeout.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboWarningTimeout.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
-    <value>Label2</value>
-  </data>
-  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;cboAlarmTimeout.Name" xml:space="preserve">
-    <value>cboAlarmTimeout</value>
-  </data>
-  <data name="&gt;&gt;cboAlarmTimeout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboAlarmTimeout.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboAlarmTimeout.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
-    <value>Label1</value>
-  </data>
-  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;cboMapSource.Name" xml:space="preserve">
-    <value>cboMapSource</value>
-  </data>
-  <data name="&gt;&gt;cboMapSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboMapSource.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboMapSource.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeOffset.Name" xml:space="preserve">
-    <value>lblAltitudeOffset</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeOffset.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeOffset.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeOffset.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;cboAltitudeOffset.Name" xml:space="preserve">
-    <value>cboAltitudeOffset</value>
-  </data>
-  <data name="&gt;&gt;cboAltitudeOffset.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboAltitudeOffset.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboAltitudeOffset.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;lblLanguage.Name" xml:space="preserve">
-    <value>lblLanguage</value>
-  </data>
-  <data name="&gt;&gt;lblLanguage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblLanguage.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblLanguage.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;cboLanguage.Name" xml:space="preserve">
-    <value>cboLanguage</value>
-  </data>
-  <data name="&gt;&gt;cboLanguage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboLanguage.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleChannel.Name" xml:space="preserve">
-    <value>cboThrottleChannel</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleChannel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleChannel.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleChannel.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleChannel.Name" xml:space="preserve">
-    <value>lblThrottleChannel</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleChannel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleChannel.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleChannel.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;lblHeadingReverse.Name" xml:space="preserve">
-    <value>lblHeadingReverse</value>
-  </data>
-  <data name="&gt;&gt;lblHeadingReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblHeadingReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblHeadingReverse.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;chkHeadingReverse.Name" xml:space="preserve">
-    <value>chkHeadingReverse</value>
-  </data>
-  <data name="&gt;&gt;chkHeadingReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkHeadingReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;chkHeadingReverse.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;lblYawReverse.Name" xml:space="preserve">
-    <value>lblYawReverse</value>
-  </data>
-  <data name="&gt;&gt;lblYawReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblYawReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblYawReverse.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;chkYawReverse.Name" xml:space="preserve">
-    <value>chkYawReverse</value>
-  </data>
-  <data name="&gt;&gt;chkYawReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkYawReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;chkYawReverse.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;lblRollReverse.Name" xml:space="preserve">
-    <value>lblRollReverse</value>
-  </data>
-  <data name="&gt;&gt;lblRollReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblRollReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblRollReverse.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;chkRollReverse.Name" xml:space="preserve">
-    <value>chkRollReverse</value>
-  </data>
-  <data name="&gt;&gt;chkRollReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkRollReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;chkRollReverse.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;lblPitchReverse.Name" xml:space="preserve">
-    <value>lblPitchReverse</value>
-  </data>
-  <data name="&gt;&gt;lblPitchReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblPitchReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblPitchReverse.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;chkPitchReverse.Name" xml:space="preserve">
-    <value>chkPitchReverse</value>
-  </data>
-  <data name="&gt;&gt;chkPitchReverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkPitchReverse.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;chkPitchReverse.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="&gt;&gt;cbo3DModel.Name" xml:space="preserve">
-    <value>cbo3DModel</value>
-  </data>
-  <data name="&gt;&gt;cbo3DModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbo3DModel.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cbo3DModel.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;lbl3DModel.Name" xml:space="preserve">
-    <value>lbl3DModel</value>
-  </data>
-  <data name="&gt;&gt;lbl3DModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl3DModel.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lbl3DModel.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
-  <data name="&gt;&gt;lblSpeedUnits.Name" xml:space="preserve">
-    <value>lblSpeedUnits</value>
-  </data>
-  <data name="&gt;&gt;lblSpeedUnits.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblSpeedUnits.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblSpeedUnits.ZOrder" xml:space="preserve">
-    <value>26</value>
-  </data>
-  <data name="&gt;&gt;cboSpeedUnits.Name" xml:space="preserve">
-    <value>cboSpeedUnits</value>
-  </data>
-  <data name="&gt;&gt;cboSpeedUnits.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboSpeedUnits.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboSpeedUnits.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
-  <data name="&gt;&gt;lblDistanceUnits.Name" xml:space="preserve">
-    <value>lblDistanceUnits</value>
-  </data>
-  <data name="&gt;&gt;lblDistanceUnits.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblDistanceUnits.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;lblDistanceUnits.ZOrder" xml:space="preserve">
-    <value>28</value>
-  </data>
-  <data name="&gt;&gt;cboDistanceUnits.Name" xml:space="preserve">
-    <value>cboDistanceUnits</value>
-  </data>
-  <data name="&gt;&gt;cboDistanceUnits.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboDistanceUnits.Parent" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;cboDistanceUnits.ZOrder" xml:space="preserve">
-    <value>29</value>
-  </data>
-  <data name="grpGeneral.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 9</value>
-  </data>
-  <data name="grpGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 347</value>
-  </data>
-  <data name="grpGeneral.TabIndex" type="System.Int32, mscorlib">
-    <value>49</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.Name" xml:space="preserve">
-    <value>grpGeneral</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.Parent" xml:space="preserve">
-    <value>tabGeneral</value>
-  </data>
-  <data name="&gt;&gt;grpGeneral.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -2280,6 +1008,69 @@
   <data name="&gt;&gt;cboDistanceUnits.ZOrder" xml:space="preserve">
     <value>29</value>
   </data>
+  <data name="grpGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 9</value>
+  </data>
+  <data name="grpGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>456, 347</value>
+  </data>
+  <data name="grpGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="&gt;&gt;grpGeneral.Name" xml:space="preserve">
+    <value>grpGeneral</value>
+  </data>
+  <data name="&gt;&gt;grpGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpGeneral.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;grpGeneral.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 375</value>
+  </data>
+  <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Name" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtGoogleEarthKey.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt</value>
+  </data>
+  <data name="txtGoogleEarthKey.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="txtGoogleEarthKey.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtGoogleEarthKey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 145</value>
+  </data>
+  <data name="txtGoogleEarthKey.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;txtGoogleEarthKey.Name" xml:space="preserve">
     <value>txtGoogleEarthKey</value>
   </data>
@@ -2318,177 +1109,6 @@
   </data>
   <data name="&gt;&gt;grpGoogleEarthKey.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="txtGoogleEarthKey.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 8.25pt</value>
-  </data>
-  <data name="txtGoogleEarthKey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 15</value>
-  </data>
-  <data name="txtGoogleEarthKey.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtGoogleEarthKey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 145</value>
-  </data>
-  <data name="txtGoogleEarthKey.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;txtGoogleEarthKey.Name" xml:space="preserve">
-    <value>txtGoogleEarthKey</value>
-  </data>
-  <data name="&gt;&gt;txtGoogleEarthKey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtGoogleEarthKey.Parent" xml:space="preserve">
-    <value>grpGoogleEarthKey</value>
-  </data>
-  <data name="&gt;&gt;txtGoogleEarthKey.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lblGETerrain.Name" xml:space="preserve">
-    <value>lblGETerrain</value>
-  </data>
-  <data name="&gt;&gt;lblGETerrain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblGETerrain.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;lblGETerrain.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;chkGETerrain.Name" xml:space="preserve">
-    <value>chkGETerrain</value>
-  </data>
-  <data name="&gt;&gt;chkGETerrain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkGETerrain.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;chkGETerrain.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblGEBorders.Name" xml:space="preserve">
-    <value>lblGEBorders</value>
-  </data>
-  <data name="&gt;&gt;lblGEBorders.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblGEBorders.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;lblGEBorders.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chkGEBorders.Name" xml:space="preserve">
-    <value>chkGEBorders</value>
-  </data>
-  <data name="&gt;&gt;chkGEBorders.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkGEBorders.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;chkGEBorders.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;lblGETrees.Name" xml:space="preserve">
-    <value>lblGETrees</value>
-  </data>
-  <data name="&gt;&gt;lblGETrees.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblGETrees.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;lblGETrees.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;chkGETrees.Name" xml:space="preserve">
-    <value>chkGETrees</value>
-  </data>
-  <data name="&gt;&gt;chkGETrees.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkGETrees.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;chkGETrees.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblGEBuildings.Name" xml:space="preserve">
-    <value>lblGEBuildings</value>
-  </data>
-  <data name="&gt;&gt;lblGEBuildings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblGEBuildings.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;lblGEBuildings.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;chkGEBuildings.Name" xml:space="preserve">
-    <value>chkGEBuildings</value>
-  </data>
-  <data name="&gt;&gt;chkGEBuildings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkGEBuildings.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;chkGEBuildings.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;lblGERoads.Name" xml:space="preserve">
-    <value>lblGERoads</value>
-  </data>
-  <data name="&gt;&gt;lblGERoads.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblGERoads.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;lblGERoads.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;chkGERoads.Name" xml:space="preserve">
-    <value>chkGERoads</value>
-  </data>
-  <data name="&gt;&gt;chkGERoads.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkGERoads.Parent" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;chkGERoads.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="grpGoogleEarthFeatures.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 15</value>
-  </data>
-  <data name="grpGoogleEarthFeatures.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 172</value>
-  </data>
-  <data name="grpGoogleEarthFeatures.TabIndex" type="System.Int32, mscorlib">
-    <value>54</value>
-  </data>
-  <data name="grpGoogleEarthFeatures.Text" xml:space="preserve">
-    <value>Features</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Name" xml:space="preserve">
-    <value>grpGoogleEarthFeatures</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.Parent" xml:space="preserve">
-    <value>tabGoogleEarth</value>
-  </data>
-  <data name="&gt;&gt;grpGoogleEarthFeatures.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="lblGETerrain.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2820,149 +1440,29 @@
   <data name="&gt;&gt;chkGERoads.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;lblClamptoGround.Name" xml:space="preserve">
-    <value>lblClamptoGround</value>
+  <data name="grpGoogleEarthFeatures.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 15</value>
   </data>
-  <data name="&gt;&gt;lblClamptoGround.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grpGoogleEarthFeatures.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 172</value>
   </data>
-  <data name="&gt;&gt;lblClamptoGround.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
+  <data name="grpGoogleEarthFeatures.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
   </data>
-  <data name="&gt;&gt;lblClamptoGround.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="grpGoogleEarthFeatures.Text" xml:space="preserve">
+    <value>Features</value>
   </data>
-  <data name="&gt;&gt;chkClampToGround.Name" xml:space="preserve">
-    <value>chkClampToGround</value>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Name" xml:space="preserve">
+    <value>grpGoogleEarthFeatures</value>
   </data>
-  <data name="&gt;&gt;chkClampToGround.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkClampToGround.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;chkClampToGround.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblMissionOpacity.Name" xml:space="preserve">
-    <value>lblMissionOpacity</value>
-  </data>
-  <data name="&gt;&gt;lblMissionOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMissionOpacity.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;lblMissionOpacity.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionOpacity.Name" xml:space="preserve">
-    <value>tbarMissionOpacity</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionOpacity.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionOpacity.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;lblMissionExtrude.Name" xml:space="preserve">
-    <value>lblMissionExtrude</value>
-  </data>
-  <data name="&gt;&gt;lblMissionExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMissionExtrude.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;lblMissionExtrude.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;chkMissionExtrude.Name" xml:space="preserve">
-    <value>chkMissionExtrude</value>
-  </data>
-  <data name="&gt;&gt;chkMissionExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkMissionExtrude.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;chkMissionExtrude.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathThickness.Name" xml:space="preserve">
-    <value>lblMissionPathThickness</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathThickness.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathThickness.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathThickness.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathColor.Name" xml:space="preserve">
-    <value>lblMissionPathColor</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathColor.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;lblMissionPathColor.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionWidth.Name" xml:space="preserve">
-    <value>tbarMissionWidth</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionWidth.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;tbarMissionWidth.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;cmdMissionColor.Name" xml:space="preserve">
-    <value>cmdMissionColor</value>
-  </data>
-  <data name="&gt;&gt;cmdMissionColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdMissionColor.Parent" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;cmdMissionColor.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="grpMissionPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 190</value>
-  </data>
-  <data name="grpMissionPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 170</value>
-  </data>
-  <data name="grpMissionPath.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <data name="grpMissionPath.Text" xml:space="preserve">
-    <value>Mission Path</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.Name" xml:space="preserve">
-    <value>grpMissionPath</value>
-  </data>
-  <data name="&gt;&gt;grpMissionPath.Type" xml:space="preserve">
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;grpMissionPath.Parent" xml:space="preserve">
+  <data name="&gt;&gt;grpGoogleEarthFeatures.Parent" xml:space="preserve">
     <value>tabGoogleEarth</value>
   </data>
-  <data name="&gt;&gt;grpMissionPath.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;grpGoogleEarthFeatures.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="lblClamptoGround.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3264,149 +1764,29 @@
   <data name="&gt;&gt;cmdMissionColor.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;lblFlightOpacity.Name" xml:space="preserve">
-    <value>lblFlightOpacity</value>
+  <data name="grpMissionPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 190</value>
   </data>
-  <data name="&gt;&gt;lblFlightOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grpMissionPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 170</value>
   </data>
-  <data name="&gt;&gt;lblFlightOpacity.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
+  <data name="grpMissionPath.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
   </data>
-  <data name="&gt;&gt;lblFlightOpacity.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="grpMissionPath.Text" xml:space="preserve">
+    <value>Mission Path</value>
   </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Name" xml:space="preserve">
-    <value>tbarFlightOpacity</value>
+  <data name="&gt;&gt;grpMissionPath.Name" xml:space="preserve">
+    <value>grpMissionPath</value>
   </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightOpacity.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Name" xml:space="preserve">
-    <value>lblFlightExtrude</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightExtrude.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Name" xml:space="preserve">
-    <value>chkFlightExtrude</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;chkFlightExtrude.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Name" xml:space="preserve">
-    <value>cboMapUpdateRate</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;cboMapUpdateRate.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Name" xml:space="preserve">
-    <value>lblMapUpdateRate</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblMapUpdateRate.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Name" xml:space="preserve">
-    <value>lblFlightPathThickness</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathThickness.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Name" xml:space="preserve">
-    <value>lblFlightPathColor</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;lblFlightPathColor.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Name" xml:space="preserve">
-    <value>tbarFlightWidth</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;tbarFlightWidth.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.Name" xml:space="preserve">
-    <value>cmdFlightColor</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.Parent" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;cmdFlightColor.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="grpFlightPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 15</value>
-  </data>
-  <data name="grpFlightPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 172</value>
-  </data>
-  <data name="grpFlightPath.TabIndex" type="System.Int32, mscorlib">
-    <value>52</value>
-  </data>
-  <data name="grpFlightPath.Text" xml:space="preserve">
-    <value>Google Earth Flight Path</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Name" xml:space="preserve">
-    <value>grpFlightPath</value>
-  </data>
-  <data name="&gt;&gt;grpFlightPath.Type" xml:space="preserve">
+  <data name="&gt;&gt;grpMissionPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;grpFlightPath.Parent" xml:space="preserve">
+  <data name="&gt;&gt;grpMissionPath.Parent" xml:space="preserve">
     <value>tabGoogleEarth</value>
   </data>
-  <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;grpMissionPath.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="lblFlightOpacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3693,269 +2073,56 @@
   <data name="&gt;&gt;cmdFlightColor.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;cboMaxSpeed.Name" xml:space="preserve">
-    <value>cboMaxSpeed</value>
+  <data name="grpFlightPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 15</value>
   </data>
-  <data name="&gt;&gt;cboMaxSpeed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grpFlightPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>246, 172</value>
   </data>
-  <data name="&gt;&gt;cboMaxSpeed.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
+  <data name="grpFlightPath.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
   </data>
-  <data name="&gt;&gt;cboMaxSpeed.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="grpFlightPath.Text" xml:space="preserve">
+    <value>Google Earth Flight Path</value>
   </data>
-  <data name="&gt;&gt;lblMaxSpeed.Name" xml:space="preserve">
-    <value>lblMaxSpeed</value>
+  <data name="&gt;&gt;grpFlightPath.Name" xml:space="preserve">
+    <value>grpFlightPath</value>
   </data>
-  <data name="&gt;&gt;lblMaxSpeed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMaxSpeed.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblMaxSpeed.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleColor.Name" xml:space="preserve">
-    <value>cboThrottleColor</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;cboThrottleColor.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleColor.Name" xml:space="preserve">
-    <value>lblThrottleColor</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblThrottleColor.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;cboMAHColor.Name" xml:space="preserve">
-    <value>cboMAHColor</value>
-  </data>
-  <data name="&gt;&gt;cboMAHColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboMAHColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;cboMAHColor.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;lblMahColor.Name" xml:space="preserve">
-    <value>lblMahColor</value>
-  </data>
-  <data name="&gt;&gt;lblMahColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMahColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblMahColor.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;lblMahMax.Name" xml:space="preserve">
-    <value>lblMahMax</value>
-  </data>
-  <data name="&gt;&gt;lblMahMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMahMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblMahMax.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMax.Name" xml:space="preserve">
-    <value>txtMAHMax</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMax.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;lblMahMin.Name" xml:space="preserve">
-    <value>lblMahMin</value>
-  </data>
-  <data name="&gt;&gt;lblMahMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblMahMin.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblMahMin.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMin.Name" xml:space="preserve">
-    <value>txtMAHMin</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMin.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;txtMAHMin.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;cboAmperageColor.Name" xml:space="preserve">
-    <value>cboAmperageColor</value>
-  </data>
-  <data name="&gt;&gt;cboAmperageColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboAmperageColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;cboAmperageColor.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageColor.Name" xml:space="preserve">
-    <value>lblAmperageColor</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageColor.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageMax.Name" xml:space="preserve">
-    <value>lblAmperageMax</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblAmperageMax.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;txtAmperageMax.Name" xml:space="preserve">
-    <value>txtAmperageMax</value>
-  </data>
-  <data name="&gt;&gt;txtAmperageMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtAmperageMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;txtAmperageMax.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;cboVoltageColor.Name" xml:space="preserve">
-    <value>cboVoltageColor</value>
-  </data>
-  <data name="&gt;&gt;cboVoltageColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboVoltageColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;cboVoltageColor.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageColor.Name" xml:space="preserve">
-    <value>lblVoltageColor</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageColor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageColor.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageColor.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMax.Name" xml:space="preserve">
-    <value>lblVoltageMax</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMax.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMax.Name" xml:space="preserve">
-    <value>txtVoltageMax</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMax.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMax.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMax.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMin.Name" xml:space="preserve">
-    <value>lblVoltageMin</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMin.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;lblVoltageMin.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMin.Name" xml:space="preserve">
-    <value>txtVoltageMin</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMin.Parent" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;txtVoltageMin.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="grpBatteryThrottle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 145</value>
-  </data>
-  <data name="grpBatteryThrottle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 177</value>
-  </data>
-  <data name="grpBatteryThrottle.TabIndex" type="System.Int32, mscorlib">
-    <value>54</value>
-  </data>
-  <data name="grpBatteryThrottle.Text" xml:space="preserve">
-    <value>Battery &amp;&amp; Throttle Settings</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Name" xml:space="preserve">
-    <value>grpBatteryThrottle</value>
-  </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Type" xml:space="preserve">
+  <data name="&gt;&gt;grpFlightPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;grpBatteryThrottle.Parent" xml:space="preserve">
-    <value>tabInstruments</value>
+  <data name="&gt;&gt;grpFlightPath.Parent" xml:space="preserve">
+    <value>tabGoogleEarth</value>
   </data>
-  <data name="&gt;&gt;grpBatteryThrottle.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;grpFlightPath.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabGoogleEarth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabGoogleEarth.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabGoogleEarth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 375</value>
+  </data>
+  <data name="tabGoogleEarth.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabGoogleEarth.Text" xml:space="preserve">
+    <value>Google Earth</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Name" xml:space="preserve">
+    <value>tabGoogleEarth</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabGoogleEarth.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="cboMaxSpeed.Location" type="System.Drawing.Point, System.Drawing">
     <value>313, 138</value>
@@ -4467,125 +2634,29 @@
   <data name="&gt;&gt;txtVoltageMin.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="&gt;&gt;chkInstBattery.Name" xml:space="preserve">
-    <value>chkInstBattery</value>
+  <data name="grpBatteryThrottle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 145</value>
   </data>
-  <data name="&gt;&gt;chkInstBattery.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grpBatteryThrottle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 177</value>
   </data>
-  <data name="&gt;&gt;chkInstBattery.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
+  <data name="grpBatteryThrottle.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
   </data>
-  <data name="&gt;&gt;chkInstBattery.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="grpBatteryThrottle.Text" xml:space="preserve">
+    <value>Battery &amp;&amp; Throttle Settings</value>
   </data>
-  <data name="&gt;&gt;chkInstTurn.Name" xml:space="preserve">
-    <value>chkInstTurn</value>
+  <data name="&gt;&gt;grpBatteryThrottle.Name" xml:space="preserve">
+    <value>grpBatteryThrottle</value>
   </data>
-  <data name="&gt;&gt;chkInstTurn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstTurn.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;chkInst3DModel.Name" xml:space="preserve">
-    <value>chkInst3DModel</value>
-  </data>
-  <data name="&gt;&gt;chkInst3DModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInst3DModel.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInst3DModel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chkInstVertical.Name" xml:space="preserve">
-    <value>chkInstVertical</value>
-  </data>
-  <data name="&gt;&gt;chkInstVertical.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstVertical.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstVertical.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.Name" xml:space="preserve">
-    <value>chkInstHeading</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstHeading.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;chkInstAttitude.Name" xml:space="preserve">
-    <value>chkInstAttitude</value>
-  </data>
-  <data name="&gt;&gt;chkInstAttitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstAttitude.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstAttitude.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;chkInstAltimeter.Name" xml:space="preserve">
-    <value>chkInstAltimeter</value>
-  </data>
-  <data name="&gt;&gt;chkInstAltimeter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstAltimeter.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstAltimeter.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;chkInstSpeed.Name" xml:space="preserve">
-    <value>chkInstSpeed</value>
-  </data>
-  <data name="&gt;&gt;chkInstSpeed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkInstSpeed.Parent" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;chkInstSpeed.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="grpInstrumentSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 11</value>
-  </data>
-  <data name="grpInstrumentSelection.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 128</value>
-  </data>
-  <data name="grpInstrumentSelection.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <data name="grpInstrumentSelection.Text" xml:space="preserve">
-    <value>Instrument Selection</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Name" xml:space="preserve">
-    <value>grpInstrumentSelection</value>
-  </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Type" xml:space="preserve">
+  <data name="&gt;&gt;grpBatteryThrottle.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.Parent" xml:space="preserve">
+  <data name="&gt;&gt;grpBatteryThrottle.Parent" xml:space="preserve">
     <value>tabInstruments</value>
   </data>
-  <data name="&gt;&gt;grpInstrumentSelection.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;grpBatteryThrottle.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="chkInstBattery.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4827,6 +2898,813 @@
   <data name="&gt;&gt;chkInstSpeed.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="grpInstrumentSelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 11</value>
+  </data>
+  <data name="grpInstrumentSelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 128</value>
+  </data>
+  <data name="grpInstrumentSelection.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="grpInstrumentSelection.Text" xml:space="preserve">
+    <value>Instrument Selection</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Name" xml:space="preserve">
+    <value>grpInstrumentSelection</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.Parent" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;grpInstrumentSelection.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabInstruments.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabInstruments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 375</value>
+  </data>
+  <data name="tabInstruments.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabInstruments.Text" xml:space="preserve">
+    <value>Instruments</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Name" xml:space="preserve">
+    <value>tabInstruments</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabInstruments.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkManuelMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkManuelMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkManuelMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 19</value>
+  </data>
+  <data name="chkManuelMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="chkManuelMode.TabIndex" type="System.Int32, mscorlib">
+    <value>88</value>
+  </data>
+  <data name="chkManuelMode.Text" xml:space="preserve">
+    <value>Manuel Mode</value>
+  </data>
+  <data name="&gt;&gt;chkManuelMode.Name" xml:space="preserve">
+    <value>chkManuelMode</value>
+  </data>
+  <data name="&gt;&gt;chkManuelMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkManuelMode.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkManuelMode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboVoice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 15</value>
+  </data>
+  <data name="cboVoice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 21</value>
+  </data>
+  <data name="cboVoice.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Name" xml:space="preserve">
+    <value>cboVoice</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cboVoice.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chkAnnounceWaypoints.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceWaypoints.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 49</value>
+  </data>
+  <data name="chkAnnounceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 17</value>
+  </data>
+  <data name="chkAnnounceWaypoints.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="chkAnnounceWaypoints.Text" xml:space="preserve">
+    <value>Announce Waypoints</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceWaypoints.Name" xml:space="preserve">
+    <value>chkAnnounceWaypoints</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceWaypoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceWaypoints.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceWaypoints.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboSpeechInterval.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboSpeechInterval.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="cboSpeechInterval.Location" type="System.Drawing.Point, System.Drawing">
+    <value>314, 143</value>
+  </data>
+  <data name="cboSpeechInterval.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 21</value>
+  </data>
+  <data name="cboSpeechInterval.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="&gt;&gt;cboSpeechInterval.Name" xml:space="preserve">
+    <value>cboSpeechInterval</value>
+  </data>
+  <data name="&gt;&gt;cboSpeechInterval.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboSpeechInterval.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cboSpeechInterval.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtAltitudeMin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 292</value>
+  </data>
+  <data name="txtAltitudeMin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 20</value>
+  </data>
+  <data name="txtAltitudeMin.TabIndex" type="System.Int32, mscorlib">
+    <value>85</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeMin.Name" xml:space="preserve">
+    <value>txtAltitudeMin</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeMin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeMin.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeMin.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblSpeechInterval.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblSpeechInterval.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSpeechInterval.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 148</value>
+  </data>
+  <data name="lblSpeechInterval.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
+  </data>
+  <data name="lblSpeechInterval.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
+  <data name="lblSpeechInterval.Text" xml:space="preserve">
+    <value>Interval:</value>
+  </data>
+  <data name="lblSpeechInterval.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblSpeechInterval.Name" xml:space="preserve">
+    <value>lblSpeechInterval</value>
+  </data>
+  <data name="&gt;&gt;lblSpeechInterval.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSpeechInterval.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblSpeechInterval.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblVoice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblVoice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 17</value>
+  </data>
+  <data name="lblVoice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 19</value>
+  </data>
+  <data name="lblVoice.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="lblVoice.Text" xml:space="preserve">
+    <value>Voice:</value>
+  </data>
+  <data name="lblVoice.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Name" xml:space="preserve">
+    <value>lblVoice</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblVoice.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 165</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdRegularIntervalPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="&gt;&gt;cmdRegularIntervalPlay.Name" xml:space="preserve">
+    <value>cmdRegularIntervalPlay</value>
+  </data>
+  <data name="&gt;&gt;cmdRegularIntervalPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdRegularIntervalPlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdRegularIntervalPlay.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblAltitudeMinValue.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblAltitudeMinValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblAltitudeMinValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 295</value>
+  </data>
+  <data name="lblAltitudeMinValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
+  </data>
+  <data name="lblAltitudeMinValue.TabIndex" type="System.Int32, mscorlib">
+    <value>84</value>
+  </data>
+  <data name="lblAltitudeMinValue.Text" xml:space="preserve">
+    <value>Min Altitude:</value>
+  </data>
+  <data name="lblAltitudeMinValue.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeMinValue.Name" xml:space="preserve">
+    <value>lblAltitudeMinValue</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeMinValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeMinValue.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeMinValue.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 196</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 17</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="chkAnnounceLinkWarning.Text" xml:space="preserve">
+    <value>Announce Link Warning</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkWarning.Name" xml:space="preserve">
+    <value>chkAnnounceLinkWarning</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkWarning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkWarning.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkWarning.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txtAnnounceRegularInterval.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 167</value>
+  </data>
+  <data name="txtAnnounceRegularInterval.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAnnounceRegularInterval.TabIndex" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceRegularInterval.Name" xml:space="preserve">
+    <value>txtAnnounceRegularInterval</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceRegularInterval.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceRegularInterval.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceRegularInterval.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cmdAltitudeAlarm.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdAltitudeAlarm.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdAltitudeAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 312</value>
+  </data>
+  <data name="cmdAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
+    <value>83</value>
+  </data>
+  <data name="&gt;&gt;cmdAltitudeAlarm.Name" xml:space="preserve">
+    <value>cmdAltitudeAlarm</value>
+  </data>
+  <data name="&gt;&gt;cmdAltitudeAlarm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdAltitudeAlarm.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdAltitudeAlarm.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="txtAnnounceWarning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 216</value>
+  </data>
+  <data name="txtAnnounceWarning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAnnounceWarning.TabIndex" type="System.Int32, mscorlib">
+    <value>76</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWarning.Name" xml:space="preserve">
+    <value>txtAnnounceWarning</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWarning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWarning.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWarning.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="txtAnnounceWaypoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 69</value>
+  </data>
+  <data name="txtAnnounceWaypoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAnnounceWaypoints.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWaypoints.Name" xml:space="preserve">
+    <value>txtAnnounceWaypoints</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWaypoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWaypoints.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceWaypoints.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 147</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 17</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.TabIndex" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="chkAnnounceRegularInterval.Text" xml:space="preserve">
+    <value>Announce Regular Interval</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceRegularInterval.Name" xml:space="preserve">
+    <value>chkAnnounceRegularInterval</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceRegularInterval.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceRegularInterval.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceRegularInterval.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="txtAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>22, 314</value>
+  </data>
+  <data name="txtAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
+    <value>82</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeAlarm.Name" xml:space="preserve">
+    <value>txtAltitudeAlarm</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeAlarm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeAlarm.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAltitudeAlarm.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cmdWarningPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdWarningPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdWarningPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdWarningPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 214</value>
+  </data>
+  <data name="cmdWarningPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdWarningPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>77</value>
+  </data>
+  <data name="&gt;&gt;cmdWarningPlay.Name" xml:space="preserve">
+    <value>cmdWarningPlay</value>
+  </data>
+  <data name="&gt;&gt;cmdWarningPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdWarningPlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdWarningPlay.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="cmdWaypointPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdWaypointPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdWaypointPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdWaypointPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 67</value>
+  </data>
+  <data name="cmdWaypointPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdWaypointPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Name" xml:space="preserve">
+    <value>cmdWaypointPlay</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdWaypointPlay.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="lblHelp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Underline</value>
+  </data>
+  <data name="lblHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>317, 15</value>
+  </data>
+  <data name="lblHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 19</value>
+  </data>
+  <data name="lblHelp.TabIndex" type="System.Int32, mscorlib">
+    <value>69</value>
+  </data>
+  <data name="lblHelp.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="lblHelp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Name" xml:space="preserve">
+    <value>lblHelp</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;lblHelp.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 294</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 17</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.TabIndex" type="System.Int32, mscorlib">
+    <value>81</value>
+  </data>
+  <data name="chkAnnounceAltitudeAlarm.Text" xml:space="preserve">
+    <value>Announce Altitude Alarm</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Name" xml:space="preserve">
+    <value>chkAnnounceAltitudeAlarm</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceAltitudeAlarm.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 245</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 17</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.TabIndex" type="System.Int32, mscorlib">
+    <value>78</value>
+  </data>
+  <data name="chkAnnounceLinkAlarm.Text" xml:space="preserve">
+    <value>Announce Link Alarm</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkAlarm.Name" xml:space="preserve">
+    <value>chkAnnounceLinkAlarm</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkAlarm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkAlarm.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceLinkAlarm.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="chkAnnounceModeChange.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkAnnounceModeChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkAnnounceModeChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 98</value>
+  </data>
+  <data name="chkAnnounceModeChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 17</value>
+  </data>
+  <data name="chkAnnounceModeChange.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="chkAnnounceModeChange.Text" xml:space="preserve">
+    <value>Announce Mode Change</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceModeChange.Name" xml:space="preserve">
+    <value>chkAnnounceModeChange</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceModeChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceModeChange.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;chkAnnounceModeChange.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="cmdModeChangePlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdModeChangePlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdModeChangePlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdModeChangePlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 116</value>
+  </data>
+  <data name="cmdModeChangePlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdModeChangePlay.TabIndex" type="System.Int32, mscorlib">
+    <value>68</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Name" xml:space="preserve">
+    <value>cmdModeChangePlay</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdModeChangePlay.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="cmdAlarmPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cmdAlarmPlay.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="cmdAlarmPlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmdAlarmPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 263</value>
+  </data>
+  <data name="cmdAlarmPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
+  </data>
+  <data name="cmdAlarmPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="&gt;&gt;cmdAlarmPlay.Name" xml:space="preserve">
+    <value>cmdAlarmPlay</value>
+  </data>
+  <data name="&gt;&gt;cmdAlarmPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmdAlarmPlay.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;cmdAlarmPlay.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="txtAnnounceAlarm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 265</value>
+  </data>
+  <data name="txtAnnounceAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAnnounceAlarm.TabIndex" type="System.Int32, mscorlib">
+    <value>79</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceAlarm.Name" xml:space="preserve">
+    <value>txtAnnounceAlarm</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceAlarm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceAlarm.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceAlarm.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="txtAnnounceModeChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 118</value>
+  </data>
+  <data name="txtAnnounceModeChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 20</value>
+  </data>
+  <data name="txtAnnounceModeChange.TabIndex" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceModeChange.Name" xml:space="preserve">
+    <value>txtAnnounceModeChange</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceModeChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceModeChange.Parent" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;txtAnnounceModeChange.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="tabSpeech.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabSpeech.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 375</value>
+  </data>
+  <data name="tabSpeech.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tabSpeech.Text" xml:space="preserve">
+    <value>Speech</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Name" xml:space="preserve">
+    <value>tabSpeech</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.Parent" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabSpeech.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 11</value>
+  </data>
+  <data name="tabSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>499, 401</value>
+  </data>
+  <data name="tabSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Name" xml:space="preserve">
+    <value>tabSettings</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabSettings.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="Label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -5062,7 +3940,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>523, 474</value>
+    <value>521, 451</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

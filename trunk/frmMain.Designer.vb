@@ -164,9 +164,6 @@ Partial Class frmMain
         Me.Label2 = New System.Windows.Forms.Label
         Me.txtMissionAttoLatitude = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
-        Me.lblMissionAttoControlValue = New System.Windows.Forms.Label
-        Me.lblMissionAttoDurationValue = New System.Windows.Forms.Label
-        Me.lblMissionAttoLoiterValue = New System.Windows.Forms.Label
         Me.lblMissionHomeAlt = New System.Windows.Forms.Label
         Me.grpMissionControlGeneric = New System.Windows.Forms.GroupBox
         Me.Label13 = New System.Windows.Forms.Label
@@ -348,26 +345,24 @@ Partial Class frmMain
         Me.tbarSensor2 = New System.Windows.Forms.TrackBar
         Me.tbarSensor1 = New System.Windows.Forms.TrackBar
         Me.tabPortJoystick = New System.Windows.Forms.TabPage
-        Me.lblJoystickMode = New System.Windows.Forms.Label
-        Me.tbarJoystickMode = New System.Windows.Forms.TrackBar
-        Me.Label20 = New System.Windows.Forms.Label
         Me.cboJoystickOutput = New System.Windows.Forms.ComboBox
         Me.lblJoystickDevice = New System.Windows.Forms.Label
         Me.chkJoystickEnable = New System.Windows.Forms.CheckBox
         Me.cmdJoystickCalibrate = New System.Windows.Forms.Button
-        Me.lblJoystickRudder = New System.Windows.Forms.Label
-        Me.lblJoystickAileron = New System.Windows.Forms.Label
-        Me.lblJoystickElevator = New System.Windows.Forms.Label
-        Me.tbarJoystickRudder = New System.Windows.Forms.TrackBar
-        Me.tbarJoystickAileron = New System.Windows.Forms.TrackBar
-        Me.tbarJoystickElevator = New System.Windows.Forms.TrackBar
+        Me.lblJoystickOutput4 = New System.Windows.Forms.Label
+        Me.lblJoystickOutput3 = New System.Windows.Forms.Label
+        Me.lblJoystickOutput2 = New System.Windows.Forms.Label
+        Me.tbarJoystickOutput4 = New System.Windows.Forms.TrackBar
+        Me.tbarJoystickOutput3 = New System.Windows.Forms.TrackBar
+        Me.tbarJoystickOutput2 = New System.Windows.Forms.TrackBar
         Me.Label18 = New System.Windows.Forms.Label
         Me.Label17 = New System.Windows.Forms.Label
         Me.Label16 = New System.Windows.Forms.Label
         Me.Label15 = New System.Windows.Forms.Label
-        Me.lblJoystickThrottle = New System.Windows.Forms.Label
-        Me.tbarJoystickThrottle = New System.Windows.Forms.TrackBar
+        Me.lblJoystickOutput1 = New System.Windows.Forms.Label
+        Me.tbarJoystickOutput1 = New System.Windows.Forms.TrackBar
         Me.Label14 = New System.Windows.Forms.Label
+        Me.imgManuel = New System.Windows.Forms.PictureBox
         Me.lblResolution = New System.Windows.Forms.Label
         Me.JoystickInstrumentControl1 = New HK_GCS.AvionicsInstrumentControlDemo.JoystickInstrumentControl
         Me.cmdExit = New System.Windows.Forms.Button
@@ -448,11 +443,11 @@ Partial Class frmMain
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPortJoystick.SuspendLayout()
-        CType(Me.tbarJoystickMode, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.tbarJoystickRudder, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.tbarJoystickAileron, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.tbarJoystickElevator, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.tbarJoystickThrottle, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickOutput4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickOutput3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickOutput2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbarJoystickOutput1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.imgManuel, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabMapView.SuspendLayout()
         Me.tabViewMapView.SuspendLayout()
         Me.tabViewLiveCamera.SuspendLayout()
@@ -670,6 +665,7 @@ Partial Class frmMain
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.imgManuel)
         Me.SplitContainer1.Panel2.Controls.Add(Me.lblResolution)
         Me.SplitContainer1.Panel2.Controls.Add(Me.JoystickInstrumentControl1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdExit)
@@ -980,8 +976,8 @@ Partial Class frmMain
         '
         'tabMissionPlanning
         '
-        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlMavlink)
         Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlAtto)
+        Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlMavlink)
         Me.tabMissionPlanning.Controls.Add(Me.cmdMissionOverride)
         Me.tabMissionPlanning.Controls.Add(Me.lblMissionHomeAlt)
         Me.tabMissionPlanning.Controls.Add(Me.grpMissionControlGeneric)
@@ -1194,7 +1190,6 @@ Partial Class frmMain
         Me.grpMissionControlAtto.Controls.Add(Me.Label12)
         Me.grpMissionControlAtto.Controls.Add(Me.Label11)
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoReversePath)
-        Me.grpMissionControlAtto.Controls.Add(Me.Label10)
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoAltitudeControl)
         Me.grpMissionControlAtto.Controls.Add(Me.Label9)
         Me.grpMissionControlAtto.Controls.Add(Me.cboMissionAttoTriggerControl)
@@ -1219,9 +1214,7 @@ Partial Class frmMain
         Me.grpMissionControlAtto.Controls.Add(Me.Label2)
         Me.grpMissionControlAtto.Controls.Add(Me.txtMissionAttoLatitude)
         Me.grpMissionControlAtto.Controls.Add(Me.Label1)
-        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoControlValue)
-        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoDurationValue)
-        Me.grpMissionControlAtto.Controls.Add(Me.lblMissionAttoLoiterValue)
+        Me.grpMissionControlAtto.Controls.Add(Me.Label10)
         resources.ApplyResources(Me.grpMissionControlAtto, "grpMissionControlAtto")
         Me.grpMissionControlAtto.Name = "grpMissionControlAtto"
         Me.grpMissionControlAtto.TabStop = False
@@ -1391,21 +1384,6 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
-        '
-        'lblMissionAttoControlValue
-        '
-        resources.ApplyResources(Me.lblMissionAttoControlValue, "lblMissionAttoControlValue")
-        Me.lblMissionAttoControlValue.Name = "lblMissionAttoControlValue"
-        '
-        'lblMissionAttoDurationValue
-        '
-        resources.ApplyResources(Me.lblMissionAttoDurationValue, "lblMissionAttoDurationValue")
-        Me.lblMissionAttoDurationValue.Name = "lblMissionAttoDurationValue"
-        '
-        'lblMissionAttoLoiterValue
-        '
-        resources.ApplyResources(Me.lblMissionAttoLoiterValue, "lblMissionAttoLoiterValue")
-        Me.lblMissionAttoLoiterValue.Name = "lblMissionAttoLoiterValue"
         '
         'lblMissionHomeAlt
         '
@@ -2773,50 +2751,26 @@ Partial Class frmMain
         '
         'tabPortJoystick
         '
-        Me.tabPortJoystick.Controls.Add(Me.lblJoystickMode)
-        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickMode)
-        Me.tabPortJoystick.Controls.Add(Me.Label20)
         Me.tabPortJoystick.Controls.Add(Me.cboJoystickOutput)
         Me.tabPortJoystick.Controls.Add(Me.lblJoystickDevice)
         Me.tabPortJoystick.Controls.Add(Me.chkJoystickEnable)
         Me.tabPortJoystick.Controls.Add(Me.cmdJoystickCalibrate)
-        Me.tabPortJoystick.Controls.Add(Me.lblJoystickRudder)
-        Me.tabPortJoystick.Controls.Add(Me.lblJoystickAileron)
-        Me.tabPortJoystick.Controls.Add(Me.lblJoystickElevator)
-        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickRudder)
-        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickAileron)
-        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickElevator)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickOutput4)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickOutput3)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickOutput2)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickOutput4)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickOutput3)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickOutput2)
         Me.tabPortJoystick.Controls.Add(Me.Label18)
         Me.tabPortJoystick.Controls.Add(Me.Label17)
         Me.tabPortJoystick.Controls.Add(Me.Label16)
         Me.tabPortJoystick.Controls.Add(Me.Label15)
-        Me.tabPortJoystick.Controls.Add(Me.lblJoystickThrottle)
-        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickThrottle)
+        Me.tabPortJoystick.Controls.Add(Me.lblJoystickOutput1)
+        Me.tabPortJoystick.Controls.Add(Me.tbarJoystickOutput1)
         Me.tabPortJoystick.Controls.Add(Me.Label14)
         resources.ApplyResources(Me.tabPortJoystick, "tabPortJoystick")
         Me.tabPortJoystick.Name = "tabPortJoystick"
         Me.tabPortJoystick.UseVisualStyleBackColor = True
-        '
-        'lblJoystickMode
-        '
-        resources.ApplyResources(Me.lblJoystickMode, "lblJoystickMode")
-        Me.lblJoystickMode.Name = "lblJoystickMode"
-        '
-        'tbarJoystickMode
-        '
-        resources.ApplyResources(Me.tbarJoystickMode, "tbarJoystickMode")
-        Me.tbarJoystickMode.BackColor = System.Drawing.Color.White
-        Me.tbarJoystickMode.LargeChange = 1
-        Me.tbarJoystickMode.Maximum = 10000
-        Me.tbarJoystickMode.Minimum = -10000
-        Me.tbarJoystickMode.Name = "tbarJoystickMode"
-        Me.tbarJoystickMode.TabStop = False
-        Me.tbarJoystickMode.TickStyle = System.Windows.Forms.TickStyle.None
-        '
-        'Label20
-        '
-        resources.ApplyResources(Me.Label20, "Label20")
-        Me.Label20.Name = "Label20"
         '
         'cboJoystickOutput
         '
@@ -2842,53 +2796,53 @@ Partial Class frmMain
         Me.cmdJoystickCalibrate.Name = "cmdJoystickCalibrate"
         Me.cmdJoystickCalibrate.UseVisualStyleBackColor = True
         '
-        'lblJoystickRudder
+        'lblJoystickOutput4
         '
-        resources.ApplyResources(Me.lblJoystickRudder, "lblJoystickRudder")
-        Me.lblJoystickRudder.Name = "lblJoystickRudder"
+        resources.ApplyResources(Me.lblJoystickOutput4, "lblJoystickOutput4")
+        Me.lblJoystickOutput4.Name = "lblJoystickOutput4"
         '
-        'lblJoystickAileron
+        'lblJoystickOutput3
         '
-        resources.ApplyResources(Me.lblJoystickAileron, "lblJoystickAileron")
-        Me.lblJoystickAileron.Name = "lblJoystickAileron"
+        resources.ApplyResources(Me.lblJoystickOutput3, "lblJoystickOutput3")
+        Me.lblJoystickOutput3.Name = "lblJoystickOutput3"
         '
-        'lblJoystickElevator
+        'lblJoystickOutput2
         '
-        resources.ApplyResources(Me.lblJoystickElevator, "lblJoystickElevator")
-        Me.lblJoystickElevator.Name = "lblJoystickElevator"
+        resources.ApplyResources(Me.lblJoystickOutput2, "lblJoystickOutput2")
+        Me.lblJoystickOutput2.Name = "lblJoystickOutput2"
         '
-        'tbarJoystickRudder
+        'tbarJoystickOutput4
         '
-        resources.ApplyResources(Me.tbarJoystickRudder, "tbarJoystickRudder")
-        Me.tbarJoystickRudder.BackColor = System.Drawing.Color.White
-        Me.tbarJoystickRudder.LargeChange = 1
-        Me.tbarJoystickRudder.Maximum = 10000
-        Me.tbarJoystickRudder.Minimum = -10000
-        Me.tbarJoystickRudder.Name = "tbarJoystickRudder"
-        Me.tbarJoystickRudder.TabStop = False
-        Me.tbarJoystickRudder.TickStyle = System.Windows.Forms.TickStyle.None
+        resources.ApplyResources(Me.tbarJoystickOutput4, "tbarJoystickOutput4")
+        Me.tbarJoystickOutput4.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickOutput4.LargeChange = 1
+        Me.tbarJoystickOutput4.Maximum = 1250
+        Me.tbarJoystickOutput4.Minimum = -1250
+        Me.tbarJoystickOutput4.Name = "tbarJoystickOutput4"
+        Me.tbarJoystickOutput4.TabStop = False
+        Me.tbarJoystickOutput4.TickStyle = System.Windows.Forms.TickStyle.None
         '
-        'tbarJoystickAileron
+        'tbarJoystickOutput3
         '
-        resources.ApplyResources(Me.tbarJoystickAileron, "tbarJoystickAileron")
-        Me.tbarJoystickAileron.BackColor = System.Drawing.Color.White
-        Me.tbarJoystickAileron.LargeChange = 1
-        Me.tbarJoystickAileron.Maximum = 10000
-        Me.tbarJoystickAileron.Minimum = -10000
-        Me.tbarJoystickAileron.Name = "tbarJoystickAileron"
-        Me.tbarJoystickAileron.TabStop = False
-        Me.tbarJoystickAileron.TickStyle = System.Windows.Forms.TickStyle.None
+        resources.ApplyResources(Me.tbarJoystickOutput3, "tbarJoystickOutput3")
+        Me.tbarJoystickOutput3.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickOutput3.LargeChange = 1
+        Me.tbarJoystickOutput3.Maximum = 1250
+        Me.tbarJoystickOutput3.Minimum = -1250
+        Me.tbarJoystickOutput3.Name = "tbarJoystickOutput3"
+        Me.tbarJoystickOutput3.TabStop = False
+        Me.tbarJoystickOutput3.TickStyle = System.Windows.Forms.TickStyle.None
         '
-        'tbarJoystickElevator
+        'tbarJoystickOutput2
         '
-        resources.ApplyResources(Me.tbarJoystickElevator, "tbarJoystickElevator")
-        Me.tbarJoystickElevator.BackColor = System.Drawing.Color.White
-        Me.tbarJoystickElevator.LargeChange = 1
-        Me.tbarJoystickElevator.Maximum = 10000
-        Me.tbarJoystickElevator.Minimum = -10000
-        Me.tbarJoystickElevator.Name = "tbarJoystickElevator"
-        Me.tbarJoystickElevator.TabStop = False
-        Me.tbarJoystickElevator.TickStyle = System.Windows.Forms.TickStyle.None
+        resources.ApplyResources(Me.tbarJoystickOutput2, "tbarJoystickOutput2")
+        Me.tbarJoystickOutput2.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickOutput2.LargeChange = 1
+        Me.tbarJoystickOutput2.Maximum = 1250
+        Me.tbarJoystickOutput2.Minimum = -1250
+        Me.tbarJoystickOutput2.Name = "tbarJoystickOutput2"
+        Me.tbarJoystickOutput2.TabStop = False
+        Me.tbarJoystickOutput2.TickStyle = System.Windows.Forms.TickStyle.None
         '
         'Label18
         '
@@ -2910,26 +2864,32 @@ Partial Class frmMain
         resources.ApplyResources(Me.Label15, "Label15")
         Me.Label15.Name = "Label15"
         '
-        'lblJoystickThrottle
+        'lblJoystickOutput1
         '
-        resources.ApplyResources(Me.lblJoystickThrottle, "lblJoystickThrottle")
-        Me.lblJoystickThrottle.Name = "lblJoystickThrottle"
+        resources.ApplyResources(Me.lblJoystickOutput1, "lblJoystickOutput1")
+        Me.lblJoystickOutput1.Name = "lblJoystickOutput1"
         '
-        'tbarJoystickThrottle
+        'tbarJoystickOutput1
         '
-        resources.ApplyResources(Me.tbarJoystickThrottle, "tbarJoystickThrottle")
-        Me.tbarJoystickThrottle.BackColor = System.Drawing.Color.White
-        Me.tbarJoystickThrottle.LargeChange = 1
-        Me.tbarJoystickThrottle.Maximum = 10000
-        Me.tbarJoystickThrottle.Minimum = -10000
-        Me.tbarJoystickThrottle.Name = "tbarJoystickThrottle"
-        Me.tbarJoystickThrottle.TabStop = False
-        Me.tbarJoystickThrottle.TickStyle = System.Windows.Forms.TickStyle.None
+        resources.ApplyResources(Me.tbarJoystickOutput1, "tbarJoystickOutput1")
+        Me.tbarJoystickOutput1.BackColor = System.Drawing.Color.White
+        Me.tbarJoystickOutput1.LargeChange = 1
+        Me.tbarJoystickOutput1.Maximum = 1250
+        Me.tbarJoystickOutput1.Minimum = -1250
+        Me.tbarJoystickOutput1.Name = "tbarJoystickOutput1"
+        Me.tbarJoystickOutput1.TabStop = False
+        Me.tbarJoystickOutput1.TickStyle = System.Windows.Forms.TickStyle.None
         '
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
         Me.Label14.Name = "Label14"
+        '
+        'imgManuel
+        '
+        resources.ApplyResources(Me.imgManuel, "imgManuel")
+        Me.imgManuel.Name = "imgManuel"
+        Me.imgManuel.TabStop = False
         '
         'lblResolution
         '
@@ -3211,11 +3171,11 @@ Partial Class frmMain
         CType(Me.tbarSensor2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarSensor1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPortJoystick.ResumeLayout(False)
-        CType(Me.tbarJoystickMode, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.tbarJoystickRudder, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.tbarJoystickAileron, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.tbarJoystickElevator, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.tbarJoystickThrottle, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickOutput4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickOutput3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickOutput2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbarJoystickOutput1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.imgManuel, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabMapView.ResumeLayout(False)
         Me.tabViewMapView.ResumeLayout(False)
         Me.tabViewLiveCamera.ResumeLayout(False)
@@ -3515,27 +3475,24 @@ Partial Class frmMain
     Friend WithEvents cmdControlAttoTriggerServo As System.Windows.Forms.Button
     Friend WithEvents mnuJoystickCalibration As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tabPortJoystick As System.Windows.Forms.TabPage
-    Friend WithEvents lblJoystickRudder As System.Windows.Forms.Label
-    Friend WithEvents lblJoystickAileron As System.Windows.Forms.Label
-    Friend WithEvents lblJoystickElevator As System.Windows.Forms.Label
-    Friend WithEvents tbarJoystickRudder As System.Windows.Forms.TrackBar
-    Friend WithEvents tbarJoystickAileron As System.Windows.Forms.TrackBar
-    Friend WithEvents tbarJoystickElevator As System.Windows.Forms.TrackBar
+    Friend WithEvents lblJoystickOutput4 As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickOutput3 As System.Windows.Forms.Label
+    Friend WithEvents lblJoystickOutput2 As System.Windows.Forms.Label
+    Friend WithEvents tbarJoystickOutput4 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarJoystickOutput3 As System.Windows.Forms.TrackBar
+    Friend WithEvents tbarJoystickOutput2 As System.Windows.Forms.TrackBar
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents lblJoystickThrottle As System.Windows.Forms.Label
-    Friend WithEvents tbarJoystickThrottle As System.Windows.Forms.TrackBar
+    Friend WithEvents lblJoystickOutput1 As System.Windows.Forms.Label
+    Friend WithEvents tbarJoystickOutput1 As System.Windows.Forms.TrackBar
     Friend WithEvents tmrJoystick As System.Windows.Forms.Timer
     Friend WithEvents chkJoystickEnable As System.Windows.Forms.CheckBox
     Friend WithEvents cmdJoystickCalibrate As System.Windows.Forms.Button
     Friend WithEvents lblJoystickDevice As System.Windows.Forms.Label
     Friend WithEvents cboJoystickOutput As System.Windows.Forms.ComboBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents lblJoystickMode As System.Windows.Forms.Label
-    Friend WithEvents tbarJoystickMode As System.Windows.Forms.TrackBar
-    Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents pnlLinkLost As System.Windows.Forms.Panel
     Friend WithEvents lblLinkLostTime As System.Windows.Forms.Label
@@ -3571,9 +3528,6 @@ Partial Class frmMain
     Friend WithEvents txtControlMavlinkSetAltitude As System.Windows.Forms.TextBox
     Friend WithEvents cmdControlMavlinkSetAltitude As System.Windows.Forms.Button
     Friend WithEvents cmdControlMavlinkSetHome As System.Windows.Forms.Button
-    Friend WithEvents lblMissionAttoControlValue As System.Windows.Forms.Label
-    Friend WithEvents lblMissionAttoDurationValue As System.Windows.Forms.Label
-    Friend WithEvents lblMissionAttoLoiterValue As System.Windows.Forms.Label
     Friend WithEvents txtMissionMavlinkArg7 As System.Windows.Forms.TextBox
     Friend WithEvents txtMissionMavlinkArg6 As System.Windows.Forms.TextBox
     Friend WithEvents txtMissionMavlinkArg5 As System.Windows.Forms.TextBox
@@ -3593,4 +3547,5 @@ Partial Class frmMain
     Friend WithEvents cmdControlMavlinkWPRadius As System.Windows.Forms.Button
     Friend WithEvents txtControlMavlinkLoiterRadius As System.Windows.Forms.TextBox
     Friend WithEvents cmdControlMavlinkLoiterRadius As System.Windows.Forms.Button
+    Friend WithEvents imgManuel As System.Windows.Forms.PictureBox
 End Class

@@ -119,7 +119,7 @@ Module modMAVlink
 
         Dim cf As System.Globalization.CultureInfo
         cf = New System.Globalization.CultureInfo("en-US")
-        dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
+        dTempDate = DateAdd(DateInterval.Second, inputValue / 1000000, dTempDate.Parse("1/1/1970", cf))
         GetMAVlinkDate = dTempDate.Date
     End Function
     Public Function GetMAVlinkTime(ByVal inputValue As Long) As Date
@@ -128,7 +128,7 @@ Module modMAVlink
         Try
             Dim cf As System.Globalization.CultureInfo
             cf = New System.Globalization.CultureInfo("en-US")
-            dTempDate = DateAdd(DateInterval.Second, inputValue / 1000, dTempDate.Parse("1/1/1970", cf))
+            dTempDate = DateAdd(DateInterval.Second, inputValue / 1000000, dTempDate.Parse("1/1/1970", cf))
             GetMAVlinkTime = dTempDate.ToLongTimeString
         Catch ex2 As Exception
             Debug.Print(ex2.Message)
@@ -289,6 +289,8 @@ Module modMAVlink
                         GetAPMMode = "Auto - Take-Off"
                     Case 6 'Lanfing
                         GetAPMMode = "Auto - Land"
+                    Case Else
+                        GetAPMMode = "Auto"
                 End Select
             Case 5 'Test1
                 GetAPMMode = "Fly By Wire A"

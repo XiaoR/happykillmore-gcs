@@ -127,6 +127,11 @@ Partial Class frmSettings
         Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
         Me.chkInstSpeed = New System.Windows.Forms.CheckBox
         Me.tabSpeech = New System.Windows.Forms.TabPage
+        Me.txtAltitudeMin = New System.Windows.Forms.TextBox
+        Me.lblAltitudeMinValue = New System.Windows.Forms.Label
+        Me.cmdAltitudeAlarm = New System.Windows.Forms.Button
+        Me.txtAltitudeAlarm = New System.Windows.Forms.TextBox
+        Me.chkAnnounceAltitudeAlarm = New System.Windows.Forms.CheckBox
         Me.cmdAlarmPlay = New System.Windows.Forms.Button
         Me.txtAnnounceAlarm = New System.Windows.Forms.TextBox
         Me.chkAnnounceLinkAlarm = New System.Windows.Forms.CheckBox
@@ -157,11 +162,7 @@ Partial Class frmSettings
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.cmdAltitudeAlarm = New System.Windows.Forms.Button
-        Me.txtAltitudeAlarm = New System.Windows.Forms.TextBox
-        Me.chkAnnounceAltitudeAlarm = New System.Windows.Forms.CheckBox
-        Me.lblAltitudeMinValue = New System.Windows.Forms.Label
-        Me.txtAltitudeMin = New System.Windows.Forms.TextBox
+        Me.chkManuelMode = New System.Windows.Forms.CheckBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -894,34 +895,63 @@ Partial Class frmSettings
         '
         'tabSpeech
         '
+        Me.tabSpeech.Controls.Add(Me.chkManuelMode)
+        Me.tabSpeech.Controls.Add(Me.cboVoice)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceWaypoints)
+        Me.tabSpeech.Controls.Add(Me.cboSpeechInterval)
         Me.tabSpeech.Controls.Add(Me.txtAltitudeMin)
+        Me.tabSpeech.Controls.Add(Me.lblSpeechInterval)
+        Me.tabSpeech.Controls.Add(Me.lblVoice)
+        Me.tabSpeech.Controls.Add(Me.cmdRegularIntervalPlay)
         Me.tabSpeech.Controls.Add(Me.lblAltitudeMinValue)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkWarning)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceRegularInterval)
         Me.tabSpeech.Controls.Add(Me.cmdAltitudeAlarm)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceWarning)
+        Me.tabSpeech.Controls.Add(Me.txtAnnounceWaypoints)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceRegularInterval)
         Me.tabSpeech.Controls.Add(Me.txtAltitudeAlarm)
+        Me.tabSpeech.Controls.Add(Me.cmdWarningPlay)
+        Me.tabSpeech.Controls.Add(Me.cmdWaypointPlay)
+        Me.tabSpeech.Controls.Add(Me.lblHelp)
         Me.tabSpeech.Controls.Add(Me.chkAnnounceAltitudeAlarm)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkAlarm)
+        Me.tabSpeech.Controls.Add(Me.chkAnnounceModeChange)
+        Me.tabSpeech.Controls.Add(Me.cmdModeChangePlay)
         Me.tabSpeech.Controls.Add(Me.cmdAlarmPlay)
         Me.tabSpeech.Controls.Add(Me.txtAnnounceAlarm)
-        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkAlarm)
-        Me.tabSpeech.Controls.Add(Me.cmdWarningPlay)
-        Me.tabSpeech.Controls.Add(Me.txtAnnounceWarning)
-        Me.tabSpeech.Controls.Add(Me.chkAnnounceLinkWarning)
-        Me.tabSpeech.Controls.Add(Me.lblSpeechInterval)
-        Me.tabSpeech.Controls.Add(Me.cboSpeechInterval)
-        Me.tabSpeech.Controls.Add(Me.cmdRegularIntervalPlay)
-        Me.tabSpeech.Controls.Add(Me.txtAnnounceRegularInterval)
-        Me.tabSpeech.Controls.Add(Me.chkAnnounceRegularInterval)
-        Me.tabSpeech.Controls.Add(Me.lblHelp)
-        Me.tabSpeech.Controls.Add(Me.cmdModeChangePlay)
         Me.tabSpeech.Controls.Add(Me.txtAnnounceModeChange)
-        Me.tabSpeech.Controls.Add(Me.chkAnnounceModeChange)
-        Me.tabSpeech.Controls.Add(Me.cmdWaypointPlay)
-        Me.tabSpeech.Controls.Add(Me.txtAnnounceWaypoints)
-        Me.tabSpeech.Controls.Add(Me.chkAnnounceWaypoints)
-        Me.tabSpeech.Controls.Add(Me.cboVoice)
-        Me.tabSpeech.Controls.Add(Me.lblVoice)
         resources.ApplyResources(Me.tabSpeech, "tabSpeech")
         Me.tabSpeech.Name = "tabSpeech"
         Me.tabSpeech.UseVisualStyleBackColor = True
+        '
+        'txtAltitudeMin
+        '
+        resources.ApplyResources(Me.txtAltitudeMin, "txtAltitudeMin")
+        Me.txtAltitudeMin.Name = "txtAltitudeMin"
+        '
+        'lblAltitudeMinValue
+        '
+        resources.ApplyResources(Me.lblAltitudeMinValue, "lblAltitudeMinValue")
+        Me.lblAltitudeMinValue.Name = "lblAltitudeMinValue"
+        '
+        'cmdAltitudeAlarm
+        '
+        resources.ApplyResources(Me.cmdAltitudeAlarm, "cmdAltitudeAlarm")
+        Me.cmdAltitudeAlarm.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdAltitudeAlarm.Name = "cmdAltitudeAlarm"
+        Me.cmdAltitudeAlarm.UseVisualStyleBackColor = True
+        '
+        'txtAltitudeAlarm
+        '
+        resources.ApplyResources(Me.txtAltitudeAlarm, "txtAltitudeAlarm")
+        Me.txtAltitudeAlarm.Name = "txtAltitudeAlarm"
+        '
+        'chkAnnounceAltitudeAlarm
+        '
+        resources.ApplyResources(Me.chkAnnounceAltitudeAlarm, "chkAnnounceAltitudeAlarm")
+        Me.chkAnnounceAltitudeAlarm.Name = "chkAnnounceAltitudeAlarm"
+        Me.chkAnnounceAltitudeAlarm.UseVisualStyleBackColor = True
         '
         'cmdAlarmPlay
         '
@@ -1111,33 +1141,11 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'cmdAltitudeAlarm
+        'chkManuelMode
         '
-        resources.ApplyResources(Me.cmdAltitudeAlarm, "cmdAltitudeAlarm")
-        Me.cmdAltitudeAlarm.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdAltitudeAlarm.Name = "cmdAltitudeAlarm"
-        Me.cmdAltitudeAlarm.UseVisualStyleBackColor = True
-        '
-        'txtAltitudeAlarm
-        '
-        resources.ApplyResources(Me.txtAltitudeAlarm, "txtAltitudeAlarm")
-        Me.txtAltitudeAlarm.Name = "txtAltitudeAlarm"
-        '
-        'chkAnnounceAltitudeAlarm
-        '
-        resources.ApplyResources(Me.chkAnnounceAltitudeAlarm, "chkAnnounceAltitudeAlarm")
-        Me.chkAnnounceAltitudeAlarm.Name = "chkAnnounceAltitudeAlarm"
-        Me.chkAnnounceAltitudeAlarm.UseVisualStyleBackColor = True
-        '
-        'lblAltitudeMinValue
-        '
-        resources.ApplyResources(Me.lblAltitudeMinValue, "lblAltitudeMinValue")
-        Me.lblAltitudeMinValue.Name = "lblAltitudeMinValue"
-        '
-        'txtAltitudeMin
-        '
-        resources.ApplyResources(Me.txtAltitudeMin, "txtAltitudeMin")
-        Me.txtAltitudeMin.Name = "txtAltitudeMin"
+        resources.ApplyResources(Me.chkManuelMode, "chkManuelMode")
+        Me.chkManuelMode.Name = "chkManuelMode"
+        Me.chkManuelMode.UseVisualStyleBackColor = True
         '
         'frmSettings
         '
@@ -1314,4 +1322,5 @@ Partial Class frmSettings
     Friend WithEvents cmdAltitudeAlarm As System.Windows.Forms.Button
     Friend WithEvents txtAltitudeAlarm As System.Windows.Forms.TextBox
     Friend WithEvents chkAnnounceAltitudeAlarm As System.Windows.Forms.CheckBox
+    Friend WithEvents chkManuelMode As System.Windows.Forms.CheckBox
 End Class
