@@ -60,41 +60,6 @@ Module modSettings
 
     Public sJoystickDevice As String
     Public nJoystickOutput As e_JoystickOutput
-    Public nJoystickThrottle As Integer
-    Public nJoystickElevator As Integer
-    Public nJoystickAileron As Integer
-    Public nJoystickRudder As Integer
-    Public nJoystickMode As Integer
-
-    Public bJoystickThrottleReverse As Boolean
-    Public bJoystickElevatorReverse As Boolean
-    Public bJoystickAileronReverse As Boolean
-    Public bJoystickRudderReverse As Boolean
-    Public bJoystickModeReverse As Boolean
-
-    Public nJoystickThrottleMin As Integer
-    Public nJoystickElevatorMin As Integer
-    Public nJoystickAileronMin As Integer
-    Public nJoystickRudderMin As Integer
-    Public nJoystickModeMin As Integer
-
-    Public nJoystickThrottleMax As Integer
-    Public nJoystickElevatorMax As Integer
-    Public nJoystickAileronMax As Integer
-    Public nJoystickRudderMax As Integer
-    Public nJoystickModeMax As Integer
-
-    Public nJoystickThrottleServo As Integer
-    Public nJoystickElevatorServo As Integer
-    Public nJoystickAileronServo As Integer
-    Public nJoystickRudderServo As Integer
-    Public nJoystickModeServo As Integer
-
-    Public nJoystickThrottlePosition As Integer
-    Public nJoystickElevatorPosition As Integer
-    Public nJoystickAileronPosition As Integer
-    Public nJoystickRudderPosition As Integer
-    Public nJoystickModePosition As Integer
 
     Public bHeartbeat1 As Boolean
     Public bHeartbeat2 As Boolean
@@ -173,6 +138,7 @@ Module modSettings
         Dim nCount As Integer
         Dim eNewSpeedUnits As e_SpeedFormat
         Dim eNewDistanceUnits As e_DistanceFormat
+        Dim oJoystickChannel As cJoystickChannel
 
         bIsAdmin = GetRegSetting(sRootRegistry & "\Settings", "Admin Mode", False)
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
@@ -275,6 +241,8 @@ Module modSettings
         sSpeechAltitude = GetRegSetting(sRootRegistry & "\Settings\Speech", "Altitude", "Warning, your altitude is {alt} {distance_units}")
         nSpeechAltitudeMin = GetRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Min", 100)
 
+        bManuelMode = GetRegSetting(sRootRegistry & "\Settings\Speech", "Manuel Mode", False)
+
         nWarningTimeout = GetRegSetting(sRootRegistry & "\Settings", "Warning Timeout", 3)
         nAlarmTimeout = GetRegSetting(sRootRegistry & "\Settings", "Alarm Timeout", 10)
 
@@ -292,35 +260,29 @@ Module modSettings
         sJoystickDevice = GetRegSetting(sRootRegistry & "\Settings\Joystick", "Device", "")
         nJoystickOutput = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Output", 0)
 
-        nJoystickThrottle = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Input", 3)
-        nJoystickElevator = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Input", 0)
-        nJoystickAileron = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Input", 1)
-        nJoystickRudder = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Input", 4)
-        nJoystickMode = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Input", 7)
+        cJoystick = New cJoystickChannels
+        For nCount = 1 To 8
+            oJoystickChannel = New cJoystickChannel
 
-        bJoystickThrottleReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Reverse", True)
-        bJoystickElevatorReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Reverse", False)
-        bJoystickAileronReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Reverse", False)
-        bJoystickRudderReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Reverse", False)
-        bJoystickModeReverse = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Reverse", False)
+            With oJoystickChannel
+                .Axis = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Input", nCount - 1)
+                .Servo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Servo", nCount)
+                .MinJoystickMovement = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Min", -32767)
+                .MaxJoystickMovement = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Max", 32768)
+                .LowerEndPoint = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Lower", -100)
+                .UpperEndPoint = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Upper", 100)
+                .Reversed = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Reverse", False)
+                .SubTrim = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Sub Trim", 0)
+            End With
+            cJoystick.Add(oJoystickChannel)
+        Next
 
-        nJoystickThrottleMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Min", 32767)
-        nJoystickElevatorMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Min", 32767)
-        nJoystickAileronMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Min", 32767)
-        nJoystickRudderMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Min", 32767)
-        nJoystickModeMin = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Min", 32767)
+        'nJoystickThrottle = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Input", 3)
+        'nJoystickElevator = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Input", 0)
+        'nJoystickAileron = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Input", 1)
+        'nJoystickRudder = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Input", 4)
+        'nJoystickMode = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Input", 7)
 
-        nJoystickThrottleMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Max", 32767)
-        nJoystickElevatorMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Max", 32767)
-        nJoystickAileronMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Max", 32767)
-        nJoystickRudderMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Max", 32767)
-        nJoystickModeMax = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Max", 32767)
-
-        nJoystickThrottleServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Servo", 0)
-        nJoystickElevatorServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Servo", 0)
-        nJoystickAileronServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Servo", 0)
-        nJoystickRudderServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Servo", 0)
-        nJoystickModeServo = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Servo", 0)
 
         bHeartbeat1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Enabled", False)
         bHeartbeat2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Enabled", False)
@@ -442,6 +404,8 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Altitude", sSpeechAltitude)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Altitude Min", nSpeechAltitudeMin)
 
+        SaveRegSetting(sRootRegistry & "\Settings\Speech", "Manuel Mode", bManuelMode)
+
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning Enabled", bAnnounceLinkWarning)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Warning", sSpeechWarning)
         SaveRegSetting(sRootRegistry & "\Settings\Speech", "Alarm Enabled", bAnnounceLinkAlarm)
@@ -469,35 +433,18 @@ Module modSettings
 
         SaveRegSetting(sRootRegistry & "\Settings\Joystick", "Device", sJoystickDevice)
 
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Input", nJoystickThrottle)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Input", nJoystickElevator)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Input", nJoystickAileron)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Input", nJoystickRudder)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Input", nJoystickMode)
-
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Reverse", bJoystickThrottleReverse)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Reverse", bJoystickElevatorReverse)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Reverse", bJoystickAileronReverse)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Reverse", bJoystickRudderReverse)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Reverse", bJoystickModeReverse)
-
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Min", nJoystickThrottleMin)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Min", nJoystickElevatorMin)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Min", nJoystickAileronMin)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Min", nJoystickRudderMin)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Min", nJoystickModeMin)
-
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Max", nJoystickThrottleMax)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Max", nJoystickElevatorMax)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Max", nJoystickAileronMax)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Max", nJoystickRudderMax)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Max", nJoystickModeMax)
-
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Throttle Servo", nJoystickThrottleServo)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Elevator Servo", nJoystickElevatorServo)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Aileron Servo", nJoystickAileronServo)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Rudder Servo", nJoystickRudderServo)
-        SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Mode Servo", nJoystickModeServo)
+        For nCount = 1 To 8
+            With cJoystick(nCount)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Input", .Axis)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Servo", .Servo)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Min", .MinJoystickMovement)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Max", .MaxJoystickMovement)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Lower", .LowerEndPoint)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Upper", .UpperEndPoint)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Reverse", .Reversed)
+                SaveRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " " & nCount & " Sub Trim", .SubTrim)
+            End With
+        Next
 
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Enabled", bHeartbeat1)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Enabled", bHeartbeat2)

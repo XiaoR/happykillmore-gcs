@@ -40,6 +40,7 @@ Public Class cActiveDevices
     End Sub
     Public Sub Validate()
         Dim ncount As Integer
+        Dim bWasPlayed As Boolean
 
         bAlarm = False
         bWarning = False
@@ -58,7 +59,13 @@ Public Class cActiveDevices
                 If bDeviceAlarm(ncount) = False Then
                     bDeviceAlarm(ncount) = True
                     If bAnnounceLinkAlarm = True Then
-                        PlayMessage(sSpeechAlarm, sSpeechVoice)
+                        bWasPlayed = False
+                        If bManuelMode = True Then
+                            bWasPlayed = PlaySoundFile("Alarm")
+                        End If
+                        If bWasPlayed = False Then
+                            PlayMessage(sSpeechAlarm, sSpeechVoice)
+                        End If
                     End If
                 End If
                 nHearbeatRun(ncount) = 0
@@ -76,7 +83,13 @@ Public Class cActiveDevices
                 If bDeviceWarning(ncount) = False Then
                     bDeviceWarning(ncount) = True
                     If bAnnounceLinkWarning = True Then
-                        PlayMessage(sSpeechWarning, sSpeechVoice)
+                        bWasPlayed = False
+                        If bManuelMode = True Then
+                            bWasPlayed = PlaySoundFile("Warning")
+                        End If
+                        If bWasPlayed = False Then
+                            PlayMessage(sSpeechWarning, sSpeechVoice)
+                        End If
                     End If
                 End If
                 nHearbeatRun(ncount) = 0

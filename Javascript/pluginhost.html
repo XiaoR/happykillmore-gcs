@@ -53,6 +53,8 @@
     var cameraRange = 0;
 
     var eAltOffset = 0;
+    var bZeroIsHome = false;
+    var homePointAlt = 0;
     
     var lastChangeTime = 0;
 
@@ -402,7 +404,7 @@
         modelLoaded = true;
     }
     
-    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera) {        
+    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera,filename) {        
         eAltOffset = altOffset;
         nScale = scale;
 
@@ -412,8 +414,17 @@
 
 	    // Define a custom icon. 
 	    var icon = ge.createIcon(''); 
-	    icon.setHref('http://google-maps-icons.googlecode.com/files/blackH.png'); 
+	    icon.setHref('http://google-maps-icons.googlecode.com/files/' + filename +'.png'); 
+
 	    var style = ge.createStyle(''); 
+
+	    if (filename == 'blackH'){
+	        style.getIconStyle().setScale(1.0); 
+	        bZeroIsHome = true;
+	    } else {
+	        style.getIconStyle().setScale(0.7); 
+	        bZeroIsHome = false;
+	    }	    
 	    style.getIconStyle().setIcon(icon); 
 	    //style.getIconStyle().setScale(0.5); 
 	    homePlacemark.setStyleSelector(style);  
@@ -424,15 +435,30 @@
 	    //}
 
 
+ 	    homeGroundAltitude = ge.getGlobe().getGroundAltitude(lat,long);
+
 	    // Create the placemark. 
 	    homePoint.setLatitude(lat); 
 	    homePoint.setLongitude(long); 
-	    homePoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
-
+	    if (filename == 'blackH'){
+	        homePoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
+	        lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
+	    } else {
+	        homePoint.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+            if (altOffset == 0) {
+        	    homePointAlt = altitude;
+	            homePoint.setAltitude(homePointAlt); 
+        	    lineString.getCoordinates().pushLatLngAlt(lat,long,homePointAlt);
+	        } else {
+	            homePointAlt = altitude + homeGroundAltitude;
+	            homePoint.setAltitude(homePointAlt); 
+        	    lineString.getCoordinates().pushLatLngAlt(lat,long,homePointAlt);
+	        }
+	    }	    
+	    
         homePlacemark.setGeometry(homePoint);  
         ge.getFeatures().appendChild(homePlacemark); 
 	    
-	    lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
 
 	    homeSet = true;
  
@@ -443,7 +469,11 @@
 
     function drawHomeLine() {
 
-	    lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude(), homePoint.getLongitude(),homeGroundAltitude); 
+//        if (bZeroIsHome == true){
+//	        lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude(), homePoint.getLongitude(),homeGroundAltitude); 
+//	    } else {
+	        lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude()+.00001, homePoint.getLongitude()+.00001, homePoint.getAltitude()); 
+//	    }
 	    ge.getFeatures().appendChild(lineStringPlacemark);
         }
     	

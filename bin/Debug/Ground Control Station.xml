@@ -1280,9 +1280,13 @@ Loiter,12
 </summary>
 </member><member name="P:HK_GCS.My.Resources.TextFiles.APMSetConfig">
 	<summary>
-  Looks up a localized string similar to HDNG2RLL_P,0,,0.7,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
-HDNG2RLL_I,0,,0.01,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, The I term is used to control drift.
-HDNG2RLL_D,0,,0.02,1,NAV_ROLL_D - Navigation control gains, Tuning values for the navigation control PID loops, The D [rest of string was truncated]";.
+  Looks up a localized string similar to //EEPROM variable name,Min,Max,Default,Multiplier,Enabled (0 = no, 1 = yes)Comment
+MAH,,,,,1,
+CURRENT_ENABLE,,,,,1,
+AOA,,,,,1,
+MAG_ENABLE,,,,,1,
+HDNG2RLL_P,0,5,0.7,1,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
+HDNG2RLL_I,0,1,0.01,1,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops, [rest of string was truncated]";.
 </summary>
 </member><member name="P:HK_GCS.My.Resources.TextFiles.AttoSetConfig">
 	<summary>

@@ -146,7 +146,8 @@ Public Class AsynchronousSocketListener
             'I HAVE NO IDEA WHERE TO PUT THIS allDone.Set()
             'Signal the main thread to continue.
             allDone.Set()
-        Catch
+        Catch ex As Exception
+            Debug.Print(ex.Message)
         End Try
     End Sub 'AcceptCallback
 
@@ -199,7 +200,8 @@ Public Class AsynchronousSocketListener
                 If handler.Available > 0 Then
                     cpBytesRec = clients(0).workSocket.ReceiveFrom(bytes, 0, bytes.Length, SocketFlags.None, clients(0).SenderRemote)
                 End If
-                content = Encoding.ASCII.GetString(bytes, 0, cpBytesRec)
+                content = Encoding.GetEncoding(1252).GetString(bytes, 0, cpBytesRec)
+                'content = Encoding.ASCII.GetString(bytes, 0, cpBytesRec)
                 sBuffer = sBuffer & content
 
             End If

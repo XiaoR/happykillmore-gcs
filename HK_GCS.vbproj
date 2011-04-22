@@ -122,6 +122,8 @@
     <Compile Include="cActiveDevices.vb" />
     <Compile Include="cAsyncSocket.vb" />
     <Compile Include="cJoystick.vb" />
+    <Compile Include="cJoystickChannel.vb" />
+    <Compile Include="cJoystickChannels.vb" />
     <Compile Include="cValueDesc.vb" />
     <Compile Include="frmHeartbeat.Designer.vb">
       <DependentUpon>frmHeartbeat.vb</DependentUpon>
@@ -351,6 +353,14 @@
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
