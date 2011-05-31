@@ -75,6 +75,10 @@ Module modSettings
     Public bHeartbeatRun5 As Boolean = False
     Public bHeartbeatRun6 As Boolean = False
 
+    Public bHeartbeatMAVlink As Boolean = False
+    Public bHeartbeatMAVlinkJoystick As Boolean = False
+    Public bHeartbeatMAVlinkJoystickForce As Boolean = False
+
     Public sHeartbeatName1 As String
     Public sHeartbeatName2 As String
     Public sHeartbeatName3 As String
@@ -140,6 +144,8 @@ Module modSettings
         Dim eNewDistanceUnits As e_DistanceFormat
         Dim oJoystickChannel As cJoystickChannel
 
+        LoadLanguageFile()
+
         bIsAdmin = GetRegSetting(sRootRegistry & "\Settings", "Admin Mode", False)
         sLanguageFile = GetRegSetting(sRootRegistry & "\Settings", "Language File", "Default")
 
@@ -151,7 +157,7 @@ Module modSettings
         bRollReverse = GetRegSetting(sRootRegistry & "\Settings", "Roll Reverse", False)
         bYawReverse = GetRegSetting(sRootRegistry & "\Settings", "Yaw Reverse", False)
         bHeadingReverse = GetRegSetting(sRootRegistry & "\Settings", "Heading Reverse", False)
-        nThrottleChannel = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Throttle Channel", "1"))
+        nThrottleChannel = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Throttle Channel", "3"))
         eAltOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Altitude Offset", "0"))
         nHomeOffset = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Home Offset", "0"))
         eMapSelection = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Map Source", "1"))
@@ -291,6 +297,8 @@ Module modSettings
         bHeartbeat5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Enabled", False)
         bHeartbeat6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Enabled", True)
 
+        bHeartbeatMAVlink = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "MAVlink Enabled", True)
+
         sHeartbeatName1 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Name", "")
         sHeartbeatName2 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Name", "")
         sHeartbeatName3 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "3 Name", "")
@@ -351,6 +359,10 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Throttle Channel", nThrottleChannel)
         SaveRegSetting(sRootRegistry & "\Settings", "Altitude Offset", eAltOffset)
         SaveRegSetting(sRootRegistry & "\Settings", "Home Offset", nHomeOffset)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "Config Device", nConfigDevice)
+        SaveRegSetting(sRootRegistry & "\Settings", "Config Vehicle", nConfigVehicle)
+        SaveRegSetting(sRootRegistry & "\Settings", "Config Generic Alt Offset", nConfigAltOffset)
 
         SaveRegSetting(sRootRegistry & "\Settings", "2-way Reties", n2WayRetries)
         SaveRegSetting(sRootRegistry & "\Settings", "2-way Timeout", n2WayTimeout)
@@ -452,6 +464,8 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Enabled", bHeartbeat4)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Enabled", bHeartbeat5)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Enabled", bHeartbeat6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "MAVlink Enabled", bHeartbeatMAVlink)
 
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "1 Name", sHeartbeatName1)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "2 Name", sHeartbeatName2)

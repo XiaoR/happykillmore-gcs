@@ -31,7 +31,7 @@ Namespace AvionicsInstrumentControlDemo
         Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Altimeter_Background)
         Private bmpSmallNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.SmallNeedleAltimeter)
         Private bmpLongNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.LongNeedleAltimeter)
-        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Bandeau_Dérouleur)
+        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.NumberScroll)
 
         Private sUnitLabel As String '= GetResString(, "Feet")
 #End Region

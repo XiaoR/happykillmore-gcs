@@ -965,6 +965,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Hertz.
+        '''</summary>
+        Friend Shared ReadOnly Property Hertz() As String
+            Get
+                Return ResourceManager.GetString("Hertz", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Highly Assisted.
         '''</summary>
         Friend Shared ReadOnly Property Highly_Assisted() As String
@@ -1568,6 +1577,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Protocol.
+        '''</summary>
+        Friend Shared ReadOnly Property Protocol() As String
+            Get
+                Return ResourceManager.GetString("Protocol", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Purple.
         '''</summary>
         Friend Shared ReadOnly Property Purple() As String
@@ -2059,6 +2077,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Throttle_Color() As String
             Get
                 Return ResourceManager.GetString("Throttle_Color", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tracking.
+        '''</summary>
+        Friend Shared ReadOnly Property Tracking() As String
+            Get
+                Return ResourceManager.GetString("Tracking", resourceCulture)
             End Get
         End Property
         

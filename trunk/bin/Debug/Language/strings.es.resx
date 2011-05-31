@@ -118,295 +118,422 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_2D_Lock" xml:space="preserve">
-    <value>2D Adquirido</value>
-    <comment>GPS Lock</comment>
+    <value>2D Lock</value>
+    <comment>GPS Lock - Indicates Poor Signal Quality</comment>
   </data>
   <data name="_3D_Lock" xml:space="preserve">
-    <value>3D Adquirido</value>
-    <comment>GPS Lock</comment>
+    <value>3D Lock</value>
+    <comment>GPS Lock - Indicated Good Signal Quality</comment>
   </data>
   <data name="_3D_Model" xml:space="preserve">
-    <value>Modelo 3D</value>
-    <comment>Settings Form</comment>
+    <value>3D Model</value>
+    <comment>3-Dimensional Model (ie EasyStar)</comment>
   </data>
   <data name="_3D_Models_From" xml:space="preserve">
-    <value>Modelo 3D por</value>
-    <comment>About Form</comment>
+    <value>3D Models from OpenPilot Project</value>
+    <comment>Credits to authors of OpenPilot for their fantastic planes (ie EasyStar)</comment>
   </data>
   <data name="About" xml:space="preserve">
-    <value>Acerca</value>
-    <comment>About Form</comment>
+    <value>About</value>
+    <comment>About and Splash Screen</comment>
   </data>
   <data name="Accel_Mult" xml:space="preserve">
     <value>&amp;1 Accel</value>
+    <comment>Short for Accelerometer (Keep it short)</comment>
   </data>
   <data name="Air_Speed" xml:space="preserve">
-    <value>Vel IAS</value>
+    <value>Air Speed</value>
+    <comment>Speed of plane moving through air (not the same as ground speed)</comment>
   </data>
   <data name="AirGround_Speed" xml:space="preserve">
-    <value>Vel GND</value>
+    <value>Air/Ground Speed</value>
+    <comment>Instrument Name (Really Ground Speed Indicator)</comment>
   </data>
   <data name="Already_Exists" xml:space="preserve">
-    <value>&amp;1 Ya existe.^¿Sobreescribir el archivo?</value>
+    <value>&amp;1 already exists.^Overwrite output file?</value>
+    <comment>Overwrite File</comment>
   </data>
   <data name="Altimeter" xml:space="preserve">
-    <value>Altímetro</value>
+    <value>Altimeter</value>
+    <comment>Altimeter Instrument Name</comment>
   </data>
   <data name="Altitude_Hold_Mode" xml:space="preserve">
-    <value>Mantenener Altura</value>
+    <value>Altitude Hold Mode</value>
     <comment>FY21AP Modes</comment>
   </data>
+  <data name="Altitude_Offset" xml:space="preserve">
+    <value>Altitude Offset</value>
+  </data>
   <data name="Amperage_Color" xml:space="preserve">
-    <value>Color Amperaje</value>
+    <value>Amperage Color</value>
+    <comment>Color selection for Battery meter - Amps meter</comment>
   </data>
   <data name="Amps" xml:space="preserve">
     <value>Amps</value>
+    <comment>Short - 6 characters or less</comment>
+  </data>
+  <data name="Announce_Alarm_Default" xml:space="preserve">
+    <value>Danger! Danger! Signal lost for more than {alarm} seconds</value>
+  </data>
+  <data name="Announce_ModeChange" xml:space="preserve">
+    <value>Announce Mode Change</value>
+  </data>
+  <data name="Announce_ModeChange_Default" xml:space="preserve">
+    <value>Changed mode to {mode}</value>
+  </data>
+  <data name="Announce_Regular_Interval" xml:space="preserve">
+    <value>Announce Regular Interval</value>
+  </data>
+  <data name="Announce_Regular_Interval_Default" xml:space="preserve">
+    <value>en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour</value>
+  </data>
+  <data name="Announce_Warning_Default" xml:space="preserve">
+    <value>Warning, Signal lost for {warning} seconds</value>
+  </data>
+  <data name="Announce_Waypoints" xml:space="preserve">
+    <value>Announce Waypoints</value>
+  </data>
+  <data name="Announce_Waypoints_Default" xml:space="preserve">
+    <value>Arrived, Now heading to waypoint {wpn}</value>
   </data>
   <data name="AP_Mega_Binary" xml:space="preserve">
-    <value>AP Mega Binario</value>
+    <value>AP Mega Binary</value>
     <comment>APM Message Type</comment>
   </data>
   <data name="ArduIMU_Binary" xml:space="preserve">
-    <value>ArduIMU Binario</value>
+    <value>ArduIMU Binary</value>
+    <comment>ArduIMU Binary Message Type</comment>
   </data>
   <data name="ArduPilot_Message" xml:space="preserve">
-    <value>ArduPilot Mensaje</value>
+    <value>ArduPilot Message</value>
+    <comment>ArduPilot Message Type</comment>
   </data>
   <data name="Assisted_RC" xml:space="preserve">
-    <value>RC Asistido</value>
+    <value>Assisted RC</value>
     <comment>AttoPilot Modes</comment>
   </data>
   <data name="Attitude" xml:space="preserve">
-    <value>Actitud</value>
+    <value>Attitude</value>
+    <comment>Attitude Indicator (also called artificial horizon)</comment>
   </data>
   <data name="Attitude_Data" xml:space="preserve">
-    <value>Datos de Actitud</value>
+    <value>Attitude Data</value>
+    <comment>Data that is shown on the Artificial horizon)</comment>
   </data>
   <data name="Auto_Balance_Mode" xml:space="preserve">
-    <value>Autoestabilización</value>
+    <value>Auto Balance Mode</value>
     <comment>FY21AP Modes</comment>
   </data>
   <data name="Auto_Scroll" xml:space="preserve">
-    <value>Desplazamiento Automático</value>
+    <value>Auto Scroll</value>
+    <comment>Move the contents of the listbox automatically</comment>
   </data>
   <data name="Autonomous" xml:space="preserve">
-    <value>Autónomo</value>
+    <value>Autonomous</value>
+    <comment>Auto-Pilot Auto mode</comment>
   </data>
   <data name="Battery" xml:space="preserve">
-    <value>Batería</value>
+    <value>Battery</value>
+    <comment>Status Window (Maybe 10 characters max)</comment>
   </data>
   <data name="Battery_Throttle" xml:space="preserve">
-    <value>Batería &amp;&amp;Motor</value>
+    <value>Battery &amp;&amp; Throttle</value>
+    <comment>Name of Instrument on Settings page</comment>
   </data>
   <data name="Battery_Throttle_Settings" xml:space="preserve">
-    <value>Batería &amp;&amp;Ajustes de motor</value>
+    <value>Battery &amp;&amp; Throttle Settings</value>
+    <comment>Settings Page</comment>
   </data>
   <data name="Baud_Rate" xml:space="preserve">
-    <value>Baud</value>
+    <value>Baud Rate</value>
+    <comment>Keep short (about 12 characters max, will line wrap)</comment>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Azul</value>
+    <value>Blue</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Building_Map_Files" xml:space="preserve">
-    <value>Creando Archivos de Mapa</value>
+    <value>Building Map Files</value>
+    <comment>Splash screen startup message</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
+    <value>Cancel</value>
   </data>
   <data name="Carriage_Return" xml:space="preserve">
     <value>Carriage Return</value>
+    <comment>Don't worry about this one</comment>
   </data>
   <data name="Center_On_Plane" xml:space="preserve">
-    <value>Centrar el Avión</value>
+    <value>Center On Plane</value>
+    <comment>Moves Google Earth map to put plane in center</comment>
   </data>
   <data name="Change_Model_Scale" xml:space="preserve">
-    <value>Escala de Modelo</value>
+    <value>Change Model Scale</value>
+    <comment>Increase/Decrease Google Earth model size</comment>
   </data>
   <data name="Channel_Raw" xml:space="preserve">
-    <value>Canal Real</value>
+    <value>Channel Raw</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Chase_Cam" xml:space="preserve">
-    <value>Guiado CAM</value>
+    <value>Chase Cam</value>
+    <comment>Changes Google Earth camera view to following behind plane</comment>
   </data>
   <data name="Checking_baud" xml:space="preserve">
-    <value>Comprobando &amp;1 conexión</value>
+    <value>Checking &amp;1 baud</value>
+    <comment>Status message for "Search" buttons on COM tab</comment>
   </data>
   <data name="Clear_Map" xml:space="preserve">
-    <value>Limpiar Mapa</value>
+    <value>Clear Map</value>
+    <comment>Clears all lines on Google Earth</comment>
   </data>
   <data name="COM_Port" xml:space="preserve">
-    <value>Puerto COM</value>
+    <value>COM Port</value>
   </data>
   <data name="Command_Line" xml:space="preserve">
-    <value>Linea de Comando</value>
+    <value>Command Line</value>
+    <comment>This is where commands can be sent to the plane</comment>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Conectar</value>
+    <value>Connect</value>
   </data>
   <data name="Connected_to" xml:space="preserve">
-    <value>Connectado a &amp;1 at &amp;2</value>
+    <value>Connected to &amp;1 at &amp;2</value>
+    <comment>Connected message says: Connected to COM1 at 38400</comment>
   </data>
   <data name="Current_Culture" xml:space="preserve">
-    <value>Idioma Actual</value>
-    <comment>About Form</comment>
+    <value>Current Culture</value>
+    <comment>Culture file name (ie pl-PL for Polish)</comment>
   </data>
   <data name="Current_Waypoint" xml:space="preserve">
-    <value>Waypoint Actual</value>
+    <value>Current Waypoint</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Custom_Binary" xml:space="preserve">
-    <value>Binario Personalizado</value>
+    <value>Custom Binary</value>
+    <comment>GPS Message Type</comment>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cian</value>
+    <value>Cyan</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Data_File" xml:space="preserve">
-    <value>Grabación</value>
+    <value>Data File</value>
+    <comment>Saved flight data</comment>
   </data>
   <data name="Data_Points" xml:space="preserve">
-    <value>Datos de Grabación</value>
+    <value>Data Points</value>
+    <comment>Number of GPS lat and long messages in Data File</comment>
+  </data>
+  <data name="Default_Language" xml:space="preserve">
+    <value>Default Language</value>
+    <comment>Allow Windows to Select Language File</comment>
   </data>
   <data name="Disconnect" xml:space="preserve">
-    <value>Desconectar</value>
+    <value>Disconnect</value>
   </data>
   <data name="Disconnect_from" xml:space="preserve">
-    <value>Desconectar de &amp;1</value>
+    <value>Disconnected from &amp;1</value>
+    <comment>Disconnected from COM1</comment>
   </data>
   <data name="Distance" xml:space="preserve">
-    <value>Distancia</value>
+    <value>Distance</value>
+    <comment>How far from plane to next waypoint</comment>
   </data>
   <data name="Distance_Units" xml:space="preserve">
-    <value>Distancia</value>
-    <comment>Settings Form</comment>
+    <value>Distance Units</value>
+    <comment>Distance Units (ie Meters/Feet)</comment>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Bajar</value>
+    <value>down</value>
     <comment>For Vertical Speed</comment>
   </data>
   <data name="Draw_Full_Mission" xml:space="preserve">
-    <value>Dibujar Misión Completa</value>
+    <value>Draw Full Mission</value>
+    <comment>Draw entire mission on Google Earth</comment>
   </data>
   <data name="Error_Message" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="Exit_Label" xml:space="preserve">
-    <value>Salir</value>
+    <value>Exit</value>
   </data>
   <data name="Expand" xml:space="preserve">
-    <value>Expandir</value>
+    <value>Expand</value>
   </data>
   <data name="Extrude" xml:space="preserve">
-    <value>Conforma</value>
+    <value>Extrude</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Features</value>
   </data>
   <data name="Feet" xml:space="preserve">
-    <value>Pies</value>
+    <value>Feet</value>
+    <comment>Feet/Meters</comment>
   </data>
   <data name="File" xml:space="preserve">
-    <value>Archivo</value>
+    <value>File</value>
   </data>
   <data name="First_Person" xml:space="preserve">
-    <value>Piloto</value>
+    <value>First Person</value>
+    <comment>Changes Google Earth camera view to inside cockpit</comment>
   </data>
   <data name="Flight_Path_Color" xml:space="preserve">
-    <value>Color de la Traza</value>
+    <value>Flight Path Color</value>
+    <comment>Color of line drawn behind plane in Google Earth</comment>
+  </data>
+  <data name="From_HomeAlt" xml:space="preserve">
+    <value>From Home Alt</value>
+  </data>
+  <data name="From_Sealevel" xml:space="preserve">
+    <value>From Sea Level</value>
   </data>
   <data name="Full" xml:space="preserve">
-    <value>Todo</value>
+    <value>Full</value>
+    <comment>Very SHORT (5 characters max) - Button name for Draw Full Mission</comment>
+  </data>
+  <data name="GE_Borders" xml:space="preserve">
+    <value>Borders</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Buildings" xml:space="preserve">
+    <value>3D Buildings</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Roads" xml:space="preserve">
+    <value>Roads</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Terrain" xml:space="preserve">
+    <value>Terrain</value>
+    <comment>Google Earth Feature</comment>
+  </data>
+  <data name="GE_Trees" xml:space="preserve">
+    <value>3D Trees</value>
+    <comment>Google Earth Feature</comment>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
-    <comment>Settings Form</comment>
+    <comment>General Preferences - Non specific</comment>
   </data>
   <data name="Geonavigation_Data" xml:space="preserve">
-    <value>Datos de Geonavegación</value>
+    <value>Geonavigation Data</value>
     <comment>SiRF Message Type</comment>
   </data>
   <data name="Global_Position" xml:space="preserve">
-    <value>Posición Global</value>
+    <value>Global Position</value>
     <comment>MAVline Message Type</comment>
   </data>
+  <data name="Google_Earth" xml:space="preserve">
+    <value>Google Earth</value>
+  </data>
   <data name="Google_Earth_Flight_Path" xml:space="preserve">
-    <value>Plan de Vuelo en Google Earth</value>
+    <value>Google Earth Flight Path</value>
+    <comment>Line drawn behind plane in Google Earth</comment>
   </data>
   <data name="GPS_Data" xml:space="preserve">
-    <value>Datos GPS</value>
+    <value>GPS Data</value>
+    <comment>Data from GPS</comment>
   </data>
   <data name="GPS_Lock" xml:space="preserve">
-    <value>GPS Adquirido</value>
+    <value>GPS Lock</value>
+    <comment>GPS has at least 5 satellites and is ready to fly</comment>
   </data>
   <data name="GPS_Message" xml:space="preserve">
-    <value>Msg GPS</value>
+    <value>GPS Msg</value>
+    <comment>GPS message - ie GPGGA or GPRMC for NMEA</comment>
   </data>
   <data name="GPS_Raw" xml:space="preserve">
-    <value>GPS Real</value>
+    <value>GPS Raw</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="GPS_Status" xml:space="preserve">
-    <value>Estado de GPS</value>
+    <value>GPS Status</value>
     <comment>MAVline Message Type</comment>
   </data>
+  <data name="GPS_Time" xml:space="preserve">
+    <value>GPS Time</value>
+    <comment>Current time sent by GPS</comment>
+  </data>
   <data name="GPS_Type" xml:space="preserve">
-    <value>GPS</value>
+    <value>GPS Type</value>
+    <comment>What device is sending messages - ie NMEA, uBlox, AttoPilot, etc</comment>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Verde</value>
+    <value>Green</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Ground_Control_Station" xml:space="preserve">
-    <value>Estación de Tierra</value>
+    <value>Ground Control Station</value>
     <comment>About Form</comment>
   </data>
   <data name="Ground_Speed" xml:space="preserve">
-    <value>Vel GND</value>
+    <value>Ground Speed</value>
+    <comment>Speed of plane over ground</comment>
   </data>
   <data name="Gyro_Mult" xml:space="preserve">
     <value>&amp;1 Gyro</value>
+    <comment>X Gyro, y Gyro, Z Gyro</comment>
   </data>
   <data name="HappyKillmores_Email" xml:space="preserve">
-    <value>Email de HappyKillmore's</value>
+    <value>HappyKillmore's Email</value>
     <comment>About Form</comment>
   </data>
   <data name="HDOP" xml:space="preserve">
     <value>HDOP</value>
+    <comment>Don't translate this one - This is a GPS term</comment>
   </data>
   <data name="Heading" xml:space="preserve">
-    <value>Rumbo</value>
+    <value>Heading</value>
+    <comment>Course over ground 0 - 359 degrees</comment>
   </data>
   <data name="Heatbeat_Data" xml:space="preserve">
     <value>Heatbeat Data</value>
-    <comment>APM Message Type</comment>
+    <comment>KeepAlive message from Auto-Pilot - I'm still alive!</comment>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Ayuda</value>
+    <value>Help</value>
+    <comment>Help!</comment>
+  </data>
+  <data name="Hertz" xml:space="preserve">
+    <value>Hertz</value>
+    <comment>Data Speed (ie 2 Hertz = 2 times per second)</comment>
   </data>
   <data name="Highly_Assisted" xml:space="preserve">
-    <value>Asistido</value>
+    <value>Highly Assisted</value>
     <comment>AttoPilot Modes</comment>
   </data>
   <data name="In_Label" xml:space="preserve">
-    <value>IN</value>
+    <value>In</value>
+    <comment>End of Servo selection Servo 1 In</comment>
   </data>
   <data name="Instrument_Selection" xml:space="preserve">
-    <value>Selección de Instrumentos</value>
+    <value>Instrument Selection</value>
   </data>
   <data name="Instruments" xml:space="preserve">
-    <value>Instrumentos</value>
+    <value>Instruments</value>
+  </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
   </data>
   <data name="Invalid_File" xml:space="preserve">
-    <value>Archivo Incorrecto</value>
+    <value>Invalid File</value>
   </data>
   <data name="Invalid_Mission_File_Format" xml:space="preserve">
-    <value>Formato de Archivo de Misión Incorrecto</value>
+    <value>Invalid Mission File Format</value>
   </data>
   <data name="Knots" xml:space="preserve">
-    <value>Nudos</value>
+    <value>Knots</value>
   </data>
   <data name="KPH" xml:space="preserve">
     <value>km/h</value>
     <comment>Kilometers Per Hour</comment>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Latitud</value>
+    <value>Latitude</value>
   </data>
   <data name="Left" xml:space="preserve">
     <value>L</value>
@@ -414,29 +541,35 @@
   </data>
   <data name="Line_Feed" xml:space="preserve">
     <value>Line Feed</value>
+    <comment>Don't worry about this one</comment>
   </data>
   <data name="Line_Feed_Carriage_Return" xml:space="preserve">
     <value>Line Feed+Carriage Return</value>
+    <comment>Don't worry about this one</comment>
   </data>
   <data name="Live_Camera" xml:space="preserve">
-    <value>Camara en Vivo</value>
+    <value>Live Camera</value>
+    <comment>Video camera input</comment>
   </data>
   <data name="Loading_COM_Ports" xml:space="preserve">
-    <value>Cargando Puertos COM</value>
+    <value>Loading COM Ports</value>
   </data>
   <data name="Loading_Settings" xml:space="preserve">
-    <value>Cargando Ajustes</value>
+    <value>Loading Settings</value>
   </data>
   <data name="Location_Data" xml:space="preserve">
-    <value>Datos de Posición</value>
+    <value>Location Data</value>
     <comment>APM Message Type</comment>
   </data>
   <data name="Locked" xml:space="preserve">
-    <value>Adquirido</value>
+    <value>Locked</value>
     <comment>GPS Lock</comment>
   </data>
+  <data name="Loiter" xml:space="preserve">
+    <value>Loiter</value>
+  </data>
   <data name="Longitude" xml:space="preserve">
-    <value>Longitud</value>
+    <value>Longitude</value>
   </data>
   <data name="m_s" xml:space="preserve">
     <value>m/s</value>
@@ -444,68 +577,93 @@
   </data>
   <data name="Mag_Mult" xml:space="preserve">
     <value>&amp;1 Mag</value>
+    <comment>X Magnetometer, Y Magnetometer, Z Magnetometer - Sensor data from IMU</comment>
   </data>
   <data name="mAh" xml:space="preserve">
     <value>mAh</value>
+    <comment>Milliamp Hours</comment>
   </data>
   <data name="MAH_Color" xml:space="preserve">
-    <value>Color mAh</value>
+    <value>mAh Color</value>
+    <comment>Color selection on Battery/Throttle Meter for Milliamp Hours</comment>
   </data>
   <data name="Manual_Mode" xml:space="preserve">
-    <value>Manual</value>
-    <comment>AttoPilot Modes</comment>
+    <value>Manual Mode</value>
+    <comment>User is controlling plane with radio</comment>
   </data>
   <data name="Map_Update_Rate" xml:space="preserve">
-    <value>Actualización de Mapa</value>
+    <value>Map Update Rate</value>
+    <comment>Speed at which Google Earth is updated</comment>
   </data>
   <data name="Map_View" xml:space="preserve">
-    <value>Vista de Mapa</value>
+    <value>Map View</value>
+    <comment>Google Earth is selected instead of Live Camera</comment>
   </data>
   <data name="Max_Amperage" xml:space="preserve">
-    <value>Consumo Máximo</value>
+    <value>Max Amperage</value>
+    <comment>Maximum Amps </comment>
   </data>
   <data name="Max_Attitude" xml:space="preserve">
-    <value>Incidencia Máxima</value>
+    <value>Max Attitude</value>
+    <comment>Fastest the 3D model and Artificial Horizon will be updated with attitude data</comment>
   </data>
   <data name="Max_GPS" xml:space="preserve">
     <value>Max GPS</value>
+    <comment>Fastest the lat, long, heading, etc will be updated with GPS data</comment>
   </data>
   <data name="Max_MAH" xml:space="preserve">
     <value>Max mAh</value>
+    <comment>Max milliamp hours on battery meters</comment>
   </data>
   <data name="Max_Speed" xml:space="preserve">
-    <value>Velocidad Max</value>
-    <comment>Settings Form</comment>
+    <value>Max Speed</value>
+    <comment>Max speed shown on Speed Indicator (80, 120, 160, etc)</comment>
   </data>
   <data name="Max_Voltage" xml:space="preserve">
-    <value>Voltaje Max</value>
+    <value>Max Voltage</value>
+    <comment>Max voltage shown on battery meter</comment>
   </data>
   <data name="Max_Waypoint" xml:space="preserve">
-    <value>Waypoint Max</value>
+    <value>Max Waypoint</value>
+    <comment>Fastest thewaypoint, distance to waypoint, etc data will be updated</comment>
   </data>
   <data name="Meters" xml:space="preserve">
-    <value>Metros</value>
+    <value>Meters</value>
+    <comment>Meters/Feet</comment>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+    <comment>Short for minutes (non plural)</comment>
   </data>
   <data name="Min_MAH" xml:space="preserve">
     <value>Min mAh</value>
+    <comment>Minimum mAh on battery meter</comment>
   </data>
   <data name="Min_Voltage" xml:space="preserve">
-    <value>Voltaje Min</value>
+    <value>Min Voltage</value>
+    <comment>Minimum voltage on battery meter</comment>
+  </data>
+  <data name="mins" xml:space="preserve">
+    <value>mins</value>
+    <comment>Short for minutes (plural)</comment>
   </data>
   <data name="Mission" xml:space="preserve">
-    <value>Misión</value>
+    <value>Mission</value>
+    <comment>Load mission waypoints</comment>
   </data>
   <data name="Mission_Path" xml:space="preserve">
-    <value>Traza</value>
+    <value>Mission Path</value>
+    <comment>Not flight path, but waypoint path</comment>
   </data>
   <data name="Mission_Path_Color" xml:space="preserve">
-    <value>Color de Traza</value>
+    <value>Mission Path Color</value>
+    <comment>Color of lines connecting waypoints</comment>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Modo</value>
+    <value>Mode</value>
   </data>
   <data name="Mode_Change" xml:space="preserve">
-    <value>Cambio de Modo</value>
+    <value>Mode Change</value>
   </data>
   <data name="MPH" xml:space="preserve">
     <value>MPH</value>
@@ -515,275 +673,336 @@
     <value>No</value>
   </data>
   <data name="No_line_ending" xml:space="preserve">
-    <value>Linea sin Final</value>
-    <comment>Commandline Tab</comment>
+    <value>No line ending</value>
+    <comment>Don't worry about this one</comment>
   </data>
   <data name="No_Tracking" xml:space="preserve">
-    <value>No Traza</value>
+    <value>No Tracking</value>
+    <comment>Camera view for Google Earth - Do not follow plane</comment>
   </data>
   <data name="None" xml:space="preserve">
-    <value>Ninguno</value>
+    <value>None</value>
   </data>
   <data name="Normal" xml:space="preserve">
     <value>Normal</value>
     <comment>Settings Form</comment>
   </data>
   <data name="Not_Locked" xml:space="preserve">
-    <value>No Adquirido</value>
+    <value>Not Locked</value>
     <comment>GPS Lock</comment>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Open_Downloads" xml:space="preserve">
-    <value>Abrir Lista de Descargas</value>
+    <value>Open Download List</value>
   </data>
   <data name="Open_Homepage" xml:space="preserve">
-    <value>Abrir Página de Inicio</value>
+    <value>Open Project Homepage</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>Naranja</value>
+    <value>Orange</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Original_Instruments" xml:space="preserve">
-    <value>Instrumentos Originales por Guillaume</value>
-    <comment>About Form</comment>
+    <value>Original Instrument Code by Guillaume CHOUTEAU</value>
+    <comment>Credits for original creator of instruments (ie Artificial Horizon)</comment>
   </data>
   <data name="Out_Label" xml:space="preserve">
-    <value>OUT</value>
+    <value>Out</value>
+    <comment>End of Servo selection Servo 1 Out</comment>
   </data>
   <data name="Overhead" xml:space="preserve">
-    <value>Cenital</value>
+    <value>Overhead</value>
+    <comment>Google Earth View type where camera is looking straight down on top of plane</comment>
   </data>
   <data name="Overwrite_File" xml:space="preserve">
-    <value>Sobreescribir Archivo</value>
+    <value>Overwrite File</value>
   </data>
   <data name="Path_Opacity" xml:space="preserve">
-    <value>Transparencia</value>
+    <value>Path Opacity</value>
+    <comment>Sets transparency of flight and mission path</comment>
   </data>
   <data name="Path_Thickness" xml:space="preserve">
-    <value>Grosor de Linea</value>
+    <value>Path Thickness</value>
+    <comment>How thick are the lines connecting waypoints and flight data points in Google Earth</comment>
   </data>
   <data name="Pause" xml:space="preserve">
-    <value>Pausa</value>
+    <value>Pause</value>
   </data>
   <data name="Pitch" xml:space="preserve">
-    <value>Profundidad</value>
+    <value>Pitch</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
   <data name="Project_Homepage" xml:space="preserve">
-    <value>Página de Inicio de Proyecto</value>
+    <value>Project Homepage</value>
     <comment>About Form</comment>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>Propiedades</value>
+    <value>Properties</value>
+  </data>
+  <data name="Protocol" xml:space="preserve">
+    <value>Protocol</value>
+    <comment>Protocol Label (ie NMEA, uBlox, SiRF)</comment>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Púrpura</value>
+    <value>Purple</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Raw_Data" xml:space="preserve">
-    <value>Datos Raw</value>
+    <value>Raw Data</value>
   </data>
   <data name="Raw_IMU" xml:space="preserve">
     <value>Raw IMU</value>
     <comment>MAVline Message Type</comment>
   </data>
+  <data name="RC_Channels_Scaled" xml:space="preserve">
+    <value>R/C Channels Scaled</value>
+    <comment>MAVlink message for servo outputs</comment>
+  </data>
   <data name="Record" xml:space="preserve">
-    <value>Grabación</value>
+    <value>Record</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Rojo</value>
+    <value>Red</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Reload_Com_Port_List" xml:space="preserve">
-    <value>Actualizar Lista Puerto COM</value>
+    <value>Reload COM Port List</value>
   </data>
   <data name="Reload_Letter" xml:space="preserve">
     <value>R</value>
     <comment>Very small button (Only 1 Character!)</comment>
   </data>
   <data name="Reload_Mission" xml:space="preserve">
-    <value>Actualizar Misión</value>
+    <value>Reload Mission</value>
   </data>
   <data name="Reload_Mission_Directory" xml:space="preserve">
-    <value>Actualizar Directorio de Misión</value>
+    <value>Reload Mission Directory</value>
   </data>
   <data name="Reload_Output_File_List" xml:space="preserve">
-    <value>Actualizar Lista de Archivos de Salida</value>
+    <value>Reload Output File List</value>
   </data>
   <data name="Reset_Run_Timer" xml:space="preserve">
-    <value>Resetear Temporizador</value>
+    <value>Reset Run Timer</value>
   </data>
   <data name="Resizing_Form" xml:space="preserve">
-    <value>Redimensionar Forma</value>
+    <value>Resizing Form</value>
+  </data>
+  <data name="Return_Home" xml:space="preserve">
+    <value>Return Home</value>
   </data>
   <data name="Reversed" xml:space="preserve">
-    <value>Reservado</value>
+    <value>Reversed</value>
     <comment>Settings Form</comment>
   </data>
   <data name="Rewind_To_Beginning" xml:space="preserve">
-    <value>Volver al Principio</value>
+    <value>Rewind to Beginning</value>
   </data>
   <data name="Right" xml:space="preserve">
     <value>R</value>
     <comment>For Turn Coordinator (Only 1 Character!)</comment>
   </data>
   <data name="Roll" xml:space="preserve">
-    <value>Alabeo</value>
+    <value>Roll</value>
   </data>
   <data name="Run_Time" xml:space="preserve">
-    <value>Tiempo</value>
+    <value>Run Time</value>
   </data>
   <data name="Satellites" xml:space="preserve">
-    <value>Satelites</value>
+    <value>Satellites</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Salva</value>
+    <value>Save</value>
   </data>
   <data name="Search_Baud" xml:space="preserve">
-    <value>Buscar Transimisión</value>
+    <value>Search Baud</value>
   </data>
   <data name="Search_COM" xml:space="preserve">
-    <value>Buscar COM</value>
+    <value>Search COM</value>
+  </data>
+  <data name="sec" xml:space="preserve">
+    <value>sec</value>
+    <comment>Short for seconds (non plural)</comment>
+  </data>
+  <data name="secs" xml:space="preserve">
+    <value>secs</value>
+    <comment>Short for seconds plural)</comment>
   </data>
   <data name="Select_Data_File_Directory" xml:space="preserve">
-    <value>Seleccionar Directorio de Datos</value>
+    <value>Select Data File Directory</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Enviar</value>
+    <value>Send</value>
   </data>
   <data name="Sensors" xml:space="preserve">
-    <value>Sensores</value>
+    <value>Sensors</value>
   </data>
   <data name="Serial_Data" xml:space="preserve">
     <value>Serial Data</value>
   </data>
   <data name="Serial_Settings" xml:space="preserve">
-    <value>Ajustes Serial</value>
+    <value>Serial Settings</value>
   </data>
   <data name="Servo_Mult" xml:space="preserve">
     <value>Servo &amp;1</value>
+    <comment>Servo 1, Servo 2, etc</comment>
   </data>
   <data name="Servos" xml:space="preserve">
     <value>Servos</value>
   </data>
   <data name="Set_Home" xml:space="preserve">
-    <value>Asignar Casa</value>
+    <value>Set Home</value>
   </data>
   <data name="Setting_Up_Comboboxes" xml:space="preserve">
-    <value>Ajustar Combinación de Cuadros</value>
+    <value>Setting up Comboboxes</value>
+    <comment>Splash screen status message - Loading data into dropdown controls</comment>
   </data>
   <data name="Setting_Up_Webbrowser" xml:space="preserve">
-    <value>Ajustar Navegador WEB</value>
+    <value>Setting up Webbrowser</value>
+    <comment>Splash screen status message - Loading javascript into webbrowser control</comment>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Ajustes</value>
+    <value>Settings</value>
   </data>
   <data name="Shrink" xml:space="preserve">
-    <value>Encojer</value>
+    <value>Shrink</value>
+  </data>
+  <data name="Socket_Num" xml:space="preserve">
+    <value>Socket Num</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Speech</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Velocidad</value>
+    <value>Speed</value>
   </data>
   <data name="Speed_Units" xml:space="preserve">
-    <value>Velocidad</value>
-    <comment>Settings Form</comment>
+    <value>Speed Units</value>
+    <comment>MPH, km/h, m/s</comment>
+  </data>
+  <data name="Stabilized" xml:space="preserve">
+    <value>Stabilized</value>
   </data>
   <data name="Starting_GCS" xml:space="preserve">
-    <value>Comienzo &amp;1</value>
-    <comment>About Form</comment>
+    <value>Starting &amp;1</value>
+    <comment>Splash screen title Starting HappyKillmore's GCS</comment>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Estado</value>
+    <value>Status</value>
   </data>
   <data name="Step_Back" xml:space="preserve">
-    <value>Paso Atrás</value>
+    <value>Step Back</value>
   </data>
   <data name="Step_Forward" xml:space="preserve">
-    <value>Paso Adelante</value>
+    <value>Step Forward</value>
   </data>
   <data name="Stop_Recording" xml:space="preserve">
-    <value>Parar Grabación</value>
+    <value>Stop Recording</value>
   </data>
   <data name="Supported_Protocols" xml:space="preserve">
-    <value>Protocolos Soportados</value>
-    <comment>About Form</comment>
+    <value>Supported Protocols</value>
+    <comment>NMEA, uBlox, AttoPilot, UavDevBoard, etc - About Form</comment>
   </data>
   <data name="System_Status" xml:space="preserve">
-    <value>Estado del Sistema</value>
+    <value>System Status</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Target_Alt" xml:space="preserve">
-    <value>Altura Objetivo</value>
+    <value>Target Alt</value>
+    <comment>Desired altitude at next waypoint</comment>
   </data>
   <data name="Telemetry_GPS" xml:space="preserve">
-    <value>Telemetría GPS</value>
+    <value>Telemetry GPS</value>
     <comment>FY21AP Message Type</comment>
   </data>
+  <data name="Thro" xml:space="preserve">
+    <value>Thro</value>
+    <comment>Short for Throttle</comment>
+  </data>
   <data name="Throttle" xml:space="preserve">
-    <value>Motor</value>
+    <value>Throttle</value>
   </data>
   <data name="Throttle_Channel" xml:space="preserve">
-    <value>Canal de Motor</value>
-    <comment>Settings Form</comment>
+    <value>Throttle Channel</value>
+    <comment>Which radio input is the throttle (1 or 3 typically)</comment>
   </data>
   <data name="Throttle_Color" xml:space="preserve">
-    <value>Color de Motor</value>
+    <value>Throttle Color</value>
+    <comment>Color of throttle meter on battery instrument</comment>
+  </data>
+  <data name="Tracking" xml:space="preserve">
+    <value>Tracking</value>
+    <comment>Tracking Tab (Antenna Tracking)</comment>
   </data>
   <data name="Translated_Data" xml:space="preserve">
-    <value>Datos Traducidos</value>
+    <value>Translated Data</value>
+    <comment>Data that is not the raw message from GPS/Auto-pilot</comment>
   </data>
   <data name="Turn_Coordinator" xml:space="preserve">
-    <value>Coordinador de Viraje</value>
+    <value>Turn Coordinator</value>
+    <comment>http://en.wikipedia.org/wiki/Turn_coordinator</comment>
   </data>
   <data name="Type_F13" xml:space="preserve">
-    <value>Presione F13</value>
+    <value>Type F13</value>
     <comment>UavDevBoard Message Type</comment>
   </data>
   <data name="uBlox_Binary" xml:space="preserve">
-    <value>uBlox Binario</value>
+    <value>uBlox Binary</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Sube</value>
+    <value>up</value>
     <comment>For Vertical Speed</comment>
   </data>
+  <data name="UTC" xml:space="preserve">
+    <value>UTC</value>
+    <comment>Coordinated Universal Time (Greenich Mean Time - No Timezone Offset) - SHORT!</comment>
+  </data>
   <data name="Version" xml:space="preserve">
-    <value>Versión</value>
+    <value>Version</value>
     <comment>About Form</comment>
   </data>
   <data name="Vertical_Speed" xml:space="preserve">
-    <value>Vario</value>
+    <value>Vertical Speed</value>
+    <comment>Speed of plane going up or down (not ground or air speed)</comment>
   </data>
   <data name="View_File" xml:space="preserve">
-    <value>Ver Archivo</value>
+    <value>View File</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>Voice</value>
   </data>
   <data name="Voltage_Color" xml:space="preserve">
-    <value>Color Voltaje</value>
+    <value>Voltage Color</value>
+    <comment>Color of voltage meter in battery instrument</comment>
   </data>
   <data name="Volts" xml:space="preserve">
-    <value>Voltios</value>
+    <value>Volts</value>
   </data>
   <data name="Waypoint" xml:space="preserve">
     <value>Waypoint</value>
     <comment>MAVline Message Type</comment>
   </data>
   <data name="Waypoint_Data" xml:space="preserve">
-    <value>Datos Waypoint</value>
+    <value>Waypoint Data</value>
   </data>
   <data name="Waypoint_Mode" xml:space="preserve">
-    <value>Auto</value>
+    <value>Waypoint Mode</value>
     <comment>FY21AP Modes</comment>
   </data>
   <data name="Yaw" xml:space="preserve">
-    <value>Guiñada</value>
+    <value>Yaw</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Amarillo</value>
+    <value>Yellow</value>
+    <comment>Meter Color Selection</comment>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Si</value>
+    <value>Yes</value>
   </data>
   <data name="Zero_Yaw" xml:space="preserve">
-    <value>Guiñada Cero</value>
+    <value>Zero Yaw</value>
   </data>
 </root>

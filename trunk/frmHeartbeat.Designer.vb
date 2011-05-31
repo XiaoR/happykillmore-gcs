@@ -79,6 +79,8 @@ Partial Class frmHeartbeat
         Me.txtHeatbeat6 = New System.Windows.Forms.TextBox
         Me.chkHeartbeat6 = New System.Windows.Forms.CheckBox
         Me.cmdDefaults = New System.Windows.Forms.Button
+        Me.chkHeartbeatMAVlink = New System.Windows.Forms.CheckBox
+        Me.Label19 = New System.Windows.Forms.Label
         Me.grpHeartbeat3.SuspendLayout()
         Me.grpHeartbeat2.SuspendLayout()
         Me.grpHeartbeat1.SuspendLayout()
@@ -89,7 +91,7 @@ Partial Class frmHeartbeat
         '
         'cmdSave
         '
-        Me.cmdSave.Location = New System.Drawing.Point(12, 449)
+        Me.cmdSave.Location = New System.Drawing.Point(12, 477)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(75, 23)
         Me.cmdSave.TabIndex = 16
@@ -98,7 +100,7 @@ Partial Class frmHeartbeat
         '
         'cmdCancel
         '
-        Me.cmdCancel.Location = New System.Drawing.Point(723, 449)
+        Me.cmdCancel.Location = New System.Drawing.Point(723, 477)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
         Me.cmdCancel.TabIndex = 17
@@ -635,18 +637,40 @@ Partial Class frmHeartbeat
         '
         'cmdDefaults
         '
-        Me.cmdDefaults.Location = New System.Drawing.Point(93, 449)
+        Me.cmdDefaults.Location = New System.Drawing.Point(93, 477)
         Me.cmdDefaults.Name = "cmdDefaults"
         Me.cmdDefaults.Size = New System.Drawing.Size(118, 23)
         Me.cmdDefaults.TabIndex = 35
         Me.cmdDefaults.Text = "Set to Defaults"
         Me.cmdDefaults.UseVisualStyleBackColor = True
         '
+        'chkHeartbeatMAVlink
+        '
+        Me.chkHeartbeatMAVlink.AutoSize = True
+        Me.chkHeartbeatMAVlink.Location = New System.Drawing.Point(23, 449)
+        Me.chkHeartbeatMAVlink.Name = "chkHeartbeatMAVlink"
+        Me.chkHeartbeatMAVlink.Size = New System.Drawing.Size(143, 17)
+        Me.chkHeartbeatMAVlink.TabIndex = 36
+        Me.chkHeartbeatMAVlink.Text = "Send MAVlink Heartbeat"
+        Me.chkHeartbeatMAVlink.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        Me.Label19.Location = New System.Drawing.Point(203, 449)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(595, 21)
+        Me.Label19.TabIndex = 37
+        Me.Label19.Text = "NOTE: Heartbeats will only fire if the device type specified is detected.  So don" & _
+            "'t worry about the default heartbeats"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'frmHeartbeat
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(810, 481)
+        Me.ClientSize = New System.Drawing.Size(810, 512)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.chkHeartbeatMAVlink)
         Me.Controls.Add(Me.cmdDefaults)
         Me.Controls.Add(Me.grpHeartbeat6)
         Me.Controls.Add(Me.grpHeartbeat5)
@@ -674,6 +698,7 @@ Partial Class frmHeartbeat
         Me.grpHeartbeat6.ResumeLayout(False)
         Me.grpHeartbeat6.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents cmdSave As System.Windows.Forms.Button
@@ -733,4 +758,6 @@ Partial Class frmHeartbeat
     Friend WithEvents txtHeatbeat6 As System.Windows.Forms.TextBox
     Friend WithEvents chkHeartbeat6 As System.Windows.Forms.CheckBox
     Friend WithEvents cmdDefaults As System.Windows.Forms.Button
+    Friend WithEvents chkHeartbeatMAVlink As System.Windows.Forms.CheckBox
+    Friend WithEvents Label19 As System.Windows.Forms.Label
 End Class

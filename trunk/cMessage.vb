@@ -32,7 +32,7 @@ Public Class cMessage
 
     Public ValidMessage As Boolean
     Public RawMessage As String
-    Public RawBytes() As Byte
+    'Public RawBytes() As Byte
     Public MessageType As e_MessageType
     Public Checksum As String
     Public Header As String
@@ -46,6 +46,6 @@ Public Class cMessage
     Public ValidCrop As Integer
 
     Public Sub New()
-        RawBytes = New Byte() {}
+        'RawBytes = New Byte() {}
     End Sub
 End Class

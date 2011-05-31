@@ -1,6 +1,7 @@
 // Command IDs
 // (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},<Multiplier>,~Format~
-16,Waypoint,Hold Time ~0.0~,Radius [m] ~0.00~ (Acceptance radius - if the sphere with this radius is hit the waypoint counts as reached),,,Latitude,Longitude,Altitude [m] ~0.00~
+//16,Waypoint,Hold Time ~0.0~,Radius [m] ~0.00~ (Acceptance radius - if the sphere with this radius is hit the waypoint counts as reached),,,Latitude,Longitude,Altitude [m] ~0.00~
+16,Waypoint,,,,,Latitude,Longitude,Altitude [m] ~0.00~
 //17,Loiter,,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
 //18,Loiter Turns,Turns ~0~,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
 //19,Loiter Time,Hold Time ~0~ (Seconds),,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~

@@ -178,7 +178,9 @@ Public Class AsynchronousSocketListener
 
                         If handler.Available > 0 Then
                             cpBytesRec = state.workSocket.Receive(bytes)
-                            content = Encoding.ASCII.GetString(bytes, 0, cpBytesRec)
+                            'content = Encoding.ASCII.GetString(bytes, 0, cpBytesRec)
+
+                            content = Encoding.GetEncoding(1252).GetString(bytes, 0, cpBytesRec)
                             'If state.workSocket.Receive(bytes, > 0 Then
                             '    ' There  might be more data, so store the data received so far.
                             '    content = Encoding.ASCII.GetString(state.buffer, 0, state.workSocket.ReceiveBufferSize)

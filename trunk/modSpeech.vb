@@ -1,12 +1,11 @@
-Imports System.Speech
-Imports System.Media
+'Imports System.Speech
+'Imports System.Media
 Module modSpeech
-    Dim speaker As New System.Speech.Synthesis.SpeechSynthesizer
 
     Public Function PlaySoundFile(ByVal inputFile As String) As Boolean
-        Dim MyPlayer As New SoundPlayer()
-        PlaySoundFile = True
         Try
+            Dim MyPlayer As New System.Media.SoundPlayer()
+            PlaySoundFile = True
             If Dir(GetRootPath() & "Audio\" & inputFile & ".wav", FileAttribute.Normal) <> "" Then
                 MyPlayer.SoundLocation = GetRootPath() & "Audio\" & inputFile & ".wav"
                 MyPlayer.Play()
@@ -18,12 +17,23 @@ Module modSpeech
         End Try
     End Function
     Public Sub PlayMessage(ByVal inputMessage As String, ByVal voiceName As String)
+        Dim sVoices() As String
+        Dim speaker As System.Speech.Synthesis.SpeechSynthesizer
         Try
+            speaker = New System.Speech.Synthesis.SpeechSynthesizer
             speaker.Rate = 0
             speaker.Volume = 100
             speaker.SelectVoice(voiceName)
             speaker.SpeakAsync(ConvertSpeech(inputMessage))
         Catch
+            sVoices = ReturnAllSpeechSynthesisVoices()
+            If UBound(sVoices) >= 0 Then
+                speaker = New System.Speech.Synthesis.SpeechSynthesizer
+                speaker.Rate = 0
+                speaker.Volume = 100
+                speaker.SelectVoice(sVoices(0))
+                speaker.SpeakAsync(ConvertSpeech(inputMessage))
+            End If
         End Try
     End Sub
     Public Function ReturnAllSpeechSynthesisVoices() As String()

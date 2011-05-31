@@ -1,8 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Google Earth Plug-in</title>
     <!-- NOTE: replace the key below with your own key -->
     <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA0Fr-33jU5znk3eeIujbO7BTJMCHS-jujuL6EC_OZAQIbzgaqGxSc7loBqiXeUNQ8d7DjBpAZtmBctg"></script>
@@ -238,7 +238,7 @@
             geocoder.getLatLng(addressString, function(point) {
               if (point) {
                 var lookAt = ge.createLookAt('');
-                lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND,0, 60, 20000);
+                lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND,0, 0, 200);
                 //lookAt.setTilt(0)
                 ge.getView().setAbstractView(lookAt);
               }
@@ -404,7 +404,7 @@
         modelLoaded = true;
     }
     
-    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera,filename) {        
+    function setHomeLatLng(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera,filename, clampToGround) {        
         eAltOffset = altOffset;
         nScale = scale;
 
@@ -444,7 +444,11 @@
 	        homePoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
 	        lineString.getCoordinates().pushLatLngAlt(lat,long,homeGroundAltitude);
 	    } else {
-	        homePoint.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	        if (clampToGround == false){
+	            homePoint.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+	        } else {
+	            homePoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
+	        }
             if (altOffset == 0) {
         	    homePointAlt = altitude;
 	            homePoint.setAltitude(homePointAlt); 

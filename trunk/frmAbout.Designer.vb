@@ -75,6 +75,7 @@ Partial Class frmAbout
         'ProgressBar1
         '
         resources.ApplyResources(Me.ProgressBar1, "ProgressBar1")
+        Me.ProgressBar1.MarqueeAnimationSpeed = 20
         Me.ProgressBar1.Name = "ProgressBar1"
         '
         'lblSupportedProtocolsLabel

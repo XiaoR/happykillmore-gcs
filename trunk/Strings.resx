@@ -495,6 +495,10 @@
     <value>Help</value>
     <comment>Help!</comment>
   </data>
+  <data name="Hertz" xml:space="preserve">
+    <value>Hertz</value>
+    <comment>Data Speed (ie 2 Hertz = 2 times per second)</comment>
+  </data>
   <data name="Highly_Assisted" xml:space="preserve">
     <value>Highly Assisted</value>
     <comment>AttoPilot Modes</comment>
@@ -739,6 +743,10 @@
   <data name="Properties" xml:space="preserve">
     <value>Properties</value>
   </data>
+  <data name="Protocol" xml:space="preserve">
+    <value>Protocol</value>
+    <comment>Protocol Label (ie NMEA, uBlox, SiRF)</comment>
+  </data>
   <data name="Purple" xml:space="preserve">
     <value>Purple</value>
     <comment>Meter Color Selection</comment>
@@ -924,6 +932,10 @@
   <data name="Throttle_Color" xml:space="preserve">
     <value>Throttle Color</value>
     <comment>Color of throttle meter on battery instrument</comment>
+  </data>
+  <data name="Tracking" xml:space="preserve">
+    <value>Tracking</value>
+    <comment>Tracking Tab (Antenna Tracking)</comment>
   </data>
   <data name="Translated_Data" xml:space="preserve">
     <value>Translated Data</value>

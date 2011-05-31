@@ -174,7 +174,7 @@ Public Class frmJoystick
 
     Private Sub tmrJoystick_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmrJoystick.Tick
         Dim nFoundIndex As Integer
-        Dim nCount As Integer
+        'Dim nCount As Integer
         Dim bSuccess As Boolean
         Dim nSliderValue As Long
         Dim nJoystickCurrent As Long
@@ -795,43 +795,43 @@ Public Class frmJoystick
         If MsgBox("Are you sure you want to overwrite min, max and sub trim values?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "Update Radio Limits") = MsgBoxResult.Yes Then
             For nCount = 0 To UBound(aName)
                 Select Case aName(nCount)
-                    Case "THROTTLE_MIN"
+                    Case "RC3_MIN"
                         aValue(nCount) = 1500 + (600 * (numLower1.Value / 100))
                         aChanged(nCount) = True
-                    Case "THROTTLE_MAX"
+                    Case "RC3_MAX"
                         aValue(nCount) = 1500 + (600 * (numUpper1.Value / 100))
                         aChanged(nCount) = True
-                    Case "THROTTLE_TRIM"
+                    Case "RC3_TRIM"
                         aValue(nCount) = Convert.ToInt32(1500 + (tbarSubTrim1.Value * 1500 / 32767))
                         aChanged(nCount) = True
 
-                    Case "PITCH_MIN"
+                    Case "RC2_MIN"
                         aValue(nCount) = 1500 + (600 * (numLower2.Value / 100))
                         aChanged(nCount) = True
-                    Case "PITCH_MAX"
+                    Case "RC2_MAX"
                         aValue(nCount) = 1500 + (600 * (numUpper2.Value / 100))
                         aChanged(nCount) = True
-                    Case "PITCH_TRIM"
+                    Case "RC2_TRIM"
                         aValue(nCount) = Convert.ToInt32(1500 + (tbarSubTrim2.Value * 1500 / 32767))
                         aChanged(nCount) = True
 
-                    Case "ROLL_MIN"
+                    Case "RC1_MIN"
                         aValue(nCount) = 1500 + (600 * (numLower3.Value / 100))
                         aChanged(nCount) = True
-                    Case "ROLL_MAX"
+                    Case "RC1_MAX"
                         aValue(nCount) = 1500 + (600 * (numUpper3.Value / 100))
                         aChanged(nCount) = True
-                    Case "ROLL_TRIM"
+                    Case "RC1_TRIM"
                         aValue(nCount) = Convert.ToInt32(1500 + (tbarSubTrim3.Value * 1500 / 32767))
                         aChanged(nCount) = True
 
-                    Case "YAW_MIN"
+                    Case "RC4_MIN"
                         aValue(nCount) = 1500 + (600 * (numLower4.Value / 100))
                         aChanged(nCount) = True
-                    Case "YAW_MAX"
+                    Case "RC4_MAX"
                         aValue(nCount) = 1500 + (600 * (numUpper4.Value / 100))
                         aChanged(nCount) = True
-                    Case "YAW_TRIM"
+                    Case "RC4_TRIM"
                         aValue(nCount) = Convert.ToInt32(1500 + (tbarSubTrim4.Value * 1500 / 32767))
                         aChanged(nCount) = True
                 End Select
