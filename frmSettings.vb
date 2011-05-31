@@ -106,7 +106,7 @@ Public Class frmSettings
             End If
         End With
 
-        For nCount = 1 To 20
+        For nCount = 1 To 5
             If nCount <= 5 Then
                 cboMapUpdateRate.Items.Add(nCount & " Hz")
             End If

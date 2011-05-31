@@ -127,15 +127,6 @@
   <data name="Altimeter_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\altimeter_background.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Bandeau_Dérouleur" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\bandeau_dérouleur.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bandeau_Dérouleur1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\bandeau_dérouleur.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bandeau_Dérouleur2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\bandeau_dérouleur.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BatteryBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\batteryblue.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -189,6 +180,9 @@
   </data>
   <data name="Maquette_Avion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\maquette_avion.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NumberScroll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\bandeau_dérouleur.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Record" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\record.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

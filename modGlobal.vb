@@ -53,6 +53,7 @@ Module modGlobal
         e_DeviceTypes_GluonPilot
         e_DeviceTypes_Paparazzi
         e_DeviceTypes_MavLink
+        e_DeviceTypes_Other = 99
     End Enum
     Public Enum e_JoystickCenter
         e_JoystickCenter_None = 0
@@ -150,9 +151,15 @@ Module modGlobal
     Public nMaxRollAngle As Integer = -1
     Public nMinThrottle As Integer = -1
     Public nMAxThrottle As Integer = -1
+    Public dLastSerialMessage As Long
 
     Public bManuelMode As Boolean = False
     Public dManuelMode As Long
+
+    Public g_GCS_System_ID As Integer = 255
+    Public g_GCS_Component_ID As Integer = 250
+
+    Public sCommandLineBuffer As String
 
     Public Delegate Sub MyDelegate()
     'Public Delegate Sub NewDataArrived()
@@ -350,6 +357,7 @@ Module modGlobal
     Public aWPOther2(0) As String
     Public aWPOther3(0) As String
     Public aWPOther4(0) As String
+    'Public aWPAltOffset(0) As Integer
 
 
     Public eMissionFileType As e_MissionFileType = e_MissionFileType.e_MissionFileType_None
@@ -785,6 +793,27 @@ Module modGlobal
         'End If
         ConvertLatLongFY21AP = nTemp.ToString("0.0000000")
     End Function
+    Public Function CheckMessageHeader(ByVal sBuffer As String, ByVal sHeaderCharacters As String, ByRef nLastStart As Integer, ByRef nMessageType As cMessage.e_MessageType, ByVal nPreviousMessageType As cMessage.e_MessageType, Optional ByVal additionalCharacterCheck As String = "", Optional ByVal additionalCharacterIndex As Integer = -1) As cMessage.e_MessageType
+        Dim nInstrTest As Integer
+        Try
+            CheckMessageHeader = nPreviousMessageType
+            nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            If nInstrTest < nLastStart And nInstrTest <> 0 Then
+                If additionalCharacterIndex <> -1 Then
+                    If Len(sBuffer) >= nInstrTest + additionalCharacterIndex Then
+                        If Mid(sBuffer, nInstrTest + additionalCharacterIndex, 1) = additionalCharacterCheck Then
+                            nLastStart = nInstrTest
+                            CheckMessageHeader = nMessageType
+                        End If
+                    End If
+                Else
+                    nLastStart = nInstrTest
+                    CheckMessageHeader = nMessageType
+                End If
+            End If
+        Catch ex As Exception
+        End Try
+    End Function
     Public Function GetNextSentence(ByRef sBuffer As String) As cMessage ', ByRef aBuffer() As Byte
         Dim sTemp As String = ""
         Dim nLastStart As Integer
@@ -801,6 +830,7 @@ Module modGlobal
         Dim nXBeeAPIDataLength As Integer
         Dim dLocalDate As Date
         Dim dLocalTime As Date
+        Dim nInstrTest As Integer
 
         nLastStart = 999
         GetNextSentence = New cMessage
@@ -809,167 +839,207 @@ Module modGlobal
         nMessageType = cMessage.e_MessageType.e_MessageType_None
 
         Try
-            sHeaderCharacters = "TEST:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_Test
-            End If
+            nMessageType = CheckMessageHeader(sBuffer, "$A", nLastStart, cMessage.e_MessageType.e_MessageType_AttoPilot, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "$D", nLastStart, cMessage.e_MessageType.e_MessageType_AttoSetParam, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "$OK", nLastStart, cMessage.e_MessageType.e_MessageType_AttoOk, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "TEST:", nLastStart, cMessage.e_MessageType.e_MessageType_Test, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "DIYd", nLastStart, cMessage.e_MessageType.e_MessageType_ArduIMU_Binary, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, Chr(85), nLastStart, cMessage.e_MessageType.e_MessageType_MAV, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "T", nLastStart, cMessage.e_MessageType.e_MessageType_GluonpilotT, nMessageType, ";", 2)
+            nMessageType = CheckMessageHeader(sBuffer, "CA", nLastStart, cMessage.e_MessageType.e_MessageType_GluonpilotC, nMessageType, ";", 2)
+            nMessageType = CheckMessageHeader(sBuffer, "D", nLastStart, cMessage.e_MessageType.e_MessageType_GluonpilotD, nMessageType, ";", 2)
+            nMessageType = CheckMessageHeader(sBuffer, "F13:", nLastStart, cMessage.e_MessageType.e_MessageType_UDB_SetHome, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "F2:", nLastStart, cMessage.e_MessageType.e_MessageType_UDB, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "$ATTO", nLastStart, cMessage.e_MessageType.e_MessageType_AttoPilot18, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "$GP", nLastStart, cMessage.e_MessageType.e_MessageType_NMEA, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "$GPS", nLastStart, cMessage.e_MessageType.e_MessageType_AttoPilot18, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "home:", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_Home, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "wp #", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_WP, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "WP Total:", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "+++", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "###", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "!!!", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilot_GPS, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, Chr(&HB5) & Chr(&H62), nLastStart, cMessage.e_MessageType.e_MessageType_uBlox, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, ChrW(&HD0) & ChrW(&HDD), nLastStart, cMessage.e_MessageType.e_MessageType_MediaTekv16, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, Chr(&HA5) & Chr(&H5A), nLastStart, cMessage.e_MessageType.e_MessageType_FY21AP, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, "4D", nLastStart, cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary, nMessageType)
+            nMessageType = CheckMessageHeader(sBuffer, Chr(&HA0) & ChrW(&HA2), nLastStart, cMessage.e_MessageType.e_MessageType_SiRF, nMessageType)
 
-            sHeaderCharacters = "DIYd"
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
-            End If
+            'sHeaderCharacters = "TEST:"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_Test
+            'End If
 
-            sHeaderCharacters = Chr(85)
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_MAV
-            End If
+            'sHeaderCharacters = "DIYd"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
+            'End If
 
-            sHeaderCharacters = "T"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
-                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                        nLastStart = InStr(sBuffer, sHeaderCharacters)
-                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotT
-                    End If
-                End If
-            End If
+            'sHeaderCharacters = Chr(85)
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If  < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_MAV
+            'End If
 
-            sHeaderCharacters = "CA"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
-                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                        nLastStart = InStr(sBuffer, sHeaderCharacters)
-                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotC
-                    End If
-                End If
-            End If
+            'sHeaderCharacters = "T"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 And Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '    If Len(sBuffer) >= nInstrTest + 2 Then
+            '        If Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '            nLastStart = nInstrTest
+            '            nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotT
+            '        End If
+            '    End If
+            'End If
 
-            sHeaderCharacters = "D"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 And Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                If Len(sBuffer) >= InStr(sBuffer, sHeaderCharacters) + 2 Then
-                    If Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 2, 1) = ";" Then
-                        nLastStart = InStr(sBuffer, sHeaderCharacters)
-                        nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotD
-                    End If
-                End If
-            End If
+            'sHeaderCharacters = "CA"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 And Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '    If Len(sBuffer) >= nInstrTest + 2 Then
+            '        If Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '            nLastStart = nInstrTest
+            '            nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotC
+            '        End If
+            '    End If
+            'End If
 
-            sHeaderCharacters = "F13:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_UDB_SetHome
-            End If
+            'sHeaderCharacters = "D"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 And Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '    If Len(sBuffer) >= nInstrTest + 2 Then
+            '        If Mid(sBuffer, nInstrTest + 2, 1) = ";" Then
+            '            nLastStart = nInstrTest
+            '            nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotD
+            '        End If
+            '    End If
+            'End If
 
-            sHeaderCharacters = "F2:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_UDB
-            End If
+            'sHeaderCharacters = "F13:"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_UDB_SetHome
+            'End If
 
-            sHeaderCharacters = "$GP"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_NMEA
-            End If
+            'sHeaderCharacters = "F2:"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_UDB
+            'End If
 
-            sHeaderCharacters = "$A"
-            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
-            End If
+            'sHeaderCharacters = "$GP"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest < nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_NMEA
+            'End If
 
-            sHeaderCharacters = "$ATTO"
-            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
-            End If
+            'sHeaderCharacters = "$A"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest <= nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot
+            'End If
 
-            sHeaderCharacters = "$D"
-            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_AttoSetParam
-            End If
+            'sHeaderCharacters = "$ATTO"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest <= nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
+            'End If
 
-            sHeaderCharacters = "$OK"
-            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_AttoOk
-            End If
+            'sHeaderCharacters = "$D"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest <= nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_AttoSetParam
+            'End If
 
-            sHeaderCharacters = "$GPS"
-            If InStr(sBuffer, sHeaderCharacters) <= nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
-            End If
+            'sHeaderCharacters = "$OK"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest <= nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_AttoOk
+            'End If
 
-            sHeaderCharacters = "home:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
-            End If
+            'sHeaderCharacters = "$GPS"
+            'nInstrTest = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
+            'If nInstrTest <= nLastStart And nInstrTest <> 0 Then
+            '    nLastStart = nInstrTest
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_AttoPilot18
+            'End If
 
-            sHeaderCharacters = "wp #"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
-            End If
+            'sHeaderCharacters = "home:"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Home
+            'End If
 
-            sHeaderCharacters = "WP Total:"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
-            End If
+            'sHeaderCharacters = "wp #"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WP
+            'End If
 
-            sHeaderCharacters = "+++"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
-            End If
+            'sHeaderCharacters = "WP Total:"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
+            'End If
 
-            sHeaderCharacters = "###"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
-            End If
+            'sHeaderCharacters = "+++"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
+            'End If
 
-            sHeaderCharacters = "!!!"
-            If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = InStr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
-            End If
+            'sHeaderCharacters = "###"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
+            'End If
 
-            sHeaderCharacters = Chr(&HB5) & Chr(&H62)
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
-            End If
+            'sHeaderCharacters = "!!!"
+            'If InStr(sBuffer, sHeaderCharacters) < nLastStart And InStr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = InStr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
+            'End If
 
-            sHeaderCharacters = Chr("&HD0") & Chr("&HDD")
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
-            End If
+            'sHeaderCharacters = Chr(&HB5) & Chr(&H62)
+            'If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_uBlox
+            'End If
 
-            sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_FY21AP
-            End If
+            'sHeaderCharacters = Chr("&HD0") & Chr("&HDD")
+            'If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_MediaTekv16
+            'End If
 
-            sHeaderCharacters = "4D"
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
-            End If
+            'sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
+            'If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_FY21AP
+            'End If
 
-            sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
-            If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
-                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
-                nMessageType = cMessage.e_MessageType.e_MessageType_SiRF
-            End If
+            'sHeaderCharacters = "4D"
+            'If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+            'End If
+
+            'sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
+            'If NewInstr(sBuffer, sHeaderCharacters) < nLastStart And NewInstr(sBuffer, sHeaderCharacters) <> 0 Then
+            '    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+            '    nMessageType = cMessage.e_MessageType.e_MessageType_SiRF
+            'End If
 
             sHeaderCharacters = " "
             Try
@@ -1033,7 +1103,7 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
-                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                     'If Not aBuffer Is Nothing Then
                                     '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                     'End If
@@ -1056,7 +1126,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1083,7 +1153,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) - 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1111,7 +1181,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1130,9 +1200,9 @@ Module modGlobal
                                 Catch
                                 End Try
                             End With
-                        End If
+                    End If
 
-                    Case cMessage.e_MessageType.e_MessageType_UDB_SetHome
+                Case cMessage.e_MessageType.e_MessageType_UDB_SetHome
                         sHeaderCharacters = "F13:"
                         sFooterCharacters = vbCrLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1140,7 +1210,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1155,7 +1225,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
+                Case cMessage.e_MessageType.e_MessageType_ArduIMU_Binary
                         sHeaderCharacters = "DIYd"
                         If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 5 Then
                             nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 4, 1))
@@ -1170,7 +1240,7 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
-                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                     'If Not aBuffer Is Nothing Then
                                     '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                     'End If
@@ -1192,7 +1262,7 @@ Module modGlobal
                             End If
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_Attitude
                         sHeaderCharacters = "+++"
                         sFooterCharacters = "***"
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1200,7 +1270,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1215,7 +1285,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_ModeChange
                         sHeaderCharacters = "###"
                         sFooterCharacters = "***"
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1223,7 +1293,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1238,7 +1308,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_GPS
                         sHeaderCharacters = "!!!"
                         sFooterCharacters = "***"
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1246,7 +1316,7 @@ Module modGlobal
                             sTemp = Mid(sBuffer, nLastStart)
                             sTemp = Mid(sTemp, 1, InStr(sTemp, sFooterCharacters) + 2)
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1277,7 +1347,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_NMEA
+                Case cMessage.e_MessageType.e_MessageType_NMEA
                         sHeaderCharacters = "$GP"
                         sFooterCharacters = vbLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1288,7 +1358,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1320,7 +1390,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_GluonpilotT, cMessage.e_MessageType.e_MessageType_GluonpilotC, cMessage.e_MessageType.e_MessageType_GluonpilotD
+                Case cMessage.e_MessageType.e_MessageType_GluonpilotT, cMessage.e_MessageType.e_MessageType_GluonpilotC, cMessage.e_MessageType.e_MessageType_GluonpilotD
                         If nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotC Then
                             sHeaderCharacters = "CA"
                         ElseIf nMessageType = cMessage.e_MessageType.e_MessageType_GluonpilotD Then
@@ -1337,7 +1407,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1369,7 +1439,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1404,7 +1474,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_Home
                         sHeaderCharacters = "home:"
                         sFooterCharacters = vbLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1415,7 +1485,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1430,7 +1500,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_WP
                         sHeaderCharacters = "wp #"
                         sFooterCharacters = vbLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1441,7 +1511,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1456,7 +1526,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
+                Case cMessage.e_MessageType.e_MessageType_ArduPilot_WPCount
                         sHeaderCharacters = "WP Total:"
                         sFooterCharacters = vbLf
                         If InStr(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters) + 1), sFooterCharacters) <> 0 Then
@@ -1467,7 +1537,7 @@ Module modGlobal
                                 sTemp = Mid(sTemp, 1, Len(sTemp) - 1)
                             End If
                             With GetNextSentence
-                                ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                 'If Not aBuffer Is Nothing Then
                                 '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                 'End If
@@ -1482,13 +1552,13 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_SiRF
-                        sHeaderCharacters = Chr(&HA0) & Chr(&HA2)
+                Case cMessage.e_MessageType.e_MessageType_SiRF
+                        sHeaderCharacters = Chr(&HA0) & ChrW(&HA2)
                         sFooterCharacters = Chr(&HB0) & Chr(&HB3)
-                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 5 Then
-                            nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 3, 1))
-                            If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= nPacketSize + 8 Then
-                                nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary))) >= 5 Then
+                            nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary) + 3, 1))
+                            If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary))) >= nPacketSize + 8 Then
+                                nLastStart = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
                                 sTemp = Mid(sBuffer, nLastStart, nPacketSize + 8)
                                 sOutput = ""
                                 If bShowBinary = True Then
@@ -1500,7 +1570,7 @@ Module modGlobal
                                 End If
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
-                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                     'If Not aBuffer Is Nothing Then
                                     '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                     'End If
@@ -1529,7 +1599,7 @@ Module modGlobal
                             End If
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_FY21AP
+                Case cMessage.e_MessageType.e_MessageType_FY21AP
                         sHeaderCharacters = Chr(&HA5) & Chr(&H5A)
                         sFooterCharacters = Chr(&HAA)
                         If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 3 Then
@@ -1547,7 +1617,7 @@ Module modGlobal
                                 End If
                                 'Debug.Print(sOutput)
                                 With GetNextSentence
-                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                     'If Not aBuffer Is Nothing Then
                                     '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                     'End If
@@ -1582,8 +1652,8 @@ Module modGlobal
                             End If
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_MediaTekv16
-                        sHeaderCharacters = Chr(&HD0) & Chr(&HDD)
+                Case cMessage.e_MessageType.e_MessageType_MediaTekv16
+                        sHeaderCharacters = ChrW(&HD0) & ChrW(&HDD)
                         If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) >= 37 Then
                             With GetNextSentence
                                 nPacketSize = 32
@@ -1602,7 +1672,7 @@ Module modGlobal
                                     sOutput = "{Binary Message}"
                                 End If
                                 With GetNextSentence
-                                    ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                    'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                     Dim aChecksumBytes() As Byte
                                     'If Not aBuffer Is Nothing Then
                                     '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
@@ -1632,7 +1702,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_uBlox
+                Case cMessage.e_MessageType.e_MessageType_uBlox
                         sHeaderCharacters = Chr(&HB5) & Chr(&H62)
                         If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 4 Then
                             With GetNextSentence
@@ -1659,7 +1729,7 @@ Module modGlobal
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
-                                        ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                        'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                         'If Not aBuffer Is Nothing Then
                                         '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                         'End If
@@ -1698,7 +1768,7 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
+                Case cMessage.e_MessageType.e_MessageType_ArduPilotMega_Binary
                         sHeaderCharacters = "4D"
                         If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 4 Then
                             With GetNextSentence
@@ -1718,7 +1788,7 @@ Module modGlobal
                                         sOutput = "{Binary Message}"
                                     End If
                                     With GetNextSentence
-                                        ReDim .RawBytes(0 To Len(sTemp) - 1)
+                                        'ReDim .RawBytes(0 To Len(sTemp) - 1)
                                         'If Not aBuffer Is Nothing Then
                                         '    Array.ConstrainedCopy(aBuffer, nLastStart - 1, .RawBytes, 0, Len(sTemp))
                                         'End If
@@ -1742,16 +1812,16 @@ Module modGlobal
                             End With
                         End If
 
-                    Case cMessage.e_MessageType.e_MessageType_MAV
+                Case cMessage.e_MessageType.e_MessageType_MAV
                         sHeaderCharacters = Chr(85)
-                        If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > 1 Then
+                        If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary))) > 1 Then
                             With GetNextSentence
-                                nPacketSize = Asc(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters) + 1, 1)) + 2
+                                nPacketSize = Asc(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary) + 1, 1)) + 2
                                 .MessageType = nMessageType
                                 .Header = "MAVlink"
                                 nSizeOffset = 6
-                                If Len(Mid(sBuffer, NewInstr(sBuffer, sHeaderCharacters))) > nPacketSize + nSizeOffset Then
-                                    nLastStart = NewInstr(sBuffer, sHeaderCharacters)
+                                If Len(Mid(sBuffer, InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary))) >= nPacketSize + nSizeOffset Then
+                                    nLastStart = InStr(sBuffer, sHeaderCharacters, CompareMethod.Binary)
                                     sTemp = Mid(sBuffer, nLastStart, nPacketSize + nSizeOffset)
                                     sOutput = ""
                                     If bShowBinary = True Then
@@ -1762,9 +1832,9 @@ Module modGlobal
                                             sOutput = sOutput & Hex(Asc(Mid(sTemp, nCount + 1, 1))).PadLeft(2, "0") & " "
                                             '    End If
                                         Next
-                                        If Asc(Mid(sTemp, 6, 1)) = 39 Or Asc(Mid(sTemp, 6, 1)) = 44 Or Asc(Mid(sTemp, 6, 1)) = 40 Or Asc(Mid(sTemp, 6, 1)) = 43 Or Asc(Mid(sTemp, 6, 1)) = 47 Then
-                                            Debug.Print(Now & ":IN =" & sOutput)
-                                        End If
+                                        'If Asc(Mid(sTemp, 6, 1)) = 39 Or Asc(Mid(sTemp, 6, 1)) = 44 Or Asc(Mid(sTemp, 6, 1)) = 40 Or Asc(Mid(sTemp, 6, 1)) = 43 Or Asc(Mid(sTemp, 6, 1)) = 47 Then
+                                        '    Debug.Print(Now & ":IN =" & sOutput)
+                                        'End If
                                     Else
                                         sOutput = "{Binary Message}"
                                     End If
@@ -1791,10 +1861,10 @@ Module modGlobal
                                         .Checksum = sTemp.Substring(Len(sTemp) - 2) 'Strings.Right(sTemp, 2)
                                         .VisibleSentence = .Header & " - " & Trim(sOutput)
 
-                                        Dim nChecksumLong As Long
-                                        Dim nChecksumLong2 As Long
+                                        'Dim nChecksumLong As Long
+                                        'Dim nChecksumLong2 As Long
                                         Dim aChecksumBytes() As Byte
-                                        Dim sChecksumString As String
+                                        'Dim sChecksumString As String
 
                                         'nChecksumLong = (((Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 7))) << 8) + Convert.ToInt32(.RawBytes(.RawBytes(nLastStart) + 6)))
                                         ''If .RawBytes(2) = 209 Then
@@ -1836,49 +1906,76 @@ Module modGlobal
                                 End If
                             End With
                         End If
-                End Select
-            End If
+            End Select
+        End If
         Catch e2 As Exception
             'System.Diagnostics.Debug.Assert(False)
             System.Diagnostics.Debug.Print("GetNextSentence - " & e2.Message)
         End Try
 
-        Try
-            Dim aNewArray() As Byte
-            If GetNextSentence.Packet <> "" Then
-                'Do While Asc(Mid(sBuffer, 1, 1)) = 10 Or Asc(Mid(sBuffer, 1, 1)) = 13
-                '    sBuffer = Mid(sBuffer, 2)
-                '    nLastStart = nLastStart - 1
-                'Loop
-                If nLastStart <> 1 Then
-                    'If InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0 Then
-                    '    Do While InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0
-                    '        frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, InStr(Mid(sBuffer, 1, nLastStart), vbCr) - 1))
-                    '        sBuffer = Mid(sBuffer, InStr(Mid(sBuffer, 1, nLastStart), vbCr))
-                    '    Loop
-                    'Else
-                    frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, nLastStart - 1))
-                    'End If
-                End If
-                sBuffer = Mid(sBuffer, nLastStart + Len(sTemp))
-
-                'ReDim aNewArray(0 To Len(sBuffer) - 1)
-                'If Len(sBuffer) > 0 Then
-                '    'If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
-                '    '    Array.ConstrainedCopy(aBuffer, UBound(aBuffer) - Len(sBuffer) + 1, aNewArray, 0, Len(sBuffer))
-                '    'Else
-                '    If Not aBuffer Is Nothing Then
-                '        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
-                '        'End If
-                '        ReDim aBuffer(0 To UBound(aNewArray))
-                '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
-                '    End If
+        If GetNextSentence.Packet <> "" And GetNextSentence.ValidMessage = True Then
+            dLastSerialMessage = Now.Ticks
+            'Try
+            'Dim aNewArray() As Byte
+            'Do While Asc(Mid(sBuffer, 1, 1)) = 10 Or Asc(Mid(sBuffer, 1, 1)) = 13
+            '    sBuffer = Mid(sBuffer, 2)
+            '    nLastStart = nLastStart - 1
+            'Loop
+            If nLastStart <> 1 And Len(sBuffer) > 0 Then
+                'If InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0 Then
+                '    Do While InStr(Mid(sBuffer, 1, nLastStart), vbCr) <> 0
+                '        frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, InStr(Mid(sBuffer, 1, nLastStart), vbCr) - 1))
+                '        sBuffer = Mid(sBuffer, InStr(Mid(sBuffer, 1, nLastStart), vbCr))
+                '    Loop
                 'Else
-                '    aBuffer = Nothing
+                Debug.Print("Unknown: " & sBuffer.Substring(0, nLastStart - 2))
+                frmMain.UpdateSerialDataWindow("", "Unknown Message:" & sBuffer.Substring(0, nLastStart - 2)) ' Mid(sBuffer, 1, nLastStart - 1))
                 'End If
 
-                Do While Strings.Left(sBuffer, 1) = vbCrLf Or Strings.Left(sBuffer, 1) = vbCr Or Strings.Left(sBuffer, 1) = vbLf
-                    sBuffer = Mid(sBuffer, 2)
+                If frmMain.tabInstrumentView.SelectedIndex = 2 Then
+                    sCommandLineBuffer = sCommandLineBuffer & sBuffer.Substring(0, nLastStart + 1)
+                Else
+                    sCommandLineBuffer = ""
+                End If
+            End If
+
+            'ReDim aNewArray(0 To Len(sBuffer) - 1)
+            'If Len(sBuffer) > 0 Then
+            '    'If nLastStart + Len(sTemp) - 2 + Len(sBuffer) > UBound(aBuffer) Then
+            '    '    Array.ConstrainedCopy(aBuffer, UBound(aBuffer) - Len(sBuffer) + 1, aNewArray, 0, Len(sBuffer))
+            '    'Else
+            '    If Not aBuffer Is Nothing Then
+            '        Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+            '        'End If
+            '        ReDim aBuffer(0 To UBound(aNewArray))
+            '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+            '    End If
+            'Else
+            '    aBuffer = Nothing
+            'End If
+
+            If frmMain.tabInstrumentView.SelectedIndex = 2 Then
+                If GetNextSentence.VisibleSentence <> "" Then
+                    sCommandLineBuffer = sCommandLineBuffer & GetNextSentence.VisibleSentence & vbCrLf
+                    Debug.Print(GetNextSentence.VisibleSentence)
+                    'If sCommandLineBuffer.Substring(0, 3) <> "Att" Then
+                    '    Debug.Print("HERE")
+                    'End If
+                Else
+                    sCommandLineBuffer = sCommandLineBuffer & GetNextSentence.Packet & vbCrLf
+                End If
+            Else
+                sCommandLineBuffer = ""
+            End If
+
+            sBuffer = sBuffer.Substring(nLastStart + Len(sTemp) - 1) 'Mid(sBuffer, nLastStart + Len(sTemp))
+            If Len(sTemp) > 0 And Len(sBuffer) > 0 Then
+                Do While Len(sBuffer) > 0
+                    If sBuffer.Substring(0, 1) = vbCr Or sBuffer.Substring(0, 1) = vbLf Then
+                        sBuffer = sBuffer.Substring(1)
+                    Else
+                        Exit Do
+                    End If
                     'If Len(sBuffer) > 0 And Not aBuffer Is Nothing Then
                     '    ReDim aNewArray(0 To Len(sBuffer) - 1)
                     '    Array.ConstrainedCopy(aBuffer, 1, aNewArray, 0, Len(sBuffer))
@@ -1889,33 +1986,61 @@ Module modGlobal
                     'End If
                 Loop
             End If
-            If Len(sBuffer) > 2000 Then
-                frmMain.UpdateSerialDataWindow("", "Unknown Message:" & Mid(sBuffer, 1, 500))
-                sBuffer = Mid(sBuffer, 501)
-                'If Len(sBuffer) > 0 Then
-                '    ReDim aNewArray(0 To Len(sBuffer) - 1)
-                '    'If 500 + Len(sBuffer) > UBound(aBuffer) Then
-                '    If Not aBuffer Is Nothing Then
-                '        Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
-                '        'Else
-                '        '    Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
-                '        'End If
 
-                '        'Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
-                '        ReDim aBuffer(0 To UBound(aNewArray))
-                '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
-                '    End If
-                'Else
-                '    aBuffer = Nothing
-                'End If
-                'System.Diagnostics.Debug.Assert(False)
-                'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
-            End If
-            If Len(sBuffer) > 0 Then
-                'Debug.Print("First String = " & Asc(Mid(sBuffer, 1, 1)) & ", First Byte = " & aBuffer(0))
-            End If
-        Catch ex As Exception
-        End Try
+        ElseIf Len(sBuffer) > 500 Then
+            frmMain.UpdateSerialDataWindow("", "Unknown Message:" & sBuffer.Substring(0, 20))
+            sBuffer = sBuffer.Substring(20) ' "" 'sBuffer.Substring(Len(sBuffer) - 1000)
+            'ElseIf Len(sBuffer) > 0 Then
+            '    'frmMain.UpdateSerialDataWindow("", "Unknown Message:" & sBuffer.Substring(0, 8))
+
+            '    If Now.Ticks > dLastSerialMessage + 2500000 Then
+            '        dLastSerialMessage = Now.Ticks
+            '        If frmMain.tabInstrumentView.SelectedIndex = 2 Then
+            '            If Len(sBuffer) >= 50 Then
+            '                sCommandLineBuffer = sCommandLineBuffer & sBuffer.Substring(0, 50)
+            '            Else
+            '                sCommandLineBuffer = sCommandLineBuffer & sBuffer
+            '            End If
+            '        Else
+            '            sCommandLineBuffer = ""
+            '        End If
+            '        If Len(sBuffer) < 50 Then
+            '            sBuffer = ""
+            '        Else
+            '            sBuffer = sBuffer.Substring(50)
+            '        End If
+            'Else
+            '    sBuffer = ""
+        End If
+
+
+        'sBuffer = ""
+
+        'If Len(sBuffer) > 0 Then
+        '    ReDim aNewArray(0 To Len(sBuffer) - 1)
+        '    'If 500 + Len(sBuffer) > UBound(aBuffer) Then
+        '    If Not aBuffer Is Nothing Then
+        '        Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+        '        'Else
+        '        '    Array.ConstrainedCopy(aBuffer, nLastStart + Len(sTemp) - 1, aNewArray, 0, Len(sBuffer))
+        '        'End If
+
+        '        'Array.ConstrainedCopy(aBuffer, 500, aNewArray, 0, Len(sBuffer))
+        '        ReDim aBuffer(0 To UBound(aNewArray))
+        '        Array.Copy(aNewArray, aBuffer, UBound(aNewArray))
+        '    End If
+        'Else
+        '    aBuffer = Nothing
+        'End If
+        'System.Diagnostics.Debug.Assert(False)
+        'System.Diagnostics.Debug.Print("GetNextSentence - Packet Empty")
+        'End If
+        'If Len(sBuffer) > 0 Then
+        'Debug.Print("First String = " & Asc(Mid(sBuffer, 1, 1)) & ", First Byte = " & aBuffer(0))
+        'End If
+        'Catch ex As Exception
+        '    Debug.Print(ex.Message)
+        'End Try
 
     End Function
     Public Function NewInstr(ByVal strSearch As String, ByVal strWhat As String) As Integer
@@ -1933,20 +2058,22 @@ Module modGlobal
         Dim iLen As Integer, i As Integer
         Dim iRetVal As Integer
 
-        If Trim(strSearch) = "" Or Trim(strWhat) = "" Then
-            iRetVal = 0
-        Else
-            iRetVal = 0
-            iLen = Len(strSearch)
-            i = 1
-            Do
-                If Asc(Mid(strSearch, i, 1)) = Asc(strWhat) Then
-                    iRetVal = i
-                End If
-                i = i + 1
-            Loop While iRetVal = 0 And i <= iLen
-        End If
-        NewInstr = iRetVal
+        NewInstr = InStr(strSearch, strWhat, CompareMethod.Binary)
+
+        'If Trim(strSearch) = "" Or Trim(strWhat) = "" Then
+        '    iRetVal = 0
+        'Else
+        '    iRetVal = 0
+        '    iLen = Len(strSearch)
+        '    i = 1
+        '    Do
+        '        If Asc(Mid(strSearch, i, 1)) = Asc(strWhat) Then
+        '            iRetVal = i
+        '        End If
+        '        i = i + 1
+        '    Loop While iRetVal = 0 And i <= iLen
+        'End If
+        'NewInstr = iRetVal
 
     End Function
 
@@ -2471,7 +2598,8 @@ Module modGlobal
                         End If
                     End If
 
-                    If bLocalChanged = True Then
+                    If bLocalChanged = True Or bHeartbeatMAVlinkJoystickForce = True Then
+                        bHeartbeatMAVlinkJoystickForce = False
                         For nCount = 0 To 7
                             nChannels(nCount) = 65535
                             For nCount2 = 1 To 8

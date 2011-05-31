@@ -70,6 +70,8 @@ Public Class frmHeartbeat
         chkHeartbeat5.Checked = bHeartbeat5
         chkHeartbeat6.Checked = bHeartbeat6
 
+        chkHeartbeatMAVlink.Checked = bHeartbeatMAVlink
+
         txtName1.Text = sHeartbeatName1
         txtName2.Text = sHeartbeatName2
         txtName3.Text = sHeartbeatName3
@@ -126,6 +128,8 @@ Public Class frmHeartbeat
         bHeartbeat4 = chkHeartbeat4.Checked
         bHeartbeat5 = chkHeartbeat5.Checked
         bHeartbeat6 = chkHeartbeat6.Checked
+
+        bHeartbeatMAVlink = chkHeartbeatMAVlink.Checked
 
         sHeartbeatName1 = txtName1.Text
         sHeartbeatName2 = txtName2.Text

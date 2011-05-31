@@ -30,16 +30,16 @@ ENRGY2THR_IMAX,0,100,20,1,1,THROTTLE_TE_INT_MAX - In Percent - Maximum throttle 
 ALT2PTCH_P,0,5,0.65,1,1,NAV_PITCH_ALT_P - P, I and D terms for pitch adjustments made to maintain altitude.
 ALT2PTCH_I,0,1,0,1,1,NAV_PITCH_ALT_I - P, I and D terms for pitch adjustments made to maintain altitude.
 ALT2PTCH_D,0,1,0,1,1,NAV_PITCH_ALT_D - P, I and D terms for pitch adjustments made to maintain altitude.
-ALT2PTCH_IMAX,0,30,5,100,1,NAV_PITCH_ALT_INT_MAX_CM - In Meters - Maximum pitch offset due to the integral.  This limits the control output from being overdriven due to a persistent offset (eg. inability to maintain the programmed altitude).
+ALT2PTCH_IMAX,0,3000,500,100,1,NAV_PITCH_ALT_INT_MAX_CM - In Meters - Maximum pitch offset due to the integral.  This limits the control output from being overdriven due to a persistent offset (eg. inability to maintain the programmed altitude).
 KFF_PTCHCOMP,-3,3,0.2,0.01,1,PITCH_COMP - In Percent - Adds pitch input to compensate for the loss of lift due to roll control.
 KFF_RDDRMIX,-3,3,0.5,0.01,1,RUDDER_MIX - Roll to yaw mixing.  This allows for co-ordinated turns.
 KFF_PTCH2THR,-3,3,0,1,1,P_TO_T - Pitch to throttle feed-forward gain.
 KFF_THR2PTCH,-3,3,0,1,1,T_TO_P - Throttle to pitch feed-forward gain.
-XTRK_GAIN_SC,0,10,1,1,1,XTRACK_GAIN_SCALED - Default value is 1.0 degrees per metre.  Values lower than 0.001 will disable crosstrack compensation.
+XTRK_GAIN_SC,0,100,1,100,1,XTRACK_GAIN_SCALED - Default value is 1.0 degrees per metre.  Values lower than 0.001 will disable crosstrack compensation.
 ALT_MIX,0,1,0,0.01,1,ALTITUDE_MIX - In Percent - Configures the blend between GPS and pressure altitude. 0 = GPS altitude, 1 = Press alt, 0.5 = half and half, etc.
 ARSPD_RATIO,0,5,1.9936,1,1,AIRSPEED_RATIO - Adjust AIRSPEED_RATIO in small increments to calibrate the airspeed sensor relative to your GPS.  The calculation and default value are optimized for speeds around 12 m/s
 WP_RADIUS,0,200,20,1,1,WP_RADIUS_DEFAULT - When the user performs a factory reset on the APM, set the waypoint radius (the radius from a target waypoint within which the APM will consider itself to have arrived at the waypoint) to this value in meters.  This is mainly intended to allow users to start using the APM without running the WaypointWriter first.
-LOITER_RADIUS,0,200,60,1,1,LOITER_RADIUS_DEFAULT - When the user performs a factory reset on the APM, set the loiter radius (the distance the APM will attempt to maintain from a waypoint while loitering) to this value in meters.  This is mainly intended to allow users to start using the APM without running the WaypointWriter first.
+WP_LOITER_RAD,0,200,60,1,1,LOITER_RADIUS_DEFAULT - When the user performs a factory reset on the APM, set the loiter radius (the distance the APM will attempt to maintain from a waypoint while loitering) to this value in meters.  This is mainly intended to allow users to start using the APM without running the WaypointWriter first.
 ARSPD_FBW_MIN,5,50,6,1,1,AIRSPEED_FBW_MIN - In m/s - Airspeed corresponding to minimum and maximum throttle in Fly By Wire B mode.
 ARSPD_FBW_MAX,5,50,30,1,1,AIRSPEED_FBW_MAX - In m/s - Airspeed corresponding to minimum and maximum throttle in Fly By Wire B mode. AIRSPEED_FBW_MAX also sets the maximum airspeed that the cruise airspeed can be ""nudged"" to in AUTO mode when ENABLE_STICK_MIXING is set. In AUTO the cruise airspeed can be increased between AIRSPEED_CRUISE and AIRSPEED_FBW_MAX by positioning the throttle  stick in the top 1/2 of its range.  Throttle stick in the bottom 1/2 provide regular AUTO control.
 THR_MIN,0,100,0,1,1,THROTTLE_MIN - The minimum throttle setting to which the autopilot will reduce the throttle while descending.  The default is zero, which is suitable for aircraft with a steady power-off glide.  Increase this value if your aircraft needs throttle to maintain a stable descent in level flight.
@@ -48,25 +48,25 @@ THR_FAILSAFE,0,,0,1,THROTTLE_FAILSAFE - The throttle failsafe allows you to conf
 THR_FS_ACTION,0,,2,1,1,THROTTLE_FAILSAFE_ACTION - The FAILSAFE_ACTION setting determines what APM will do when throttle failsafe  mode is entered while flying in AUTO mode.  This is important in order to avoid accidental failsafe behaviour when flying waypoints that take the aircraft temporarily out of radio range. If FAILSAFE_ACTION is 1, when failsafe is entered in AUTO or LOITER modes, the aircraft will head for home in RTL mode.  If the throttle channel moves back up, it will return to AUTO or LOITER mode. The default behaviour is to ignore throttle failsafe in AUTO and LOITER modes.
 TRIM_THROTTLE,0,90,45,1,1,THROTTLE_CRUISE - In Percent - The approximate throttle setting to achieve AIRSPEED_CRUISE in level flight. The default is 45%, which is reasonable for a modestly powered aircraft.
 TRIM_AUTO,0,1,1,1,1,AUTO_TRIM - ArduPilot Mega can update its trim settings by looking at the radio inputs when switching out of MANUAL mode.  This allows you to manually trim your aircraft before switching to an assisted mode, but it also means that you should avoid switching out of MANUAL while you have any control stick deflection.
-FLT_MODE_CH,5,8,8,1,1,FLIGHT_MODE_CHANNEL - Flight modes assigned to the control channel, and the input channel that is read for the control mode. Use a servo tester, or the ArduPilotMega_demo test program to check your switch settings. ATTENTION: Some ArduPilot Mega boards have radio channels marked 0-7, and others have them marked the standard 1-8.  The FLIGHT_MODE_CHANNEL option uses channel numbers 1-8 (and defaults to 8). If you only have a three-position switch or just want three modes, set your  switch to produce 1165,1425, and 1815 microseconds and configure FLIGHT_MODE 1 & 2, 3 & 4 and 5 & 6 to be the same.  This is the default.  If you have FLIGHT_MODE_CHANNEL set to 8 (the default) and your control channel connected to input channel 8, the hardware failsafe mode will activate for any control input over 1750ms.
+FLTMODE_CH,5,8,8,1,1,FLIGHT_MODE_CHANNEL - Flight modes assigned to the control channel, and the input channel that is read for the control mode. Use a servo tester, or the ArduPilotMega_demo test program to check your switch settings. ATTENTION: Some ArduPilot Mega boards have radio channels marked 0-7, and others have them marked the standard 1-8.  The FLIGHT_MODE_CHANNEL option uses channel numbers 1-8 (and defaults to 8). If you only have a three-position switch or just want three modes, set your  switch to produce 1165,1425, and 1815 microseconds and configure FLIGHT_MODE 1 & 2, 3 & 4 and 5 & 6 to be the same.  This is the default.  If you have FLIGHT_MODE_CHANNEL set to 8 (the default) and your control channel connected to input channel 8, the hardware failsafe mode will activate for any control input over 1750ms.
 FLIGHT_MODE_1,0,14,11,,1,FLIGHT_MODE_1 - The following standard flight modes are available: MANUAL = Full manual control via the hardware multiplexer. STABILIZE = Tries to maintain level flight, but can be overridden with radio control inputs. FLY_BY_WIRE_A = Autopilot style control via user input, with manual throttle. FLY_BY_WIRE_B = Autopilot style control via user input, aispeed controlled with throttle. RTL = Returns to the Home location and then LOITERs at a safe altitude. AUTO = Autonomous flight based on programmed waypoints.  Use the WaypointWriter
 FLIGHT_MODE_2,0,14,11,,1,FLIGHT_MODE_2
 FLIGHT_MODE_3,0,14,5,,1,FLIGHT_MODE_3
 FLIGHT_MODE_4,0,14,5,,1,FLIGHT_MODE_4
 FLIGHT_MODE_5,0,14,0,,1,FLIGHT_MODE_5
 FLIGHT_MODE_6,0,14,0,,1,FLIGHT_MODE_6
-ROLL_MIN,900,2100,1000,1,1,PWM_ROLL_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-ROLL_MAX,900,2100,2000,1,1,PWM_ROLL_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-ROLL_TRIM,900,2100,1500,1,1,PWM_ROLL_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-PITCH_MIN,900,2100,1000,1,1,PWM_PITCH_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-PITCH_MAX,900,2100,2000,1,1,PWM_PITCH_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-PITCH_TRIM,900,2100,1500,1,1,PWM_PITCH_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-THROTTLE_MIN,900,2100,1000,1,1,PWM_THR_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
-THROTTLE_MAX,900,2100,2000,1,1,PWM_THR_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
-THROTTLE_TRIM,900,2100,1000,1,1,PWM_THR_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
-YAW_MIN,900,2100,1000,1,1,PWM_YAW_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
-YAW_MAX,900,2100,2000,1,1,PWM_YAW_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
-YAW_TRIM,900,2100,1500,1,1,PWM_YAW_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
+RC1_MIN,900,2100,1000,1,1,PWM_RC1_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC1_MAX,900,2100,2000,1,1,PWM_RC1_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC1_TRIM,900,2100,1500,1,1,PWM_RC1_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC2_MIN,900,2100,1000,1,1,PWM_RC2_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC2_MAX,900,2100,2000,1,1,PWM_RC2_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC2_TRIM,900,2100,1500,1,1,PWM_RC2_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC3_MIN,900,2100,1000,1,1,PWM_RC3_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit
+RC3_MAX,900,2100,2000,1,1,PWM_RC3_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
+RC3_TRIM,900,2100,1000,1,1,PWM_RC3_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
+RC4_MIN,900,2100,1000,1,1,PWM_RC4_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
+RC4_MAX,900,2100,2000,1,1,PWM_RC4_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
+RC4_TRIM,900,2100,1500,1,1,PWM_RC4_TRIM - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
 RC5_MIN,900,2100,1000,1,1,PWM_CH5_MIN - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
 RC5_MAX,900,2100,2000,1,1,PWM_CH5_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
 RC5_MAX,900,2100,2000,1,1,PWM_CH5_MAX - Radio Settings - all radio settings represent the period of the pulse width modulated signal. Typically 1000 ms is the lower limit, 1500 is neutral, and 2000 is the upper limit 
@@ -88,8 +88,8 @@ IMU_OFFSET_4,0,,0,,0,IMU_OFFSET_4 - IMU Calibration
 IMU_OFFSET_5,0,,0,,0,IMU_OFFSET_5 - IMU Calibration
 YAW_MODE,,,,,0,YAW_MODE
 //WP_MODE,,,,,0,WP_MODE
-WP_TOTAL,0,255,,,1,WP_TOTAL
-WP_INDEX,0,255,,,1,WP_INDEX
+WP_TOTAL,0,255,,,0,WP_TOTAL
+WP_INDEX,0,255,,,0,WP_INDEX
 CONFIG,,,,,1,CONFIG_OPTIONS
 SWITCH_ENABLE,0,1,,,1,REVERSE_SWITCH
 FIRMWARE_VER,,,,,0,FIRMWARE_VER
@@ -97,11 +97,11 @@ LOG_BITMASK,0,65535,0,1,1,LOG_BITMASK
 TRIM_ELEVON,900,2100,1500,1,1,TRIM_ELEVON
 THR_FS_VALUE,850,1000,975,1,1,THROTTLE_FS_VALUE - If the throttle failsafe is enabled, THROTTLE_FS_VALUE sets the channel value below which the failsafe engages.  The default is 975ms, which is a very low throttle setting.  Most transmitters will let you trim the manual throttle position up so that you cannot engage the failsafe with a regular stick movement. Configure your receiver's failsafe setting for the throttle channel to the absolute minimum, and use the ArduPilotMega_demo program to check that you cannot reach that value with the throttle control.  Leave a margin of at least 50 microseconds between the lowest throttle setting and THROTTLE_FS_VALUE.
 TRIM_ARSPD_CM,500,5000,1000,100,1,AIRSPEED_CRUISE_CM - The speed in metres per second to maintain during cruise.  The default is 10m/s, which is a conservative value suitable for relatively small, light aircraft.
-GND_TEMP,-10,50,,,1,GND_TEMP
+GND_TEMP,-10,50,27,1,1,GND_TEMP - Ground Temperature
 AP_OFFSET,,,,,0,AP_OFFSET
 TRIM_PITCH_CD,,,,,0,TRIM_PITCH_CD
 ALT_HOLD_RTL,0,20000,10000,100,1,ALT_HOLD_HOME_CM - When the user performs a factory reset on the APM, set the flag for weather the current altitude or ALT_HOLD_HOME altitude should be used for Return To Launch. Also, set the value of USE_CURRENT_ALT in meters.  This is mainly intended to allow users to start using the APM without running the WaypointWriter first.
-XTRAK_ANGL_CD,0,6000,3000,100,1,XTRACK_ENTRY_ANGLE_CENTIDEGREE - Maximum angle used to correct for track following.
+XTRK_ANGLE_CD,0,6000,3000,100,1,XTRACK_ENTRY_ANGLE_CENTIDEGREE - Maximum angle used to correct for track following.
 //ROLL_SRV_MAX,0,100,4500,100,0,ROLL_SERVO_MAX_CENTIDEGREE
 //PITCH_SRV_MAX,0,100,4500,100,0,PITCH_SERVO_MAX_CENTIDEGREE
 //RUDER_SRV_MAX,0,100,4500,100,0,RUDDER_SERVO_MAX_CENTIDEGREE
@@ -111,3 +111,23 @@ LIM_PITCH_MIN,-6000,0,-2500,100,1,PITCH_MIN_CENTIDEGREE - The maximum commanded 
 GND_ALT_CM,0,500000,0,100,1,GND_ALT_CM
 GND_ABS_PRESS,,,,,0,GND_ABS_PRESS
 COMPASS_DEC,-1.57075,1.57075,0,,1,COMPASS_DEC - Compass Declination
+SR0_EXT_STAT,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable GPS_STATUS, CONTROL_STATUS, AUX_STATUS
+SR0_EXTRA1,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable MSG_ATTITUDE
+SR0_EXTRA2,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable MSG_VFR_HUD
+SR0_EXTRA3,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Not currently used
+SR0_POSITION,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable LOCAL_POSITION, GLOBAL_POSITION/GLOBAL_POSITION_INT messages
+SR0_RAW_CTRL,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable ATTITUDE_CONTROLLER_OUTPUT, POSITION_CONTROLLER_OUTPUT, NAV_CONTROLLER_OUTPUT
+SR0_RAW_SENS,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable IMU_RAW, GPS_RAW, GPS_STATUS packets
+SR0_RC_CHAN,0,50,0,1,1,TELEMETRY_ENABLE Port 0 - Enable RC_CHANNELS_SCALED, RC_CHANNELS_RAW, SERVO_OUTPUT_RAW
+SR3_EXT_STAT,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable GPS_STATUS, CONTROL_STATUS, AUX_STATUS
+SR3_EXTRA1,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable MSG_ATTITUDE
+SR3_EXTRA2,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable MSG_VFR_HUD
+SR3_EXTRA3,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Not currently used
+SR3_POSITION,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable LOCAL_POSITION, GLOBAL_POSITION/GLOBAL_POSITION_INT messages
+SR3_RAW_CTRL,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable ATTITUDE_CONTROLLER_OUTPUT, POSITION_CONTROLLER_OUTPUT, NAV_CONTROLLER_OUTPUT
+SR3_RAW_SENS,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable IMU_RAW, GPS_RAW, GPS_STATUS packets
+SR3_RC_CHAN,0,50,0,1,1,TELEMETRY_ENABLE Port 3 - Enable RC_CHANNELS_SCALED, RC_CHANNELS_RAW, SERVO_OUTPUT_RAW
+MAG_ENABLE,0,1,0,1,1,Magnetometer Enable
+BATT_CAPACITY,0,10000,1750,1,1,BATTERY_MAH - Battery capacity in mAh
+BATT_MONITOR,0,4,0,1,1,BATTERY_MONITOR - The value should be set to 0 to disable battery monitoring, 1 to measure cell voltages for a 3 cell lipo, 2 to measure cell voltages for a 4 cell lipo, 3 to measure the total battery voltage (only) on input 1, or 4 to measure total battery voltage on input 1 and current on input 2. 
+AOA,,,,,,,0

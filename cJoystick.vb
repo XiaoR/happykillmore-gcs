@@ -346,43 +346,43 @@ Namespace JoystickInterface
                 End If
 
                 joystickDevice.SetDataFormat(DeviceDataFormat.Joystick)
-                joystickDevice.SetCooperativeLevel(frmMain, CooperativeLevelFlags.Background Or CooperativeLevelFlags.Exclusive)
-                joystickDevice.Properties.AxisModeAbsolute = True
-                joystickDevice.Properties.AutoCenter = True
+                'joystickDevice.SetCooperativeLevel(frmMain, CooperativeLevelFlags.Background Or CooperativeLevelFlags.Exclusive)
+                'joystickDevice.Properties.AxisModeAbsolute = True
+                'joystickDevice.Properties.AutoCenter = True
 
                 ' Finally, acquire the device.
                 joystickDevice.Acquire()
 
                 ' Enumerate any axes
-                axisData = Nothing
-                For Each doi As DeviceObjectInstance In joystickDevice.Objects
-                    Dim temp As Integer()
+                'axisData = Nothing
+                'For Each doi As DeviceObjectInstance In joystickDevice.Objects
+                '    Dim temp As Integer()
 
-                    'If (doi.ObjectId And CInt(DeviceObjectTypeFlags.Axis)) <> 0 Then
-                    '    ' We found an axis, set the range to a max of 10,000
-                    '    joystickDevice.Properties.SetRange(ParameterHow.ById, doi.ObjectId, New InputRange(-32767, 32768))
-                    'End If
+                '    'If (doi.ObjectId And CInt(DeviceObjectTypeFlags.Axis)) <> 0 Then
+                '    '    ' We found an axis, set the range to a max of 10,000
+                '    '    joystickDevice.Properties.SetRange(ParameterHow.ById, doi.ObjectId, New InputRange(-32767, 32768))
+                '    'End If
 
-                    ' Get info about first two FF axii on the device
-                    If (doi.Flags And CInt(ObjectInstanceFlags.Actuator)) <> 0 Then
-                        Debug.Print(doi.MaxForce)
+                '    ' Get info about first two FF axii on the device
+                '    If (doi.Flags And CInt(ObjectInstanceFlags.Actuator)) <> 0 Then
+                '        Debug.Print(doi.MaxForce)
 
-                        If axisData IsNot Nothing Then
-                            temp = New Integer(axisData.Length) {}
-                            axisData.CopyTo(temp, 0)
-                            axisData = temp
-                        Else
-                            axisData = New Integer(0) {}
-                        End If
+                '        If axisData IsNot Nothing Then
+                '            temp = New Integer(axisData.Length) {}
+                '            axisData.CopyTo(temp, 0)
+                '            axisData = temp
+                '        Else
+                '            axisData = New Integer(0) {}
+                '        End If
 
-                        ' Store the offset of each axis.
-                        axisData(axisData.Length - 1) = doi.Offset
-                        If axisData.Length = 2 Then
-                            Exit For
-                        End If
+                '        ' Store the offset of each axis.
+                '        axisData(axisData.Length - 1) = doi.Offset
+                '        If axisData.Length = 2 Then
+                '            Exit For
+                '        End If
 
-                    End If
-                Next
+                '    End If
+                'Next
 
 
                 ' How many axes?
@@ -391,11 +391,11 @@ Namespace JoystickInterface
                 'Debug.Print("Joystick Axis: " & cps.NumberAxes)
                 'Debug.Print("Joystick Buttons: " & cps.NumberButtons)
 
-                rollEffectObject = Nothing
-                rollEffect = Nothing
+                'rollEffectObject = Nothing
+                'rollEffect = Nothing
 
-                pitchEffectObject = Nothing
-                pitchEffect = Nothing
+                'pitchEffectObject = Nothing
+                'pitchEffect = Nothing
 
                 UpdateStatus()
             Catch err As Exception

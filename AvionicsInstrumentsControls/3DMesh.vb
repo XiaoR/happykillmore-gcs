@@ -181,7 +181,10 @@ Public Class _3DMesh
                 device.Present() 'send graphics to screen
                 Me.Invalidate()
             Catch e2 As Exception
+                Debug.Print(e2.Message)
                 device.Clear(ClearFlags.Target Or ClearFlags.ZBuffer, oBackColor, 1, 0)
+                resetDevice()
+                defaultSetting()
             End Try
         Catch
         End Try

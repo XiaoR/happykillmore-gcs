@@ -32,7 +32,7 @@ Namespace AvionicsInstrumentControlDemo
         Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedIndicator_Background)
         Private bmpGroundNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.GroundSpeedNeedle)
         Private bmpAirNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedNeedle)
-        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.Bandeau_Dérouleur)
+        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.NumberScroll)
 
         Private nMaxSpeed As Single = 80
         Private sUnitLabel As String = "MPH"

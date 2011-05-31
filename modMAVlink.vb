@@ -273,10 +273,18 @@ Module modMAVlink
     End Function
     Public Function GetAPMMode(ByVal modeNumber As Integer, ByVal navNumber As Integer) As String
         Select Case modeNumber
-            Case 2
+            Case 2 'Manual
                 GetAPMMode = "Manual"
-            Case 3
-                GetAPMMode = "Stabilize"
+            Case 3 'Guided
+                GetAPMMode = "Guided Mode"
+                Select Case navNumber
+                    Case 1 ' Liftoff
+                        GetAPMMode = "Guided - Take-Off"
+                    Case 2 'Loiter
+                        GetAPMMode = "Guided - Loiter"
+                    Case 6 'Landing
+                        GetAPMMode = "Guided - Land"
+                End Select
             Case 4
                 Select Case navNumber
                     Case 3 'Waypoint
@@ -285,19 +293,15 @@ Module modMAVlink
                         GetAPMMode = "Auto - Return to Launch"
                     Case 2 'Loiter
                         GetAPMMode = "Auto - Loiter"
-                    Case 1 ' Liftoff
-                        GetAPMMode = "Auto - Take-Off"
-                    Case 6 'Lanfing
-                        GetAPMMode = "Auto - Land"
                     Case Else
                         GetAPMMode = "Auto"
                 End Select
             Case 5 'Test1
-                GetAPMMode = "Fly By Wire A"
+                GetAPMMode = "Stabilize"
             Case 6 'Test2
-                GetAPMMode = "Fly By Wire B"
+                GetAPMMode = "Fly By Wire A"
             Case 7 'Test3
-                GetAPMMode = "Circle"
+                GetAPMMode = "Fly By Wire B"
         End Select
     End Function
     Public Function GetMavMode(ByVal inputMode As Integer) As String
