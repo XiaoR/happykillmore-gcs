@@ -4,3 +4,4 @@
  * [SpeechSettings Speech Settings]
  * [Tracking Antenna Tracking]
  * [Heading Compass Confusion]
+ * [Optimization Ways to optimize the GCS]
