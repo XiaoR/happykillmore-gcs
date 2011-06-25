@@ -1,7 +1,7 @@
 == HappyKillmore's Ground Control Station Manual ==
 
  * [home Home]
- * [SpeechSettings Speech Settings]
  * [Tracking Antenna Tracking]
  * [Heading Compass Confusion]
+ * [SpeechSettings Speech Settings]
  * [Optimization Ways to optimize the GCS]
