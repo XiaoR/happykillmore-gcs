@@ -3,4 +3,4 @@
  * [home Home]
  * [SpeechSettings Speech Settings]
  * [Tracking Antenna Tracking]
- * [Heading Heading vs Bearing vs Yaw]
+ * [Heading Compass Confusion]
