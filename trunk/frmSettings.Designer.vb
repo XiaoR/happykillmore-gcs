@@ -63,6 +63,8 @@ Partial Class frmSettings
         Me.grpGoogleEarthKey = New System.Windows.Forms.GroupBox
         Me.txtGoogleEarthKey = New System.Windows.Forms.TextBox
         Me.grpGoogleEarthFeatures = New System.Windows.Forms.GroupBox
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.txtGoogleEarthTinyWeb = New System.Windows.Forms.TextBox
         Me.lblGETerrain = New System.Windows.Forms.Label
         Me.chkGETerrain = New System.Windows.Forms.CheckBox
         Me.lblGEBorders = New System.Windows.Forms.Label
@@ -99,25 +101,25 @@ Partial Class frmSettings
         Me.grpBatteryThrottle = New System.Windows.Forms.GroupBox
         Me.cboMaxSpeed = New System.Windows.Forms.ComboBox
         Me.lblMaxSpeed = New System.Windows.Forms.Label
-        Me.cboThrottleColor = New System.Windows.Forms.ComboBox
-        Me.lblThrottleColor = New System.Windows.Forms.Label
-        Me.cboMAHColor = New System.Windows.Forms.ComboBox
-        Me.lblMahColor = New System.Windows.Forms.Label
         Me.lblMahMax = New System.Windows.Forms.Label
         Me.txtMAHMax = New System.Windows.Forms.TextBox
         Me.lblMahMin = New System.Windows.Forms.Label
         Me.txtMAHMin = New System.Windows.Forms.TextBox
-        Me.cboAmperageColor = New System.Windows.Forms.ComboBox
-        Me.lblAmperageColor = New System.Windows.Forms.Label
         Me.lblAmperageMax = New System.Windows.Forms.Label
         Me.txtAmperageMax = New System.Windows.Forms.TextBox
-        Me.cboVoltageColor = New System.Windows.Forms.ComboBox
-        Me.lblVoltageColor = New System.Windows.Forms.Label
         Me.lblVoltageMax = New System.Windows.Forms.Label
         Me.txtVoltageMax = New System.Windows.Forms.TextBox
         Me.lblVoltageMin = New System.Windows.Forms.Label
         Me.txtVoltageMin = New System.Windows.Forms.TextBox
         Me.grpInstrumentSelection = New System.Windows.Forms.GroupBox
+        Me.chkInstControl = New System.Windows.Forms.CheckBox
+        Me.chkInstText = New System.Windows.Forms.CheckBox
+        Me.chkInstSmooth3D = New System.Windows.Forms.CheckBox
+        Me.chkInstrSmoothInstruments = New System.Windows.Forms.CheckBox
+        Me.chkInstStatus = New System.Windows.Forms.CheckBox
+        Me.chkInstYawDial = New System.Windows.Forms.CheckBox
+        Me.chkInstRollDial = New System.Windows.Forms.CheckBox
+        Me.chkInstPitchDial = New System.Windows.Forms.CheckBox
         Me.chkInstBattery = New System.Windows.Forms.CheckBox
         Me.chkInstTurn = New System.Windows.Forms.CheckBox
         Me.chkInst3DModel = New System.Windows.Forms.CheckBox
@@ -127,42 +129,41 @@ Partial Class frmSettings
         Me.chkInstAltimeter = New System.Windows.Forms.CheckBox
         Me.chkInstSpeed = New System.Windows.Forms.CheckBox
         Me.tabSpeech = New System.Windows.Forms.TabPage
+        Me.chkManuelMode = New System.Windows.Forms.CheckBox
+        Me.cboVoice = New System.Windows.Forms.ComboBox
+        Me.chkAnnounceWaypoints = New System.Windows.Forms.CheckBox
+        Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
         Me.txtAltitudeMin = New System.Windows.Forms.TextBox
+        Me.lblSpeechInterval = New System.Windows.Forms.Label
+        Me.lblVoice = New System.Windows.Forms.Label
+        Me.cmdRegularIntervalPlay = New System.Windows.Forms.Button
         Me.lblAltitudeMinValue = New System.Windows.Forms.Label
+        Me.chkAnnounceLinkWarning = New System.Windows.Forms.CheckBox
+        Me.txtAnnounceRegularInterval = New System.Windows.Forms.TextBox
         Me.cmdAltitudeAlarm = New System.Windows.Forms.Button
+        Me.txtAnnounceWarning = New System.Windows.Forms.TextBox
+        Me.txtAnnounceWaypoints = New System.Windows.Forms.TextBox
+        Me.chkAnnounceRegularInterval = New System.Windows.Forms.CheckBox
         Me.txtAltitudeAlarm = New System.Windows.Forms.TextBox
+        Me.cmdWarningPlay = New System.Windows.Forms.Button
+        Me.cmdWaypointPlay = New System.Windows.Forms.Button
+        Me.lblHelp = New System.Windows.Forms.Label
         Me.chkAnnounceAltitudeAlarm = New System.Windows.Forms.CheckBox
+        Me.chkAnnounceLinkAlarm = New System.Windows.Forms.CheckBox
+        Me.chkAnnounceModeChange = New System.Windows.Forms.CheckBox
+        Me.cmdModeChangePlay = New System.Windows.Forms.Button
         Me.cmdAlarmPlay = New System.Windows.Forms.Button
         Me.txtAnnounceAlarm = New System.Windows.Forms.TextBox
-        Me.chkAnnounceLinkAlarm = New System.Windows.Forms.CheckBox
-        Me.cmdWarningPlay = New System.Windows.Forms.Button
-        Me.txtAnnounceWarning = New System.Windows.Forms.TextBox
-        Me.chkAnnounceLinkWarning = New System.Windows.Forms.CheckBox
-        Me.lblSpeechInterval = New System.Windows.Forms.Label
-        Me.cboSpeechInterval = New System.Windows.Forms.ComboBox
-        Me.cmdRegularIntervalPlay = New System.Windows.Forms.Button
-        Me.txtAnnounceRegularInterval = New System.Windows.Forms.TextBox
-        Me.chkAnnounceRegularInterval = New System.Windows.Forms.CheckBox
-        Me.lblHelp = New System.Windows.Forms.Label
-        Me.cmdModeChangePlay = New System.Windows.Forms.Button
         Me.txtAnnounceModeChange = New System.Windows.Forms.TextBox
-        Me.chkAnnounceModeChange = New System.Windows.Forms.CheckBox
-        Me.cmdWaypointPlay = New System.Windows.Forms.Button
-        Me.txtAnnounceWaypoints = New System.Windows.Forms.TextBox
-        Me.chkAnnounceWaypoints = New System.Windows.Forms.CheckBox
-        Me.cboVoice = New System.Windows.Forms.ComboBox
-        Me.lblVoice = New System.Windows.Forms.Label
         Me.Label11 = New System.Windows.Forms.Label
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
         Me.Label12 = New System.Windows.Forms.Label
-        Me.CheckBox5 = New System.Windows.Forms.CheckBox
         Me.ComboBox7 = New System.Windows.Forms.ComboBox
         Me.Label13 = New System.Windows.Forms.Label
         Me.Label14 = New System.Windows.Forms.Label
         Me.Label15 = New System.Windows.Forms.Label
         Me.TrackBar2 = New System.Windows.Forms.TrackBar
         Me.Button1 = New System.Windows.Forms.Button
-        Me.chkManuelMode = New System.Windows.Forms.CheckBox
         Me.tabSettings.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.grpGeneral.SuspendLayout()
@@ -453,6 +454,8 @@ Partial Class frmSettings
         '
         'grpGoogleEarthFeatures
         '
+        Me.grpGoogleEarthFeatures.Controls.Add(Me.Label6)
+        Me.grpGoogleEarthFeatures.Controls.Add(Me.txtGoogleEarthTinyWeb)
         Me.grpGoogleEarthFeatures.Controls.Add(Me.lblGETerrain)
         Me.grpGoogleEarthFeatures.Controls.Add(Me.chkGETerrain)
         Me.grpGoogleEarthFeatures.Controls.Add(Me.lblGEBorders)
@@ -466,6 +469,16 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpGoogleEarthFeatures, "grpGoogleEarthFeatures")
         Me.grpGoogleEarthFeatures.Name = "grpGoogleEarthFeatures"
         Me.grpGoogleEarthFeatures.TabStop = False
+        '
+        'Label6
+        '
+        resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.Name = "Label6"
+        '
+        'txtGoogleEarthTinyWeb
+        '
+        resources.ApplyResources(Me.txtGoogleEarthTinyWeb, "txtGoogleEarthTinyWeb")
+        Me.txtGoogleEarthTinyWeb.Name = "txtGoogleEarthTinyWeb"
         '
         'lblGETerrain
         '
@@ -699,20 +712,12 @@ Partial Class frmSettings
         '
         Me.grpBatteryThrottle.Controls.Add(Me.cboMaxSpeed)
         Me.grpBatteryThrottle.Controls.Add(Me.lblMaxSpeed)
-        Me.grpBatteryThrottle.Controls.Add(Me.cboThrottleColor)
-        Me.grpBatteryThrottle.Controls.Add(Me.lblThrottleColor)
-        Me.grpBatteryThrottle.Controls.Add(Me.cboMAHColor)
-        Me.grpBatteryThrottle.Controls.Add(Me.lblMahColor)
         Me.grpBatteryThrottle.Controls.Add(Me.lblMahMax)
         Me.grpBatteryThrottle.Controls.Add(Me.txtMAHMax)
         Me.grpBatteryThrottle.Controls.Add(Me.lblMahMin)
         Me.grpBatteryThrottle.Controls.Add(Me.txtMAHMin)
-        Me.grpBatteryThrottle.Controls.Add(Me.cboAmperageColor)
-        Me.grpBatteryThrottle.Controls.Add(Me.lblAmperageColor)
         Me.grpBatteryThrottle.Controls.Add(Me.lblAmperageMax)
         Me.grpBatteryThrottle.Controls.Add(Me.txtAmperageMax)
-        Me.grpBatteryThrottle.Controls.Add(Me.cboVoltageColor)
-        Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageColor)
         Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageMax)
         Me.grpBatteryThrottle.Controls.Add(Me.txtVoltageMax)
         Me.grpBatteryThrottle.Controls.Add(Me.lblVoltageMin)
@@ -732,30 +737,6 @@ Partial Class frmSettings
         '
         resources.ApplyResources(Me.lblMaxSpeed, "lblMaxSpeed")
         Me.lblMaxSpeed.Name = "lblMaxSpeed"
-        '
-        'cboThrottleColor
-        '
-        Me.cboThrottleColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboThrottleColor.FormattingEnabled = True
-        resources.ApplyResources(Me.cboThrottleColor, "cboThrottleColor")
-        Me.cboThrottleColor.Name = "cboThrottleColor"
-        '
-        'lblThrottleColor
-        '
-        resources.ApplyResources(Me.lblThrottleColor, "lblThrottleColor")
-        Me.lblThrottleColor.Name = "lblThrottleColor"
-        '
-        'cboMAHColor
-        '
-        Me.cboMAHColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboMAHColor.FormattingEnabled = True
-        resources.ApplyResources(Me.cboMAHColor, "cboMAHColor")
-        Me.cboMAHColor.Name = "cboMAHColor"
-        '
-        'lblMahColor
-        '
-        resources.ApplyResources(Me.lblMahColor, "lblMahColor")
-        Me.lblMahColor.Name = "lblMahColor"
         '
         'lblMahMax
         '
@@ -777,18 +758,6 @@ Partial Class frmSettings
         resources.ApplyResources(Me.txtMAHMin, "txtMAHMin")
         Me.txtMAHMin.Name = "txtMAHMin"
         '
-        'cboAmperageColor
-        '
-        Me.cboAmperageColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboAmperageColor.FormattingEnabled = True
-        resources.ApplyResources(Me.cboAmperageColor, "cboAmperageColor")
-        Me.cboAmperageColor.Name = "cboAmperageColor"
-        '
-        'lblAmperageColor
-        '
-        resources.ApplyResources(Me.lblAmperageColor, "lblAmperageColor")
-        Me.lblAmperageColor.Name = "lblAmperageColor"
-        '
         'lblAmperageMax
         '
         resources.ApplyResources(Me.lblAmperageMax, "lblAmperageMax")
@@ -798,18 +767,6 @@ Partial Class frmSettings
         '
         resources.ApplyResources(Me.txtAmperageMax, "txtAmperageMax")
         Me.txtAmperageMax.Name = "txtAmperageMax"
-        '
-        'cboVoltageColor
-        '
-        Me.cboVoltageColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboVoltageColor.FormattingEnabled = True
-        resources.ApplyResources(Me.cboVoltageColor, "cboVoltageColor")
-        Me.cboVoltageColor.Name = "cboVoltageColor"
-        '
-        'lblVoltageColor
-        '
-        resources.ApplyResources(Me.lblVoltageColor, "lblVoltageColor")
-        Me.lblVoltageColor.Name = "lblVoltageColor"
         '
         'lblVoltageMax
         '
@@ -833,6 +790,14 @@ Partial Class frmSettings
         '
         'grpInstrumentSelection
         '
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstControl)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstText)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstSmooth3D)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstrSmoothInstruments)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstStatus)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstYawDial)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstRollDial)
+        Me.grpInstrumentSelection.Controls.Add(Me.chkInstPitchDial)
         Me.grpInstrumentSelection.Controls.Add(Me.chkInstBattery)
         Me.grpInstrumentSelection.Controls.Add(Me.chkInstTurn)
         Me.grpInstrumentSelection.Controls.Add(Me.chkInst3DModel)
@@ -844,6 +809,54 @@ Partial Class frmSettings
         resources.ApplyResources(Me.grpInstrumentSelection, "grpInstrumentSelection")
         Me.grpInstrumentSelection.Name = "grpInstrumentSelection"
         Me.grpInstrumentSelection.TabStop = False
+        '
+        'chkInstControl
+        '
+        resources.ApplyResources(Me.chkInstControl, "chkInstControl")
+        Me.chkInstControl.Name = "chkInstControl"
+        Me.chkInstControl.UseVisualStyleBackColor = True
+        '
+        'chkInstText
+        '
+        resources.ApplyResources(Me.chkInstText, "chkInstText")
+        Me.chkInstText.Name = "chkInstText"
+        Me.chkInstText.UseVisualStyleBackColor = True
+        '
+        'chkInstSmooth3D
+        '
+        resources.ApplyResources(Me.chkInstSmooth3D, "chkInstSmooth3D")
+        Me.chkInstSmooth3D.Name = "chkInstSmooth3D"
+        Me.chkInstSmooth3D.UseVisualStyleBackColor = True
+        '
+        'chkInstrSmoothInstruments
+        '
+        resources.ApplyResources(Me.chkInstrSmoothInstruments, "chkInstrSmoothInstruments")
+        Me.chkInstrSmoothInstruments.Name = "chkInstrSmoothInstruments"
+        Me.chkInstrSmoothInstruments.UseVisualStyleBackColor = True
+        '
+        'chkInstStatus
+        '
+        resources.ApplyResources(Me.chkInstStatus, "chkInstStatus")
+        Me.chkInstStatus.Name = "chkInstStatus"
+        Me.chkInstStatus.UseVisualStyleBackColor = True
+        '
+        'chkInstYawDial
+        '
+        resources.ApplyResources(Me.chkInstYawDial, "chkInstYawDial")
+        Me.chkInstYawDial.Name = "chkInstYawDial"
+        Me.chkInstYawDial.UseVisualStyleBackColor = True
+        '
+        'chkInstRollDial
+        '
+        resources.ApplyResources(Me.chkInstRollDial, "chkInstRollDial")
+        Me.chkInstRollDial.Name = "chkInstRollDial"
+        Me.chkInstRollDial.UseVisualStyleBackColor = True
+        '
+        'chkInstPitchDial
+        '
+        resources.ApplyResources(Me.chkInstPitchDial, "chkInstPitchDial")
+        Me.chkInstPitchDial.Name = "chkInstPitchDial"
+        Me.chkInstPitchDial.UseVisualStyleBackColor = True
         '
         'chkInstBattery
         '
@@ -925,74 +938,24 @@ Partial Class frmSettings
         Me.tabSpeech.Name = "tabSpeech"
         Me.tabSpeech.UseVisualStyleBackColor = True
         '
-        'txtAltitudeMin
+        'chkManuelMode
         '
-        resources.ApplyResources(Me.txtAltitudeMin, "txtAltitudeMin")
-        Me.txtAltitudeMin.Name = "txtAltitudeMin"
+        resources.ApplyResources(Me.chkManuelMode, "chkManuelMode")
+        Me.chkManuelMode.Name = "chkManuelMode"
+        Me.chkManuelMode.UseVisualStyleBackColor = True
         '
-        'lblAltitudeMinValue
+        'cboVoice
         '
-        resources.ApplyResources(Me.lblAltitudeMinValue, "lblAltitudeMinValue")
-        Me.lblAltitudeMinValue.Name = "lblAltitudeMinValue"
+        Me.cboVoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboVoice.FormattingEnabled = True
+        resources.ApplyResources(Me.cboVoice, "cboVoice")
+        Me.cboVoice.Name = "cboVoice"
         '
-        'cmdAltitudeAlarm
+        'chkAnnounceWaypoints
         '
-        resources.ApplyResources(Me.cmdAltitudeAlarm, "cmdAltitudeAlarm")
-        Me.cmdAltitudeAlarm.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdAltitudeAlarm.Name = "cmdAltitudeAlarm"
-        Me.cmdAltitudeAlarm.UseVisualStyleBackColor = True
-        '
-        'txtAltitudeAlarm
-        '
-        resources.ApplyResources(Me.txtAltitudeAlarm, "txtAltitudeAlarm")
-        Me.txtAltitudeAlarm.Name = "txtAltitudeAlarm"
-        '
-        'chkAnnounceAltitudeAlarm
-        '
-        resources.ApplyResources(Me.chkAnnounceAltitudeAlarm, "chkAnnounceAltitudeAlarm")
-        Me.chkAnnounceAltitudeAlarm.Name = "chkAnnounceAltitudeAlarm"
-        Me.chkAnnounceAltitudeAlarm.UseVisualStyleBackColor = True
-        '
-        'cmdAlarmPlay
-        '
-        resources.ApplyResources(Me.cmdAlarmPlay, "cmdAlarmPlay")
-        Me.cmdAlarmPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdAlarmPlay.Name = "cmdAlarmPlay"
-        Me.cmdAlarmPlay.UseVisualStyleBackColor = True
-        '
-        'txtAnnounceAlarm
-        '
-        resources.ApplyResources(Me.txtAnnounceAlarm, "txtAnnounceAlarm")
-        Me.txtAnnounceAlarm.Name = "txtAnnounceAlarm"
-        '
-        'chkAnnounceLinkAlarm
-        '
-        resources.ApplyResources(Me.chkAnnounceLinkAlarm, "chkAnnounceLinkAlarm")
-        Me.chkAnnounceLinkAlarm.Name = "chkAnnounceLinkAlarm"
-        Me.chkAnnounceLinkAlarm.UseVisualStyleBackColor = True
-        '
-        'cmdWarningPlay
-        '
-        resources.ApplyResources(Me.cmdWarningPlay, "cmdWarningPlay")
-        Me.cmdWarningPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdWarningPlay.Name = "cmdWarningPlay"
-        Me.cmdWarningPlay.UseVisualStyleBackColor = True
-        '
-        'txtAnnounceWarning
-        '
-        resources.ApplyResources(Me.txtAnnounceWarning, "txtAnnounceWarning")
-        Me.txtAnnounceWarning.Name = "txtAnnounceWarning"
-        '
-        'chkAnnounceLinkWarning
-        '
-        resources.ApplyResources(Me.chkAnnounceLinkWarning, "chkAnnounceLinkWarning")
-        Me.chkAnnounceLinkWarning.Name = "chkAnnounceLinkWarning"
-        Me.chkAnnounceLinkWarning.UseVisualStyleBackColor = True
-        '
-        'lblSpeechInterval
-        '
-        resources.ApplyResources(Me.lblSpeechInterval, "lblSpeechInterval")
-        Me.lblSpeechInterval.Name = "lblSpeechInterval"
+        resources.ApplyResources(Me.chkAnnounceWaypoints, "chkAnnounceWaypoints")
+        Me.chkAnnounceWaypoints.Name = "chkAnnounceWaypoints"
+        Me.chkAnnounceWaypoints.UseVisualStyleBackColor = True
         '
         'cboSpeechInterval
         '
@@ -1002,17 +965,60 @@ Partial Class frmSettings
         Me.cboSpeechInterval.FormattingEnabled = True
         Me.cboSpeechInterval.Name = "cboSpeechInterval"
         '
+        'txtAltitudeMin
+        '
+        resources.ApplyResources(Me.txtAltitudeMin, "txtAltitudeMin")
+        Me.txtAltitudeMin.Name = "txtAltitudeMin"
+        '
+        'lblSpeechInterval
+        '
+        resources.ApplyResources(Me.lblSpeechInterval, "lblSpeechInterval")
+        Me.lblSpeechInterval.Name = "lblSpeechInterval"
+        '
+        'lblVoice
+        '
+        resources.ApplyResources(Me.lblVoice, "lblVoice")
+        Me.lblVoice.Name = "lblVoice"
+        '
         'cmdRegularIntervalPlay
         '
         resources.ApplyResources(Me.cmdRegularIntervalPlay, "cmdRegularIntervalPlay")
-        Me.cmdRegularIntervalPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
+        Me.cmdRegularIntervalPlay.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
         Me.cmdRegularIntervalPlay.Name = "cmdRegularIntervalPlay"
         Me.cmdRegularIntervalPlay.UseVisualStyleBackColor = True
+        '
+        'lblAltitudeMinValue
+        '
+        resources.ApplyResources(Me.lblAltitudeMinValue, "lblAltitudeMinValue")
+        Me.lblAltitudeMinValue.Name = "lblAltitudeMinValue"
+        '
+        'chkAnnounceLinkWarning
+        '
+        resources.ApplyResources(Me.chkAnnounceLinkWarning, "chkAnnounceLinkWarning")
+        Me.chkAnnounceLinkWarning.Name = "chkAnnounceLinkWarning"
+        Me.chkAnnounceLinkWarning.UseVisualStyleBackColor = True
         '
         'txtAnnounceRegularInterval
         '
         resources.ApplyResources(Me.txtAnnounceRegularInterval, "txtAnnounceRegularInterval")
         Me.txtAnnounceRegularInterval.Name = "txtAnnounceRegularInterval"
+        '
+        'cmdAltitudeAlarm
+        '
+        resources.ApplyResources(Me.cmdAltitudeAlarm, "cmdAltitudeAlarm")
+        Me.cmdAltitudeAlarm.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
+        Me.cmdAltitudeAlarm.Name = "cmdAltitudeAlarm"
+        Me.cmdAltitudeAlarm.UseVisualStyleBackColor = True
+        '
+        'txtAnnounceWarning
+        '
+        resources.ApplyResources(Me.txtAnnounceWarning, "txtAnnounceWarning")
+        Me.txtAnnounceWarning.Name = "txtAnnounceWarning"
+        '
+        'txtAnnounceWaypoints
+        '
+        resources.ApplyResources(Me.txtAnnounceWaypoints, "txtAnnounceWaypoints")
+        Me.txtAnnounceWaypoints.Name = "txtAnnounceWaypoints"
         '
         'chkAnnounceRegularInterval
         '
@@ -1020,23 +1026,42 @@ Partial Class frmSettings
         Me.chkAnnounceRegularInterval.Name = "chkAnnounceRegularInterval"
         Me.chkAnnounceRegularInterval.UseVisualStyleBackColor = True
         '
+        'txtAltitudeAlarm
+        '
+        resources.ApplyResources(Me.txtAltitudeAlarm, "txtAltitudeAlarm")
+        Me.txtAltitudeAlarm.Name = "txtAltitudeAlarm"
+        '
+        'cmdWarningPlay
+        '
+        resources.ApplyResources(Me.cmdWarningPlay, "cmdWarningPlay")
+        Me.cmdWarningPlay.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
+        Me.cmdWarningPlay.Name = "cmdWarningPlay"
+        Me.cmdWarningPlay.UseVisualStyleBackColor = True
+        '
+        'cmdWaypointPlay
+        '
+        resources.ApplyResources(Me.cmdWaypointPlay, "cmdWaypointPlay")
+        Me.cmdWaypointPlay.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
+        Me.cmdWaypointPlay.Name = "cmdWaypointPlay"
+        Me.cmdWaypointPlay.UseVisualStyleBackColor = True
+        '
         'lblHelp
         '
         resources.ApplyResources(Me.lblHelp, "lblHelp")
         Me.lblHelp.ForeColor = System.Drawing.Color.Black
         Me.lblHelp.Name = "lblHelp"
         '
-        'cmdModeChangePlay
+        'chkAnnounceAltitudeAlarm
         '
-        resources.ApplyResources(Me.cmdModeChangePlay, "cmdModeChangePlay")
-        Me.cmdModeChangePlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdModeChangePlay.Name = "cmdModeChangePlay"
-        Me.cmdModeChangePlay.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.chkAnnounceAltitudeAlarm, "chkAnnounceAltitudeAlarm")
+        Me.chkAnnounceAltitudeAlarm.Name = "chkAnnounceAltitudeAlarm"
+        Me.chkAnnounceAltitudeAlarm.UseVisualStyleBackColor = True
         '
-        'txtAnnounceModeChange
+        'chkAnnounceLinkAlarm
         '
-        resources.ApplyResources(Me.txtAnnounceModeChange, "txtAnnounceModeChange")
-        Me.txtAnnounceModeChange.Name = "txtAnnounceModeChange"
+        resources.ApplyResources(Me.chkAnnounceLinkAlarm, "chkAnnounceLinkAlarm")
+        Me.chkAnnounceLinkAlarm.Name = "chkAnnounceLinkAlarm"
+        Me.chkAnnounceLinkAlarm.UseVisualStyleBackColor = True
         '
         'chkAnnounceModeChange
         '
@@ -1044,35 +1069,29 @@ Partial Class frmSettings
         Me.chkAnnounceModeChange.Name = "chkAnnounceModeChange"
         Me.chkAnnounceModeChange.UseVisualStyleBackColor = True
         '
-        'cmdWaypointPlay
+        'cmdModeChangePlay
         '
-        resources.ApplyResources(Me.cmdWaypointPlay, "cmdWaypointPlay")
-        Me.cmdWaypointPlay.BackgroundImage = Global.HK_GCS.My.Resources.Resources.Play
-        Me.cmdWaypointPlay.Name = "cmdWaypointPlay"
-        Me.cmdWaypointPlay.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cmdModeChangePlay, "cmdModeChangePlay")
+        Me.cmdModeChangePlay.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
+        Me.cmdModeChangePlay.Name = "cmdModeChangePlay"
+        Me.cmdModeChangePlay.UseVisualStyleBackColor = True
         '
-        'txtAnnounceWaypoints
+        'cmdAlarmPlay
         '
-        resources.ApplyResources(Me.txtAnnounceWaypoints, "txtAnnounceWaypoints")
-        Me.txtAnnounceWaypoints.Name = "txtAnnounceWaypoints"
+        resources.ApplyResources(Me.cmdAlarmPlay, "cmdAlarmPlay")
+        Me.cmdAlarmPlay.BackgroundImage = Global.HK_GCS_Lite.My.Resources.Resources.Play
+        Me.cmdAlarmPlay.Name = "cmdAlarmPlay"
+        Me.cmdAlarmPlay.UseVisualStyleBackColor = True
         '
-        'chkAnnounceWaypoints
+        'txtAnnounceAlarm
         '
-        resources.ApplyResources(Me.chkAnnounceWaypoints, "chkAnnounceWaypoints")
-        Me.chkAnnounceWaypoints.Name = "chkAnnounceWaypoints"
-        Me.chkAnnounceWaypoints.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.txtAnnounceAlarm, "txtAnnounceAlarm")
+        Me.txtAnnounceAlarm.Name = "txtAnnounceAlarm"
         '
-        'cboVoice
+        'txtAnnounceModeChange
         '
-        Me.cboVoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboVoice.FormattingEnabled = True
-        resources.ApplyResources(Me.cboVoice, "cboVoice")
-        Me.cboVoice.Name = "cboVoice"
-        '
-        'lblVoice
-        '
-        resources.ApplyResources(Me.lblVoice, "lblVoice")
-        Me.lblVoice.Name = "lblVoice"
+        resources.ApplyResources(Me.txtAnnounceModeChange, "txtAnnounceModeChange")
+        Me.txtAnnounceModeChange.Name = "txtAnnounceModeChange"
         '
         'Label11
         '
@@ -1095,12 +1114,6 @@ Partial Class frmSettings
         '
         resources.ApplyResources(Me.Label12, "Label12")
         Me.Label12.Name = "Label12"
-        '
-        'CheckBox5
-        '
-        resources.ApplyResources(Me.CheckBox5, "CheckBox5")
-        Me.CheckBox5.Name = "CheckBox5"
-        Me.CheckBox5.UseVisualStyleBackColor = True
         '
         'ComboBox7
         '
@@ -1141,12 +1154,6 @@ Partial Class frmSettings
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'chkManuelMode
-        '
-        resources.ApplyResources(Me.chkManuelMode, "chkManuelMode")
-        Me.chkManuelMode.Name = "chkManuelMode"
-        Me.chkManuelMode.UseVisualStyleBackColor = True
-        '
         'frmSettings
         '
         resources.ApplyResources(Me, "$this")
@@ -1165,6 +1172,7 @@ Partial Class frmSettings
         Me.grpGoogleEarthKey.ResumeLayout(False)
         Me.grpGoogleEarthKey.PerformLayout()
         Me.grpGoogleEarthFeatures.ResumeLayout(False)
+        Me.grpGoogleEarthFeatures.PerformLayout()
         Me.grpMissionPath.ResumeLayout(False)
         CType(Me.tbarMissionOpacity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarMissionWidth, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1211,7 +1219,6 @@ Partial Class frmSettings
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox5 As System.Windows.Forms.CheckBox
     Friend WithEvents ComboBox7 As System.Windows.Forms.ComboBox
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents Label14 As System.Windows.Forms.Label
@@ -1220,20 +1227,12 @@ Partial Class frmSettings
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents tabInstruments As System.Windows.Forms.TabPage
     Friend WithEvents grpBatteryThrottle As System.Windows.Forms.GroupBox
-    Friend WithEvents cboThrottleColor As System.Windows.Forms.ComboBox
-    Friend WithEvents lblThrottleColor As System.Windows.Forms.Label
-    Friend WithEvents cboMAHColor As System.Windows.Forms.ComboBox
-    Friend WithEvents lblMahColor As System.Windows.Forms.Label
     Friend WithEvents lblMahMax As System.Windows.Forms.Label
     Friend WithEvents txtMAHMax As System.Windows.Forms.TextBox
     Friend WithEvents lblMahMin As System.Windows.Forms.Label
     Friend WithEvents txtMAHMin As System.Windows.Forms.TextBox
-    Friend WithEvents cboAmperageColor As System.Windows.Forms.ComboBox
-    Friend WithEvents lblAmperageColor As System.Windows.Forms.Label
     Friend WithEvents lblAmperageMax As System.Windows.Forms.Label
     Friend WithEvents txtAmperageMax As System.Windows.Forms.TextBox
-    Friend WithEvents cboVoltageColor As System.Windows.Forms.ComboBox
-    Friend WithEvents lblVoltageColor As System.Windows.Forms.Label
     Friend WithEvents lblVoltageMax As System.Windows.Forms.Label
     Friend WithEvents txtVoltageMax As System.Windows.Forms.TextBox
     Friend WithEvents lblVoltageMin As System.Windows.Forms.Label
@@ -1323,4 +1322,14 @@ Partial Class frmSettings
     Friend WithEvents txtAltitudeAlarm As System.Windows.Forms.TextBox
     Friend WithEvents chkAnnounceAltitudeAlarm As System.Windows.Forms.CheckBox
     Friend WithEvents chkManuelMode As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstSmooth3D As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstrSmoothInstruments As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstStatus As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstYawDial As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstRollDial As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstPitchDial As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstText As System.Windows.Forms.CheckBox
+    Friend WithEvents chkInstControl As System.Windows.Forms.CheckBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents txtGoogleEarthTinyWeb As System.Windows.Forms.TextBox
 End Class

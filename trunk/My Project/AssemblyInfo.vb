@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("HappyKillmore's Ground Control Station")> 
-<Assembly: AssemblyDescription("GPS and ArduPilot gound based display")> 
-<Assembly: AssemblyCompany("HappyKillmore")> 
-<Assembly: AssemblyProduct("HK_GCS")> 
-<Assembly: AssemblyCopyright("Copyright ©  2010")> 
+<Assembly: AssemblyTitle("HK's Ground Control Station - Lite")> 
+<Assembly: AssemblyDescription("Ground Control Station for R/C Autopilots")> 
+<Assembly: AssemblyCompany("Paul Mather")> 
+<Assembly: AssemblyProduct("HK GCS Lite")> 
+<Assembly: AssemblyCopyright("Copyright ©  2011")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -32,5 +32,5 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 '<Assembly: AssemblyVersion("1.0.0.5")> 
-<Assembly: AssemblyFileVersion("1.2.106")> 
-<Assembly: AssemblyVersion("1.2.106")> 
+<Assembly: AssemblyFileVersion("1.3.9")> 
+<Assembly: AssemblyVersion("1.3.9")> 

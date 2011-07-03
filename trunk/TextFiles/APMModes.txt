@@ -1,10 +1,14 @@
 // Auto Pilot modes
 // ----------------
 Manual,2,0
+Guided - Take-off,3,1
+Guided - Loiter,3,2
+Guided - Landing,3,6
 Stabilize,5,0
-Fly By Wire A,6,0
-Fly By Wire B,7,0
-Auto - Waypoint,4,3
+Fly By Wire A,6,1
+Fly By Wire B,6,2
+Fly By Wire C,6,3
+Auto - Mission,4,3
 Auto - Return to Launch,4,5
 Auto - Loiter,4,8
 //Takeoff 13

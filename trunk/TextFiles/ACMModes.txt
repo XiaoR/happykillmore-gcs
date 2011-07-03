@@ -1,0 +1,10 @@
+// Auto Copter modes
+// ----------------
+Stabilize,100,0
+Acrobatic,101,0
+Simple,102,0
+Altitude Hold,103,0
+Auto - Mission,4,3
+Guided - Loiter,3,2
+Auto - Loiter,4,8
+Auto - Return to Launch,4,5

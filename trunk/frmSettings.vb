@@ -54,16 +54,16 @@ Public Class frmSettings
         GetResString(grpBatteryThrottle, "Battery_Throttle_Settings")
         GetResString(lblVoltageMin, "Min_Voltage", True)
         GetResString(lblVoltageMax, "Max_Voltage", True)
-        GetResString(lblVoltageColor, "Voltage_Color", True)
+        'GetResString(lblVoltageColor, "Voltage_Color", True)
 
         GetResString(lblAmperageMax, "Max_Amperage", True)
-        GetResString(lblAmperageColor, "Amperage_Color", True)
+        'GetResString(lblAmperageColor, "Amperage_Color", True)
 
         GetResString(lblMahMin, "Min_MAH", True)
         GetResString(lblMahMax, "Max_MAH", True)
-        GetResString(lblMahColor, "MAH_Color", True)
+        'GetResString(lblMahColor, "MAH_Color", True)
 
-        GetResString(lblThrottleColor, "Throttle_Color", True)
+        'GetResString(lblThrottleColor, "Throttle_Color", True)
 
         GetResString(cmdSave, "Save")
         GetResString(cmdCancel, "Cancel")
@@ -192,21 +192,23 @@ Public Class frmSettings
             .SelectedIndex = eMapSelection
         End With
 
-        cboVoltageColor.Items.Clear()
-        cboAmperageColor.Items.Clear()
-        cboMAHColor.Items.Clear()
-        cboThrottleColor.Items.Clear()
-        For nCount = 0 To e_InstrumentColor_Max
-            cboVoltageColor.Items.Add(LookupInstrumentColorName(nCount))
-            cboAmperageColor.Items.Add(LookupInstrumentColorName(nCount))
-            cboMAHColor.Items.Add(LookupInstrumentColorName(nCount))
-            cboThrottleColor.Items.Add(LookupInstrumentColorName(nCount))
-        Next
+        txtGoogleEarthTinyWeb.Text = nTinyWebPort
 
-        cboVoltageColor.SelectedIndex = oBatteryColor
-        cboAmperageColor.SelectedIndex = oAmperageColor
-        cboMAHColor.SelectedIndex = oMAHColor
-        cboThrottleColor.SelectedIndex = oThrottleColor
+        'cboVoltageColor.Items.Clear()
+        'cboAmperageColor.Items.Clear()
+        'cboMAHColor.Items.Clear()
+        'cboThrottleColor.Items.Clear()
+        'For nCount = 0 To e_InstrumentColor_Max
+        '    cboVoltageColor.Items.Add(LookupInstrumentColorName(nCount))
+        '    cboAmperageColor.Items.Add(LookupInstrumentColorName(nCount))
+        '    cboMAHColor.Items.Add(LookupInstrumentColorName(nCount))
+        '    cboThrottleColor.Items.Add(LookupInstrumentColorName(nCount))
+        'Next
+
+        'cboVoltageColor.SelectedIndex = oBatteryColor
+        'cboAmperageColor.SelectedIndex = oAmperageColor
+        'cboMAHColor.SelectedIndex = oMAHColor
+        'cboThrottleColor.SelectedIndex = oThrottleColor
 
         txtVoltageMax.Text = nBatteryMax
         txtVoltageMin.Text = nBatteryMin
@@ -269,6 +271,16 @@ Public Class frmSettings
         chkInstVertical.Checked = bInstruments(e_Instruments.e_Instruments_Vertical)
         chkInstTurn.Checked = bInstruments(e_Instruments.e_Instruments_Turn)
         chkInstBattery.Checked = bInstruments(e_Instruments.e_Instruments_Battery)
+        chkInstPitchDial.Checked = bInstruments(e_Instruments.e_Instruments_Pitch)
+        chkInstRollDial.Checked = bInstruments(e_Instruments.e_Instruments_Roll)
+        chkInstYawDial.Checked = bInstruments(e_Instruments.e_Instruments_Yaw)
+        chkInstStatus.Checked = bInstruments(e_Instruments.e_Instruments_GpsStatus)
+        chkInstText.Checked = bInstruments(e_Instruments.e_Instruments_InstrumentText)
+        chkInstControl.Checked = bInstruments(e_Instruments.e_Instruments_Controls)
+
+        chkInstrSmoothInstruments.Checked = bSmoothInstruments
+        chkInstSmooth3D.Checked = bSmooth3DModel
+
         chkManuelMode.Checked = bManuelMode
 
         chkAnnounceWaypoints.Checked = bAnnounceWaypoints
@@ -368,8 +380,13 @@ Public Class frmSettings
 
         If cbo3DModel.Text <> sModelName Then
             sModelName = cbo3DModel.Text
-            frmMain._3DMesh1.DrawMesh(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), True, sModelName, GetRootPath() & "3D Models\")
+            frmMain._3DMesh1.UpdateModel(GetPitch(nPitch), GetRoll(nRoll), GetYaw(nYaw), True, sModelName, GetRootPath() & "3D Models\")
             frmMain.WebBrowser1.Invoke(New MyDelegate(AddressOf frmMain.loadModel))
+        End If
+
+        If nTinyWebPort <> txtGoogleEarthTinyWeb.Text And IsNumeric(txtGoogleEarthTinyWeb.Text) = True Then
+            nTinyWebPort = txtGoogleEarthTinyWeb.Text
+            LaunchTinyWeb(True)
         End If
 
         sLanguageFile = aLanguages(cboLanguage.SelectedIndex)
@@ -383,19 +400,28 @@ Public Class frmSettings
         bInstruments(e_Instruments.e_Instruments_Vertical) = chkInstVertical.Checked
         bInstruments(e_Instruments.e_Instruments_Turn) = chkInstTurn.Checked
         bInstruments(e_Instruments.e_Instruments_Battery) = chkInstBattery.Checked
+        bInstruments(e_Instruments.e_Instruments_Pitch) = chkInstPitchDial.Checked
+        bInstruments(e_Instruments.e_Instruments_Roll) = chkInstRollDial.Checked
+        bInstruments(e_Instruments.e_Instruments_Yaw) = chkInstYawDial.Checked
+        bInstruments(e_Instruments.e_Instruments_GpsStatus) = chkInstStatus.Checked
+        bInstruments(e_Instruments.e_Instruments_InstrumentText) = chkInstText.Checked
+        bInstruments(e_Instruments.e_Instruments_Controls) = chkInstControl.Checked
+
+        bSmoothInstruments = chkInstrSmoothInstruments.Checked
+        bSmooth3DModel = chkInstSmooth3D.Checked
 
         On Error Resume Next
         nBatteryMax = Convert.ToSingle(txtVoltageMax.Text)
         nBatteryMin = Convert.ToSingle(txtVoltageMin.Text)
-        oBatteryColor = cboVoltageColor.SelectedIndex
+        'oBatteryColor = cboVoltageColor.SelectedIndex
 
         nAmperageMax = Convert.ToSingle(txtAmperageMax.Text)
 
         nMAHMax = Convert.ToSingle(txtMAHMax.Text)
         nMAHMin = Convert.ToSingle(txtMAHMin.Text)
-        oMAHColor = cboMAHColor.SelectedIndex
+        'oMAHColor = cboMAHColor.SelectedIndex
 
-        oThrottleColor = cboThrottleColor.SelectedIndex
+        'oThrottleColor = cboThrottleColor.SelectedIndex
 
         sSpeechVoice = cboVoice.Text
         bAnnounceWaypoints = chkAnnounceWaypoints.Checked

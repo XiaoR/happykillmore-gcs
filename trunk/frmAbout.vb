@@ -4,8 +4,8 @@ Public Class frmAbout
     Public Sub ResetForm()
         LoadLanguageFile()
 
-        mnuTitle.Text = "HappyKillmore's" & vbCrLf & GetResString(, "Ground_Control_Station")
-        lblVersion.Text = GetResString(, "Version", True) & " " & Version
+        mnuTitle.Text = "HK's " & GetResString(, "Ground_Control_Station") & " - Lite Version"
+        lblVersion.Text = Version
 
         If bIsSplash = True Then
             Me.Text = GetResString(, "Starting_GCS", , , , "HappyKillmore's GCS") & "..."
@@ -15,10 +15,10 @@ Public Class frmAbout
         End If
 
         GetResString(lblProjectHomepageLabel, "Project_Homepage")
-        GetResString(lblHappyKillmoreEmailLabel, "HappyKillmores_Email")
+        'GetResString(lblHappyKillmoreEmailLabel, "HappyKillmores_Email")
         GetResString(lbl3DModelLabel, "_3D_Models_From")
         GetResString(lblSupportedProtocolsLabel, "Supported_Protocols")
-        GetResString(lblOriginalInstrumentLabel, "Original_Instruments")
+        'GetResString(lblOriginalInstrumentLabel, "Original_Instruments")
 
         GetResString(cmdOk, "OK")
     End Sub
@@ -31,9 +31,9 @@ Public Class frmAbout
         System.Diagnostics.Process.Start("mailto:" & lblEmailHappyKillmore.Text)
     End Sub
 
-    Private Sub lblInstruments_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblInstruments.Click
-        System.Diagnostics.Process.Start(lblInstruments.Text)
-    End Sub
+    'Private Sub lblInstruments_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    System.Diagnostics.Process.Start(lblInstruments.Text)
+    'End Sub
 
     Private Sub lblOpenPilot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblOpenPilot.Click
         System.Diagnostics.Process.Start(lblOpenPilot.Text)

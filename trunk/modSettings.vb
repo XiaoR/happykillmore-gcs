@@ -1,5 +1,6 @@
 Module modSettings
-    Public Const g_Default_DAE_URL = "http://www.happykillmore.com/Software/HK_GCS/3D Models/"
+    'Public Const g_Default_DAE_URL = "http://www.happykillmore.com/Software/HK_GCS/3D Models/"
+    Public Const g_Default_DAE_URL = "http://127.0.0.1"
 
     Public nMapUpdateRate As Integer = 2
     Public sModelName As String = "EasyStar"
@@ -20,10 +21,14 @@ Module modSettings
 
     Public bInstruments(0 To e_Instruments_Max) As Boolean
     Public b3DModelFailed As Boolean = False
+    Public bSmoothInstruments As Boolean
+    Public bSmooth3DModel As Boolean
 
     Public bFlightExtrude As Boolean = True
     Public sFlightColor As String
     Public nFlightWidth As Integer = 2
+
+    Public nTinyWebPort As Integer
 
     Public bMissionExtrude As Boolean = True
     Public bMissionClampToGround As Boolean
@@ -54,12 +59,15 @@ Module modSettings
     Public nTrackingOutputType As Integer
 
     Public nConfigDevice As e_ConfigDevice
+    Public nConfigSubDevice As e_ConfigSubDevice
     Public nConfigVehicle As Integer
     Public sConfigFormatString As String = "0.000000"
     Public nConfigAltOffset As e_AltOffset
 
     Public sJoystickDevice As String
     Public nJoystickOutput As e_JoystickOutput
+
+    Public nVarioInstrument As Byte
 
     Public bHeartbeat1 As Boolean
     Public bHeartbeat2 As Boolean
@@ -107,6 +115,8 @@ Module modSettings
     Public sHeartbeat5 As String
     Public sHeartbeat6 As String
 
+    Public nHeartbeatMavlink As Integer
+
     Public eOldSpeedUnits As Integer
     Public eOldDistanceUnits As Integer
 
@@ -136,6 +146,12 @@ Module modSettings
         e_ConfigDevice_MAVlink
         e_ConfigDevice_Gluonpilot
         e_ConfigDevice_FY21AP
+    End Enum
+
+    Public Enum e_ConfigSubDevice
+        e_ConfigSubDevice_APM = 0
+        e_ConfigSubDevice_ACM
+        e_ConfigSubDevice_UDB
     End Enum
 
     Public Sub LoadSettings()
@@ -173,6 +189,8 @@ Module modSettings
 
         nMavlinkTelemetryRate = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Mavlink Telemetry Rate", "4"))
 
+        nVarioInstrument = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings", "Vario Instrument", 0))
+
         bMissionExtrude = GetRegSetting(sRootRegistry & "\Settings", "Mission Extrude", True)
         sMissionColor = GetRegSetting(sRootRegistry & "\Settings", "Mission Color", "720000FF")
         nMissionWidth = GetRegSetting(sRootRegistry & "\Settings", "Mission Width", 1)
@@ -207,7 +225,7 @@ Module modSettings
         frmMain.AirSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(nGroundSpeed, nMaxSpeed, GetResString(, "Speed"), sSpeedUnits)
         'End If
         'If bInstruments(e_Instruments.e_Instruments_Turn) = True Then
-        frmMain.TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(GetRoll(-nRoll), 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
+        frmMain.TurnCoordinatorInstrumentControl1.SetTurnCoordinatorParameters(nYaw, 0, UCase(GetResString(, "Turn_Coordinator")), GetResString(, "Left"), GetResString(, "Right"))
         'End If
         'If bInstruments(e_Instruments.e_Instruments_Vertical) = True Then
         frmMain.VerticalSpeedIndicatorInstrumentControl1.SetVerticalSpeedIndicatorParameters(nAltChange, LCase(GetResString(, "Vertical_Speed")), GetResString(, "Up"), GetResString(, "Down"), "100ft/min")
@@ -217,6 +235,11 @@ Module modSettings
         For nCount = 0 To UBound(bInstruments)
             bInstruments(nCount) = GetRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, IIf(nCount <= 4 Or nCount = 7, True, False))
         Next
+
+        nTinyWebPort = GetRegSetting(sRootRegistry & "\Settings", "TinyWeb Port", 8000)
+
+        bSmoothInstruments = GetRegSetting(sRootRegistry & "\Settings", "Smooth Instruments", True)
+        bSmooth3DModel = GetRegSetting(sRootRegistry & "\Settings", "Smooth 3D", False)
 
         nBatteryMax = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Max", "12.5"))
         nBatteryMin = ConvertPeriodToLocal(GetRegSetting(sRootRegistry & "\Settings", "Battery Min", 9))
@@ -262,6 +285,9 @@ Module modSettings
 
         frmMain.txtMissionDefaultAlt.Text = ConvertDistance(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Altitude", 200), e_DistanceFormat.e_DistanceFormat_Feet, eDistanceUnits)
         frmMain.txtMissionAttoDefaultSpeed.Text = ConvertSpeed(GetRegSetting(sRootRegistry & "\Settings", "Default Mission Atto Speed", 50), e_SpeedFormat.e_SpeedFormat_MPerSec, eSpeedUnits)
+
+        frmMain.chkDataFileSaveBinary.Checked = GetRegSetting(sRootRegistry & "\Settings", "Save Data File Binary", False)
+        frmMain.chkVarioenable.Checked = GetRegSetting(sRootRegistry & "\Settings", "Enable Vario", False)
 
         sJoystickDevice = GetRegSetting(sRootRegistry & "\Settings\Joystick", "Device", "")
         nJoystickOutput = GetRegSetting(sRootRegistry & "\Settings\Joystick", sJoystickDevice & " Output", 0)
@@ -327,6 +353,15 @@ Module modSettings
         sHeartbeat5 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Output", "$PMTK220,250*29<CR><LF>$PGCMD,16,0,0,0,0,0*6A<CR><LF>")
         sHeartbeat6 = GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Output", "$PMTK330,220*2E<CR><LF>$PMTK313,1*2E<CR><LF>$PMTK301,2*2E<CR><LF>$PMTK220,200*2C<CR><LF>$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28<CR><LF>")
 
+        nHeartbeatMavlink = Convert.ToInt32(GetRegSetting(sRootRegistry & "\Settings\Heartbeat", "Mavlink Heartbeat Rate", "1"))
+
+        If bSmooth3DModel = True Or bSmoothInstruments = True Then
+            frmMain.tmrEase.Interval = 8
+            frmMain.tmrEase.Enabled = True
+        Else
+            frmMain.tmrEase.Enabled = False
+        End If
+
         If frmMain.bStartup = False Then
             'frmMain.SetMapMode()
             'If webDocument Is Nothing Then
@@ -349,6 +384,8 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings", "Google Earth Key", sGoogleEarthKey)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Language File", sLanguageFile)
+
+        SaveRegSetting(sRootRegistry & "\Settings", "TinyWeb Port", nTinyWebPort)
 
         SaveRegSetting(sRootRegistry & "\Settings", "3D Model", sModelName)
         SaveRegSetting(sRootRegistry & "\Settings", "Max Speed", nMaxSpeed)
@@ -390,6 +427,8 @@ Module modSettings
         For nCount = 0 To UBound(bInstruments)
             SaveRegSetting(sRootRegistry & "\Settings", "Show Instrument " & nCount, bInstruments(nCount))
         Next
+        SaveRegSetting(sRootRegistry & "\Settings", "Smooth Instruments", bSmoothInstruments)
+        SaveRegSetting(sRootRegistry & "\Settings", "Smooth 3D", bSmooth3DModel)
 
         SaveRegSetting(sRootRegistry & "\Settings", "Battery Max", nBatteryMax)
         SaveRegSetting(sRootRegistry & "\Settings", "Battery Min", nBatteryMin)
@@ -494,6 +533,9 @@ Module modSettings
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "4 Output", sHeartbeat4)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "5 Output", sHeartbeat5)
         SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "6 Output", sHeartbeat6)
+
+        SaveRegSetting(sRootRegistry & "\Settings\Heartbeat", "Mavlink Heartbeat Rate", nHeartbeatMavlink)
+
 
         If nSpeechInterval < 10 Then
             nSpeechInterval = 10

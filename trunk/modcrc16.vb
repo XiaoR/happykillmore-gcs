@@ -81,6 +81,7 @@ Module modcrc16
 
             Return arr
         Catch ex As Exception
+            Debug.Print("Warning: MAVlink packet size set incorrectly")
         End Try
     End Function
     Public Function crc_calculate_long(ByVal inputBytes() As Byte) As Long

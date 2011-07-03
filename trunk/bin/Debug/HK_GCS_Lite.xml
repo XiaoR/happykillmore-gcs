@@ -1,0 +1,1398 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+HK_GCS_Lite
+</name>
+</assembly>
+<members>
+<member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AirSpeedIndicatorInstrumentControl.SetAirSpeedIndicatorParameters(System.Single,System.Int32,System.String,System.String,System.Single)">
+ Define the physical value to be displayed on the indicator
+ The aircraft air speed in kts
+
+</member><member name="P:HK_GCS_Lite.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:HK_GCS_Lite.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.ACMModes">
+	<summary>
+  Looks up a localized string similar to // Auto Copter modes
+// ----------------
+Stabilize,100,0
+Acrobatic,101,0
+Simple,102,0
+Altitude Hold,103,0
+Auto - Mission,4,3
+Guided - Loiter,3,2
+Auto - Loiter,4,8
+Auto - Return to Launch,4,5
+.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.APMCommands">
+	<summary>
+  Looks up a localized string similar to // Command IDs
+// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},&lt;Multiplier&gt;,~Format~
+//16,Waypoint,Hold Time ~0.0~,Radius [m] ~0.00~ (Acceptance radius - if the sphere with this radius is hit the waypoint counts as reached),,,Latitude,Longitude,Altitude [m] ~0.00~
+16,Waypoint,,,,,Latitude,Longitude,Altitude [m] ~0.00~
+//17,Loiter,,,Radius [m] ~0.00~ (Radius around waypoint. If positive loiter clockwise else counter-clockwise),,Latitude,Longitude,Altitude [m] ~0.00~
+//18,Loiter Turns,Tu [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.APMModes">
+	<summary>
+  Looks up a localized string similar to // Auto Pilot modes
+// ----------------
+Manual,2,0
+Guided - Take-off,3,1
+Guided - Loiter,3,2
+Guided - Landing,3,6
+Stabilize,5,0
+Fly By Wire A,6,1
+Fly By Wire B,6,2
+Fly By Wire C,6,3
+Auto - Mission,4,3
+Auto - Return to Launch,4,5
+Auto - Loiter,4,8
+//Takeoff 13
+//Land 14
+//Waypoint 16
+//Circle,1
+.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.APMSetConfig">
+	<summary>
+  Looks up a localized string similar to //EEPROM variable name,Min,Max,Default,Multiplier,Enabled (0 = no, 1 = yes),Comment
+MAH,,,,,1,
+CURRENT_ENABLE,,,,,1,
+AOA,,,,,1,
+MAG_ENABLE,,,,,1,
+HDNG2RLL_P,0,5,0.7,1,1,NAV_ROLL_P - Navigation control gains, Tuning values for the navigation control PID loops, The P term is the primary tuning value.  This determines how the control deflection varies in proportion to the required correction.
+HDNG2RLL_I,0,1,0.01,1,1,NAV_ROLL_I - Navigation control gains, Tuning values for the navigation control PID loops [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.AttoSetConfig">
+	<summary>
+  Looks up a localized string similar to $1,Mix Enable,0,1,0,Enable flag for Elevon/V-tail mixing. 0 = FALSE, 1 = TRUE
+$2,Mix Servo1 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 1 servo direction
+$3,Mix Servo2 Sign,-1,1,1,If Mixing for Elevon/V-tail is enabled, this is Elevon 2 servo direction
+$4,Servo 1 Gain,0,100,10,Is 10x format. Aileron, or with elevons it is the aileron component of the mix
+$5,Servo 2 Gain,0,100,10,Is 10x format. Elevator, or with elevons it is the elevator component of the mix
+$6,Servo 3 Gain,0,100 [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.GluonCommands">
+	<summary>
+  Looks up a localized string similar to // Command IDs
+// (Tool Tip comment),[Unit],{ComboBox Options with Semi Colons},&lt;Multiplier&gt;,~Format~
+0,Empty
+1,Climb,Climb To [m] ~0.00~
+2,From to Relative,Circle Center (North) [m] ~0.00~,Circle Center (East) [m] ~0.00~,Circle Radius [m] ~0.00~,Height [m] ~0.00~
+3,From to Absolute,Latitude,Longitude,Altitude
+4,Fly to Relative,Distance (North) [m] ~0.00~,Distance (East) [m] ~0.00~,Altitude [m] ~0.00~
+5,Fly to Absolute,Latitude,Longitude,Altitude [m] ~0.00~
+6,Goto Line,Line Number
+7,Circle Absolute [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.TextFiles.GluonSetConfig">
+	<summary>
+  Looks up a localized string similar to //Arg Number,Name,Min,Max,Default,Mult,Add,Bit,Desc
+1,acc_x_neutral,,,,1,0,,
+2,acc_y_neutral,,,,1,0,,
+3,acc_z_neutral,,,,1,0,,
+4,gyro_x_neutral,,,,1,0,,
+5,gyro_y_neutral,,,,1,0,,
+6,gyro_z_neutral,,,,1,0,,
+
+7,telemetry_basicgps,0,10,,1,0,,
+8,telemetry_ppm,0,10,,1,0,,
+9,telemetry_gyroaccraw,0,10,,1,0,,
+10,telemetry_gyroaccproc,0,10,,1,0,,
+11,telemetry_pressuretemp,0,10,,1,0,,
+12,telemetry_attitude,0,10,,1,0,,
+
+13,gps_initial_baudrate,,,,10,0,,
+14,gps_operational_baudrate,,,,10,0,,
+
+15,channe [rest of string was truncated]";.
+</summary>
+</member><member name="T:HK_GCS_Lite.My.Resources.TextFiles">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.BatteryIndicatorInstrumentControl.SetBatteryIndicatorParameters(System.String,System.Single,System.Single,System.Single,HK_GCS_Lite.modGlobal.e_InstrumentColor,System.Single,System.Single,System.Single,HK_GCS_Lite.modGlobal.e_InstrumentColor,System.Int64,System.Int64,System.Int64,HK_GCS_Lite.modGlobal.e_InstrumentColor,System.Single,HK_GCS_Lite.modGlobal.e_InstrumentColor)">
+ Define the physical value to be displayed on the indicator
+ The aircraft air speed in kts
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl.SetAttitudeIndicatorParameters(System.Double,System.Double)">
+ Define the physical value to be displayed on the indicator
+ The aircraft pitch angle in °deg
+ The aircraft roll angle in °deg
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.DialControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.DialControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.DialControl.SetDialIndicatorParameters(System.Single,System.String,System.Int32)">
+ Define the physical value to be displayed on the indicator
+ The aircraft air speed in kts
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.TurnCoordinatorInstrumentControl.SetTurnCoordinatorParameters(System.Single,System.Single,System.String,System.String,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft turn rate in °deg per minutes
+ The aircraft turn quality
+
+</member><member name="P:HK_GCS_Lite.My.Resources.GoogleResources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.GoogleResources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.GoogleResources.Maps">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"&gt;
+ 
+&lt;head&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="include.css" /&gt;
+&lt;meta http-equiv="content-type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;meta name="author" content="HappyKillmore based on samples from Wolfgang Pichler" /&gt;
+&lt;meta name="URL"  [rest of string was truncated]";.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.GoogleResources.pluginhost">
+	<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+    &lt;title&gt;Google Earth Plug-in&lt;/title&gt;
+    &lt;!-- NOTE: replace the key below with your own key --&gt;
+    &lt;script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA0Fr-33jU5znk3eeIujbO7BTJMCHS-jujuL6EC_OZAQIbzgaqGxSc7loBqiXeUNQ8d7DjBpAZtmBctg"&gt;&lt;/script&gt;
+    &lt; [rest of string was truncated]";.
+</summary>
+</member><member name="T:HK_GCS_Lite.My.Resources.GoogleResources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.AltimeterInstrumentControl.SetAlimeterParameters(System.Int32,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft altitude in ft
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.StatusInstrument.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.StatusInstrument.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings._2D_Lock">
+	<summary>
+  Looks up a localized string similar to 2D Lock.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings._3D_Lock">
+	<summary>
+  Looks up a localized string similar to 3D Lock.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings._3D_Model">
+	<summary>
+  Looks up a localized string similar to 3D Model.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings._3D_Models_From">
+	<summary>
+  Looks up a localized string similar to 3D Models from OpenPilot Project.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.About">
+	<summary>
+  Looks up a localized string similar to About.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Accel_Mult">
+	<summary>
+  Looks up a localized string similar to &amp;1 Accel.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Air_Speed">
+	<summary>
+  Looks up a localized string similar to Air Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.AirGround_Speed">
+	<summary>
+  Looks up a localized string similar to Air/Ground Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Already_Exists">
+	<summary>
+  Looks up a localized string similar to &amp;1 already exists.^Overwrite output file?.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Altimeter">
+	<summary>
+  Looks up a localized string similar to Altimeter.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Altitude_Hold_Mode">
+	<summary>
+  Looks up a localized string similar to Altitude Hold Mode.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Altitude_Offset">
+	<summary>
+  Looks up a localized string similar to Altitude Offset.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Amperage_Color">
+	<summary>
+  Looks up a localized string similar to Amperage Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Amps">
+	<summary>
+  Looks up a localized string similar to Amps.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Alarm_Default">
+	<summary>
+  Looks up a localized string similar to Danger! Danger! Signal lost for more than {alarm} seconds.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_ModeChange">
+	<summary>
+  Looks up a localized string similar to Announce Mode Change.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_ModeChange_Default">
+	<summary>
+  Looks up a localized string similar to Changed mode to {mode}.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Regular_Interval">
+	<summary>
+  Looks up a localized string similar to Announce Regular Interval.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Regular_Interval_Default">
+	<summary>
+  Looks up a localized string similar to en route to waypoint {wpn}, altitude is {alt} feet, ground speed is {gsp} miles per hour.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Warning_Default">
+	<summary>
+  Looks up a localized string similar to Warning, Signal lost for {warning} seconds.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Waypoints">
+	<summary>
+  Looks up a localized string similar to Announce Waypoints.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Announce_Waypoints_Default">
+	<summary>
+  Looks up a localized string similar to Arrived, Now heading to waypoint {wpn}.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.AP_Mega_Binary">
+	<summary>
+  Looks up a localized string similar to AP Mega Binary.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.ArduIMU_Binary">
+	<summary>
+  Looks up a localized string similar to ArduIMU Binary.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.ArduPilot_Message">
+	<summary>
+  Looks up a localized string similar to ArduPilot Message.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Assisted_RC">
+	<summary>
+  Looks up a localized string similar to Assisted RC.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Attitude">
+	<summary>
+  Looks up a localized string similar to Attitude.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Attitude_Data">
+	<summary>
+  Looks up a localized string similar to Attitude Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Auto_Balance_Mode">
+	<summary>
+  Looks up a localized string similar to Auto Balance Mode.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Auto_Scroll">
+	<summary>
+  Looks up a localized string similar to Auto Scroll.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Autonomous">
+	<summary>
+  Looks up a localized string similar to Autonomous.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Battery">
+	<summary>
+  Looks up a localized string similar to Battery.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Battery_Throttle">
+	<summary>
+  Looks up a localized string similar to Battery &amp;&amp; Throttle.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Battery_Throttle_Settings">
+	<summary>
+  Looks up a localized string similar to Battery &amp;&amp; Throttle Settings.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Baud_Rate">
+	<summary>
+  Looks up a localized string similar to Baud Rate.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Blue">
+	<summary>
+  Looks up a localized string similar to Blue.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Building_Map_Files">
+	<summary>
+  Looks up a localized string similar to Building Map Files.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Cancel">
+	<summary>
+  Looks up a localized string similar to Cancel.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Carriage_Return">
+	<summary>
+  Looks up a localized string similar to Carriage Return.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Center_On_Plane">
+	<summary>
+  Looks up a localized string similar to Center On Plane.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Change_Model_Scale">
+	<summary>
+  Looks up a localized string similar to Change Model Scale.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Channel_Raw">
+	<summary>
+  Looks up a localized string similar to Channel Raw.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Chase_Cam">
+	<summary>
+  Looks up a localized string similar to Chase Cam.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Checking_baud">
+	<summary>
+  Looks up a localized string similar to Checking &amp;1 baud.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Clear_Map">
+	<summary>
+  Looks up a localized string similar to Clear Map.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.COM_Port">
+	<summary>
+  Looks up a localized string similar to COM Port.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Command_Line">
+	<summary>
+  Looks up a localized string similar to Command Line.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Connect">
+	<summary>
+  Looks up a localized string similar to Connect.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Connected_to">
+	<summary>
+  Looks up a localized string similar to Connected to &amp;1 at &amp;2.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Current_Culture">
+	<summary>
+  Looks up a localized string similar to Current Culture.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Current_Waypoint">
+	<summary>
+  Looks up a localized string similar to Current Waypoint.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Custom_Binary">
+	<summary>
+  Looks up a localized string similar to Custom Binary.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Cyan">
+	<summary>
+  Looks up a localized string similar to Cyan.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Data_File">
+	<summary>
+  Looks up a localized string similar to Data File.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Data_Points">
+	<summary>
+  Looks up a localized string similar to Data Points.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Default_Language">
+	<summary>
+  Looks up a localized string similar to Default Language.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Disconnect">
+	<summary>
+  Looks up a localized string similar to Disconnect.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Disconnect_from">
+	<summary>
+  Looks up a localized string similar to Disconnected from &amp;1.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Distance">
+	<summary>
+  Looks up a localized string similar to Distance.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Distance_Units">
+	<summary>
+  Looks up a localized string similar to Distance Units.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Down">
+	<summary>
+  Looks up a localized string similar to down.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Draw_Full_Mission">
+	<summary>
+  Looks up a localized string similar to Draw Full Mission.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Error_Message">
+	<summary>
+  Looks up a localized string similar to Error.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Exit_Label">
+	<summary>
+  Looks up a localized string similar to Exit.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Expand">
+	<summary>
+  Looks up a localized string similar to Expand.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Extrude">
+	<summary>
+  Looks up a localized string similar to Extrude.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Features">
+	<summary>
+  Looks up a localized string similar to Features.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Feet">
+	<summary>
+  Looks up a localized string similar to Feet.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.File">
+	<summary>
+  Looks up a localized string similar to File.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.First_Person">
+	<summary>
+  Looks up a localized string similar to First Person.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Flight_Path_Color">
+	<summary>
+  Looks up a localized string similar to Flight Path Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.From_HomeAlt">
+	<summary>
+  Looks up a localized string similar to From Home Alt.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.From_Sealevel">
+	<summary>
+  Looks up a localized string similar to From Sea Level.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Full">
+	<summary>
+  Looks up a localized string similar to Full.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GE_Borders">
+	<summary>
+  Looks up a localized string similar to Borders.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GE_Buildings">
+	<summary>
+  Looks up a localized string similar to 3D Buildings.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GE_Roads">
+	<summary>
+  Looks up a localized string similar to Roads.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GE_Terrain">
+	<summary>
+  Looks up a localized string similar to Terrain.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GE_Trees">
+	<summary>
+  Looks up a localized string similar to 3D Trees.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.General">
+	<summary>
+  Looks up a localized string similar to General.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Geonavigation_Data">
+	<summary>
+  Looks up a localized string similar to Geonavigation Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Global_Position">
+	<summary>
+  Looks up a localized string similar to Global Position.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Google_Earth">
+	<summary>
+  Looks up a localized string similar to Google Earth.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Google_Earth_Flight_Path">
+	<summary>
+  Looks up a localized string similar to Google Earth Flight Path.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Data">
+	<summary>
+  Looks up a localized string similar to GPS Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Lock">
+	<summary>
+  Looks up a localized string similar to GPS Lock.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Message">
+	<summary>
+  Looks up a localized string similar to GPS Msg.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Raw">
+	<summary>
+  Looks up a localized string similar to GPS Raw.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Status">
+	<summary>
+  Looks up a localized string similar to GPS Status.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Time">
+	<summary>
+  Looks up a localized string similar to GPS Time.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.GPS_Type">
+	<summary>
+  Looks up a localized string similar to GPS Type.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Green">
+	<summary>
+  Looks up a localized string similar to Green.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Ground_Control_Station">
+	<summary>
+  Looks up a localized string similar to Ground Control Station.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Ground_Speed">
+	<summary>
+  Looks up a localized string similar to Ground Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Gyro_Mult">
+	<summary>
+  Looks up a localized string similar to &amp;1 Gyro.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.HappyKillmores_Email">
+	<summary>
+  Looks up a localized string similar to HappyKillmore's Email.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.HDOP">
+	<summary>
+  Looks up a localized string similar to HDOP.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Heading">
+	<summary>
+  Looks up a localized string similar to Heading.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Heatbeat_Data">
+	<summary>
+  Looks up a localized string similar to Heatbeat Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Help">
+	<summary>
+  Looks up a localized string similar to Help.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Hertz">
+	<summary>
+  Looks up a localized string similar to Hertz.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Highly_Assisted">
+	<summary>
+  Looks up a localized string similar to Highly Assisted.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.In_Label">
+	<summary>
+  Looks up a localized string similar to In.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Instrument_Selection">
+	<summary>
+  Looks up a localized string similar to Instrument Selection.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Instruments">
+	<summary>
+  Looks up a localized string similar to Instruments.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Interval">
+	<summary>
+  Looks up a localized string similar to Interval.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Invalid_File">
+	<summary>
+  Looks up a localized string similar to Invalid File.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Invalid_Mission_File_Format">
+	<summary>
+  Looks up a localized string similar to Invalid Mission File Format.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Knots">
+	<summary>
+  Looks up a localized string similar to Knots.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.KPH">
+	<summary>
+  Looks up a localized string similar to km/h.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Language">
+	<summary>
+  Looks up a localized string similar to Language.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Latitude">
+	<summary>
+  Looks up a localized string similar to Latitude.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Left">
+	<summary>
+  Looks up a localized string similar to L.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Line_Feed">
+	<summary>
+  Looks up a localized string similar to Line Feed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Line_Feed_Carriage_Return">
+	<summary>
+  Looks up a localized string similar to Line Feed+Carriage Return.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Live_Camera">
+	<summary>
+  Looks up a localized string similar to Live Camera.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Loading_COM_Ports">
+	<summary>
+  Looks up a localized string similar to Loading COM Ports.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Loading_Settings">
+	<summary>
+  Looks up a localized string similar to Loading Settings.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Location_Data">
+	<summary>
+  Looks up a localized string similar to Location Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Locked">
+	<summary>
+  Looks up a localized string similar to Locked.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Loiter">
+	<summary>
+  Looks up a localized string similar to Loiter.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Longitude">
+	<summary>
+  Looks up a localized string similar to Longitude.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.m_s">
+	<summary>
+  Looks up a localized string similar to m/s.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mag_Mult">
+	<summary>
+  Looks up a localized string similar to &amp;1 Mag.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.mAh">
+	<summary>
+  Looks up a localized string similar to mAh.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.MAH_Color">
+	<summary>
+  Looks up a localized string similar to mAh Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Manual_Mode">
+	<summary>
+  Looks up a localized string similar to Manual Mode.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Map_Update_Rate">
+	<summary>
+  Looks up a localized string similar to Map Update Rate.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Map_View">
+	<summary>
+  Looks up a localized string similar to Map View.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_Amperage">
+	<summary>
+  Looks up a localized string similar to Max Amperage.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_Attitude">
+	<summary>
+  Looks up a localized string similar to Max Attitude.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_GPS">
+	<summary>
+  Looks up a localized string similar to Max GPS.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_MAH">
+	<summary>
+  Looks up a localized string similar to Max mAh.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_Speed">
+	<summary>
+  Looks up a localized string similar to Max Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_Voltage">
+	<summary>
+  Looks up a localized string similar to Max Voltage.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Max_Waypoint">
+	<summary>
+  Looks up a localized string similar to Max Waypoint.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Meters">
+	<summary>
+  Looks up a localized string similar to Meters.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.min">
+	<summary>
+  Looks up a localized string similar to min.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Min_MAH">
+	<summary>
+  Looks up a localized string similar to Min mAh.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Min_Voltage">
+	<summary>
+  Looks up a localized string similar to Min Voltage.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.mins">
+	<summary>
+  Looks up a localized string similar to mins.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mission">
+	<summary>
+  Looks up a localized string similar to Mission.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mission_Path">
+	<summary>
+  Looks up a localized string similar to Mission Path.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mission_Path_Color">
+	<summary>
+  Looks up a localized string similar to Mission Path Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mode">
+	<summary>
+  Looks up a localized string similar to Mode.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Mode_Change">
+	<summary>
+  Looks up a localized string similar to Mode Change.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.MPH">
+	<summary>
+  Looks up a localized string similar to MPH.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.No">
+	<summary>
+  Looks up a localized string similar to No.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.No_line_ending">
+	<summary>
+  Looks up a localized string similar to No line ending.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.No_Tracking">
+	<summary>
+  Looks up a localized string similar to No Tracking.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.None">
+	<summary>
+  Looks up a localized string similar to None.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Normal">
+	<summary>
+  Looks up a localized string similar to Normal.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Not_Locked">
+	<summary>
+  Looks up a localized string similar to Not Locked.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.OK">
+	<summary>
+  Looks up a localized string similar to OK.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Open_Downloads">
+	<summary>
+  Looks up a localized string similar to Open Download List.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Open_Homepage">
+	<summary>
+  Looks up a localized string similar to Open Project Homepage.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Orange">
+	<summary>
+  Looks up a localized string similar to Orange.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Original_Instruments">
+	<summary>
+  Looks up a localized string similar to Original Instrument Code by Guillaume CHOUTEAU.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Out_Label">
+	<summary>
+  Looks up a localized string similar to Out.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Overhead">
+	<summary>
+  Looks up a localized string similar to Overhead.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Overwrite_File">
+	<summary>
+  Looks up a localized string similar to Overwrite File.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Path_Opacity">
+	<summary>
+  Looks up a localized string similar to Path Opacity.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Path_Thickness">
+	<summary>
+  Looks up a localized string similar to Path Thickness.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Pause">
+	<summary>
+  Looks up a localized string similar to Pause.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Pitch">
+	<summary>
+  Looks up a localized string similar to Pitch.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Play">
+	<summary>
+  Looks up a localized string similar to Play.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Project_Homepage">
+	<summary>
+  Looks up a localized string similar to Project Homepage.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Properties">
+	<summary>
+  Looks up a localized string similar to Properties.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Protocol">
+	<summary>
+  Looks up a localized string similar to Protocol.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Purple">
+	<summary>
+  Looks up a localized string similar to Purple.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Raw_Data">
+	<summary>
+  Looks up a localized string similar to Raw Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Raw_IMU">
+	<summary>
+  Looks up a localized string similar to Raw IMU.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.RC_Channels_Scaled">
+	<summary>
+  Looks up a localized string similar to R/C Channels Scaled.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Record">
+	<summary>
+  Looks up a localized string similar to Record.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Red">
+	<summary>
+  Looks up a localized string similar to Red.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reload_Com_Port_List">
+	<summary>
+  Looks up a localized string similar to Reload COM Port List.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reload_Letter">
+	<summary>
+  Looks up a localized string similar to R.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reload_Mission">
+	<summary>
+  Looks up a localized string similar to Reload Mission.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reload_Mission_Directory">
+	<summary>
+  Looks up a localized string similar to Reload Mission Directory.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reload_Output_File_List">
+	<summary>
+  Looks up a localized string similar to Reload Output File List.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reset_Run_Timer">
+	<summary>
+  Looks up a localized string similar to Reset Run Timer.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Resizing_Form">
+	<summary>
+  Looks up a localized string similar to Resizing Form.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Return_Home">
+	<summary>
+  Looks up a localized string similar to Return Home.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Reversed">
+	<summary>
+  Looks up a localized string similar to Reversed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Rewind_To_Beginning">
+	<summary>
+  Looks up a localized string similar to Rewind to Beginning.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Right">
+	<summary>
+  Looks up a localized string similar to R.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Roll">
+	<summary>
+  Looks up a localized string similar to Roll.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Run_Time">
+	<summary>
+  Looks up a localized string similar to Run Time.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Satellites">
+	<summary>
+  Looks up a localized string similar to Satellites.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Save">
+	<summary>
+  Looks up a localized string similar to Save.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Search_Baud">
+	<summary>
+  Looks up a localized string similar to Search Baud.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Search_COM">
+	<summary>
+  Looks up a localized string similar to Search COM.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.sec">
+	<summary>
+  Looks up a localized string similar to sec.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.secs">
+	<summary>
+  Looks up a localized string similar to secs.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Select_Data_File_Directory">
+	<summary>
+  Looks up a localized string similar to Select Data File Directory.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Send">
+	<summary>
+  Looks up a localized string similar to Send.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Sensors">
+	<summary>
+  Looks up a localized string similar to Sensors.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Serial_Data">
+	<summary>
+  Looks up a localized string similar to Serial Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Serial_Settings">
+	<summary>
+  Looks up a localized string similar to Serial Settings.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Servo_Mult">
+	<summary>
+  Looks up a localized string similar to Servo &amp;1.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Servos">
+	<summary>
+  Looks up a localized string similar to Servos.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Set_Home">
+	<summary>
+  Looks up a localized string similar to Set Home.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Setting_Up_Comboboxes">
+	<summary>
+  Looks up a localized string similar to Setting up Comboboxes.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Setting_Up_Webbrowser">
+	<summary>
+  Looks up a localized string similar to Setting up Webbrowser.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Settings">
+	<summary>
+  Looks up a localized string similar to Settings.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Shrink">
+	<summary>
+  Looks up a localized string similar to Shrink.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Socket_Num">
+	<summary>
+  Looks up a localized string similar to Socket Num.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Speech">
+	<summary>
+  Looks up a localized string similar to Speech.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Speed">
+	<summary>
+  Looks up a localized string similar to Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Speed_Units">
+	<summary>
+  Looks up a localized string similar to Speed Units.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Stabilized">
+	<summary>
+  Looks up a localized string similar to Stabilized.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Starting_GCS">
+	<summary>
+  Looks up a localized string similar to Starting &amp;1.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Status">
+	<summary>
+  Looks up a localized string similar to Status.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Step_Back">
+	<summary>
+  Looks up a localized string similar to Step Back.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Step_Forward">
+	<summary>
+  Looks up a localized string similar to Step Forward.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Stop_Recording">
+	<summary>
+  Looks up a localized string similar to Stop Recording.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Supported_Protocols">
+	<summary>
+  Looks up a localized string similar to Supported Protocols.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.System_Status">
+	<summary>
+  Looks up a localized string similar to System Status.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Target_Alt">
+	<summary>
+  Looks up a localized string similar to Target Alt.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Telemetry_GPS">
+	<summary>
+  Looks up a localized string similar to Telemetry GPS.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Thro">
+	<summary>
+  Looks up a localized string similar to Thro.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Throttle">
+	<summary>
+  Looks up a localized string similar to Throttle.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Throttle_Channel">
+	<summary>
+  Looks up a localized string similar to Throttle Channel.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Throttle_Color">
+	<summary>
+  Looks up a localized string similar to Throttle Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Tracking">
+	<summary>
+  Looks up a localized string similar to Tracking.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Translated_Data">
+	<summary>
+  Looks up a localized string similar to Translated Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Turn_Coordinator">
+	<summary>
+  Looks up a localized string similar to Turn Coordinator.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Type_F13">
+	<summary>
+  Looks up a localized string similar to Type F13.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.uBlox_Binary">
+	<summary>
+  Looks up a localized string similar to uBlox Binary.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Up">
+	<summary>
+  Looks up a localized string similar to up.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.UTC">
+	<summary>
+  Looks up a localized string similar to UTC.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Version">
+	<summary>
+  Looks up a localized string similar to Version.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Vertical_Speed">
+	<summary>
+  Looks up a localized string similar to Vertical Speed.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.View_File">
+	<summary>
+  Looks up a localized string similar to View File.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Voice">
+	<summary>
+  Looks up a localized string similar to Voice.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Voltage_Color">
+	<summary>
+  Looks up a localized string similar to Voltage Color.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Volts">
+	<summary>
+  Looks up a localized string similar to Volts.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Waypoint">
+	<summary>
+  Looks up a localized string similar to Waypoint.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Waypoint_Data">
+	<summary>
+  Looks up a localized string similar to Waypoint Data.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Waypoint_Mode">
+	<summary>
+  Looks up a localized string similar to Waypoint Mode.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Yaw">
+	<summary>
+  Looks up a localized string similar to Yaw.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Yellow">
+	<summary>
+  Looks up a localized string similar to Yellow.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Yes">
+	<summary>
+  Looks up a localized string similar to Yes.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.Strings.Zero_Yaw">
+	<summary>
+  Looks up a localized string similar to Zero Yaw.
+</summary>
+</member><member name="T:HK_GCS_Lite.My.Resources.Strings">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="F:HK_GCS_Lite.DirectShowControl.DirectShowControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.DirectShowControl.DirectShowControl.Dispose(System.Boolean)">
+ Clean up any resources being used.
+ true if managed resources should be disposed; otherwise, false.
+
+</member><member name="P:HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentControl.RotateImage(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Double,System.Drawing.Point,System.Drawing.Point,System.Single)">
+ Rotate an image on a point with a specified angle
+ The paint area event where the image will be displayed
+ The image to display
+ The angle of rotation in radian
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ The location of the rotation point in the paint area
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentControl.TranslateImage(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Int32,System.Single,System.Drawing.Point,System.Single)">
+ Translate an image on line with a specified distance and a spcified angle
+ The paint area event where the image will be displayed
+ The image to display
+ The translation distance in pixel
+ The angle of translation direction in radian
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentControl.RotateAndTranslate(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Double,System.Double,System.Drawing.Point,System.Int32,System.Drawing.Point,System.Single)">
+ Rotate an image an apply a translation on the rotated image and the display it
+ The paint area event where the image will be displayed
+ The image to display
+ The angle of rotation in radian
+ The angle of translation direction in radian, expressed in the rotated image coordonate system
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ The location of the rotation point in the paint area
+ The translation distance in pixel
+ The location of the rotation point in the paint area
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentControl.ScrollCounter(System.Windows.Forms.PaintEventArgs,System.Drawing.Image,System.Int32,System.Single,System.Drawing.Point,System.Single)">
+ Display a Scroll counter image like on gas  pumps 
+ The paint area event where the image will be displayed
+ The band counter image to display with digts : 0|1|2|3|4|5|6|7|8|9|0
+ The number of digits displayed by the counter
+ The value to dispay on the counter
+ The location of the left upper corner of the image to display in the paint area in nominal situation
+ Multiplication factor on the display image
+
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentControl.InterpolPhyToAngle(System.Single,System.Single,System.Single,System.Single,System.Single)">
+ Convert a physical value in an rad angle used by the rotate function
+ Physical value to interpol/param&gt;
+ Minimum physical value
+ Maximum physical value
+ The angle related to the minumum value, in deg
+ The angle related to the maximum value, in deg
+ The angle in radian witch correspond to the physical value
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.HeadingIndicatorInstrumentControl.SetHeadingIndicatorParameters(System.Single,System.Single)">
+ Define the physical value to be displayed on the indicator
+ The aircraft heading in °deg
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.VerticalSpeedIndicatorInstrumentControl.SetVerticalSpeedIndicatorParameters(System.Int32,System.String,System.String,System.String,System.String)">
+ Define the physical value to be displayed on the indicator
+ The aircraft vertical speed in ft per minutes
+
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.ControlInstrument.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.ControlInstrument.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="F:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentText.components">
+	<summary>
+ Required designer variable.
+ </summary>
+</member><member name="M:HK_GCS_Lite.AvionicsInstrumentControlDemo.InstrumentText.InitializeComponent">
+	<summary>
+ Required method for Designer support - do not modify 
+ the contents of this method with the code editor.
+ </summary>
+</member><member name="M:HK_GCS_Lite.JoystickInterface.Joystick.#ctor(System.IntPtr)">
+	<summary>
+ Constructor for the class.
+ </summary>
+	<param name="window_handle">Handle of the window which the joystick will be "attached" to.</param>
+</member><member name="M:HK_GCS_Lite.JoystickInterface.Joystick.FindJoysticks">
+	<summary>
+ Retrieves a list of joysticks attached to the computer.
+ </summary>
+	<example>
+ [C#]
+ <code>
+ JoystickInterface.Joystick jst = new JoystickInterface.Joystick(this.Handle);
+ string[] sticks = jst.FindJoysticks();
+ </code>
+	</example>
+	<returns>A list of joysticks as an array of strings.</returns>
+</member><member name="M:HK_GCS_Lite.JoystickInterface.Joystick.AcquireJoystick(System.String)">
+	<summary>
+ Acquire the named joystick. You can find this joystick through the <see cref="FindJoysticks"/> method.
+ </summary>
+	<param name="name">Name of the joystick.</param>
+	<returns>The success of the connection.</returns>
+</member><member name="M:HK_GCS_Lite.JoystickInterface.Joystick.ReleaseJoystick">
+	<summary>
+ Unaquire a joystick releasing it back to the system.
+ </summary>
+</member><member name="M:HK_GCS_Lite.JoystickInterface.Joystick.UpdateStatus">
+	<summary>
+ Update the properties of button and axis positions.
+ </summary>
+</member><member name="T:HK_GCS_Lite.JoystickInterface.Joystick">
+	<summary>
+ Class to interface with a joystick device.
+ </summary>
+</member>
+</members>
+</doc>

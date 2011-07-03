@@ -37,6 +37,9 @@
     var lookAt = null;
     var camera = null;
     
+    var guidedDestPlacemark = null;
+    var guidedDestPoint = null
+    
     var modelURL = null;
     var viewType = 0;
 
@@ -106,6 +109,8 @@
     }
 
     function initCallback(pluginInstance) {
+    
+   
         ge = pluginInstance;
         google.earth.addEventListener(ge.getView(), "viewchange", eventListener);
         google.earth.addEventListener(ge.getWindow(), 'dblclick', function(event)
@@ -249,6 +254,15 @@
         }
     }
     
+    function clearMission() {
+        try {
+            ge.getFeatures().removeChild(lineStringPlacemark);
+        }
+        catch(err)
+        {
+        }
+    }
+
     function clearMap() {
         try {
         	var features = ge.getFeatures(); 
@@ -353,10 +367,59 @@
         modelURL = newModelURL;
         nDaeHeadingOffset = headingOffset;
         planeLink.setHref(newModelURL);
-        planeModel.setLink(planeLink);
+        if(viewType == 3) {
+            planeModel.setLink(null);
+        } else {
+            planeModel.setLink(planeLink);
+        }
         planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
         modelLoaded = true;
     }
+    
+    function setGuidedDest(lat,long) {
+        //Photo Icon
+        //http://google-maps-icons.googlecode.com/files/photo.png
+    
+        //Small Plane
+        //http://google-maps-icons.googlecode.com/files/aircraft-small.png
+    
+        //Park
+        //http://google-maps-icons.googlecode.com/files/park-urban.png
+        
+        if (guidedDestPlacemark == null) {
+            var icon = ge.createIcon(''); 
+	        icon.setHref('http://google-maps-icons.googlecode.com/files/observatory.png'); 
+    	    
+	        var style = ge.createStyle(''); 
+	        style.getIconStyle().setScale(2);     
+	        style.getIconStyle().setIcon(icon); 
+	        guidedDestPlacemark = ge.createPlacemark(''); 
+	        guidedDestPlacemark.setStyleSelector(style); 
+	    } 
+
+	    guidedDestPoint = ge.createPoint(''); 
+	    guidedDestPoint.setLatitude(lat); 
+	    guidedDestPoint.setLongitude(long); 
+	    guidedDestPoint.setAltitudeMode(ge.ALTITUDE_CLAMP_TO_GROUND);
+	    
+	    guidedDestPlacemark.setGeometry(guidedDestPoint);  
+        ge.getFeatures().appendChild(guidedDestPlacemark);
+        
+    }
+    
+    function clearGuidedDest() {
+        try {
+            if (guidedDestPlacemark != null) {
+                ge.getFeatures().removeChild(guidedDestPlacemark);
+            }
+        }
+        catch(err)
+        {
+        }
+        guidedDestPlacemark = null;
+        guidedDestPoint = null;
+    }
+ 
     
     function initPlaneCamera(lat,long, altitude, newModelURL, scale, pitch, roll, newView, altOffset,setCamera) {
         eAltOffset = altOffset;
@@ -393,6 +456,8 @@
         if (viewType != 3 && modelURL != ''){
             planeLink.setHref(modelURL);
             planeModel.setLink(planeLink);
+        } else {
+            planeModel.setLink(null);
         }
         planeModel.setAltitudeMode (ge.ALTITUDE_ABSOLUTE); 
 
@@ -400,7 +465,9 @@
         planeModel.getScale().setY(nScale);
         planeModel.getScale().setZ(nScale);
 
-        planePlacemark.setGeometry(planeModel);
+        if (viewType != 3 && modelURL != ''){
+            planePlacemark.setGeometry(planeModel);
+        }
         modelLoaded = true;
     }
     
@@ -476,7 +543,7 @@
 //        if (bZeroIsHome == true){
 //	        lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude(), homePoint.getLongitude(),homeGroundAltitude); 
 //	    } else {
-	        lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude()+.00001, homePoint.getLongitude()+.00001, homePoint.getAltitude()); 
+	        lineString.getCoordinates().pushLatLngAlt(homePoint.getLatitude()+.00001, homePoint.getLongitude()+.00001,homeGroundAltitude); // homePoint.getAltitude()); 
 //	    }
 	    ge.getFeatures().appendChild(lineStringPlacemark);
         }
@@ -567,6 +634,30 @@
 //		}
     }
 
+    function orientPlane(heading,pitch,roll) {
+        try {
+            planeOrient.setHeading(heading);
+            planeOrient.setTilt(pitch); 
+            planeOrient.setRoll(roll); 
+            
+            if(cameraTracking == 3) {
+                camera.setHeading(heading); 
+                //if (nDaeHeadingOffset == 0)
+                //{
+                    camera.setRoll(roll); 
+                    camera.setTilt(90 - pitch); 
+                //} else {
+                //    camera.setRoll(-roll); 
+                //    camera.setTilt(90 + pitch); 
+                //}
+                ge.getView().setAbstractView(camera);
+		    }
+        }
+        catch(err)
+        {
+        }
+    }
+    
     function drawAndCenter(lat, long, altitude, flightExtrude, flightColor, flightWidth, cameraTracking,isMeters,heading,headingOffset,pitch,roll,altOffset,headLock) {
 	    var nAngle = 0;
 	    var nNewHeading = 0;
@@ -583,133 +674,142 @@
             return;
         }
         
-        eAltOffset = altOffset;
-        nDaeHeadingOffset = headingOffset;
-        nLocked = 1;
-        if (lastRange != 0) {
-            nRange = currentRange - lastRange;
-        }
-        
-        if (cameraTracking != 3) {
-            ge.getOptions().setFlyToSpeed(1); 
-        } else {
-            ge.getOptions().setFlyToSpeed(4.5); 
-        }
-        ge.getOptions().setUnitsFeetMiles(isMeters);
-            
-        nCameraHeading = heading - headingOffset
-        if (nCameraHeading < 0) {
-            nCameraHeading += 360 ;
-        }
-            
-        //if (isMeters == "True"){
-        //} else {
-        //    ge.getOptions().setUnitsFeetMiles(true);
-        //}
-                
-        planeOrient.setHeading(heading);
-        planeOrient.setTilt(pitch); 
-        planeOrient.setRoll(roll); 
-        
-	    flightString.setExtrude(flightExtrude); 
-	    flightStyle.getColor().set(flightColor);
-	    flightStyle.setWidth(flightWidth);
-	    flightPolyStyle.getColor().set(flightColor);
-	    
-	    currentGroundAlt = ge.getGlobe().getGroundAltitude(lat,long);
-
-	    flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
-        if (eAltOffset == 0) {
-            nNewAltitude = altitude
-	    } else {
-            nNewAltitude = altitude + homeGroundAltitude
-	    }
-//	    if (nNewAltitude <= currentGroundAlt) {
-//	        nNewAltitude = currentGroundAlt;
-//	    }
-
-        lastLat = lat;
-        lastLong = long;
-        lastAlt = nNewAltitude;
-	    
-	    flightString.getCoordinates().pushLatLngAlt(lat,long,nNewAltitude); 
-
-	    ge.getFeatures().appendChild(flightStringPlacemark);
-	    
-	    if (lat != 0 || long != 0) {
-	    
-            planeLoc.setLatitude(lat);
-            planeLoc.setLongitude(long);
-            if (eAltOffset == 0) {
-                planeLoc.setAltitude(altitude);
-            } else {
-                planeLoc.setAltitude(altitude + homeGroundAltitude);
+        try {
+            eAltOffset = altOffset;
+            nDaeHeadingOffset = headingOffset;
+            nLocked = 1;
+            if (lastRange != 0) {
+                nRange = currentRange - lastRange;
             }
+            
+            if (cameraTracking != 3) {
+                ge.getOptions().setFlyToSpeed(1); 
+            } else {
+                ge.getOptions().setFlyToSpeed(4.5); 
+            }
+            ge.getOptions().setUnitsFeetMiles(isMeters);
+                
+            nCameraHeading = heading - headingOffset
+            if (nCameraHeading < 0) {
+                nCameraHeading += 360 ;
+            }
+                
+            //if (isMeters == "True"){
+            //} else {
+            //    ge.getOptions().setUnitsFeetMiles(true);
+            //}
+                    
+            planeOrient.setHeading(heading);
+            planeOrient.setTilt(pitch); 
+            planeOrient.setRoll(roll); 
+            
+	        flightString.setExtrude(flightExtrude); 
+	        flightStyle.getColor().set(flightColor);
+	        flightStyle.setWidth(flightWidth);
+	        flightPolyStyle.getColor().set(flightColor);
     	    
-	        viewType = cameraTracking;
-	        if (cameraTracking == 1) {
-		        camera.setLatitude(lat); 
-		        camera.setLongitude(long);  
-                //lookAt.setRange(ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND).getRange().toFixed(2)); 
-		        //lookAt.setRange(nRange);
-		        camera.setTilt(0);  
-		        if (headLock == true) {
-		            camera.setHeading(nCameraHeading); 
-		            lookAt.setHeading(nCameraHeading);
-		        } else {
-		            camera.setHeading(currentHeading); 
-		            lookAt.setHeading(currentHeading);
-		        } 
-		        camera.setAltitude(currentRange);
-		        ge.getView().setAbstractView(camera);
-		        lastRange = altitude;
-		    } else if(cameraTracking == 2) {
-                //lookAt.setRange(currentRange); 
-		        lookAt.setLatitude(lat); 
-		        lookAt.setLongitude(long);  
- 		        lookAt.setRange(400); 
-		        lookAt.setTilt(60);  
-               if (eAltOffset == 0) {
- 		            lookAt.setAltitude(altitude); 
-                } else {
-		            lookAt.setAltitude(altitude + homeGroundAltitude); 
-                }
-		        if (headLock == true) {
-		            lookAt.setHeading(nCameraHeading); 
-		            camera.setHeading(nCameraHeading); 
-		        } else {
-		            camera.setHeading(currentHeading); 
-		            lookAt.setHeading(currentHeading);
-		        }
-		        //lookAt.setRange(currentRange-altitude);
-		        //camera.setAltitude(currentRange);
-		        lookAt.setTilt(60);  
-		        ge.getView().setAbstractView(lookAt);
-		    } else if(cameraTracking == 3) {
-		        camera.setLatitude(lat); 
-		        camera.setLongitude(long);  
-                if (eAltOffset == 0) {
- 		            camera.setAltitude(altitude); 
-                } else {
-		            camera.setAltitude(altitude + homeGroundAltitude); 
-                }
-		        if (headLock == true) {
-		            camera.setHeading(nCameraHeading); 
-		        } else {
-		            camera.setHeading(currentHeading); 
-		        }
-		        camera.setRoll(roll); 
-		        camera.setTilt(90 - pitch); 
-		        ge.getView().setAbstractView(camera);
-		    }
-		}
-		
-		nLocked = 0;
+	        currentGroundAlt = ge.getGlobe().getGroundAltitude(lat,long);
 
-        if (modelLoaded = false && modelURL != '') {
-            buildPlaneMode();
+	        flightString.setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+            if (eAltOffset == 0) {
+                nNewAltitude = altitude
+	        } else {
+                nNewAltitude = altitude + homeGroundAltitude
+	        }
+    //	    if (nNewAltitude <= currentGroundAlt) {
+    //	        nNewAltitude = currentGroundAlt;
+    //	    }
+
+            lastLat = lat;
+            lastLong = long;
+            lastAlt = nNewAltitude;
+    	    
+	        flightString.getCoordinates().pushLatLngAlt(lat,long,nNewAltitude); 
+
+	        ge.getFeatures().appendChild(flightStringPlacemark);
+    	    
+	        if (lat != 0 || long != 0) {
+    	    
+                planeLoc.setLatitude(lat);
+                planeLoc.setLongitude(long);
+                if (eAltOffset == 0) {
+                    planeLoc.setAltitude(altitude);
+                } else {
+                    planeLoc.setAltitude(altitude + homeGroundAltitude);
+                }
+        	    
+	            viewType = cameraTracking;
+	            if (cameraTracking == 1) {
+		            camera.setLatitude(lat); 
+		            camera.setLongitude(long);  
+                    //lookAt.setRange(ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND).getRange().toFixed(2)); 
+		            //lookAt.setRange(nRange);
+		            camera.setTilt(0);  
+		            if (headLock == true) {
+		                camera.setHeading(nCameraHeading); 
+		                lookAt.setHeading(nCameraHeading);
+		            } else {
+		                camera.setHeading(currentHeading); 
+		                lookAt.setHeading(currentHeading);
+		            } 
+		            camera.setAltitude(currentRange);
+		            ge.getView().setAbstractView(camera);
+		            lastRange = altitude;
+		        } else if(cameraTracking == 2) {
+                    //lookAt.setRange(currentRange); 
+		            lookAt.setLatitude(lat); 
+		            lookAt.setLongitude(long);  
+ 		            lookAt.setRange(400); 
+		            lookAt.setTilt(60);  
+                   if (eAltOffset == 0) {
+ 		                lookAt.setAltitude(altitude); 
+                    } else {
+		                lookAt.setAltitude(altitude + homeGroundAltitude); 
+                    }
+		            if (headLock == true) {
+		                lookAt.setHeading(nCameraHeading); 
+		                camera.setHeading(nCameraHeading); 
+		            } else {
+		                camera.setHeading(currentHeading); 
+		                lookAt.setHeading(currentHeading);
+		            }
+		            //lookAt.setRange(currentRange-altitude);
+		            //camera.setAltitude(currentRange);
+		            lookAt.setTilt(60);  
+		            ge.getView().setAbstractView(lookAt);
+		        } else if(cameraTracking == 3) {
+		            camera.setLatitude(lat); 
+		            camera.setLongitude(long);  
+                    if (eAltOffset == 0) {
+ 		                camera.setAltitude(altitude); 
+                    } else {
+		                camera.setAltitude(altitude + homeGroundAltitude); 
+                    }
+		            //if (headLock == true) {
+		                camera.setHeading(nCameraHeading); 
+		            //} else {
+		            //    camera.setHeading(currentHeading); 
+		            //}
+		            if (nDaeHeadingOffset == 0) {
+		                camera.setRoll(roll); 
+		                camera.setTilt(90 - pitch); 
+		            } else {
+		                camera.setRoll(-roll); 
+		                camera.setTilt(90 + pitch); 
+		            }
+		            ge.getView().setAbstractView(camera);
+		        }
+		    }
+    		
+		    nLocked = 0;
+
+            if (modelLoaded = false && modelURL != '') {
+                buildPlaneMode();
+            }
+	   }
+        catch(err)
+        {
         }
-	    
 
 //	    if (cameraTracking == 1 || cameraTracking == 2){
 //		    lookAt.setLatitude(lat); 

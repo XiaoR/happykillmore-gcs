@@ -24,11 +24,12 @@ Partial Class frmAbout
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAbout))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox
+        Me.mnuTitle = New System.Windows.Forms.Label
         Me.lblStatus = New System.Windows.Forms.Label
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
         Me.lblSupportedProtocolsLabel = New System.Windows.Forms.Label
         Me.Label6 = New System.Windows.Forms.Label
-        Me.lblInstruments = New System.Windows.Forms.Label
         Me.cmdOk = New System.Windows.Forms.Button
         Me.lblVersion = New System.Windows.Forms.Label
         Me.lbl3DModelLabel = New System.Windows.Forms.Label
@@ -39,18 +40,19 @@ Partial Class frmAbout
         Me.lblProjectHomepageLabel = New System.Windows.Forms.Label
         Me.lblGoogleCode = New System.Windows.Forms.Label
         Me.PictureBox1 = New System.Windows.Forms.PictureBox
-        Me.mnuTitle = New System.Windows.Forms.Label
         Me.GroupBox1.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.PictureBox2)
+        Me.GroupBox1.Controls.Add(Me.mnuTitle)
         Me.GroupBox1.Controls.Add(Me.lblStatus)
         Me.GroupBox1.Controls.Add(Me.ProgressBar1)
         Me.GroupBox1.Controls.Add(Me.lblSupportedProtocolsLabel)
         Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Controls.Add(Me.lblInstruments)
         Me.GroupBox1.Controls.Add(Me.cmdOk)
         Me.GroupBox1.Controls.Add(Me.lblVersion)
         Me.GroupBox1.Controls.Add(Me.lbl3DModelLabel)
@@ -61,10 +63,21 @@ Partial Class frmAbout
         Me.GroupBox1.Controls.Add(Me.lblProjectHomepageLabel)
         Me.GroupBox1.Controls.Add(Me.lblGoogleCode)
         Me.GroupBox1.Controls.Add(Me.PictureBox1)
-        Me.GroupBox1.Controls.Add(Me.mnuTitle)
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
+        '
+        'PictureBox2
+        '
+        resources.ApplyResources(Me.PictureBox2, "PictureBox2")
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.TabStop = False
+        '
+        'mnuTitle
+        '
+        resources.ApplyResources(Me.mnuTitle, "mnuTitle")
+        Me.mnuTitle.ForeColor = System.Drawing.Color.Black
+        Me.mnuTitle.Name = "mnuTitle"
         '
         'lblStatus
         '
@@ -89,12 +102,6 @@ Partial Class frmAbout
         resources.ApplyResources(Me.Label6, "Label6")
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Name = "Label6"
-        '
-        'lblInstruments
-        '
-        resources.ApplyResources(Me.lblInstruments, "lblInstruments")
-        Me.lblInstruments.ForeColor = System.Drawing.Color.Black
-        Me.lblInstruments.Name = "lblInstruments"
         '
         'cmdOk
         '
@@ -156,12 +163,6 @@ Partial Class frmAbout
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '
-        'mnuTitle
-        '
-        resources.ApplyResources(Me.mnuTitle, "mnuTitle")
-        Me.mnuTitle.ForeColor = System.Drawing.Color.Red
-        Me.mnuTitle.Name = "mnuTitle"
-        '
         'frmAbout
         '
         resources.ApplyResources(Me, "$this")
@@ -173,6 +174,7 @@ Partial Class frmAbout
         Me.Name = "frmAbout"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -182,7 +184,6 @@ Partial Class frmAbout
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents lblSupportedProtocolsLabel As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents lblInstruments As System.Windows.Forms.Label
     Friend WithEvents cmdOk As System.Windows.Forms.Button
     Friend WithEvents lblVersion As System.Windows.Forms.Label
     Friend WithEvents lbl3DModelLabel As System.Windows.Forms.Label
@@ -194,4 +195,5 @@ Partial Class frmAbout
     Friend WithEvents lblGoogleCode As System.Windows.Forms.Label
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents mnuTitle As System.Windows.Forms.Label
+    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
 End Class
