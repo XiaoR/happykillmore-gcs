@@ -121,6 +121,7 @@ Partial Class frmJoystick
         Me.lblCalibration = New System.Windows.Forms.Label
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.tmrTrimHold = New System.Windows.Forms.Timer(Me.components)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.grpJoystickMapping.SuspendLayout()
         CType(Me.numLower4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numLower3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -147,6 +148,7 @@ Partial Class frmJoystick
         '
         'grpJoystickMapping
         '
+        Me.grpJoystickMapping.BackColor = System.Drawing.SystemColors.Control
         Me.grpJoystickMapping.Controls.Add(Me.cmdSetEndpoints)
         Me.grpJoystickMapping.Controls.Add(Me.numLower4)
         Me.grpJoystickMapping.Controls.Add(Me.numLower3)
@@ -1175,6 +1177,14 @@ Partial Class frmJoystick
         '
         Me.tmrTrimHold.Interval = 500
         '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "air_speed_bg_alpha.bmp")
+        Me.ImageList1.Images.SetKeyName(1, "Bandeau_Dérouleur.bmp")
+        Me.ImageList1.Images.SetKeyName(2, "needle_alpha.bmp")
+        '
         'frmJoystick
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1185,6 +1195,7 @@ Partial Class frmJoystick
         Me.Controls.Add(Me.cmdSave)
         Me.Controls.Add(Me.grpJoystickMapping)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmJoystick"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -1312,4 +1323,5 @@ Partial Class frmJoystick
     Friend WithEvents numUpper3 As System.Windows.Forms.NumericUpDown
     Friend WithEvents numUpper2 As System.Windows.Forms.NumericUpDown
     Friend WithEvents cmdSetEndpoints As System.Windows.Forms.Button
+    Friend WithEvents ImageList1 As System.Windows.Forms.ImageList
 End Class

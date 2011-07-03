@@ -21,6 +21,11 @@ Public Class frmHeartbeat
         AddToRateCombo("1 Hz", 1)
         AddToRateCombo("2 Hz", 2)
 
+        For nCount = 3 To 20
+            cboHeartbeatRateMavlink.Items.Add(New cValueDesc(nCount, nCount & " Hz"))
+
+        Next
+
         For nCount = 0 To cboDeviceType1.Items.Count - 1
             If CType(cboDeviceType1.Items(nCount), cValueDesc).Value = nHeartbeatDevice1 Then
                 cboDeviceType1.SelectedIndex = nCount
@@ -60,6 +65,9 @@ Public Class frmHeartbeat
             End If
             If CType(cboHeatbeatRate1.Items(nCount), cValueDesc).Value = nHeartbeatRate6 Then
                 cboHeatbeatRate6.SelectedIndex = nCount
+            End If
+            If CType(cboHeartbeatRateMavlink.Items(nCount), cValueDesc).Value = nHeartbeatMavlink Then
+                cboHeartbeatRateMavlink.SelectedIndex = nCount
             End If
         Next nCount
 
@@ -111,6 +119,7 @@ Public Class frmHeartbeat
             cboHeatbeatRate4.Items.Clear()
             cboHeatbeatRate5.Items.Clear()
             cboHeatbeatRate6.Items.Clear()
+            cboHeartbeatRateMavlink.Items.Clear()
         End If
 
         cboHeatbeatRate1.Items.Add((New cValueDesc(value, inputString)))
@@ -119,6 +128,7 @@ Public Class frmHeartbeat
         cboHeatbeatRate4.Items.Add((New cValueDesc(value, inputString)))
         cboHeatbeatRate5.Items.Add((New cValueDesc(value, inputString)))
         cboHeatbeatRate6.Items.Add((New cValueDesc(value, inputString)))
+        cboHeartbeatRateMavlink.Items.Add((New cValueDesc(value, inputString)))
     End Sub
 
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
@@ -151,6 +161,7 @@ Public Class frmHeartbeat
         nHeartbeatRate4 = CType(cboHeatbeatRate3.Items(cboHeatbeatRate4.SelectedIndex), cValueDesc).Value
         nHeartbeatRate5 = CType(cboHeatbeatRate3.Items(cboHeatbeatRate5.SelectedIndex), cValueDesc).Value
         nHeartbeatRate6 = CType(cboHeatbeatRate3.Items(cboHeatbeatRate6.SelectedIndex), cValueDesc).Value
+        nHeartbeatMavlink = CType(cboHeartbeatRateMavlink.Items(cboHeartbeatRateMavlink.SelectedIndex), cValueDesc).Value
 
         sHeartbeat1 = Replace(Replace(txtHeatbeat1.Text, vbCr, "<CR>", , , CompareMethod.Text), vbLf, "<LF>", , , CompareMethod.Text)
         sHeartbeat2 = Replace(Replace(txtHeatbeat2.Text, vbCr, "<CR>", , , CompareMethod.Text), vbLf, "<LF>", , , CompareMethod.Text)

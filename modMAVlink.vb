@@ -60,7 +60,7 @@ Module modMAVlink
             inputValue = -(((2 ^ (4 * 4) - 1) Xor inputValue) + 1)
         End If
         sTemp = Hex(inputValue).PadLeft(4, "0")
-        ConvertIntegerToMavlink = ConvertChrHex(Mid(sTemp, 1, 2)) & ConvertChrHex(Mid(sTemp, 3, 2))
+        ConvertIntegerToMavlink = ConvertChrHex(Mid(sTemp, 3, 2)) & ConvertChrHex(Mid(sTemp, 1, 2))
     End Function
     Public Function ConvertIntegerToMavlinkByte(ByVal inputValue As Integer, Optional ByVal is2sCompliment As Boolean = False) As Byte()
         Dim arr(0 To 1) As Byte
@@ -276,7 +276,6 @@ Module modMAVlink
             Case 2 'Manual
                 GetAPMMode = "Manual"
             Case 3 'Guided
-                GetAPMMode = "Guided Mode"
                 Select Case navNumber
                     Case 1 ' Liftoff
                         GetAPMMode = "Guided - Take-Off"
@@ -284,14 +283,16 @@ Module modMAVlink
                         GetAPMMode = "Guided - Loiter"
                     Case 6 'Landing
                         GetAPMMode = "Guided - Land"
+                    Case Else
+                        GetAPMMode = "Guided Mode"
                 End Select
             Case 4
                 Select Case navNumber
                     Case 3 'Waypoint
-                        GetAPMMode = "Auto"
+                        GetAPMMode = "Auto - Mission"
                     Case 5 'Returning
                         GetAPMMode = "Auto - Return to Launch"
-                    Case 2 'Loiter
+                    Case 8 'Loiter
                         GetAPMMode = "Auto - Loiter"
                     Case Else
                         GetAPMMode = "Auto"
@@ -299,9 +300,27 @@ Module modMAVlink
             Case 5 'Test1
                 GetAPMMode = "Stabilize"
             Case 6 'Test2
-                GetAPMMode = "Fly By Wire A"
-            Case 7 'Test3
-                GetAPMMode = "Fly By Wire B"
+                Select Case navNumber
+                    Case 1 'Waypoint
+                        GetAPMMode = "Fly By Wire A"
+                    Case 2 'Returning
+                        GetAPMMode = "Fly By Wire B"
+                    Case 3 'Loiter
+                        GetAPMMode = "Fly By Wire C"
+                End Select
+                'GetAPMMode = "Fly By Wire A"
+                'Case 7 'Test3
+                '    GetAPMMode = "Fly By Wire B"
+            Case 100
+                GetAPMMode = "Stabilize"
+            Case 101
+                GetAPMMode = "Acrobatic"
+            Case 102
+                GetAPMMode = "Simple"
+            Case 103
+                GetAPMMode = "Altitude Hold"
+            Case Else
+                GetAPMMode = "Unknown Mode"
         End Select
     End Function
     Public Function GetMavMode(ByVal inputMode As Integer) As String

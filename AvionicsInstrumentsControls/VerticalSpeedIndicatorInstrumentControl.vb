@@ -25,11 +25,18 @@ Namespace AvionicsInstrumentControlDemo
 #Region "Fields"
 
         ' Parameters
-        Private verticalSpeed As Integer
+        'Private verticalSpeed As Integer
+
+        Private verticalSpeedTargetValue As Single
+        Private verticalSpeedMoveIndex As Integer
+        Private verticalSpeedStartingValue As Single
+
 
         ' Images
-        Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.VerticalSpeedIndicator_Background)
-        Private bmpNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.VerticalSpeedNeedle)
+        Private bmpCadran As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.vert_bottom)
+        Private bmpNeedle As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.needle_01)
+        Private bmpGlass As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.glass_layer_3)
+        'Private bmpBorder As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.outside_bg)
 
         Private sUpLabel As String = "up"
         Private sDownLabel As String = "down"
@@ -70,20 +77,23 @@ Namespace AvionicsInstrumentControlDemo
 
             ' Pre Display computings
             Dim ptRotation As New Point(150, 150)
-            Dim ptimgNeedle As New Point(136, 39)
+            Dim ptimgNeedle As New Point(135, 36)
 
             Me.BackColor = GetSystemColor("F5F4F1")
 
             bmpCadran.MakeTransparent(Color.Yellow)
             bmpNeedle.MakeTransparent(Color.Yellow)
 
-            Dim alphaNeedle As Double = InterpolPhyToAngle(verticalSpeed, -6000, 6000, 120, 420)
+            Dim alphaNeedle As Double = InterpolPhyToAngle(GetCurrentEaseInstrument(verticalSpeedStartingValue, verticalSpeedTargetValue, verticalSpeedMoveIndex), -6000, 6000, 120, 420)
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
 
             ' diplay mask
             Dim maskPen As New Pen(Me.BackColor, 30 * scale)
             pe.Graphics.DrawRectangle(maskPen, 0, 0, bmpCadran.Width * scale, bmpCadran.Height * scale)
+
+            ' display border
+            pe.Graphics.DrawImage(bmpBorder, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
@@ -108,6 +118,8 @@ Namespace AvionicsInstrumentControlDemo
             ' display small needle
             RotateImage(pe, bmpNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
 
+            pe.Graphics.DrawImage(bmpGlass, 0, 0, CSng(bmpGlass.Width * scale), CSng(bmpGlass.Height * scale))
+
         End Sub
 
 #End Region
@@ -118,15 +130,33 @@ Namespace AvionicsInstrumentControlDemo
         ''' Define the physical value to be displayed on the indicator
         ''' The aircraft vertical speed in ft per minutes
         Public Sub SetVerticalSpeedIndicatorParameters(ByVal aircraftVerticalSpeed As Integer, ByVal instrumentName As String, ByVal upLabel As String, ByVal downString As String, ByVal unitString As String)
-            verticalSpeed = aircraftVerticalSpeed
-            sInstrumentLabel = instrumentName
-            sUpLabel = upLabel
-            sDownLabel = downString
-            sUnitLabel = unitString
+            If aircraftVerticalSpeed <> verticalSpeedTargetValue Then
+                verticalSpeedStartingValue = GetCurrentEaseInstrument(verticalSpeedStartingValue, verticalSpeedTargetValue, verticalSpeedMoveIndex)
+                verticalSpeedMoveIndex = 0
+                verticalSpeedTargetValue = aircraftVerticalSpeed
 
-            Me.Refresh()
+                sInstrumentLabel = instrumentName
+                sUpLabel = upLabel
+                sDownLabel = downString
+                sUnitLabel = unitString
+
+                Me.Refresh()
+            End If
+
+            'verticalSpeed = aircraftVerticalSpeed
         End Sub
 
+        Public Sub TickEase()
+            Dim bFoundOne As Boolean = False
+            If verticalSpeedMoveIndex <= g_EaseSteps - 2 Then
+                bFoundOne = True
+                verticalSpeedMoveIndex = verticalSpeedMoveIndex + 1
+            End If
+
+            If bFoundOne = True Then
+                Me.Refresh()
+            End If
+        End Sub
 #End Region
 
     End Class

@@ -145,36 +145,41 @@ Namespace AvionicsInstrumentControlDemo
         ''' The value to dispay on the counter
         ''' The location of the left upper corner of the image to display in the paint area in nominal situation
         ''' Multiplication factor on the display image
-        Protected Sub ScrollCounter(ByVal pe As PaintEventArgs, ByVal imgBand As Image, ByVal nbOfDigits As Integer, ByVal counterValue As Integer, ByVal ptImg As Point, ByVal scaleFactor As Single)
+        Protected Sub ScrollCounter(ByVal pe As PaintEventArgs, ByVal imgBand As Image, ByVal nbOfDigits As Integer, ByVal counterValue As Single, ByVal ptImg As Point, ByVal scaleFactor As Single)
             Dim indexDigit As Integer = 0
             Dim digitBoxHeight As Integer = CInt(imgBand.Height \ 11)
             Dim digitBoxWidth As Integer = imgBand.Width
 
             For indexDigit = 0 To nbOfDigits - 1
-                Dim currentDigit As Integer
-                Dim prevDigit As Integer
+                Dim currentDigit As Single
+                Dim prevDigit As Single
                 Dim xOffset As Integer
                 Dim yOffset As Integer
                 Dim fader As Double
 
-                currentDigit = CInt(Math.Truncate((counterValue / Math.Pow(10, indexDigit)) Mod 10))
+                'currentDigit = CInt(Math.Truncate((counterValue / Math.Pow(10, indexDigit)) Mod 10))
+                currentDigit = (Math.Truncate((counterValue / Math.Pow(10, indexDigit)) Mod 10))
 
-                If indexDigit = 0 Then
-                    prevDigit = 0
-                Else
-                    prevDigit = CInt(Math.Truncate((counterValue / Math.Pow(10, indexDigit - 1)) Mod 10))
-                End If
+                'If indexDigit = 0 Then
+                '    prevDigit = 0
+                'Else
+                '    prevDigit = CInt(Math.Truncate((counterValue / Math.Pow(10, indexDigit - 1)) Mod 10))
+                'End If
 
                 ' xOffset Computing
                 xOffset = CInt(digitBoxWidth * (nbOfDigits - indexDigit - 1))
 
                 ' yOffset Computing	
-                If prevDigit = 9 Then
-                    fader = 0 ' 0.33
-                    yOffset = CInt(Math.Truncate(-((fader + currentDigit) * digitBoxHeight))) - 1
-                Else
-                    yOffset = CInt(-(currentDigit * digitBoxHeight)) - 1
-                End If
+                'If prevDigit = 9 Then
+                '    fader = 0 '0.33
+                '    yOffset = CInt(Math.Truncate(-((fader + currentDigit) * digitBoxHeight))) - 1
+                'Else
+                'If indexDigit = 0 Then
+                '    yOffset = CInt(-(currentDigit * digitBoxHeight + (counterValue - Math.Truncate(counterValue)) * digitBoxHeight)) - 1
+                'Else
+                yOffset = CInt(-(currentDigit * digitBoxHeight)) - 1
+                'End If
+                'End If
 
                 ' Display Image
                 pe.Graphics.DrawImage(imgBand, (ptImg.X + xOffset) * scaleFactor, (ptImg.Y + yOffset) * scaleFactor, imgBand.Width * scaleFactor, imgBand.Height * scaleFactor)
@@ -185,17 +190,21 @@ Namespace AvionicsInstrumentControlDemo
 
             Dim yOffset As Integer
 
+            If meterValue < minValue Then
+                meterValue = minValue
+            End If
             Try
                 ' yOffset Computing	
-                yOffset = (-(imgBand.Height / 2)) + openingHeight - Convert.ToInt32(meterValue - minValue) / (maxValue - minValue) * (openingHeight)
+                yOffset = (-(imgBand.Height / 2)) + openingHeight - ((meterValue - minValue) / (maxValue - minValue)) * (openingHeight)
             Catch
                 yOffset = 0
             End Try
-            If yOffset > (-(imgBand.Height / 2)) + openingHeight Then
-                yOffset = (-(imgBand.Height / 2)) + openingHeight
-            ElseIf yOffset < -imgBand.Height + openingHeight Then
-                yOffset = -imgBand.Height + openingHeight
-            End If
+            'Debug.Print("yOffset=" & yOffset)
+            'If yOffset > (-(imgBand.Height / 2)) + openingHeight Then
+            '    yOffset = (-(imgBand.Height / 2)) + openingHeight
+            'ElseIf yOffset < -imgBand.Height + openingHeight Then
+            '    yOffset = -imgBand.Height + openingHeight
+            'End If
 
             ' Display Image
             pe.Graphics.DrawImage(imgBand, (ptImg.X) * scaleFactor, (ptImg.Y + yOffset) * scaleFactor, imgBand.Width * scaleFactor, imgBand.Height * scaleFactor)
@@ -288,6 +297,33 @@ Namespace AvionicsInstrumentControlDemo
             Return radAngle
         End Function
 
+        Protected Function GetCurrentEaseInstrument(ByVal startingValue As Single, ByVal targetValue As Single, ByVal moveIndex As Integer, Optional ByVal degreeRollAround As Integer = -1) As Single
+            If bSmoothInstruments = True Then
+                If degreeRollAround <> -1 Then
+                    If Math.Abs(startingValue - targetValue) <= 180 Then
+                        GetCurrentEaseInstrument = (targetValue - startingValue) * ((moveIndex + 1) / g_EaseSteps) + startingValue
+                        'Debug.Print("Me=" & Me.Name & ",Starting=" & startingValue & ",Target=" & targetValue & ",Normal")
+                    Else
+                        If targetValue > startingValue Then
+                            GetCurrentEaseInstrument = startingValue - Math.Abs(Math.Abs(targetValue - degreeRollAround) + startingValue) * ((moveIndex + 1) / g_EaseSteps)
+                            'Debug.Print("Me=" & Me.Name & ",Starting=" & startingValue & ",Target=" & targetValue & ",RotatingLeft")
+                        Else
+                            GetCurrentEaseInstrument = Math.Abs(Math.Abs(startingValue - degreeRollAround) + targetValue) * ((moveIndex + 1) / g_EaseSteps) + startingValue
+                            'Debug.Print("Me=" & Me.Name & ",Starting=" & startingValue & ",Target=" & targetValue & ",RotatingRight")
+                        End If
+                    End If
+                    If GetCurrentEaseInstrument > degreeRollAround Then
+                        GetCurrentEaseInstrument = GetCurrentEaseInstrument - degreeRollAround
+                    ElseIf GetCurrentEaseInstrument < 0 Then
+                        GetCurrentEaseInstrument = degreeRollAround + GetCurrentEaseInstrument
+                    End If
+                Else
+                    GetCurrentEaseInstrument = (targetValue - startingValue) * ((moveIndex + 1) / g_EaseSteps) + startingValue
+                End If
+            Else
+                GetCurrentEaseInstrument = targetValue
+            End If
+        End Function
 
 #End Region
     End Class
@@ -312,6 +348,7 @@ Namespace AvionicsInstrumentControlDemo
         Friend fontSize As Integer
         Friend fontColor As Color
         Friend scaleStyle As InstumentMarkScaleStyle
+
     End Structure
 
     Structure InstrumentControlMarkPoint

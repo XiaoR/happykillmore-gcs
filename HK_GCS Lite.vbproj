@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FCD785F-BABD-4C8D-9AA5-A22F11F22D81}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>HK_GCS_Lite.My.MyApplication</StartupObject>
+    <RootNamespace>HK_GCS_Lite</RootNamespace>
+    <AssemblyName>HK_GCS_Lite</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>8AE3DB1BF4B5889CD3728942249EC4745322AE54</ManifestCertificateThumbprint>
+    <ManifestKeyFile>HK_GCS_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <ApplicationIcon>HK.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <PublishUrl>http://localhost/HK_GCS/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <ProductName>Ground Control Station</ProductName>
+    <WebPage>index.htm</WebPage>
+    <ApplicationVersion>1.0.0.6</ApplicationVersion>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>HK_GCS_Lite.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>HK_GCS_Lite.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\system32\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <Reference Include="Toub.Sound.Midi, Version=2.0.4.0, Culture=neutral, PublicKeyToken=9510c3608a1f0024, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Save this\Install Folder\Setup\Source Files\Toub.Sound.Midi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="DirectShowLib" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.IO.Ports" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AvionicsInstrumentsControls\3DMesh.Designer.vb">
+      <DependentUpon>3DMesh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\3DMesh.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AirSpeedIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AltimeterInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AttitudeIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AvionicsInstrumentsControlsRessources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\ControlInstrument.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\DialControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\HeadingIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\InstrumentText.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\StatusInstrument.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\TurnCoordinatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\BatteryIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cActiveDevices.vb" />
+    <Compile Include="cAsyncSocket.vb" />
+    <Compile Include="cJoystick.vb" />
+    <Compile Include="cJoystickChannel.vb" />
+    <Compile Include="cJoystickChannels.vb" />
+    <Compile Include="cVario.vb" />
+    <Compile Include="cValueDesc.vb" />
+    <Compile Include="frmHeartbeat.Designer.vb">
+      <DependentUpon>frmHeartbeat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmHeartbeat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmJoystick.Designer.vb">
+      <DependentUpon>frmJoystick.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmJoystick.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrackingCalibrate.Designer.vb">
+      <DependentUpon>frmTrackingCalibrate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrackingCalibrate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modcrc16.vb" />
+    <Compile Include="ctlDirectShowControl.designer.vb">
+      <DependentUpon>ctlDirectShowControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ctlDirectShowControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAbout.Designer.vb">
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.vb">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modDirectShow.vb" />
+    <Compile Include="modDirectX.vb" />
+    <Compile Include="AvionicsInstrumentsControls\InstrucmentControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Javascript\GoogleResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoogleResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="modLoadFiles.vb" />
+    <Compile Include="modMAVlink.vb" />
+    <Compile Include="modRegistry.vb" />
+    <Compile Include="modSettings.vb" />
+    <Compile Include="modSpeech.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="cMessage.vb" />
+    <Compile Include="modChecksums.vb" />
+    <Compile Include="modGlobal.vb" />
+    <Compile Include="Strings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\TextFiles.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextFiles.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AvionicsInstrumentsControls\3DMesh.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>3DMesh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHeartbeat.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHeartbeat.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmJoystick.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmJoystick.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrackingCalibrate.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTrackingCalibrate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Javascript\GoogleResources.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GoogleResources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\TextFiles.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TextFiles.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BaseApplicationManifest Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HK.ico" />
+    <Content Include="Javascript\Maps.html" />
+    <Content Include="Javascript\pluginhost.html" />
+    <None Include="app.config" />
+    <None Include="Resources\Images\Play.gif" />
+    <None Include="Resources\ARW03DN.ICO" />
+    <None Include="Resources\BigRedX.gif" />
+    <None Include="Resources\ARW03UP.ICO" />
+    <None Include="Resources\ArrowUp.ICO" />
+    <None Include="Resources\ArrowDown.ICO" />
+    <None Include="Resources\Blank.ico" />
+    <None Include="Resources\Delete.gif" />
+    <None Include="Resources\down.gif" />
+    <None Include="Resources\Delete.ico" />
+    <None Include="Resources\Bandeau_Dérouleur.png" />
+    <None Include="Resources\1_blank_gage_glass_top.png" />
+    <None Include="Resources\blank_sq_600px.png" />
+    <None Include="Resources\blank_sq_top.png" />
+    <None Include="Resources\dark_bg.png" />
+    <None Include="Resources\AH_bottom.png" />
+    <None Include="Resources\AH_top.png" />
+    <None Include="Resources\center_1.png" />
+    <None Include="Resources\center_2.png" />
+    <None Include="Resources\center_3.png" />
+    <None Include="Resources\center_4.png" />
+    <None Include="Resources\center_5.png" />
+    <None Include="Resources\alt.png" />
+    <None Include="Resources\alt_glass_top.png" />
+    <None Include="Resources\battery_bottom.png" />
+    <None Include="Resources\battery_cover_mid.png" />
+    <None Include="Resources\battery_glass_top.png" />
+    <None Include="Resources\battery_mid.png" />
+    <None Include="Resources\battery_thr_mid.png" />
+    <None Include="Resources\blank black.png" />
+    <None Include="Resources\blank blue.png" />
+    <None Include="Resources\blank green.png" />
+    <None Include="Resources\blank red.png" />
+    <None Include="Resources\blank_sq_bottom.png" />
+    <None Include="Resources\Compass_2_layer_1.png" />
+    <None Include="Resources\Compass_2_layer_2.png" />
+    <Content Include="Resources\F510_smi.jpg" />
+    <None Include="Resources\glass_layer_3.png" />
+    <Content Include="Resources\Images\Button.gif" />
+    <None Include="Resources\up.gif" />
+    <None Include="TextFiles\APMSetConfig.csv" />
+    <None Include="Resources\needle-13.png" />
+    <None Include="Resources\needle-01.png" />
+    <None Include="Resources\needle-02.png" />
+    <None Include="Resources\needle-03.png" />
+    <None Include="Resources\needle-04.png" />
+    <None Include="Resources\needle-05.png" />
+    <None Include="Resources\needle-06.png" />
+    <None Include="Resources\needle-07.png" />
+    <None Include="Resources\needle-08.png" />
+    <None Include="Resources\needle-09.png" />
+    <None Include="Resources\needle-10.png" />
+    <None Include="Resources\needle-11.png" />
+    <None Include="Resources\needle-12.png" />
+    <None Include="Resources\outside_bg.png" />
+    <None Include="Resources\outside_bg_600.png" />
+    <None Include="Resources\outside_bg_white.png" />
+    <None Include="Resources\Record.gif" />
+    <None Include="Resources\StopRed.gif" />
+    <None Include="Resources\SCALE_humm_mm.png" />
+    <None Include="Resources\SCALE_paul.png" />
+    <None Include="Resources\Number_Scroll.png" />
+    <None Include="Resources\speed.png" />
+    <None Include="Resources\speed_glass_top.png" />
+    <None Include="Resources\speed_glowing.png" />
+    <None Include="Resources\TC_bottom.png" />
+    <None Include="Resources\TC_glass_top.png" />
+    <None Include="Resources\TC_plane.png" />
+    <None Include="Resources\TC-bub.png" />
+    <None Include="Resources\TC-marks.png" />
+    <None Include="Resources\vert_bottom.png" />
+    <None Include="Resources\vert_glass_top.png" />
+    <None Include="Resources\StopRed.png" />
+    <None Include="Resources\Record.png" />
+    <Content Include="TextFiles\ACMModes.txt" />
+    <Content Include="TextFiles\APMCommands.txt" />
+    <Content Include="TextFiles\APMModes.txt" />
+    <Content Include="TextFiles\GluonCommands.txt" />
+    <Content Include="TextFiles\GluonSetConfig.txt" />
+    <Content Include="TextFiles\AttoSetConfig.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="GEPlugin">
+      <Guid>{F9152AEC-3462-4632-8087-EEE3C3CDDA35}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

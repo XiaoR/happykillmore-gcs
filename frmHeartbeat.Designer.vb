@@ -22,6 +22,7 @@ Partial Class frmHeartbeat
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmHeartbeat))
         Me.cmdSave = New System.Windows.Forms.Button
         Me.cmdCancel = New System.Windows.Forms.Button
         Me.grpHeartbeat3 = New System.Windows.Forms.GroupBox
@@ -81,6 +82,8 @@ Partial Class frmHeartbeat
         Me.cmdDefaults = New System.Windows.Forms.Button
         Me.chkHeartbeatMAVlink = New System.Windows.Forms.CheckBox
         Me.Label19 = New System.Windows.Forms.Label
+        Me.cboHeartbeatRateMavlink = New System.Windows.Forms.ComboBox
+        Me.Label20 = New System.Windows.Forms.Label
         Me.grpHeartbeat3.SuspendLayout()
         Me.grpHeartbeat2.SuspendLayout()
         Me.grpHeartbeat1.SuspendLayout()
@@ -660,15 +663,34 @@ Partial Class frmHeartbeat
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(595, 21)
         Me.Label19.TabIndex = 37
-        Me.Label19.Text = "NOTE: Heartbeats will only fire if the device type specified is detected.  So don" & _
-            "'t worry about the default heartbeats"
+        Me.Label19.Text = "NOTE: Heartbeats will only fire if the device type specified is detected. "
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'cboHeartbeatRateMavlink
+        '
+        Me.cboHeartbeatRateMavlink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboHeartbeatRateMavlink.FormattingEnabled = True
+        Me.cboHeartbeatRateMavlink.Location = New System.Drawing.Point(292, 445)
+        Me.cboHeartbeatRateMavlink.Name = "cboHeartbeatRateMavlink"
+        Me.cboHeartbeatRateMavlink.Size = New System.Drawing.Size(93, 21)
+        Me.cboHeartbeatRateMavlink.TabIndex = 39
+        '
+        'Label20
+        '
+        Me.Label20.Location = New System.Drawing.Point(186, 448)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(100, 16)
+        Me.Label20.TabIndex = 38
+        Me.Label20.Text = "Send Rate:"
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'frmHeartbeat
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(810, 512)
+        Me.Controls.Add(Me.cboHeartbeatRateMavlink)
+        Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.chkHeartbeatMAVlink)
         Me.Controls.Add(Me.cmdDefaults)
@@ -681,6 +703,7 @@ Partial Class frmHeartbeat
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmdSave)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmHeartbeat"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -760,4 +783,6 @@ Partial Class frmHeartbeat
     Friend WithEvents cmdDefaults As System.Windows.Forms.Button
     Friend WithEvents chkHeartbeatMAVlink As System.Windows.Forms.CheckBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents cboHeartbeatRateMavlink As System.Windows.Forms.ComboBox
+    Friend WithEvents Label20 As System.Windows.Forms.Label
 End Class

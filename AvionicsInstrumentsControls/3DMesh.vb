@@ -8,15 +8,90 @@ Public Class _3DMesh
     Dim oBackColor As System.Drawing.Color
     Dim bHasRun As Boolean = False
     Dim bLocked As Boolean = False
-    Private Sub CreateSettingsFile(ByVal rootpath As String, ByVal modelname As String, ByVal filename As String, ByVal scale As Integer, ByVal backcolor As String)
+
+    Dim pitchTargetValue As Single
+    Dim pitchStartingValue As Single
+    Dim pitchMoveIndex As Integer
+
+    Dim rollTargetValue As Single
+    Dim rollStartingValue As Single
+    Dim rollMoveIndex As Integer
+
+    Dim yawTargetValue As Single
+    Dim yawStartingValue As Single
+    Dim yawMoveIndex As Integer
+
+    Dim sModelName As String
+    Dim sRootPath As String
+
+    Public Sub UpdateModel(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single, Optional ByVal forceLoad As Boolean = False, Optional ByVal modelName As String = "", Optional ByVal rootPath As String = "")
+        Dim bFoundOne As Boolean = False
+
+        If pitch <> pitchTargetValue Then
+            bFoundOne = True
+            pitchStartingValue = GetCurrentEase3D(pitchStartingValue, pitchTargetValue, pitchMoveIndex)
+            pitchMoveIndex = 0
+            pitchTargetValue = pitch
+        End If
+
+        If roll <> rollTargetValue Then
+            bFoundOne = True
+            rollStartingValue = GetCurrentEase3D(rollStartingValue, rollTargetValue, rollMoveIndex)
+            rollMoveIndex = 0
+            rollTargetValue = roll
+        End If
+
+        If yaw <> yawTargetValue Then
+            bFoundOne = True
+            yawStartingValue = GetCurrentEase3D(yawStartingValue, yawTargetValue, yawMoveIndex, 360)
+            yawMoveIndex = 0
+            yawTargetValue = yaw
+        End If
+
+        If rootPath <> "" Then
+            sRootPath = rootPath
+        End If
+        If modelName <> "" Then
+            sModelName = modelName
+        End If
+        
+        If bFoundOne = True Or forceLoad = True Then
+            DrawMesh(GetCurrentEase3D(pitchStartingValue, pitchTargetValue, pitchMoveIndex), GetCurrentEase3D(rollStartingValue, rollTargetValue, rollMoveIndex), GetCurrentEase3D(yawStartingValue, yawTargetValue, yawMoveIndex, 360), forceLoad, sModelName, sRootPath)
+        End If
+    End Sub
+
+    Public Sub TickEase()
+        Dim bFoundOne As Boolean = False
+        If pitchMoveIndex <= g_EaseSteps - 2 Then
+            bFoundOne = True
+            pitchMoveIndex = pitchMoveIndex + 1
+        End If
+
+        If rollMoveIndex <= g_EaseSteps - 2 Then
+            bFoundOne = True
+            rollMoveIndex = rollMoveIndex + 1
+        End If
+
+        If yawMoveIndex <= g_EaseSteps - 2 Then
+            bFoundOne = True
+            yawMoveIndex = yawMoveIndex + 1
+        End If
+
+        If bFoundOne = True And sRootPath <> "" Then
+            DrawMesh(GetCurrentEase3D(pitchStartingValue, pitchTargetValue, pitchMoveIndex), GetCurrentEase3D(rollStartingValue, rollTargetValue, rollMoveIndex), GetCurrentEase3D(yawStartingValue, yawTargetValue, yawMoveIndex, 360), False, sModelName, sRootPath)
+        End If
+    End Sub
+
+    Private Sub CreateSettingsFile(ByVal rootpath As String, ByVal modelname As String, ByVal filename As String, ByVal scaleValue As Integer, ByVal backcolor As String)
         Dim sOutputFile As StreamWriter
 
         If Dir(rootpath & modelname, FileAttribute.Directory) <> "" Then
             sOutputFile = New StreamWriter(rootpath & modelname & "\Settings.txt")
             sOutputFile.WriteLine("Filename=" & filename)
-            sOutputFile.WriteLine("Scale=" & scale)
+            sOutputFile.WriteLine("Scale=" & scaleValue)
             sOutputFile.WriteLine("BackColor=" & backcolor)
-            If UCase(sModelURL) <> UCase(g_Default_DAE_URL & sModelName & ".DAE") Then
+
+            If UCase(sModelURL) <> UCase(g_Default_DAE_URL & ":" & nTinyWebPort & "/" & sModelName & "/" & sModelName & ".dae") Then
                 sOutputFile.WriteLine("Dae URL=" & sModelURL)
             End If
             If nDaeHeadingOffset = 180 Then
@@ -48,7 +123,7 @@ Public Class _3DMesh
             nScaleFactor = 70
             oBackColor = Color.LightGray
 
-            sModelURL = g_Default_DAE_URL & sModelName & ".dae"
+            sModelURL = g_Default_DAE_URL & ":" & nTinyWebPort & "/" & sModelName & "/" & sModelName & ".dae"
             nDaeHeadingOffset = 0
             nDaePitchRollOffset = 1
             n3DHeadingOffset = 0
@@ -103,6 +178,8 @@ Public Class _3DMesh
                 End Try
             End If
 
+            'oBackColor = Me.Parent.BackColor
+
             If Dir(sFilePath & "\" & sFilename, FileAttribute.Normal) = "" Then
                 sFilename = "Easystar.x"
                 sFilePath = rootPath & "Easystar"
@@ -116,7 +193,7 @@ Public Class _3DMesh
 
     End Sub
 
-    Public Sub DrawMesh(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single, Optional ByVal forceLoad As Boolean = False, Optional ByVal modelName As String = "EasyStar", Optional ByVal rootPath As String = "")
+    Private Sub DrawMesh(ByVal pitch As Single, ByVal roll As Single, ByVal yaw As Single, Optional ByVal forceLoad As Boolean = False, Optional ByVal modelName As String = "EasyStar", Optional ByVal rootPath As String = "")
         'transformation matrix
         Dim tempMatrix As Matrix
 
@@ -126,6 +203,8 @@ Public Class _3DMesh
                 'with true you'll use windowed mode
                 createDevice(0, 0, 32, Me.Handle, True)
                 defaultSetting()
+                sModelName = modelName
+                sRootPath = rootPath
                 loadObject(modelName, rootPath)
                 'this instruction avoid artefact
                 Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.Opaque, True)
@@ -199,6 +278,10 @@ Public Class _3DMesh
             bLocked = Locked
         End Set
     End Property
+
+    Private Sub _3DMesh_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+        _3DMesh_Resize(Nothing, Nothing)
+    End Sub
     Private Sub _3DMesh_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
         Try
             If Not (device Is Nothing) And bLocked = False Then

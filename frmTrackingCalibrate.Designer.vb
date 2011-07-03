@@ -22,6 +22,7 @@ Partial Class frmTrackingCalibrate
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTrackingCalibrate))
         Me.cboLeft = New System.Windows.Forms.ComboBox
         Me.tbarUp = New System.Windows.Forms.TrackBar
         Me.tbarLeft = New System.Windows.Forms.TrackBar
@@ -408,6 +409,7 @@ Partial Class frmTrackingCalibrate
         Me.Controls.Add(Me.tbarUp)
         Me.Controls.Add(Me.tbarLeft)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmTrackingCalibrate"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent

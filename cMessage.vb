@@ -28,6 +28,7 @@ Public Class cMessage
         e_MessageType_Paparazzi
         e_MessageType_AttoSetParam
         e_MessageType_AttoOk
+        e_MessageType_AUAV
     End Enum
 
     Public ValidMessage As Boolean

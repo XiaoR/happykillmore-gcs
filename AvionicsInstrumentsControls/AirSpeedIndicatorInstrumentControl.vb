@@ -25,14 +25,25 @@ Namespace AvionicsInstrumentControlDemo
 #Region "Fields"
 
         ' Parameters
-        Private airSpeed As Single
-        Private groundSpeed As Single
+        'Private airSpeed As Single
+        'Private groundSpeed As Single
+
+        Private groundSpeedTargetValue As Single
+        Private groundSpeedMoveIndex As Integer
+        Private groundSpeedStartingValue As Single
+
+        Private airSpeedTargetValue As Single
+        Private airSpeedMoveIndex As Integer
+        Private airSpeedStartingValue As Single
 
         ' Images
-        Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedIndicator_Background)
-        Private bmpGroundNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.GroundSpeedNeedle)
-        Private bmpAirNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedNeedle)
-        Private bmpScroll As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.NumberScroll)
+        Private bmpCadran As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.speed_glowing)
+        'Private bmpCadran As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.AirSpeedIndicator_Background)
+        'Private bmpGroundNeedle As New Bitmap(HK_GCS.My.Resources.AvionicsInstrumentsControlsRessources.GroundSpeedNeedle)
+        Private bmpGroundNeedle As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.needle_06)
+        Private bmpAirNeedle As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.needle_07)
+        Private bmpScroll As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.Number_Scroll)
+        Private bmpGlass As New Bitmap(HK_GCS_Lite.My.Resources.AvionicsInstrumentsControlsRessources.glass_layer_3)
 
         Private nMaxSpeed As Single = 80
         Private sUnitLabel As String = "MPH"
@@ -72,12 +83,14 @@ Namespace AvionicsInstrumentControlDemo
 
             ' Pre Display computings
             Dim ptCounter As New Point(165, 135)
-            Dim ptRotation As New Point(150, 150)
-            Dim ptimgNeedle As New Point(136, 39)
+            Dim ptRotation As New Point(150, 149)
+            'Dim ptimgNeedle As New Point(136, 39)
+            Dim ptimgNeedle As New Point(135, 36)
 
             bmpCadran.MakeTransparent(Color.Yellow)
             bmpGroundNeedle.MakeTransparent(Color.Yellow)
             bmpAirNeedle.MakeTransparent(Color.Yellow)
+            bmpGlass.MakeTransparent(Color.Yellow)
 
             Me.BackColor = GetSystemColor("F5F4F1")
 
@@ -85,17 +98,20 @@ Namespace AvionicsInstrumentControlDemo
 
             Dim scale As Single = CSng(Me.Width) / bmpCadran.Width
 
-            ScrollCounter(pe, bmpScroll, 3, Convert.ToInt64(groundSpeed), ptCounter, scale)
+            ScrollCounter(pe, bmpScroll, 3, (GetCurrentEaseInstrument(groundSpeedStartingValue, groundSpeedTargetValue, groundSpeedMoveIndex)), ptCounter, scale)
 
             ' diplay mask
             Dim maskPen As New Pen(Me.BackColor, 30 * scale)
             pe.Graphics.DrawRectangle(maskPen, 0, 0, bmpCadran.Width * scale, bmpCadran.Height * scale)
 
+            ' display border
+            pe.Graphics.DrawImage(bmpBorder, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
+
             ' display cadran
             pe.Graphics.DrawImage(bmpCadran, 0, 0, CSng(bmpCadran.Width * scale), CSng(bmpCadran.Height * scale))
 
             Dim fontSize As Single
-            fontSize = Me.Width / 180 * 11
+            fontSize = Me.Width / 180 * 9
             Using string_format As New StringFormat()
                 string_format.Alignment = StringAlignment.Center
                 string_format.LineAlignment = StringAlignment.Near
@@ -121,15 +137,20 @@ Namespace AvionicsInstrumentControlDemo
                 pe.Graphics.DrawString(sUnitLabel, the_font, Brushes.Azure, bmpCadran.Height * 0.54 * scale, bmpCadran.Width * 0.75 * scale)
             End Using
 
-            If airSpeed > 0 Then
-                alphaNeedle = InterpolPhyToAngle(airSpeed, 0, nMaxSpeed, 180.0, 468.0)
+            If airSpeedTargetValue > 0 Then
+                alphaNeedle = InterpolPhyToAngle(GetCurrentEaseInstrument(airSpeedStartingValue, airSpeedTargetValue, airSpeedMoveIndex), 0, nMaxSpeed, 180.0, 468.0)
                 RotateImage(pe, bmpAirNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
             End If
 
-            alphaNeedle = InterpolPhyToAngle(groundSpeed, 0.0, nMaxSpeed, 180.0, 468.0)
+            alphaNeedle = InterpolPhyToAngle(GetCurrentEaseInstrument(groundSpeedStartingValue, groundSpeedTargetValue, groundSpeedMoveIndex), 0.0, nMaxSpeed, 180.0, 468.0)
+            'alphaNeedle = InterpolPhyToAngle(groundSpeed, 0.0, nMaxSpeed, 180.0, 468.0)
             ' display small needle
             RotateImage(pe, bmpGroundNeedle, alphaNeedle, ptimgNeedle, ptRotation, scale)
             'Debug.Print("alphaNeedle=" & alphaNeedle)
+
+
+            pe.Graphics.DrawImage(bmpGlass, 0, 0, CSng(bmpGlass.Width * scale), CSng(bmpGlass.Height * scale))
+
 
         End Sub
 
@@ -141,15 +162,50 @@ Namespace AvionicsInstrumentControlDemo
         ''' Define the physical value to be displayed on the indicator
         ''' The aircraft air speed in kts
         Public Sub SetAirSpeedIndicatorParameters(ByVal aircraftGroundSpeed As Single, ByVal maxValue As Integer, ByVal instrumentName As String, ByVal unitString As String, Optional ByVal aircraftAirSpeed As Single = -1)
-            groundSpeed = aircraftGroundSpeed
-            nMaxSpeed = maxValue
-            sUnitLabel = unitString
-            sInstrumentLabel = instrumentName
-            airSpeed = aircraftAirSpeed
+            Dim bFoundOne As Boolean = False
 
-            Me.Refresh()
+            If aircraftGroundSpeed <> groundSpeedTargetValue Then
+                bFoundOne = True
+                groundSpeedStartingValue = GetCurrentEaseInstrument(groundSpeedStartingValue, groundSpeedTargetValue, groundSpeedMoveIndex)
+                groundSpeedMoveIndex = 0
+                groundSpeedTargetValue = aircraftGroundSpeed
+            End If
+
+            If aircraftAirSpeed <> airSpeedTargetValue Then
+                bFoundOne = True
+                airSpeedStartingValue = GetCurrentEaseInstrument(airSpeedStartingValue, airSpeedTargetValue, airSpeedMoveIndex)
+                airSpeedMoveIndex = 0
+                airSpeedTargetValue = aircraftAirSpeed
+            End If
+
+            If bFoundOne = True Then
+                'groundSpeed = aircraftGroundSpeed
+                nMaxSpeed = maxValue
+                sUnitLabel = unitString
+                sInstrumentLabel = instrumentName
+                'airSpeed = aircraftAirSpeed
+
+                Me.Refresh()
+            End If
         End Sub
 
+        Public Sub TickEase()
+            Dim bFoundOne As Boolean = False
+            If groundSpeedMoveIndex <= g_EaseSteps - 2 Then
+                bFoundOne = True
+                groundSpeedMoveIndex = groundSpeedMoveIndex + 1
+            End If
+
+            If airSpeedMoveIndex <= g_EaseSteps - 2 Then
+                bFoundOne = True
+                airSpeedMoveIndex = airSpeedMoveIndex + 1
+            End If
+
+            If bFoundOne = True Then
+                Me.Refresh()
+            End If
+
+        End Sub
 #End Region
 
 #Region "IDE"

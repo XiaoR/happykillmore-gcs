@@ -326,6 +326,7 @@ Public Class frmJoystick
 
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
         sJoystickDevice = cboDevice.Text
+        nJoystickOutput = cboJoystickOutput.SelectedIndex
 
         cJoystick(1).Axis = cboJoystick1.SelectedIndex - 1
         cJoystick(2).Axis = cboJoystick2.SelectedIndex - 1
