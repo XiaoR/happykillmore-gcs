@@ -44,7 +44,7 @@ Hardware: http://www.pololu.com/catalog/category/12
 
 Hardware: http://www.rentron.com/PicBasic/Mini_SSC_II.htm
 
-*Maestro Protocol (Pololu)*
+*Maestro Protocol (Pololu)* - 
 Download the Maestro Software http://www.pololu.com/docs/0J40/3.a
 
 1) Launch the Maestro Control Center with your Pololu board connected (and the GCS turned off)
