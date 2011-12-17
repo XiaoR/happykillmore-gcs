@@ -47,12 +47,12 @@ Hardware: http://www.rentron.com/PicBasic/Mini_SSC_II.htm
 *Maestro Protocol (Pololu)* - 
 Download the Maestro Software http://www.pololu.com/docs/0J40/3.a
 
-#Launch the Maestro Control Center with your Pololu board connected (and the GCS turned off)
+  #Launch the Maestro Control Center with your Pololu board connected (and the GCS turned off)
 #On the serial settings tab, select USD Dual Port and press Apply Settings. 
-#Make note of the device number (12 by default), this will be used on the calibration window of the GCS.
-#On the Channel Settings tab you may want to change the min value to 0 and the max value to 3000 for channels 0 and 1. They can be limited using the calibration window in the GCS but failing to set these values in the Maestro Control Center will physically disallow the servos to move outside of the 1000-2000 range in the GCS.
-#On the Channel Settings tab set speed to 1000 and acceleration to 255 for channels 0 and 1.
-#Apply Settings
+  #Make note of the device number (12 by default), this will be used on the calibration window of the GCS.
+  #On the Channel Settings tab you may want to change the min value to 0 and the max value to 3000 for channels 0 and 1. They can be limited using the calibration window in the GCS but failing to set these values in the Maestro Control Center will physically disallow the servos to move outside of the 1000-2000 range in the GCS.
+  #On the Channel Settings tab set speed to 1000 and acceleration to 255 for channels 0 and 1.
+  #Apply Settings
 
 Hardware: http://www.pololu.com/catalog/category/12
 
