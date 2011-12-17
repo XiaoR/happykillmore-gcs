@@ -53,6 +53,7 @@ Download the Maestro Software http://www.pololu.com/docs/0J40/3.a
   #  Channel Settings tab you may want to change the min value to 0 and the max value to 3000 for channels 0 and 1. They can be limited using the calibration window in the GCS but failing to set these values in the Maestro Control Center will physically disallow the servos to move outside of the 1000-2000 range in the GCS.
   # Channel Settings tab set speed to 1000 and acceleration to 255 for channels 0 and 1.
   # Apply Settings
+  # Launch GCS and select Maestro Protocol, Select Command Port (not TTL in device manager), Baud rate can be set to anything (will auto detect baud rate).
 
 Hardware: http://www.pololu.com/catalog/category/12
 
