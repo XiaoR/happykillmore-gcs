@@ -5,4 +5,4 @@
  * [Heading Compass Confusion]
  * [SpeechSettings Speech Settings]
  * [Optimization Ways to optimize the GCS]
- * [MovingGCS Moving GCS/Remote Camera Location]
+ * [MovingGCS Moving GCS / Remote Camera Location]
