@@ -19,4 +19,4 @@
 
  * Additional voices can be downloaded here: 
 
-http://www.microsoft.com/download/en/details.aspx?id=10121
+http://www.microsoft.com/download/en/details.aspx?id=10121 (Download and run SpeechSDK51MSM.exe)
