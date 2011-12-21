@@ -18,5 +18,5 @@
  * Announce Link Alarm will fire after the Alarm Timeout period has expired and no new messages have arrived.
 
  * Additional voices can be downloaded here: 
-http://ftp.pcworld.com/pub/new/graphics_and_multimedia/audio/audio_tools/msttsl.exe
+
 http://download.microsoft.com/download/B/4/3/B4314928-7B71-4336-9DE7-6FA4CF00B7B3/Sp5TTIntXP.exe
